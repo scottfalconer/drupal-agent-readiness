@@ -111,7 +111,7 @@ method/PUBLISHING.md
 | Task | What it tests | Current role |
 | --- | --- | --- |
 | `inventory.read_only` | Can the agent discover live site state without mutation? | Constrained read-only task |
-| `act.event_jsonapi` | Can the agent create a minimal Event bundle, fields, sample content, and verify JSON:API without unrelated changes? | Minimal write/evaluator smoke task |
+| `act.event_jsonapi` | Can the agent create a minimal Event bundle, fields, sample content, and verify JSON:API without unrelated changes? | Minimal write/evaluator task; not the fuller editorial Events-section task |
 | `recover.event_jsonapi` | Can the agent remove or restore Event work without leaving content, routes, JSON:API resources, aliases, or unrelated blast radius? | Constrained recovery task |
 | `assess.alias_safety` | Can the agent classify paths as safe or unsafe from a path-only candidate list? | Headline v0 finding |
 | `act.events_section_editorial` | Future fuller Events-section task with editorial workflow, listing ownership, content-editor access, public output, JSON:API, and operation-specific path safety. | Future task |

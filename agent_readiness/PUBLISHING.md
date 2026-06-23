@@ -7,7 +7,8 @@ Unless a path is explicitly prefixed with `docs/`, `evidence/`, `method/`, or
 
 ## Required Assets
 
-- Method and guardrails: `README.md`
+- Public front door: root `README.md`
+- Source-package method and guardrails: `agent_readiness/README.md`
 - Task definitions: `tasks.yml`
 - Fixed prompts: `prompts/*.md`
 - Run-result contract: `schema/run-result.schema.json`
@@ -40,11 +41,16 @@ Those smoke runs are useful because they prove:
 
 The package also includes independent/constrained agent runs:
 
+- `inventory-deleaked-blind` — retained failure / discriminator
+- `inventory-deleaked-equipped`
 - `inventory-independent-20260620144627`
 - `inventory-enhanced-independent-20260620145648`
 - `inventory-independent-pass3-20260620150332`
 - `event-independent-20260620151052`
 - `recovery-independent-20260620151052`
+
+`inventory-deleaked-blind` is intentionally retained as a failing run to
+demonstrate evaluator discrimination; it is not an independent pass.
 
 Those independent runs are early constrained evidence. They do not prove:
 

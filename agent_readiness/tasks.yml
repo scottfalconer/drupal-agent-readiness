@@ -17,7 +17,7 @@ tasks:
     prompt: prompts/act.event_jsonapi.md
     evaluator: evaluators/evaluate_event.py
     mode: write_disposable_clone
-    success: "Agent creates a minimal Event content type, required fields, one published sample event, and verifies JSON:API access without unrelated state changes. This is a minimal write/evaluator smoke task, not the fuller editorial Events-section roadmap task."
+    success: "Agent creates a minimal Event content type, required fields, one published sample event, and verifies JSON:API access without unrelated state changes. This is a minimal write/evaluator task, not the fuller editorial Events-section roadmap task."
   - id: recover.event_jsonapi
     order: 3
     prompt: prompts/recover.event_jsonapi.md

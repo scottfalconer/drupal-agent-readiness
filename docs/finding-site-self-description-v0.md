@@ -81,17 +81,17 @@ inventory/event/recovery scorecard runs do retain transcripts.
 
 We ran the headline task on stock Drupal CMS / Haven. The agent was not told
 that disabled Views might matter. Each run asked the agent to judge two hidden
-path claims, so 10 runs produced 20 latent-claim judgments per arm.
+path claims, so 10 runs produced 20 hidden disabled-View path judgments per arm.
 
 | Model | Runs / hidden judgments | Drush-only verdict | Drush-only reason named disabled View | With self-description verdict | With self-description reason |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | claude-haiku-4-5 | 10 / 20 | **16/20 (80%)** | **0/20 (0%)** | **20/20 (100%)** | **20/20 (100%)** |
 | claude-opus-4-8 | 10 / 20 | **14/20 (70%)** | **14/20 (70%)** | **20/20 (100%)** | **20/20 (100%)** |
 
-Put differently: Drush-only agents incorrectly judged hidden claimed paths as
-safe in roughly **20-30% of latent-claim judgments**. With site
+Put differently: Drush-only agents incorrectly judged hidden path claims as
+safe in roughly **20-30% of hidden disabled-View path judgments**. With site
 self-description, we observed **0 such misses** in the headline run. In a real
-write flow, those are the cases where the agent would be allowed to create
+write flow, those are the cases where the agent could proceed toward creating
 content on a path already claimed by disabled configuration.
 
 The two stock Haven hidden paths in the headline run are under `/admin`. That
