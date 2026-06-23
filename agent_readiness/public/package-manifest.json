@@ -6,9 +6,9 @@
       "sha256": "3f83e741aec1b932725300f79e3c38ff636e993fc830e0d2f82b4af4a9d1a37e"
     },
     {
-      "bytes": 4279,
+      "bytes": 7659,
       "path": "README.md",
-      "sha256": "9eddbb5c526408dd87629913aed41da4818b4642e8ef22b08979659ad0c6b43f"
+      "sha256": "1e5ee1544d1775757d7813dda534ffc7f7bb7783ed0f900c806a773a360c3a51"
     },
     {
       "bytes": 50,
@@ -3041,7 +3041,7 @@
       "sha256": "02b30926371be322b746220d10e941a3c610aea1e43812f2a4ac0cfeb1b06eab"
     }
   ],
-  "generated_at": "2026-06-23T15:30:31.310437+00:00",
+  "generated_at": "2026-06-23T16:11:18.977883+00:00",
   "package": "State of Agents in Drupal v0 evidence package",
   "run_ids": [
     "event-independent-20260620151052",

@@ -1,111 +1,176 @@
-# State of Agents in Drupal v0 evidence package
+# Drupal Agent Readiness: State of Agents in Drupal v0
 
-This repository contains the clean v0 evidence package for the first `State of
-Agents in Drupal` finding.
+This repo is a public test bench for Drupal's agent experience: how external AI
+agents inspect a Drupal site, decide what is safe, act through Drupal, verify
+the result, and recover from mistakes.
 
-It is intentionally scoped to a first finding, not a broad readiness verdict:
+v0 is not a benchmark verdict. It is a first finding and a reproducible evidence
+loop.
 
-> Drupal can warn agents about hidden path conflicts.
+## The v0 Finding
 
-## Recommended reading order
+Can an agent safely decide whether a Drupal URL path is free to use?
 
-1. `REVIEW-READINESS.md`
-   - Reviewer alignment sheet.
-   - Safe claims, non-claims, and how the package maps to the Outside AI loop.
-2. `docs/finding-site-self-description-v0.md`
-   - One concrete agent mistake Drupal can prevent.
-   - Plain-English summary plus the headline result table.
-3. `docs/why-this-bench.md`
-   - Why we are testing Drupal's agent experience.
-   - Why site context, public tasks, rubrics, starting sites, and claim
-     boundaries matter.
-   - Why public curriculum tasks and fresh measurement variants are both useful.
-4. `docs/state-of-agents-in-drupal-v0.md`
-   - The broader v0 evidence-loop report and scorecard.
-5. `docs/scorecard.csv`
-   - Machine-readable scorecard rows.
-6. `docs/readiness.json`
-   - Current readiness flags and caveats.
+In Drupal, a path can look unused while still being claimed by site state. For
+example, a disabled View can declare a path that currently returns nothing, then
+reclaim that path when someone re-enables the View. An agent that only asks
+"does anything respond at this URL right now?" can make the wrong decision.
 
-## What is included
+This package tests that failure mode. In a constrained path-safety task on stock
+Drupal CMS/Haven, agents inspected path-only candidates and had to decide
+whether each path was safe for a new node alias.
 
-- `docs/`
-  - Public-facing release docs and generated scorecard assets.
-- `REVIEW-READINESS.md`
-  - Reviewer-only alignment note with safe claims and non-claims.
-- `method/`
-  - Harness, prompts, task definitions, publishing checklist, and schema.
-- `evidence/experiments/`
-  - Alias-safety experiment packages, including n=10 Haven and Codex runs.
-- `evidence/runs/`
-  - Inventory, Event, and recovery run packages used by the scorecard.
-- `repro/`
-  - Evaluators, scripts, tests, and Python modules needed to reproduce or audit
-    the package.
-- `agent_readiness/`
-  - Runnable source-package layout assembled from the sanitized release assets.
-  - Use this for the commands in `method/PUBLISHING.md`.
-- `prototype/site_architecture_module/`
-  - The working Drupal module used by the finding.
-  - This is included for review and reproduction, not as a Drupal.org-ready
-    contrib package.
-
-## Intended claim
+| Agent setup | Hidden path claims flagged |
+| --- | --- |
+| Claude Haiku, Drush-only inspection | 16/20 |
+| Claude Haiku, with `site-architecture:path-owner` | 20/20 |
+| Claude Opus, Drush-only inspection | 14/20 |
+| Claude Opus, with `site-architecture:path-owner` | 20/20 |
+| OpenAI Codex, Drush-only inspection | 0/6 |
+| OpenAI Codex, with `site-architecture:path-owner` | 6/6 |
 
 Safe public claim:
 
-> In a constrained Drupal path-safety task, exposing live site self-description
-> changed agent behavior: Drush-only inspection missed hidden disabled-View path
-> claims, while `site-architecture:path-owner` made those claims visible and
-> prevented the unsafe alias decision.
+> In one constrained Drupal path-safety task, exposing live site
+> self-description changed agent behavior: Drush-only inspection missed hidden
+> disabled-View path claims, while `site-architecture:path-owner` made those
+> claims visible and prevented the unsafe alias decision.
 
-Do not claim yet:
+## What This Is
 
-- Drupal is broadly agent-ready.
-- This is a statistically powered benchmark.
-- The public tasks are held out or uncontaminated.
-- The prototype module is ready for Drupal.org contribution.
+This is a public, inspectable evidence package for `State of Agents in Drupal`.
+It includes fixed prompts, transcripts, live-state captures, evaluator outputs,
+scorecard rows, a package manifest, and a prototype Drupal module.
 
-## Two-minute version
+The goal is not to rank AI models. The goal is to make Drupal's agent-facing
+gaps visible, reproducible, and fixable.
 
-The public story should start with the concrete mistake:
+## What This Is Not
 
-> Can an agent safely decide whether a Drupal URL path is free to use?
+- Not a broad verdict that Drupal is agent-ready.
+- Not a statistically powered benchmark.
+- Not a cross-CMS comparison.
+- Not a private held-out model exam.
+- Not a production-ready Drupal.org contrib module.
 
-In this v0 task, some paths looked unused but were claimed by disabled Views.
-Drush-only agents missed a meaningful fraction of those hidden claims. Agents
-given a live Drupal self-description command saw the claims and avoided the
-unsafe alias decision.
+## What Can I Do Here?
 
-That is the release. The rest of the package explains why the task exists, how
-to reproduce it, what the scorecard records, and what the result does not prove.
+- Understand the finding: read
+  [`docs/finding-site-self-description-v0.md`](docs/finding-site-self-description-v0.md).
+- Understand why this exists: read
+  [`docs/why-this-bench.md`](docs/why-this-bench.md).
+- Inspect the scorecard: read
+  [`docs/state-of-agents-in-drupal-v0.md`](docs/state-of-agents-in-drupal-v0.md)
+  and [`docs/scorecard.csv`](docs/scorecard.csv).
+- Reproduce the alias-safety method: start with
+  [`method/HARNESS.md`](method/HARNESS.md).
+- Audit the release package: run the tests and checks below, then inspect
+  `CLEAN-MANIFEST.sha256`, prompts, transcripts, ground truth, and evaluator
+  code.
+- Challenge or extend the bench: propose a task, a starting site, a rubric, an
+  evaluator, or an adversarial case.
 
-## Contamination policy
+Quick local checks:
 
-This bench is intentionally public. That is a feature, not a flaw.
+```bash
+python3 -B -m unittest discover -s agent_readiness/tests -v
+shasum -a 256 -c CLEAN-MANIFEST.sha256
+```
 
-For this release, the goal is curriculum and readiness: make the failure mode
-visible, make the safe inspection pattern learnable, and give contributors a
-repeatable way to improve Drupal's agent-facing surfaces.
+Full maintainer checklist:
 
-For headline progress claims, use new task variants, repeated runs, and clear
-provenance so the community can distinguish "agents learned the public task" from
-"Drupal became easier and safer for agents to operate."
+```text
+method/PUBLISHING.md
+```
 
-## Final public-release decisions
+## Current Status
 
-Before publishing outside a review circle, decide:
+| Area | Status |
+| --- | --- |
+| v0 finding | Ready for review/public preview |
+| Claim scope | `constrained_v0_mechanical_evidence_loop` |
+| Broad Drupal readiness verdict | Not claimed |
+| Statistical benchmark | Not claimed |
+| Cross-CMS comparison | Not claimed |
+| Current headline task | Alias safety / hidden path claims |
+| Reproducibility | Harness, prompts, evaluators, traces, manifest included |
+| Prototype module | Included for reproduction, not production/contrib readiness |
 
-- license for the package;
-- AI-assisted authorship/disclosure wording;
-- whether to publish the clean folder as-is, or publish only `docs/` plus a
-  linked evidence archive;
-- whether to commit this package on a public branch before announcement.
+## Current Tasks
 
-## Reader ladder
+| Task | What it tests | Current role |
+| --- | --- | --- |
+| `inventory.read_only` | Can the agent discover live site state without mutation? | Constrained read-only task |
+| `act.event_jsonapi` | Can the agent create a minimal Event bundle, fields, sample content, and verify JSON:API without unrelated changes? | Minimal write/evaluator smoke task |
+| `recover.event_jsonapi` | Can the agent remove or restore Event work without leaving content, routes, JSON:API resources, aliases, or unrelated blast radius? | Constrained recovery task |
+| `assess.alias_safety` | Can the agent classify paths as safe or unsafe from a path-only candidate list? | Headline v0 finding |
+| `act.events_section_editorial` | Future fuller Events-section task with editorial workflow, listing ownership, content-editor access, public output, JSON:API, and operation-specific path safety. | Future task |
 
-- Skimmers: read the plain-English summary and result table in the finding.
-- Roadmap reviewers: read the finding, then the roadmap section and next
-  hardening steps in the state doc.
-- Skeptics: inspect the harness, evaluator, manifest, transcripts, SHA hashes,
-  and retained failing run.
+## How To Read This Repo
+
+- Skimmers: start with the v0 finding above, then read
+  [`docs/finding-site-self-description-v0.md`](docs/finding-site-self-description-v0.md).
+- Drupal roadmap reviewers: read the finding, then
+  [`docs/why-this-bench.md`](docs/why-this-bench.md) and the next hardening
+  steps in [`docs/state-of-agents-in-drupal-v0.md`](docs/state-of-agents-in-drupal-v0.md).
+- Reproducers: start with [`method/HARNESS.md`](method/HARNESS.md) and
+  [`method/PUBLISHING.md`](method/PUBLISHING.md).
+- Skeptics: inspect the prompts, evaluator code, transcripts, ground truth,
+  retained failures, package manifest, and `CLEAN-MANIFEST.sha256`.
+- Claim reviewers: read [`REVIEW-READINESS.md`](REVIEW-READINESS.md).
+
+## What Is Included
+
+- `docs/`: public-facing release docs and generated scorecard assets.
+- `method/`: harness, prompts, task definitions, publishing checklist, and
+  schema.
+- `evidence/experiments/`: alias-safety experiment packages, including n=10
+  Haven and Codex runs.
+- `evidence/runs/`: Inventory, Event, and recovery run packages used by the
+  scorecard.
+- `repro/`: evaluator, script, and test copy retained for package review.
+- `agent_readiness/`: runnable Python/source-package layout used by the
+  commands in `method/PUBLISHING.md`.
+- `prototype/site_architecture_module/`: the Drupal prototype module used by
+  the finding.
+
+## How Claims Should Be Interpreted
+
+Public tasks are curriculum. They teach agents and humans the Drupal patterns we
+want to make easier: inspect live site state, act through governed surfaces,
+verify mechanically, and record blast radius.
+
+Fresh variants are measurement. A stronger Drupal-side progress claim should pin
+the model, harness, prompt, allowed tools, task version, starting-site hash,
+evaluator version, rubric version, budget, and scoring rules.
+
+This release supports a narrow first finding and a reusable evidence loop. It
+does not prove aggregate Drupal agent readiness.
+
+## Next Work
+
+- Repeat the non-Claude alias-safety run at n=10 and add another non-Claude
+  stack before making any provider-general claim.
+- Repeat `act.event_jsonapi` and `recover.event_jsonapi`, not only
+  `inventory.read_only`.
+- Add token cost to the scorecard where available.
+- Raise n on remaining fully blind Drupal starting sites.
+- Add messy, adversarial, and owner-described starting sites.
+- Add richer editorial-experience tasks.
+- Grow the task set before any aggregate Drupal readiness claim.
+
+## Contributing Or Challenging
+
+Good challenges are welcome. The most useful ones are concrete:
+
+- a task Drupal should be able to win;
+- a task Drupal should be expected to struggle with;
+- a messy or adversarial starting site;
+- a better rubric for a site-specific best-practice question;
+- an evaluator bug;
+- a rerun with another agent stack;
+- evidence that a claim is too broad for the artifacts.
+
+The evaluator is not universal Drupal truth. It is the contract for a specific
+task on a specific starting site. If the rubric is wrong, that is a task failure,
+not an agent failure.
