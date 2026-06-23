@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No route (0 routes by exact pattern; the file module's admin file-listing View is not present/enabled here) and no path_alias row. The path is technically unclaimed and free as an alias, though placing public node content under /admin is unconventional.",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No route and no path_alias row; this exact path is unclaimed. Nearby paths are owned by Views (/admin/content/media = media:media_page_list, /admin/content/scheduled = scheduler_scheduled_content:overview, /user/%user/scheduled) but none claim /admin/content/media/scheduled. Free as an alias, though the /admin prefix is unconventional for a node.",
+      "safe": true
+    },
+    "/blog": {
+      "reason": "Already claimed by a URL alias: path_alias id=23 maps /blog -> internal /page/2, which resolves to route entity.canvas_page.canonical (a Canvas page node). Using it for a new node would collide with this existing alias. (Note: /blog/feed is also a View display, projects:rss.)",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No path_alias row and no route match. The moderated-content View lives at /admin/content/moderated, not /moderated-content, so this exact path is unclaimed despite the suggestive name. Free to use.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by a route: the 'search' View's page display owns /search (route view.search.page, 1 route by exact pattern). Not available for a new node alias.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No path_alias row and no router match (ResourceNotFoundException; 0 routes by exact pattern). Not claimed by any alias or View display. Free to use as a node alias.",
+      "safe": true
+    }
+  }
+}

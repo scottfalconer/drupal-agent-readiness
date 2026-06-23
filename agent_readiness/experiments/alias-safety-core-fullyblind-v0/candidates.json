@@ -1,0 +1,39 @@
+{
+  "candidates": [
+    {
+      "blocker_kind": null,
+      "path": "/this-is-free-xyz",
+      "safe": true
+    },
+    {
+      "blocker_kind": null,
+      "path": "/zzz-unclaimed-b0ed0a",
+      "safe": true
+    },
+    {
+      "blocker_kind": "view",
+      "path": "/admin/content/pages",
+      "safe": false
+    },
+    {
+      "blocker_kind": "latent_disabled_view",
+      "path": "/admin/content/files",
+      "safe": false
+    },
+    {
+      "blocker_kind": "latent_disabled_view",
+      "path": "/admin/content/media/scheduled",
+      "safe": false
+    },
+    {
+      "blocker_kind": "latent_disabled_view",
+      "path": "/admin/structure/taxonomy/scheduled",
+      "safe": false
+    }
+  ],
+  "latent_paths": [
+    "/admin/content/files",
+    "/admin/content/media/scheduled",
+    "/admin/structure/taxonomy/scheduled"
+  ]
+}

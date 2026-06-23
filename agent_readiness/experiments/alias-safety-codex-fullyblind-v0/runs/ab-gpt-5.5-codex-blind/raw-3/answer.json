@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No alias or no-access route matched on the live site.",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No alias or no-access route matched on the live site.",
+      "safe": true
+    },
+    "/blog": {
+      "reason": "Claimed by path alias to /page/2; route entity.canvas_page.canonical.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No alias or no-access route matched on the live site.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by route view.search.page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No alias or no-access route matched on the live site.",
+      "safe": true
+    }
+  }
+}

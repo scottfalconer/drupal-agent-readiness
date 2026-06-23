@@ -1,0 +1,851 @@
+{
+  "summary": "Alias-safety A/B across Haiku 4.5 and Opus 4.8: does site_architecture path-owner help weaker vs capable agents catch disabled-view latent claims?",
+  "agentCount": 24,
+  "logs": [],
+  "result": {
+    "told": [
+      {
+        "condition": "told",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          },
+          "command_count": 12
+        }
+      },
+      {
+        "condition": "told",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "command_count": 7,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          }
+        }
+      },
+      {
+        "condition": "told",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          },
+          "command_count": 5
+        }
+      },
+      {
+        "condition": "told",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "told",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "route"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          },
+          "command_count": 18
+        }
+      },
+      {
+        "condition": "told",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "told",
+        "model": "opus",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "command_count": 5,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          }
+        }
+      },
+      {
+        "condition": "told",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "command_count": 6,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          }
+        }
+      },
+      {
+        "condition": "told",
+        "model": "opus",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "command_count": 4,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          }
+        }
+      },
+      {
+        "condition": "told",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "told",
+        "model": "opus",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "command_count": 6,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          }
+        }
+      },
+      {
+        "condition": "told",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "command_count": 4,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/moderated-content": {
+              "safe": true,
+              "blocker_kind": null
+            },
+            "/blog": {
+              "safe": false,
+              "blocker_kind": "entity"
+            },
+            "/search": {
+              "safe": false,
+              "blocker_kind": "view"
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "blocker_kind": "latent_disabled_view"
+            }
+          }
+        }
+      }
+    ],
+    "blind": [
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No existing route or path alias. Safe to use as a new node URL alias."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "No existing route or path alias. Note: /admin/content/moderated exists as a system view route, but /moderated-content itself is available."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Conflicts with Canvas page 'Blog' (canonical route) and existing path alias /blog→/page/2. Cannot reuse this path."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Reserved system route (view.search.page). View displays the search form. Path cannot be used for a node alias."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "Reserved admin route (view.files.page_1). Files management interface. Admin routes cannot be overridden by node aliases."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Reserved admin route (view.scheduler_scheduled_media.overview). Scheduled media management. Admin routes cannot be overridden by node aliases."
+            }
+          },
+          "command_count": 13
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "command_count": 6,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Already claimed as canonical page of canvas_page 2 (\"Blog\"). Creating a node with this alias would conflict with the existing entity."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Already owned by Views page display search:page. Creating a node with this alias would shadow the view and hijack the page."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "Disabled view files:page_1 declares this path. If enabled in the future, it will collide with any content created here."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Disabled view scheduler_scheduled_media:overview declares this path. If enabled in the future, it will collide with any content created here."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "command_count": 10,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No route or alias exists for this path. Safe to use as a new node alias."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "No route or alias currently exists. The 'moderated_content' view (admin/content/moderated) is disabled and doesn't conflict with this path. Safe to use."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Alias conflict: /blog currently aliases to /page/2 (canvas_page entity). Creating a node with this alias would conflict with existing content."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Active route conflict: /search is an enabled view (view.search.page) that renders the search interface. Cannot use as node alias."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "View path conflict: /admin/content/files is defined as a page display in the 'files' view (disabled now, but would activate if the view is enabled). Would cause routing conflict."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "View path conflict: /admin/content/media/scheduled is defined as a page display in the 'scheduler_scheduled_media' view (disabled now, but would activate if the view is enabled). Would cause routing conflict."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed. No route, alias, view or entity currently responds to this path."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "Unclaimed. No route, alias, view or entity currently responds to this path."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Already the canonical page of canvas_page 2 (Blog entity). Creating a node alias here would shadow the entity."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Already owned by the Views search:page display. Creating a node alias would shadow the view and hijack the page."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "Disabled view files:page_1 declares this path. Enabling that view would collide with any new node alias."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Disabled view scheduler_scheduled_media:overview declares this path. Enabling that view would collide with any new node alias."
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "command_count": 11,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Path has no route match and no existing alias. Safe to use."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "Path has no route match and no existing alias. Safe to use."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Existing path alias already points to /page/2 (a Canvas page). Also conflicts with blog view RSS feed at /blog/feed."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Route exists: view.search.page. This is the core search view endpoint."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "Path used by files view (view.files.page_1). Used for admin file management."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Path used by scheduler_scheduled_media view (view.scheduler_scheduled_media.overview). Used for scheduled media administration."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed path with no route, alias, view, or entity currently responding to it. Safe to use as a new node URL alias."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "Unclaimed path with no route, alias, view, or entity currently responding to it. Safe to use as a new node URL alias."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Already claimed as the canonical page of canvas_page 2 ('Blog'). Creating a node with this alias would conflict and hijack the existing page."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Owned by the Search view (views.view.search). Creating a node alias here would shadow the view and break the search functionality."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "Disabled view files:page_1 declares this path. Enabling that view in the future would cause a collision with any new node created here."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Disabled view scheduler_scheduled_media:overview declares this path. Enabling that view in the future would cause a collision with any new node created here."
+            }
+          },
+          "command_count": 9
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "command_count": 7,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No matching route (ResourceNotFoundException), no existing path alias, and no view (enabled or disabled) defines this path. Greenfield - safe as a new node alias."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "No route, no alias, no view targets it. The site's moderated_content view lives at /admin/content/moderated, which is a different path; this hyphenated path does not collide with it."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Hard conflict now: /blog already exists as a path alias pointing to system path /page/2, which resolves via route entity.canvas_page.canonical to a Canvas page. A new node alias at /blog would collide with the existing alias/page."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Hard conflict now: /search is an active route (view.search.page) served by the enabled Search API view 'search' (base table search_api_index_content). The route would shadow/conflict with a node alias at /search."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "Unsafe latent conflict: no route right now only because the 'files' view (display page_1, path /admin/content/files) is currently DISABLED. The file module is installed, so enabling that view - a routine config change - would register a route at this exact path and conflict."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Unsafe latent conflict: no route right now only because the 'scheduler_scheduled_media' view (display overview, path /admin/content/media/scheduled) is currently DISABLED. media and scheduler are installed; enabling that view (or the scheduler_media submodule) would register a route here and conflict."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "command_count": 12,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, redirect, or entity responds to this path, and no disabled view or other latent claim declares it. Safe to use as a new node URL alias."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "Unclaimed: no current owner and no latent claim. Despite the name, content_moderation's actual admin path is the hyphen-free /admin/content/moderated (route content_moderation.admin_moderated_content), which does not collide. No view (enabled or disabled), alias, or redirect declares /moderated-content. Safe."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Already claimed: it is the canonical URL alias of canvas_page entity 2 (\"Blog\", internal /canvas_page/2). A new node aliased here would collide with / shadow the existing page."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Owned by the Views page display search:page (route view.search.page, path /search), a search_api listing. A node alias here would shadow/hijack the search view."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "Currently no enabled route responds, but the disabled view files:page_1 (views.view.files) declares this exact path. Routine config (enabling the Files admin view) would collide with anything created here. Also under the reserved /admin namespace."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Currently unclaimed, but the disabled view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this path. The scheduler module is enabled, so enabling that view (routine config) would collide. Also under the reserved /admin namespace."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "command_count": 6,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No matching route (ResourceNotFound), no existing path alias, and no view declares this path. Nothing in core or installed modules claims it now or after routine config changes."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "No route and no alias. The moderated_content view exists and is enabled but its page path is /admin/content/moderated, not /moderated-content, so there is no current or latent conflict."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Conflict now: /blog is already an active path alias pointing to source /page/2, resolving to route entity.canvas_page.canonical. Using it as a new node alias would collide with the existing alias/page."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Conflict now: a live route view.search.page (from the ENABLED 'search' view's page display, path 'search') already serves /search. The path is taken regardless of the core search module being uninstalled."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "Latent conflict: no route today, but the 'files' view is DISABLED with a page_1 display whose path is exactly admin/content/files. The file module is installed, so enabling this view (a routine admin/config action) would reclaim the path and collide with the node alias."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Latent conflict: no route today, but the 'scheduler_scheduled_media' view is DISABLED with an overview display whose path is exactly admin/content/media/scheduled. The scheduler module is installed, so enabling this view (routine config) would reclaim the path and collide with the node alias."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Fully unclaimed: no route, alias, view, or entity responds to this path, and no existing path alias collides. No latent/disabled-view claim. Safe as a new node URL alias."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity owns it, and no alias collision. Note: content_moderation IS enabled, but its admin listing lives at /admin/content/moderated (route content_moderation.admin_moderated_content), NOT /moderated-content, so there is no current or latent conflict. Safe."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Already taken: /blog is an existing URL alias pointing to internal /page/2, the canonical page of canvas_page entity 2 (\"Blog\"). A new node alias here would collide with that entity's canonical URL."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Owned by the enabled Views page display search:page (route view.search.page, path /search). A node alias at /search would shadow/hijack the live search view page."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "No enabled route responds right now, but the DISABLED view files:page_1 (views.view.files) declares this exact path, and its provider module (file) is enabled. Enabling that view during routine config changes would collide. Also under the reserved /admin namespace. Risky."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "No enabled route responds right now, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path, and its provider module (scheduler) is enabled. Enabling that view would collide. Also under the reserved /admin namespace. Risky."
+            }
+          },
+          "command_count": 11
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "command_count": 8,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No existing path alias and no route matches it (now or via routing). No view, module, or entity claims this path. Free to use as a node alias."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "No alias and no route. The content-moderation 'moderated_content' view lives at /admin/content/moderated, not here, so there is no current or future collision from routine config. Path is clear."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Conflicts now: /blog is already an active path alias for /page/2, a real canvas_page node labeled 'Blog'. Reusing it would clash with the existing alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Conflicts now: the enabled core 'search' view provides an exact route (view.search.page) at /search. A static route takes precedence over a node alias, so the node would be unreachable here."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "No route at the moment, but the File module (installed) ships the 'files' view whose page display path is exactly /admin/content/files. The view is currently disabled; enabling it (routine admin config) creates a route that shadows the node alias."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "No route at the moment, but the Scheduler module (installed) ships the 'scheduler_scheduled_media' view whose overview display path is exactly /admin/content/media/scheduled. It is disabled only because no media type has scheduling enabled; turning on media scheduling (routine Scheduler config) enables the view and its route, shadowing the node alias."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "command_count": 6,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed. No route, alias, view, or entity responds to this path (drush route confirms 'no corresponding route'), and no disabled view or other latent contract declares it. Safe to use as a new node URL alias."
+            },
+            "/moderated-content": {
+              "safe": true,
+              "reason": "Unclaimed. No route/alias/view/entity claims it and drush route confirms no corresponding route. Note: content_moderation IS enabled, but its 'Moderated content' view lives at /admin/content/moderated, not /moderated-content, so there is no current or post-config collision. Safe."
+            },
+            "/blog": {
+              "safe": false,
+              "reason": "Conflict now. Already the canonical URL alias of canvas_page entity 2 ('Blog'), internal path /page/2. A new node with this alias would shadow/collide with that page. Edit the existing entity instead."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Conflict now. Owned by the enabled 'search' Views page display (route view.search.page, path /search). A node alias at /search would shadow the view and hijack the page."
+            },
+            "/admin/content/files": {
+              "safe": false,
+              "reason": "Risky / future conflict. Currently no enabled route responds, but the DISABLED view files:page_1 (views.view.files) declares exactly this path. Enabling that view (a routine config change) would collide. Also sits in the /admin namespace. Avoid."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Risky / future conflict. Currently unclaimed, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this path. The scheduler module is enabled, so enabling that view would collide. Also in the /admin namespace. Avoid."
+            }
+          }
+        }
+      }
+    ]
+  }
+}

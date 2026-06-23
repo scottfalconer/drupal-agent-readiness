@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/this-is-free-xyz": {
+      "safe": true,
+      "reason": "Unclaimed: no route, alias, view, or entity responds to this path, and no disabled view declares it."
+    },
+    "/moderated-content": {
+      "safe": true,
+      "reason": "Unclaimed. The core Moderated content view lives at /admin/content/moderated, not here; no view or route declares the literal /moderated-content."
+    },
+    "/blog": {
+      "safe": false,
+      "reason": "Already the canonical alias of canvas_page 2 (\"Blog\", alias of /page/2). A second surface here would conflict immediately."
+    },
+    "/search": {
+      "safe": false,
+      "reason": "Owned by the enabled Views page display search:page (route view.search.page). A node alias here would shadow and hijack the search view."
+    },
+    "/admin/content/files": {
+      "safe": false,
+      "reason": "Latent conflict: the disabled view files:page_1 declares this exact path. Enabling that view (routine config change) would collide with the node."
+    },
+    "/admin/content/media/scheduled": {
+      "safe": false,
+      "reason": "Latent conflict: the disabled view scheduler_scheduled_media:overview declares this exact path. Enabling that view would collide with the node."
+    }
+  }
+}

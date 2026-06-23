@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Defined by View 'files' (display page_1) at this exact path. The view is currently DISABLED so no route is registered today, but the path is reserved in config and would be reclaimed if the view is re-enabled. It is also in the reserved /admin namespace, which is unsuitable for a public node alias.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Defined by View 'scheduler_scheduled_media' (display 'overview') at this exact path. The view is currently DISABLED so no route exists today, but the path is reserved in config and would be reclaimed if the view is re-enabled. It is also in the reserved /admin namespace, unsuitable for a public node alias.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed by an active URL alias (path_alias id=23) that maps /blog to internal /page/2, a real canvas_page node (route entity.canvas_page.canonical, canvas_page #2).",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route, no alias, and no menu link. The enabled moderated_content View sits at /admin/content/moderated (a different path), so it does not conflict with /moderated-content.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by an enabled View page display: view 'search' display 'page' registers route view.search.page at /search.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No router route, no path_alias row, no View page display, and no menu link claim this path. Fully available as a new node alias.",
+      "safe": true
+    }
+  }
+}

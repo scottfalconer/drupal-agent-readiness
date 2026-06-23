@@ -1,0 +1,48 @@
+{
+  "command_runner": "vendor/bin/drush",
+  "provenance": {
+    "project_name": "drupal/cms",
+    "project_version": "2.1.3",
+    "site_template": "haven",
+    "active_config_source": "database",
+    "config_sync_status": "empty"
+  },
+  "paths": {
+    "/blog": {
+      "claimed": true,
+      "owner_kind": "entity",
+      "entity_type": "canvas_page"
+    },
+    "/node": {
+      "claimed": false,
+      "owner_kind": "unclaimed"
+    },
+    "/home": {
+      "claimed": true,
+      "owner_kind": "entity",
+      "entity_type": "canvas_page"
+    }
+  },
+  "canvas": {
+    "page_count": 7,
+    "embedded_listings": [
+      "blog:all",
+      "projects:all"
+    ]
+  },
+  "content_model": {
+    "bundles": [
+      "blog",
+      "person",
+      "project",
+      "resource"
+    ],
+    "moderation_enabled": true
+  },
+  "pathauto": {
+    "enabled": true,
+    "patterns": [
+      "/blog/[node:created:custom:Y]/[node:title]"
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No exact route (ResourceNotFoundException), no alias, no redirect for this exact path. Technically unclaimed. Caveat: it sits under the /admin namespace where /admin/content (system.admin_content) and /admin/content/media (entity.media.collection) are real routes; the exact path /admin/content/files is free, but placing a public node under /admin is unconventional.",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No exact route (ResourceNotFoundException), no alias, no redirect for this exact path. Note /admin/content/media is the media collection route and a scheduler 'scheduled content' view exists at /admin/content/scheduled, but the exact candidate /admin/content/media/scheduled is unclaimed. Caveat: it lives under the /admin namespace, so it is technically free but an unusual location for a content node.",
+      "safe": true
+    },
+    "/blog": {
+      "reason": "Already claimed. /blog is a URL alias (path_alias id=23, status=1) pointing to internal /page/2, which is the canvas_page entity id=2 labeled 'Blog' (route entity.canvas_page.canonical). Using it for a new node would collide with this existing alias.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route, no path alias, no redirect. Note a distinct admin path /admin/content/moderated exists (moderated_content view), but the candidate /moderated-content itself is unclaimed and safe. Watch the near-collision in naming only.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by a route. /search matches view.search.page (the search view's page display). A node alias here would be shadowed by the existing route, so it is not safe.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No matching route (ResourceNotFoundException), no path alias (path_alias table has 0 rows for it), and no redirect. The path is unclaimed and free to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

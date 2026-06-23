@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Already claimed by view.files.page_1 route (Files admin view).",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Already claimed by view.scheduler_scheduled_media.overview route (Scheduled Media admin view).",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed as path alias mapping to /page/2 (Canvas Page node).",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Not claimed by any alias, route, or node. Path is available.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by view.search.page route (Search view).",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Not claimed by any alias, route, or node. Path is available.",
+      "safe": true
+    }
+  }
+}

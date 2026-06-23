@@ -1,0 +1,14 @@
+{
+  "details": {
+    "candidates_total": 5,
+    "latent_correct": 0,
+    "latent_total": 2,
+    "verdict_correct": 3
+  },
+  "failures": [
+    "/admin/content/media/scheduled.safe",
+    "/admin/structure/taxonomy/scheduled.safe"
+  ],
+  "passed": false,
+  "warnings": []
+}

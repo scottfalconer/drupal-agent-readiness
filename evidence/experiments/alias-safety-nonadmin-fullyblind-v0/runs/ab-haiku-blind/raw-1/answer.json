@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by View 'scheduler_scheduled_media'",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Claimed by View 'scheduler_scheduled_taxonomy_term'",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Claimed by View 'files'",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Claimed by View 'search' (view.search.page router route)",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No path alias, node, or view claims this path. Free to use.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No path alias, node, or view claims this path. Free to use.",
+      "safe": true
+    }
+  }
+}

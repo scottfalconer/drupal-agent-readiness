@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Risky. Unclaimed currently, but disabled view files:page_1 declares this path. Collision risk if that view is enabled.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Risky. Unclaimed currently, but disabled view scheduler_scheduled_media:overview declares this path. Collision risk if that view is enabled.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed by canvas_page 2 (\"Blog\"). It is the canonical page at /canvas_page/2 with alias /blog. Do not create another surface here.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by Views search:page display (computed listing). Creating a node with this alias would shadow the view and hijack the page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path.",
+      "safe": true
+    }
+  }
+}

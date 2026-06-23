@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/this-is-free-xyz": {
+      "safe": true,
+      "reason": "Fully unclaimed: no route, alias, view, or latent/disabled-view claim. Safe to use as a node alias."
+    },
+    "/moderated-content": {
+      "safe": true,
+      "reason": "Unclaimed: no route, alias, or latent claim. The moderated_content view lives at /admin/content/moderated, not here, so there is no current or future view collision."
+    },
+    "/blog": {
+      "safe": false,
+      "reason": "Already the canonical URL alias of canvas_page entity 2 (\"Blog\", internal /page/2). A second node here would collide immediately."
+    },
+    "/search": {
+      "safe": false,
+      "reason": "Owned by the enabled Views page display search:page (route view.search.page). A node alias here would shadow and hijack the search view."
+    },
+    "/admin/content/files": {
+      "safe": false,
+      "reason": "Latent claim: disabled view files:page_1 declares this exact path, and its provider (file module) is already enabled. Re-enabling the File-usage view (routine config toggle) would collide. Also admin-route territory."
+    },
+    "/admin/content/media/scheduled": {
+      "safe": false,
+      "reason": "Latent claim: disabled view scheduler_scheduled_media:overview declares this exact path; scheduler and media modules are already enabled. Turning on Scheduler media integration (routine config) would activate the view here and collide."
+    }
+  }
+}

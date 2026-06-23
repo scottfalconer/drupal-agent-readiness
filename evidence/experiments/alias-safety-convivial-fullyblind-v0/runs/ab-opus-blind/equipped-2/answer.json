@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Risky/latent claim. No enabled route responds today, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path. If that Scheduler view is ever enabled it would collide with anything created here.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by the enabled Views page display canvas_pages:page_1 (\"Pages\"), route entity.canvas_page.collection, a computed listing over canvas_page_field_data. Creating a node with this alias would shadow the view and hijack the admin Pages listing.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Risky/latent claim. No enabled route responds today, but the DISABLED view scheduler_scheduled_taxonomy_term:overview (views.view.scheduler_scheduled_taxonomy_term) declares this exact path. Enabling that Scheduler view would collide with anything created here.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path, and no path alias exists in the alias repository. An agent may safely create a node with this URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path, and no path alias exists. Safe to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

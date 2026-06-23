@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Latent claim by disabled view files:page_1. If that view is enabled, it will collide with any node created here.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Latent claim by disabled view scheduler_scheduled_media:overview. If that view is enabled, it will collide.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed by canvas_page 2 (published). It is the canonical page; creating a node alias here would shadow it.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed. No route, alias, view, or entity currently responds to this path.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by Views page display search:page. A node alias would shadow the search view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. No route, alias, view, or entity currently responds to this path.",
+      "safe": true
+    }
+  }
+}

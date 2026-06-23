@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Disabled view files:page_1 declares this path. Enabling that view would collide with any new node alias.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Disabled view scheduler_scheduled_media:overview declares this path. Enabling that view would collide with any new node alias.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already the canonical page of canvas_page 2 (Blog entity). Creating a node alias here would shadow the entity.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed. No route, alias, view or entity currently responds to this path.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already owned by the Views search:page display. Creating a node alias would shadow the view and hijack the page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. No route, alias, view or entity currently responds to this path.",
+      "safe": true
+    }
+  }
+}

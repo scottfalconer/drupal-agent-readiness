@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Occupied by view 'scheduler_scheduled_media' display 'overview'. Admin paths are reserved for core admin routes and cannot be used as node aliases.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Occupied by view 'scheduler_scheduled_taxonomy_term' display 'overview'. Admin paths are reserved for core admin routes and cannot be used as node aliases.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Occupied by view 'files' display 'page_1'. Creating a node alias here would conflict with the research library view.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Occupied by view 'search' display 'page'. Creating a node alias here would conflict with the search results view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, alias, or view occupies this path. Completely free to use as node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No route, alias, or view occupies this path. Completely free to use as node alias.",
+      "safe": true
+    }
+  }
+}

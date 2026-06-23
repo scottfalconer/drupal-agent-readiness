@@ -1,0 +1,5 @@
+name: 'Enable Site Architecture PoC'
+description: 'Installs the site_architecture module so its CLI commands become available.'
+type: 'Module'
+install:
+  - site_architecture

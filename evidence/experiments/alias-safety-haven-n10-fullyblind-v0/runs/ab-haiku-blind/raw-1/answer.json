@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Associated view is disabled. No active route at this path. Safe for use as new node URL alias.",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Associated view is disabled. No active route at this path. Safe for use as new node URL alias.",
+      "safe": true
+    },
+    "/blog": {
+      "reason": "Canvas page entity (ID 2, title: Blog) is served at this path. Cannot be used as new node alias.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route, alias, or entity claims this path. Safe for use as new node URL alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Enabled Views page route (search view) is served at this path. Cannot be used as new node alias.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, alias, or entity claims this path. Safe for use as new node URL alias.",
+      "safe": true
+    }
+  }
+}

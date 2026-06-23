@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Risky / effectively claimed. Sits inside the live admin namespace under route system.admin_content (/admin/content). No enabled route responds right now, but the DISABLED view files:page_1 (views.view.files, status:false) declares exactly this path; if enabled it collides. Putting node content under /admin/content is inappropriate and fragile. Not safe.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Risky / effectively claimed. Under the live admin media namespace (/admin/content/media -> entity.media.collection). No enabled route now, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media, status:false) declares this exact path and would collide if enabled. Not appropriate for a content node. Not safe.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed: there is a URL alias /blog -> /page/2, which is the canonical page of canvas_page entity 2 (\"Blog\", published). A new node aliased to /blog would collide with/shadow that existing page. Confirmed by path-owner (owner: entity canvas_page 2) and the alias repository (alias id 23).",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Fully unclaimed. No alias, route, view, or entity. Confirmed via path-owner (claimed:false), router (no match), and alias repository (none). Safe for a new node alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by an ENABLED Views page display: search:page (route view.search.page, config views.view.search), a computed search listing over search_api_index_content. A node with alias /search would shadow and hijack this view. Confirmed by path-owner (owner: view) and view status:true.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Fully unclaimed. No URL alias, no route, no view, no entity responds here. Confirmed via site-architecture:path-owner (claimed:false), the live router (ResourceNotFoundException), and the path_alias repository (no alias). Safe to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

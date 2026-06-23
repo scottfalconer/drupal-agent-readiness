@@ -1,0 +1,60 @@
+{
+  "/admin/content/media/scheduled": {
+    "blocker_kind": "latent_disabled_view",
+    "detail": {
+      "disabled_views": [
+        {
+          "display_id": "overview",
+          "status": false,
+          "view_id": "scheduler_scheduled_media"
+        }
+      ]
+    },
+    "safe": false
+  },
+  "/admin/structure/taxonomy/scheduled": {
+    "blocker_kind": "latent_disabled_view",
+    "detail": {
+      "disabled_views": [
+        {
+          "display_id": "overview",
+          "status": false,
+          "view_id": "scheduler_scheduled_taxonomy_term"
+        }
+      ]
+    },
+    "safe": false
+  },
+  "/research-library": {
+    "blocker_kind": "latent_disabled_view",
+    "detail": {
+      "disabled_views": [
+        {
+          "display_id": "page_1",
+          "status": false,
+          "view_id": "files"
+        }
+      ]
+    },
+    "safe": false
+  },
+  "/search": {
+    "blocker_kind": "view",
+    "detail": {
+      "display_id": "page",
+      "route": "view.search.page",
+      "view_id": "search"
+    },
+    "safe": false
+  },
+  "/this-is-free-xyz": {
+    "blocker_kind": null,
+    "detail": [],
+    "safe": true
+  },
+  "/zzz-unclaimed-1ba269": {
+    "blocker_kind": null,
+    "detail": [],
+    "safe": true
+  }
+}

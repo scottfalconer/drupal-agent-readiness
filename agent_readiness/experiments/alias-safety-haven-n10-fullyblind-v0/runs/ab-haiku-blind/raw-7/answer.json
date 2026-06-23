@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No routable path defined (view exists but no actual route)",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No routable path defined (view exists but no actual route)",
+      "safe": true
+    },
+    "/blog": {
+      "reason": "Already claimed by path alias pointing to /page/2 (a Canvas page node)",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No path alias or route claims this path",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by route view.search.page (core search view)",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No path alias or route claims this path",
+      "safe": true
+    }
+  }
+}

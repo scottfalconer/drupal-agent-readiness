@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No live router match and no existing path alias found.",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No live router match and no existing path alias found.",
+      "safe": true
+    },
+    "/blog": {
+      "reason": "Claimed by existing path alias to /page/2 and route entity.canvas_page.canonical.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No live router match and no existing path alias found.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by route view.search.page, view search:page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No live router match and no existing path alias found.",
+      "safe": true
+    }
+  }
+}

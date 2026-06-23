@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No enabled route currently responds, but the DISABLED view files:page_1 (views.view.files, status false) declares this path. If that view is ever enabled it would collide. Claiming it is risky; not safe. (Also under the reserved /admin namespace.)",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No enabled route currently responds, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media, status false) declares this path. Enabling that view would cause a collision. Risky; not safe. (Also under the reserved /admin namespace.)",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed: it is the canonical page of entity canvas_page 2 (label \"Blog\", internal /canvas_page/2), served via the URL alias /blog -> /page/2. A new node here would collide with that existing entity.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path, and no latent claims exist. Safe to use as a node URL alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by the Views page display search:page (route view.search.page, config views.view.search), a computed search listing at /search. A node alias here would shadow and hijack the view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path, and no latent/disabled-view claims exist. Safe to use as a node URL alias.",
+      "safe": true
+    }
+  }
+}

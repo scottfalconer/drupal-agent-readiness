@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Disabled view files:page_1 declares this path. Claiming it is risky as enabling the view would cause a collision.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Disabled view scheduler_scheduled_media:overview declares this path. Claiming it is risky as enabling the view would cause a collision.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Path is the canonical URL alias for canvas_page entity 2 (\"Blog\"). Creating a node with this alias would shadow the existing entity.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Path is unclaimed. No route, alias, view, or entity currently responds to it.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Path is owned by the Search view (views.view.search). Creating a node alias here would shadow and hijack the view page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Path is unclaimed. No route, alias, view, or entity currently responds to it.",
+      "safe": true
+    }
+  }
+}

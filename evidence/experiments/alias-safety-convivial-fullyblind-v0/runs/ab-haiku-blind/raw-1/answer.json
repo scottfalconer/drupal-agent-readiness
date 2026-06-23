@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by view 'scheduler_scheduled_media' display 'overview'",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by view 'canvas_pages' display 'page_1'",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Claimed by view 'scheduler_scheduled_taxonomy_term' display 'overview'",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No router routes, path aliases, or views claim this path",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "No router routes, path aliases, or views claim this path",
+      "safe": true
+    }
+  }
+}

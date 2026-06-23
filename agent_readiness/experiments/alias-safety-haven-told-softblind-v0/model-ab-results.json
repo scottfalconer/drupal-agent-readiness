@@ -1,0 +1,425 @@
+{
+  "cells": {
+    "ab-haiku-blind": {
+      "condition": "blind",
+      "model": "haiku",
+      "model_id": "claude-haiku-4-5",
+      "runs": [
+        {
+          "arm": "raw",
+          "command_count": 13,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 0,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 10,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 11,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 0,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-3",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 9,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-3",
+          "verdict_correct": 6
+        }
+      ]
+    },
+    "ab-haiku-told": {
+      "condition": "told",
+      "model": "haiku",
+      "model_id": "claude-haiku-4-5",
+      "runs": [
+        {
+          "arm": "raw",
+          "command_count": 12,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 7,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 5,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 18,
+          "failures": [
+            "/search.blocker_kind"
+          ],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": false,
+          "run_id": "raw-3",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-3",
+          "verdict_correct": 6
+        }
+      ]
+    },
+    "ab-opus-blind": {
+      "condition": "blind",
+      "model": "opus",
+      "model_id": "claude-opus-4-8",
+      "runs": [
+        {
+          "arm": "raw",
+          "command_count": 7,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 12,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 11,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 8,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-3",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-3",
+          "verdict_correct": 6
+        }
+      ]
+    },
+    "ab-opus-told": {
+      "condition": "told",
+      "model": "opus",
+      "model_id": "claude-opus-4-8",
+      "runs": [
+        {
+          "arm": "raw",
+          "command_count": 5,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 4,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "raw-3",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 4,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-3",
+          "verdict_correct": 6
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-06-21T13:40:20.310038+00:00",
+  "latent_paths": [
+    "/admin/content/files",
+    "/admin/content/media/scheduled"
+  ],
+  "model_ids": {
+    "haiku": "claude-haiku-4-5",
+    "opus": "claude-opus-4-8"
+  },
+  "summary": {
+    "ab-haiku-blind": {
+      "condition": "blind",
+      "model": "haiku",
+      "model_id": "claude-haiku-4-5",
+      "raw_drush": {
+        "avg_commands": 11.3,
+        "latent_accuracy": 1.0,
+        "latent_correct": 6,
+        "latent_reasoned": 2,
+        "latent_reasoned_accuracy": 0.333,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      },
+      "site_architecture": {
+        "avg_commands": 7.0,
+        "latent_accuracy": 1.0,
+        "latent_correct": 6,
+        "latent_reasoned": 6,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      }
+    },
+    "ab-haiku-told": {
+      "condition": "told",
+      "model": "haiku",
+      "model_id": "claude-haiku-4-5",
+      "raw_drush": {
+        "avg_commands": 11.7,
+        "latent_accuracy": 1.0,
+        "latent_correct": 6,
+        "latent_reasoned": 6,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 2,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      },
+      "site_architecture": {
+        "avg_commands": 6.3,
+        "latent_accuracy": 1.0,
+        "latent_correct": 6,
+        "latent_reasoned": 6,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      }
+    },
+    "ab-opus-blind": {
+      "condition": "blind",
+      "model": "opus",
+      "model_id": "claude-opus-4-8",
+      "raw_drush": {
+        "avg_commands": 7.0,
+        "latent_accuracy": 1.0,
+        "latent_correct": 6,
+        "latent_reasoned": 6,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      },
+      "site_architecture": {
+        "avg_commands": 9.7,
+        "latent_accuracy": 1.0,
+        "latent_correct": 6,
+        "latent_reasoned": 6,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      }
+    },
+    "ab-opus-told": {
+      "condition": "told",
+      "model": "opus",
+      "model_id": "claude-opus-4-8",
+      "raw_drush": {
+        "avg_commands": 5.0,
+        "latent_accuracy": 1.0,
+        "latent_correct": 6,
+        "latent_reasoned": 6,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      },
+      "site_architecture": {
+        "avg_commands": 5.3,
+        "latent_accuracy": 1.0,
+        "latent_correct": 6,
+        "latent_reasoned": 6,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      }
+    }
+  }
+}

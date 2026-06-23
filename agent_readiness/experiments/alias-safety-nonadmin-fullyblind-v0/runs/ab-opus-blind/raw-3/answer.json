@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by the 'Scheduled Media' view (scheduler_scheduled_media, display 'overview', path admin/content/media/scheduled). The view is currently DISABLED (no live route now), but the path is reserved in config; also sits under the reserved /admin namespace, an unsuitable place for a content node alias.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Claimed by the 'Scheduled Taxonomy Terms' view (scheduler_scheduled_taxonomy_term, display 'overview', path admin/structure/taxonomy/scheduled). The view is currently DISABLED (no live route now), but the path is reserved in config; also under the reserved /admin namespace. (No vocabulary named 'scheduled' exists, so it is not a live taxonomy overview route, but it remains unsafe.)",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Claimed by the 'Files' view (display page_1, path /research-library). The view is currently DISABLED so no live route exists right now, but the path is reserved in view config; enabling the view would collide with the node alias.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Claimed by the ENABLED 'Search' view (display 'page'), serving live route view.search.page at /search. Hard collision with an active route.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No router match, no path alias, no path_alias entity, and no view display (enabled or disabled) claims this path. Free to use.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No router match, no path alias, no path_alias entity, and no view display claims this path. Free to use.",
+      "safe": true
+    }
+  }
+}

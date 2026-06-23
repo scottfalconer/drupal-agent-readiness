@@ -1,0 +1,56 @@
+{
+    "/this-is-free-xyz": {
+        "safe": true,
+        "blocker_kind": null,
+        "detail": []
+    },
+    "/moderated-content": {
+        "safe": true,
+        "blocker_kind": null,
+        "detail": []
+    },
+    "/blog": {
+        "safe": false,
+        "blocker_kind": "entity",
+        "detail": {
+            "entity_type": "canvas_page",
+            "id": "2",
+            "route": "entity.canvas_page.canonical"
+        }
+    },
+    "/search": {
+        "safe": false,
+        "blocker_kind": "view",
+        "detail": {
+            "view_id": "search",
+            "display_id": "page",
+            "route": "view.search.page"
+        }
+    },
+    "/admin/content/files": {
+        "safe": false,
+        "blocker_kind": "latent_disabled_view",
+        "detail": {
+            "disabled_views": [
+                {
+                    "view_id": "files",
+                    "display_id": "page_1",
+                    "status": false
+                }
+            ]
+        }
+    },
+    "/admin/content/media/scheduled": {
+        "safe": false,
+        "blocker_kind": "latent_disabled_view",
+        "detail": {
+            "disabled_views": [
+                {
+                    "view_id": "scheduler_scheduled_media",
+                    "display_id": "overview",
+                    "status": false
+                }
+            ]
+        }
+    }
+}

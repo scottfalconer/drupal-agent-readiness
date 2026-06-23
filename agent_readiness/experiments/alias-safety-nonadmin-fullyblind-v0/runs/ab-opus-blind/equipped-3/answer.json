@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "No enabled route today, but the DISABLED Scheduler view scheduler_scheduled_media:overview declares this path; enabling it would collide. Also under the reserved /admin namespace. Risky.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "No enabled route today, but the DISABLED Scheduler view scheduler_scheduled_taxonomy_term:overview declares this path; enabling it would collide. Also under the reserved /admin namespace. Risky.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "No enabled route today, but the DISABLED view files:page_1 (views.view.files) declares this exact path. If that view is ever enabled it collides with a node placed here. Latent claim makes it risky.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Already claimed by an enabled Views page display (config views.view.search, route view.search.page, base table search_api_index_content). A node with this alias would shadow and hijack the live search page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Fully unclaimed: no route, no URL alias, no view, and no latent/disabled-view claims. Router returns ResourceNotFoundException. Safe to use as a new node's alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "Fully unclaimed: no route, no URL alias, no view, and no latent claims. Router returns ResourceNotFoundException. Safe to use as a new node's alias.",
+      "safe": true
+    }
+  }
+}

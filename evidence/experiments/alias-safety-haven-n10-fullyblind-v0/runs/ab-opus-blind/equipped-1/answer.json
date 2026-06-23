@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Latent collision risk: no enabled route responds now, but the DISABLED view files:page_1 (views.view.files) declares this exact path. If that view is ever enabled it will collide with anything created here. It is also under the reserved /admin namespace.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Latent collision risk: no enabled route responds now, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path. If that view is ever enabled it will collide with anything created here. It is also under the reserved /admin namespace.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed: it is the canonical URL alias of canvas_page entity 2 ('Blog'), aliasing internal path /page/2. Creating a node with this alias would shadow/collide with that existing page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no alias, no matching route, and no view declares this path. The enabled core 'Moderated content' view (moderated_content:moderated_content) lives at the different path /admin/content/moderated, not /moderated-content, so there is no collision.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by the enabled Views page display search:page ('Search', route view.search.page), a computed listing over search_api_index_content. A node alias here would shadow the view and hijack the page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds to this path (confirmed by path-owner tool, path_alias.manager returns the path unchanged, and 0 matching routes). An agent may safely create a node with this URL alias here.",
+      "safe": true
+    }
+  }
+}

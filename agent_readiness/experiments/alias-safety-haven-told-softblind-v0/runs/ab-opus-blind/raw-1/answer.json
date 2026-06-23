@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Unsafe latent conflict: no route right now only because the 'files' view (display page_1, path /admin/content/files) is currently DISABLED. The file module is installed, so enabling that view - a routine config change - would register a route at this exact path and conflict.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Unsafe latent conflict: no route right now only because the 'scheduler_scheduled_media' view (display overview, path /admin/content/media/scheduled) is currently DISABLED. media and scheduler are installed; enabling that view (or the scheduler_media submodule) would register a route here and conflict.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Hard conflict now: /blog already exists as a path alias pointing to system path /page/2, which resolves via route entity.canvas_page.canonical to a Canvas page. A new node alias at /blog would collide with the existing alias/page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route, no alias, no view targets it. The site's moderated_content view lives at /admin/content/moderated, which is a different path; this hyphenated path does not collide with it.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Hard conflict now: /search is an active route (view.search.page) served by the enabled Search API view 'search' (base table search_api_index_content). The route would shadow/conflict with a node alias at /search.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No matching route (ResourceNotFoundException), no existing path alias, and no view (enabled or disabled) defines this path. Greenfield - safe as a new node alias.",
+      "safe": true
+    }
+  }
+}

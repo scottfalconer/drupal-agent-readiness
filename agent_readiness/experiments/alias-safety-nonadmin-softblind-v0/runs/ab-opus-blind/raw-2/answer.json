@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved /admin namespace, and the disabled 'scheduler_scheduled_media' view (overview display) targets exactly this path. The scheduler module is installed; enabling scheduling on any media type re-syncs and enables this view (route view.scheduler_scheduled_media.overview), creating a conflict after routine config.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Reserved /admin namespace, and the disabled 'scheduler_scheduled_taxonomy_term' view (overview display) targets exactly this path. Scheduler is installed; enabling scheduling on any vocabulary enables this view (route view.scheduler_scheduled_taxonomy_term.overview), causing a conflict after routine config.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "The 'files' view is currently disabled but its page_1 display has a customized path of /research-library. As soon as that view is enabled (a routine config action), it claims this route and conflicts with a node alias placed here.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Already an active route: the enabled 'search' view's page display owns /search (route view.search.page). A node alias here would collide with the live search results page immediately.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No matching route, no existing path alias, and no view (enabled or disabled) declares this path. Free to use as a node URL alias now and after routine config changes.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No matching route, no existing path alias, and no view declares this path. Free to use.",
+      "safe": true
+    }
+  }
+}

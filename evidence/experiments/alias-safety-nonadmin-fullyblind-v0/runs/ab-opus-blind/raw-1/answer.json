@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Declared by the 'scheduler_scheduled_media' view (overview display) at this path. The view is currently disabled (no active route now), but the path is reserved in view config and sits under the reserved /admin namespace; enabling Scheduler's media view reclaims it. Not safe for a node alias.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Declared by the 'scheduler_scheduled_taxonomy_term' view (overview display) at this path. The view is currently disabled (no active route now), but the path is reserved in view config and lives under the reserved /admin namespace; enabling the view reclaims it. Not safe for a node alias.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Declared by the 'files' view (page_1 display) at path /research-library. The view is currently disabled so no route matches right now, but the path is reserved in view config; enabling the view would reclaim it and collide with a node alias. Treat as not safe.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Claimed by an active route view.search.page (the enabled 'search' view's page display at /search). A node alias here would collide with the live search page route.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No URL alias, no route (router.no_access_checks returns ResourceNotFoundException), no redirect, and no view declares this path. Free to use as a new node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No URL alias, no route, no redirect, and no view declares this path. Free to use as a new node alias.",
+      "safe": true
+    }
+  }
+}

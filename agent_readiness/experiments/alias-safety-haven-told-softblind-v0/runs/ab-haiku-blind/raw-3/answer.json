@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Path used by files view (view.files.page_1). Used for admin file management.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Path used by scheduler_scheduled_media view (view.scheduler_scheduled_media.overview). Used for scheduled media administration.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Existing path alias already points to /page/2 (a Canvas page). Also conflicts with blog view RSS feed at /blog/feed.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Path has no route match and no existing alias. Safe to use.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Route exists: view.search.page. This is the core search view endpoint.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Path has no route match and no existing alias. Safe to use.",
+      "safe": true
+    }
+  }
+}

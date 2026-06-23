@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Risky / future conflict. Currently no enabled route responds, but the DISABLED view files:page_1 (views.view.files) declares exactly this path. Enabling that view (a routine config change) would collide. Also sits in the /admin namespace. Avoid.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Risky / future conflict. Currently unclaimed, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this path. The scheduler module is enabled, so enabling that view would collide. Also in the /admin namespace. Avoid.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Conflict now. Already the canonical URL alias of canvas_page entity 2 ('Blog'), internal path /page/2. A new node with this alias would shadow/collide with that page. Edit the existing entity instead.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed. No route/alias/view/entity claims it and drush route confirms no corresponding route. Note: content_moderation IS enabled, but its 'Moderated content' view lives at /admin/content/moderated, not /moderated-content, so there is no current or post-config collision. Safe.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Conflict now. Owned by the enabled 'search' Views page display (route view.search.page, path /search). A node alias at /search would shadow the view and hijack the page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path (drush route confirms 'no corresponding route'), and no disabled view or other latent contract declares it. Safe to use as a new node URL alias.",
+      "safe": true
+    }
+  }
+}

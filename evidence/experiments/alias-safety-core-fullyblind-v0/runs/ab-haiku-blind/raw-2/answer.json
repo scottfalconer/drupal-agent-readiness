@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Claimed by View 'files' display 'page_1'.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by View 'scheduler_scheduled_media' display 'overview'.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by View 'canvas_pages' display 'page_1' (routes to entity.canvas_page.collection).",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Claimed by View 'scheduler_scheduled_taxonomy_term' display 'overview'.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route match, no path alias, not used by any view.",
+      "safe": true
+    },
+    "/zzz-unclaimed-b0ed0a": {
+      "reason": "No route match, no path alias, not used by any view.",
+      "safe": true
+    }
+  }
+}

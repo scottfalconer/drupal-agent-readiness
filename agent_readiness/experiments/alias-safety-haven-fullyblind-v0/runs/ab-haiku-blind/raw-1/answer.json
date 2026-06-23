@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Admin path. While not a direct route match, these paths are part of admin system and creating node aliases here would shadow admin functionality.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Admin path. While not a direct route match, these paths are part of admin system and creating node aliases here would shadow admin functionality.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed as path alias; /blog -> /page/2 (a canvas_page entity). Resolves to entity.canvas_page.canonical route.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Not claimed by any route or alias. Path does not exist in router or path_alias table.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed as a view route. The 'search' view has a page display at path 'search'. Resolves to view.search.page route.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Not claimed by any route or alias. Path does not exist in router or path_alias table.",
+      "safe": true
+    }
+  }
+}

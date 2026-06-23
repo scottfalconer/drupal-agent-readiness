@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No live route today, but risky: a DISABLED view (files:page_1, views.view.files) declares this exact path and would collide if enabled. Also in the reserved /admin/* namespace. Not safe.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No live route today, but risky: a DISABLED view (scheduler_scheduled_media:overview) declares this exact path and would collide if enabled. Sits under reserved /admin/* (parent /admin/content/media is the live media collection). Not safe.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed. /blog is an existing URL alias (-> /canvas_page/2), the canonical page of canvas_page entity 2 ('Blog'). A new node alias here would shadow/collide with it.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no route, alias, view, entity, or redirect responds. (Core's moderated_content view is at /admin/content/moderated, not here.) Safe for a new node URL alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by the Views page display search:page (route view.search.page), a computed search_api listing. A node alias at /search would shadow the view and hijack the page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, entity, or redirect responds to this path. Safe for a new node URL alias.",
+      "safe": true
+    }
+  }
+}

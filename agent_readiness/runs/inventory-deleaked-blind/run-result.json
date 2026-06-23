@@ -1,0 +1,46 @@
+{
+  "agent": {
+    "harness": "Claude Code general-purpose subagent; static repo checkout, no Drupal bootstrap; metrics harness-instrumented",
+    "model": "claude-opus-4-8",
+    "name": "Independent subagent (blind, static source only)",
+    "system_prompt": "",
+    "tooling": [
+      "shell"
+    ]
+  },
+  "artifacts": {
+    "answer_json": "runs/inventory-deleaked-blind/answer.json",
+    "evaluator_json": "runs/inventory-deleaked-blind/evaluator.json",
+    "state_json": "runs/inventory-deleaked-blind/state.json",
+    "transcript": "runs/inventory-deleaked-blind/transcript.md"
+  },
+  "evaluator": {
+    "failures": [
+      "command_runner",
+      "paths./node.claimed",
+      "paths./node.owner_kind",
+      "pathauto.patterns",
+      "pathauto.patterns.unexpected"
+    ],
+    "passed": false,
+    "warnings": []
+  },
+  "failure_labels": [
+    "command_runner",
+    "path_ownership",
+    "pathauto"
+  ],
+  "metrics": {
+    "elapsed_seconds": 196.0,
+    "human_rescues": 0,
+    "tool_calls": 32
+  },
+  "prompt_version": "v0.2",
+  "run_id": "inventory-deleaked-blind",
+  "substrate": {
+    "id": "haven-clean-install",
+    "run_site_path": "<workspace>/tmp/agent-readiness/inventory-deleaked-blind/source-only",
+    "source_path": "<workspace>/haven-clean-install"
+  },
+  "task_id": "inventory.read_only"
+}

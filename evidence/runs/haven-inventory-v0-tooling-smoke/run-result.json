@@ -1,0 +1,38 @@
+{
+  "agent": {
+    "harness": "local evaluator scripts",
+    "model": "none",
+    "name": "Tooling smoke",
+    "system_prompt": "N/A - scripted smoke run",
+    "tooling": [
+      "shell",
+      "drush",
+      "Python evaluator"
+    ]
+  },
+  "artifacts": {
+    "answer_json": "runs/haven-inventory-v0-tooling-smoke/answer.json",
+    "evaluator_json": "runs/haven-inventory-v0-tooling-smoke/evaluator.json",
+    "state_json": "runs/haven-inventory-v0-tooling-smoke/state.json",
+    "transcript": "runs/haven-inventory-v0-tooling-smoke/transcript.md"
+  },
+  "evaluator": {
+    "failures": [],
+    "passed": true,
+    "warnings": []
+  },
+  "failure_labels": [],
+  "metrics": {
+    "elapsed_seconds": 18.887,
+    "human_rescues": 0,
+    "tool_calls": 4
+  },
+  "prompt_version": "v0.1",
+  "run_id": "haven-inventory-v0-tooling-smoke",
+  "substrate": {
+    "id": "haven-clean-install",
+    "run_site_path": "<workspace>/tmp/agent-readiness/haven-inventory-v0-tooling-smoke/site",
+    "source_path": "<workspace>/haven-clean-install"
+  },
+  "task_id": "inventory.read_only"
+}

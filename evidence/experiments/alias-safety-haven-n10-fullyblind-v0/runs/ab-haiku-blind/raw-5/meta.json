@@ -1,0 +1,13 @@
+{
+  "arm": "raw",
+  "cell": "ab-haiku-blind",
+  "command_count": 8,
+  "condition": "blind",
+  "harness": "Claude Code workflow subagent (general-purpose)",
+  "model": "haiku",
+  "model_id": "claude-haiku-4-5",
+  "n": 5,
+  "processed_at": "2026-06-21T15:14:22.191570+00:00",
+  "run_id": "raw-5",
+  "workflow_output": "w1bsu2glb.output"
+}

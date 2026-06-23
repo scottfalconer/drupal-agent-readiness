@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Disabled view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this path. The scheduler module is ENABLED and this view ships in scheduler config/optional, so enabling media scheduling (routine config) re-enables it and collides. Also lives under the reserved /admin route namespace. Not safe.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Disabled view scheduler_scheduled_taxonomy_term:overview (views.view.scheduler_scheduled_taxonomy_term) declares this path. The scheduler module is ENABLED and this view ships in scheduler config/optional, so enabling taxonomy-term scheduling (routine config) re-enables it and collides. Also under the reserved /admin namespace. Not safe.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "No live route now, but the locally-configured view files:page_1 (views.view.files, currently status=false) declares path research-library. Re-enabling that view is a routine admin action and would collide with the node. Risky to claim.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Actively owned by the ENABLED Views page display search:page (route view.search.page, config views.view.search). A node with this alias would shadow the view and hijack the page. Conflict exists right now.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no alias, no route, no view, no entity responds here, and no latent/disabled claim. Verified no existing path alias. Safe to use as a new node URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "Unclaimed: no alias, no route, no view, no entity, and no latent/disabled claim. Verified no existing path alias. Safe to use as a new node URL alias.",
+      "safe": true
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved by scheduler_scheduled_media View (overview display, currently disabled). Scheduler module is enabled; view can be activated by config changes.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Reserved by scheduler_scheduled_taxonomy_term View (overview display, currently disabled). Scheduler module is enabled; view can be activated by config changes.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Reserved by the files View (page_1 display, currently disabled). If the view is enabled in routine config changes, conflict would occur.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Actively routed by the enabled search View (view.search.page); conflict would occur immediately.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No existing node alias, route, or view; completely free to use.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No existing node alias, route, or view; completely free to use.",
+      "safe": true
+    }
+  }
+}

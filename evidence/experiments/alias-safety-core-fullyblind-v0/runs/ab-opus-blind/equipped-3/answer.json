@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No enabled route responds now, but the DISABLED view files:page_1 (views.view.files) declares this path. If that view is ever enabled it collides with a node placed here. Risky.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No enabled route responds now, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this path. Enabling it would collide with a node placed here. Risky.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Actively claimed by the enabled Views page display canvas_pages:page_1 ('Pages', route entity.canvas_page.collection). A node alias here would shadow the view and hijack the page.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "No enabled route responds now, but the DISABLED view scheduler_scheduled_taxonomy_term:overview (views.view.scheduler_scheduled_taxonomy_term) declares this path. Enabling it would collide with a node placed here. Risky.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path and there are no latent claims. Safe to use as a node URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-b0ed0a": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path and there are no latent claims. Safe to use as a node URL alias.",
+      "safe": true
+    }
+  }
+}

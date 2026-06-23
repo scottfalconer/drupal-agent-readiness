@@ -1,0 +1,12 @@
+{
+  "task_id": "assess.alias_safety",
+  "description": "Candidate site paths to classify as safe/unsafe to claim with a new node URL alias. This agent-facing file intentionally contains paths only.",
+  "candidates": [
+    {"path": "/this-is-free-xyz"},
+    {"path": "/moderated-content"},
+    {"path": "/blog"},
+    {"path": "/search"},
+    {"path": "/admin/content/files"},
+    {"path": "/admin/content/media/scheduled"}
+  ]
+}

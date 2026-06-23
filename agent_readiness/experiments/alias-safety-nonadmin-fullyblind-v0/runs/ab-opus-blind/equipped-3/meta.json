@@ -1,0 +1,13 @@
+{
+  "arm": "equipped",
+  "cell": "ab-opus-blind",
+  "command_count": 4,
+  "condition": "blind",
+  "harness": "Claude Code workflow subagent (general-purpose)",
+  "model": "opus",
+  "model_id": "claude-opus-4-8",
+  "n": 3,
+  "processed_at": "2026-06-21T13:40:20.613156+00:00",
+  "run_id": "equipped-3",
+  "workflow_output": "w0hbdk58t.output"
+}

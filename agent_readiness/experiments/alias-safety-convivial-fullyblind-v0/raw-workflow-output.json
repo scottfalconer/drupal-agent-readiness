@@ -1,0 +1,383 @@
+{
+  "summary": "Knowledge-blind alias-safety A/B (Haiku + Opus, raw vs site_architecture) on one parameterized substrate",
+  "agentCount": 12,
+  "logs": [
+    "substrate=convivial-fullyblind candidates=5 rawClones=3 eqClones=3"
+  ],
+  "result": {
+    "blind": [
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No router routes, path aliases, or views claim this path"
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "No router routes, path aliases, or views claim this path"
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by view 'canvas_pages' display 'page_1'"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Claimed by view 'scheduler_scheduled_media' display 'overview'"
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Claimed by view 'scheduler_scheduled_taxonomy_term' display 'overview'"
+            }
+          },
+          "command_count": 7
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No route, alias, view or entity currently responds to this path. It is unclaimed."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "No route, alias, view or entity currently responds to this path. It is unclaimed."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by Views page display canvas_pages:page_1 (Pages listing). Creating a node with this alias would shadow and hijack the view."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Disabled view scheduler_scheduled_media:overview declares this path. If enabled, it would collide with new content here."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Disabled view scheduler_scheduled_taxonomy_term:overview declares this path. If enabled, it would collide with new content here."
+            }
+          },
+          "command_count": 5
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed by router, path aliases, and views. Safe for new node alias."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "Unclaimed by router, path aliases, and views. Safe for new node alias."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by canvas_pages view (page_1 display), serves the Pages admin interface."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Claimed by scheduler_scheduled_media view (overview display), serves the Scheduled Media admin interface."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Claimed by scheduler_scheduled_taxonomy_term view (overview display), serves the Scheduled Taxonomy Terms admin interface."
+            }
+          },
+          "command_count": 4
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed. No route, alias, view or entity responds to this path."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "Unclaimed. No route, alias, view or entity responds to this path."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by Views (canvas_pages view, display page_1). Creating a node alias here would shadow the view and hijack the page."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Latent claim: disabled view scheduler_scheduled_media:overview declares this path. Risky if the view is later enabled."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Latent claim: disabled view scheduler_scheduled_taxonomy_term:overview declares this path. Risky if the view is later enabled."
+            }
+          },
+          "command_count": 5
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No route, alias, or view claims this path. Safe for new node."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "No route, alias, or view claims this path. Safe for new node."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by View 'Pages' (entity.canvas_page.collection route)"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Claimed by View 'Scheduled Media' (overview display)"
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Claimed by View 'Scheduled Taxonomy Terms' (overview display)"
+            }
+          },
+          "command_count": 9
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by Views display canvas_pages:page_1 (Pages). Creating a node with this alias would shadow the view."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Disabled view scheduler_scheduled_media:overview declares this path; collision risk if view is enabled."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Disabled view scheduler_scheduled_taxonomy_term:overview declares this path; collision risk if view is enabled."
+            }
+          },
+          "command_count": 5
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "command_count": 6,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Free. No route matches (ResourceNotFoundException), path.validator reports it is not a valid/routed path, no path_alias entity has this alias, and no redirect claims it. Available as a new node alias."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "Free. No matching route, not a valid/routed path per path.validator, no existing path_alias with this value, no redirect. Available as a new node alias."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed. Resolves to route entity.canvas_page.collection (Canvas Pages admin listing, backed by view.canvas_pages.page_1) plus entity.canvas_page.add_page at /admin/content/pages/add. A real existing route owns this path, so a node alias here would be shadowed and is unsafe."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": true,
+              "reason": "Not claimed by any route, alias, or redirect. Parent /admin/content/media is entity.media.collection but the /scheduled child is unrouted (ResourceNotFoundException); scheduler module uses /admin/content/scheduled, not this path. Note: it sits under the /admin namespace, so using it as a node alias is operationally inadvisable even though nothing currently claims the exact path."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": true,
+              "reason": "Not claimed by any route, alias, or redirect. Parent /admin/structure/taxonomy is entity.taxonomy_vocabulary.collection but the literal /scheduled child returns ResourceNotFoundException (no wildcard swallows it). Note: it lives under the /admin namespace, so a node alias here is operationally inadvisable, though the exact path is currently unclaimed."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity responds to this path, and no negative/latent contracts. Verified independently that there is no path alias and no router route. Safe for a new node URL alias."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity responds, and no negative/latent contracts. Verified no alias and no route exist. Safe for a new node URL alias."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by the enabled Views page display canvas_pages:page_1 ('Pages') at route entity.canvas_page.collection. A node alias here would shadow this view and hijack the admin listing page."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Risky latent claim: the (currently disabled) view scheduler_scheduled_media:overview declares this exact path. No route responds today, but if that Scheduler view is enabled it will collide with any node created here. Also an admin path. Not safe for new content."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Risky latent claim: the (currently disabled) view scheduler_scheduled_taxonomy_term:overview declares this exact path. No route responds today, but enabling that Scheduler view would collide with a node here. Also an admin path. Not safe for new content."
+            }
+          },
+          "command_count": 8
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "command_count": 6,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Free. Router returns 404 (no route), no path alias resolves it (path_alias.manager returns the input unchanged), no redirect entity points to it, and no view display uses this path. Nothing claims it."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "Free. Router returns 404 (no route), no path alias, no redirect entity, and no view display targets this path. Nothing claims it."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by a live route. The enabled view 'canvas_pages' (label \"Pages\", display page_1) serves /admin/content/pages, and the path also resolves to route entity.canvas_page.collection. The path is active and owned."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Claimed in configuration by the view 'scheduler_scheduled_media' (label \"Scheduled Media\", display overview, path /admin/content/media/scheduled) from the Scheduler module. The view is currently disabled, so the router 404s right now, but the path is reserved and would collide if that view is enabled. Not safe."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Claimed in configuration by the view 'scheduler_scheduled_taxonomy_term' (label \"Scheduled Taxonomy Terms\", display overview, path /admin/structure/taxonomy/scheduled) from the Scheduler module. The view is currently disabled (router 404s now), but the path is reserved and would collide if enabled. Not safe."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "command_count": 7,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed. No route, alias, view, or entity responds to this path, and no path alias exists in the alias repository. An agent may safely create a node with this URL alias."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "Unclaimed. No route, alias, view, or entity responds to this path, and no path alias exists. Safe to use as a new node's URL alias."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by the enabled Views page display canvas_pages:page_1 (\"Pages\"), route entity.canvas_page.collection, a computed listing over canvas_page_field_data. Creating a node with this alias would shadow the view and hijack the admin Pages listing."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Risky/latent claim. No enabled route responds today, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path. If that Scheduler view is ever enabled it would collide with anything created here."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Risky/latent claim. No enabled route responds today, but the DISABLED view scheduler_scheduled_taxonomy_term:overview (views.view.scheduler_scheduled_taxonomy_term) declares this exact path. Enabling that Scheduler view would collide with anything created here."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "command_count": 4,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No router route (router.no_access_checks + route_provider both return nothing), no path alias maps to or from it, and no view display claims this path. Genuinely unclaimed and safe as a new node alias."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "No router route, no path alias, and no view display uses this path. Unclaimed and safe as a new node alias."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Already claimed by two registered routes: the canvas_page entity collection (entity.canvas_page.collection) and an ENABLED view (view.canvas_pages.page_1, view 'canvas_pages' display page_1). Cannot be used as a node alias."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Reserved by the view 'scheduler_scheduled_media' (display 'overview', path admin/content/media/scheduled) from the enabled scheduler module. The view is currently DISABLED so no route is registered right now, but the config entity exists and enabling it would register this route and collide with the alias. Not safe."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Reserved by the view 'scheduler_scheduled_taxonomy_term' (display 'overview', path admin/structure/taxonomy/scheduled) from the enabled scheduler module. The view is currently DISABLED so no route is registered now, but the config entity exists and enabling it would register this route and collide with the alias. Not safe."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "command_count": 7,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity responds to this path and no latent/negative contracts. site-architecture:path-owner reports claimed=false and no path alias resolves to it. Safe to use as a new node's URL alias."
+            },
+            "/zzz-unclaimed-a015b1": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity responds and no latent claims. site-architecture:path-owner reports claimed=false and no alias resolves to it. Safe to use as a new node's URL alias."
+            },
+            "/admin/content/pages": {
+              "safe": false,
+              "reason": "Claimed by the Views page display canvas_pages:page_1 ('Pages', route entity.canvas_page.collection, config views.view.canvas_pages). A node alias here would shadow this enabled view and hijack the admin listing page."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Latent claim and reserved namespace. The DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path; enabling it would collide with any node placed here. The path also sits under the reserved /admin/* route namespace. Unsafe."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Latent claim and reserved namespace. The DISABLED view scheduler_scheduled_taxonomy_term:overview (views.view.scheduler_scheduled_taxonomy_term) declares this exact path; enabling it would collide with any node placed here. The path also sits under the reserved /admin/* route namespace. Unsafe."
+            }
+          }
+        }
+      }
+    ]
+  }
+}

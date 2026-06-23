@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "The exact leaf has no route/alias/redirect/view, but it sits under the live admin namespace (/admin/content/media is a routed view base). Aliases under /admin/* are reserved by admin routing and will not resolve to a node, so it is not usable as a node URL alias.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "No route/alias/redirect/view claims the exact path, but it falls under the live /admin/structure/taxonomy admin route space. /admin/* is reserved by admin routing; a node alias here would be shadowed and never resolve, so it is not safe to use.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "No exact route (ResourceNotFound), no path_alias row, no redirect entity, and no enabled view uses this path. Unclaimed; safe as a new node alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by the core Search view: route 'view.search.page' resolves to it (view:search, display 'page', path /search). Using it as a node alias would collide with the existing search results page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, no path alias, no redirect, and no view page uses this path. Nothing on the live site claims it; safe as a new node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No route match, no alias row, no redirect, and no view page path. Completely unclaimed; safe to use.",
+      "safe": true
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "/admin/content/files": {
+    "blocker_kind": "latent_disabled_view",
+    "detail": {
+      "disabled_views": [
+        {
+          "display_id": "page_1",
+          "status": false,
+          "view_id": "files"
+        }
+      ]
+    },
+    "safe": false
+  },
+  "/admin/content/media/scheduled": {
+    "blocker_kind": "latent_disabled_view",
+    "detail": {
+      "disabled_views": [
+        {
+          "display_id": "overview",
+          "status": false,
+          "view_id": "scheduler_scheduled_media"
+        }
+      ]
+    },
+    "safe": false
+  },
+  "/admin/content/pages": {
+    "blocker_kind": "view",
+    "detail": {
+      "display_id": "page_1",
+      "route": "entity.canvas_page.collection",
+      "view_id": "canvas_pages"
+    },
+    "safe": false
+  },
+  "/admin/structure/taxonomy/scheduled": {
+    "blocker_kind": "latent_disabled_view",
+    "detail": {
+      "disabled_views": [
+        {
+          "display_id": "overview",
+          "status": false,
+          "view_id": "scheduler_scheduled_taxonomy_term"
+        }
+      ]
+    },
+    "safe": false
+  },
+  "/this-is-free-xyz": {
+    "blocker_kind": null,
+    "detail": [],
+    "safe": true
+  },
+  "/zzz-unclaimed-b0ed0a": {
+    "blocker_kind": null,
+    "detail": [],
+    "safe": true
+  }
+}

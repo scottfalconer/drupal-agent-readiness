@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Latent claim: disabled view files:page_1 declares this path, config views.view.files.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Latent claim: disabled view scheduler_scheduled_media:overview declares this path, config views.view.scheduler_scheduled_media.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed by alias to canvas_page 2, label \"Blog\"; owner route entity.canvas_page.canonical.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no route, alias, view, entity, or latent disabled-view claim was reported.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by enabled Views page display search:page at /search, config views.view.search.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, entity, or latent disabled-view claim was reported.",
+      "safe": true
+    }
+  }
+}

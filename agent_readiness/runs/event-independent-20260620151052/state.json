@@ -1,0 +1,345 @@
+{
+  "aliases": [
+    "/404",
+    "/about",
+    "/blog",
+    "/blog/2026-06/six-months-without-car-what-actually-changed",
+    "/blog/2026-06/what-reefs-are-telling-us",
+    "/blog/2026-06/what-your-local-council-can-do-about-climate-change-right-now",
+    "/careers",
+    "/dr-alice-grossmann",
+    "/form/contact-form",
+    "/form/contact-form/confirmation",
+    "/form/contact-form/drafts",
+    "/form/contact-form/submissions",
+    "/form/newsletter-signup",
+    "/form/newsletter-signup/confirmation",
+    "/form/newsletter-signup/drafts",
+    "/form/newsletter-signup/submissions",
+    "/home",
+    "/leadership",
+    "/privacy-policy",
+    "/projects",
+    "/projects/2026-06/restoring-outer-reef",
+    "/projects/2026-06/rewilding-greenway-corridor",
+    "/projects/2026-06/solarizing-south-side",
+    "/terms-service"
+  ],
+  "baseline": {
+    "aliases": [
+      "/404",
+      "/about",
+      "/blog",
+      "/blog/2026-06/six-months-without-car-what-actually-changed",
+      "/blog/2026-06/what-reefs-are-telling-us",
+      "/blog/2026-06/what-your-local-council-can-do-about-climate-change-right-now",
+      "/careers",
+      "/dr-alice-grossmann",
+      "/form/contact-form",
+      "/form/contact-form/confirmation",
+      "/form/contact-form/drafts",
+      "/form/contact-form/submissions",
+      "/form/newsletter-signup",
+      "/form/newsletter-signup/confirmation",
+      "/form/newsletter-signup/drafts",
+      "/form/newsletter-signup/submissions",
+      "/home",
+      "/leadership",
+      "/privacy-policy",
+      "/projects",
+      "/projects/2026-06/restoring-outer-reef",
+      "/projects/2026-06/rewilding-greenway-corridor",
+      "/projects/2026-06/solarizing-south-side",
+      "/terms-service"
+    ],
+    "bundles": [
+      "blog",
+      "page",
+      "person_profile",
+      "project"
+    ],
+    "event_add_route_available": false,
+    "role_permissions": {
+      "administrator": [],
+      "anonymous": [
+        "access content",
+        "use klaro",
+        "view media",
+        "view media"
+      ],
+      "authenticated": [
+        "access administration pages",
+        "access coffee",
+        "access content",
+        "access contextual links",
+        "access navigation",
+        "bypass honeypot protection",
+        "delete own files",
+        "skip CAPTCHA",
+        "use klaro",
+        "use text format webform_default",
+        "view media",
+        "view own unpublished content",
+        "view the administration theme",
+        "view welcome dashboard"
+      ],
+      "content_editor": [
+        "access administration pages",
+        "access content overview",
+        "access media overview",
+        "access trash",
+        "administer menu",
+        "administer redirects",
+        "administer url aliases",
+        "create canvas_page",
+        "create document media",
+        "create image media",
+        "create page content",
+        "create remote_video media",
+        "create svg_image media",
+        "create url aliases",
+        "create video media",
+        "delete any document media",
+        "delete any image media",
+        "delete any page content",
+        "delete any remote_video media",
+        "delete any svg_image media",
+        "delete any video media",
+        "delete canvas_page",
+        "delete page revisions",
+        "edit any image media",
+        "edit any page content",
+        "edit any remote_video media",
+        "edit any svg_image media",
+        "edit any video media",
+        "edit canvas_page",
+        "revert all revisions",
+        "schedule publishing of nodes",
+        "use basic_editorial transition create_new_draft",
+        "use basic_editorial transition publish",
+        "use basic_editorial transition unpublish",
+        "use media document bulk upload form",
+        "use media image bulk upload form",
+        "use media remote_video bulk upload form",
+        "use media svg_image bulk upload form",
+        "use media video bulk upload form",
+        "use text format content_format",
+        "view all revisions",
+        "view any unpublished content",
+        "view own unpublished content",
+        "view own unpublished media",
+        "view scheduled content",
+        "view welcome dashboard"
+      ]
+    },
+    "views": [
+      "blog",
+      "canvas_pages",
+      "content",
+      "files",
+      "media",
+      "media_library",
+      "moderated_content",
+      "projects",
+      "publishing_content",
+      "recent_content",
+      "recent_pages",
+      "redirect",
+      "redirect_404",
+      "scheduler_scheduled_content",
+      "scheduler_scheduled_media",
+      "scheduler_scheduled_taxonomy_term",
+      "search",
+      "taxonomy_term",
+      "user_admin_people",
+      "watchdog",
+      "webform_submissions"
+    ]
+  },
+  "blast_radius": {
+    "unexpected_routes_remaining": false,
+    "unrelated_aliases_changed": false,
+    "unrelated_bundles_changed": false,
+    "unrelated_permissions_changed": false,
+    "unrelated_views_changed": false
+  },
+  "canvas": {
+    "embedded_listings": [
+      "blog:all",
+      "projects:all",
+      "projects:featured",
+      "blog:latest"
+    ],
+    "page_count": 7
+  },
+  "command_runner": {
+    "ddev": false,
+    "dr": false,
+    "drush": true
+  },
+  "content": {
+    "event_sample_count": 1,
+    "published_event_sample_count": 1
+  },
+  "content_model": {
+    "bundles": [
+      "blog",
+      "event",
+      "page",
+      "person_profile",
+      "project"
+    ],
+    "event_required_fields": [
+      "field_event_date",
+      "field_event_location"
+    ],
+    "moderation_enabled": true
+  },
+  "jsonapi": {
+    "event_resource_available": true,
+    "sample_fetch_status": 200
+  },
+  "pathauto": {
+    "enabled": true,
+    "patterns": [
+      "/[node:menu-link:parents:join-path]/[node:title]",
+      "/[node:title]",
+      "/blog/[node:created:html_month]/[node:title]",
+      "/projects/[node:created:html_month]/[node:title]"
+    ]
+  },
+  "paths": {
+    "/blog": {
+      "bundle": "canvas_page",
+      "claimed": true,
+      "entity_type": "canvas_page",
+      "id": "2",
+      "owner_kind": "entity"
+    },
+    "/home": {
+      "bundle": "canvas_page",
+      "claimed": true,
+      "entity_type": "canvas_page",
+      "id": "6",
+      "owner_kind": "entity"
+    },
+    "/node": {
+      "claimed": false,
+      "owner_kind": "unclaimed"
+    }
+  },
+  "permissions": {
+    "event_permissions_granted": [],
+    "role_permissions": {
+      "administrator": [],
+      "anonymous": [
+        "access content",
+        "use klaro",
+        "view media",
+        "view media"
+      ],
+      "authenticated": [
+        "access administration pages",
+        "access coffee",
+        "access content",
+        "access contextual links",
+        "access navigation",
+        "bypass honeypot protection",
+        "delete own files",
+        "skip CAPTCHA",
+        "use klaro",
+        "use text format webform_default",
+        "view media",
+        "view own unpublished content",
+        "view the administration theme",
+        "view welcome dashboard"
+      ],
+      "content_editor": [
+        "access administration pages",
+        "access content overview",
+        "access media overview",
+        "access trash",
+        "administer menu",
+        "administer redirects",
+        "administer url aliases",
+        "create canvas_page",
+        "create document media",
+        "create image media",
+        "create page content",
+        "create remote_video media",
+        "create svg_image media",
+        "create url aliases",
+        "create video media",
+        "delete any document media",
+        "delete any image media",
+        "delete any page content",
+        "delete any remote_video media",
+        "delete any svg_image media",
+        "delete any video media",
+        "delete canvas_page",
+        "delete page revisions",
+        "edit any image media",
+        "edit any page content",
+        "edit any remote_video media",
+        "edit any svg_image media",
+        "edit any video media",
+        "edit canvas_page",
+        "revert all revisions",
+        "schedule publishing of nodes",
+        "use basic_editorial transition create_new_draft",
+        "use basic_editorial transition publish",
+        "use basic_editorial transition unpublish",
+        "use media document bulk upload form",
+        "use media image bulk upload form",
+        "use media remote_video bulk upload form",
+        "use media svg_image bulk upload form",
+        "use media video bulk upload form",
+        "use text format content_format",
+        "view all revisions",
+        "view any unpublished content",
+        "view own unpublished content",
+        "view own unpublished media",
+        "view scheduled content",
+        "view welcome dashboard"
+      ]
+    }
+  },
+  "provenance": {
+    "active_config_source": "database",
+    "config_sync_status": "empty",
+    "project_name": "drupal/cms",
+    "project_version": "2.1.3",
+    "site_template": "haven"
+  },
+  "routes": {
+    "event_add_route_available": true,
+    "event_add_route_owner": {
+      "claimed": true,
+      "owner_kind": "route",
+      "route": "node.add"
+    }
+  },
+  "views": [
+    "blog",
+    "canvas_pages",
+    "content",
+    "files",
+    "media",
+    "media_library",
+    "moderated_content",
+    "projects",
+    "publishing_content",
+    "recent_content",
+    "recent_pages",
+    "redirect",
+    "redirect_404",
+    "scheduler_scheduled_content",
+    "scheduler_scheduled_media",
+    "scheduler_scheduled_taxonomy_term",
+    "search",
+    "taxonomy_term",
+    "user_admin_people",
+    "watchdog",
+    "webform_submissions"
+  ]
+}

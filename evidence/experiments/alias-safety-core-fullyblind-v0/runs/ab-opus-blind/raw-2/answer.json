@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Claimed by the 'files' view (display page_1, path admin/content/files). The view is currently DISABLED so no live route is registered, but the path is owned by existing view config and sits under /admin; enabling the view would collide. Not safe.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by the 'scheduler_scheduled_media' view (display overview, path admin/content/media/scheduled). View is DISABLED so no live route now, but the path is reserved by view config and is under /admin. Not safe.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by an active system route 'entity.canvas_page.collection' and by the ENABLED view 'canvas_pages' (display page_1). It is a live admin route; do not use as a node alias.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Claimed by the 'scheduler_scheduled_taxonomy_term' view (display overview, path admin/structure/taxonomy/scheduled). View is DISABLED so no live route now, but the path is reserved by view config and is under /admin. Not safe.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No router match, no path alias, and no view display claims this path. Fully unclaimed and usable as a node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-b0ed0a": {
+      "reason": "No router match, no path alias, and no view display claims this path. Fully unclaimed and usable as a node alias.",
+      "safe": true
+    }
+  }
+}

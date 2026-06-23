@@ -1,0 +1,12 @@
+{
+  "details": {},
+  "failures": [
+    "command_runner",
+    "paths./node.claimed",
+    "paths./node.owner_kind",
+    "pathauto.patterns",
+    "pathauto.patterns.unexpected"
+  ],
+  "passed": false,
+  "warnings": []
+}

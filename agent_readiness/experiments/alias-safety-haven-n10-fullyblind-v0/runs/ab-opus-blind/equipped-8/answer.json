@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No enabled route currently, but the DISABLED view files:page_1 (views.view.files) declares this exact path; enabling it would collide. It is also an admin route path, not a content-alias surface. Risky.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No enabled route currently, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this path; enabling it would collide. Also an admin route path, not a content-alias surface. Risky.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed: it is the canonical page of canvas_page entity 2 ('Blog'). Alias /blog maps to /page/2 via enabled route entity.canvas_page.canonical. A new node alias would collide.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds, and a full view scan found no display claiming it. Safe despite the suggestive name.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by the Views page display search:page (views.view.search, enabled route view.search.page). A node with alias /search would shadow and hijack the view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds to this path, and no latent/disabled-view claims. Safe for a new node alias.",
+      "safe": true
+    }
+  }
+}

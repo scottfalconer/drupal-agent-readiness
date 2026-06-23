@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Claimed by the 'files' view (admin view for file management).",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by the 'scheduler_scheduled_media' view (media scheduler functionality).",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Path alias already exists, aliasing to /page/2.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Path is not claimed by any node alias, view, or route.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by the 'search' view (Drupal core search functionality).",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Path is not claimed by any node alias, view, or route.",
+      "safe": true
+    }
+  }
+}

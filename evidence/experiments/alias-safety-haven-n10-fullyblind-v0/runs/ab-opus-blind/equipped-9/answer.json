@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Risky/unsafe. No enabled route responds today, but the DISABLED view 'files' display page_1 (views.view.files) declares this exact path; enabling it collides. It also sits under the live /admin/content admin tree (system.admin_content), so a node alias under /admin is fragile and inappropriate.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Risky/unsafe. No enabled route responds today, but the DISABLED view 'scheduler_scheduled_media' display 'overview' (views.view.scheduler_scheduled_media) declares this exact path; enabling the Scheduler view collides. It is also under the live /admin/content admin tree, making a node alias here fragile and inappropriate.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed. It is an existing URL alias pointing to internal path /page/2, which is the canonical page of canvas_page entity id 2 (label \"Blog\", route entity.canvas_page.canonical). A new node here would collide/shadow that page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no alias, no route, no view or entity claims it. Router returns ResourceNotFoundException and there is no path alias. Safe to use as a new node URL alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by a Views page display. The view 'search' display 'page' (config views.view.search, route view.search.page) serves /search as a computed listing over search_api_index_content. A node alias here would shadow and hijack the view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no alias, no route, no view or entity responds to this path. The router returns ResourceNotFoundException and path_alias.manager reports no alias. Safe to use as a new node URL alias.",
+      "safe": true
+    }
+  }
+}

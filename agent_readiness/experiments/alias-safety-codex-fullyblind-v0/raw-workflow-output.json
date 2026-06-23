@@ -1,0 +1,214 @@
+{
+  "blind": [
+    {
+      "condition": "blind",
+      "model": "gpt-5.5-codex",
+      "arm": "equipped",
+      "n": 1,
+      "answer": {
+        "assessments": {
+          "/this-is-free-xyz": {
+            "safe": true,
+            "reason": "Unclaimed: no route, alias, view, or entity responds to this path."
+          },
+          "/moderated-content": {
+            "safe": true,
+            "reason": "Unclaimed: no route, alias, view, or entity responds to this path."
+          },
+          "/blog": {
+            "safe": false,
+            "reason": "Claimed by alias to /page/2, owned by published canvas_page 2, label \"Blog\"."
+          },
+          "/search": {
+            "safe": false,
+            "reason": "Claimed by Views page display search:page at /search."
+          },
+          "/admin/content/files": {
+            "safe": false,
+            "reason": "Risky latent claim: disabled view files:page_1 declares this path."
+          },
+          "/admin/content/media/scheduled": {
+            "safe": false,
+            "reason": "Risky latent claim: disabled view scheduler_scheduled_media:overview declares this path."
+          }
+        },
+        "command_count": 6
+      }
+    },
+    {
+      "condition": "blind",
+      "model": "gpt-5.5-codex",
+      "arm": "equipped",
+      "n": 2,
+      "answer": {
+        "assessments": {
+          "/this-is-free-xyz": {
+            "safe": true,
+            "reason": "Unclaimed: no route, alias, view, entity, or latent disabled-view claim was reported."
+          },
+          "/moderated-content": {
+            "safe": true,
+            "reason": "Unclaimed: no route, alias, view, entity, or latent disabled-view claim was reported."
+          },
+          "/blog": {
+            "safe": false,
+            "reason": "Claimed by alias to canvas_page 2, label \"Blog\"; owner route entity.canvas_page.canonical."
+          },
+          "/search": {
+            "safe": false,
+            "reason": "Claimed by enabled Views page display search:page at /search, config views.view.search."
+          },
+          "/admin/content/files": {
+            "safe": false,
+            "reason": "Latent claim: disabled view files:page_1 declares this path, config views.view.files."
+          },
+          "/admin/content/media/scheduled": {
+            "safe": false,
+            "reason": "Latent claim: disabled view scheduler_scheduled_media:overview declares this path, config views.view.scheduler_scheduled_media."
+          }
+        },
+        "command_count": 6
+      }
+    },
+    {
+      "condition": "blind",
+      "model": "gpt-5.5-codex",
+      "arm": "equipped",
+      "n": 3,
+      "answer": {
+        "assessments": {
+          "/this-is-free-xyz": {
+            "safe": true,
+            "reason": "Unclaimed: no route, alias, view, entity, or latent disabled-view claim currently owns this path."
+          },
+          "/moderated-content": {
+            "safe": true,
+            "reason": "Unclaimed: no route, alias, view, entity, or latent disabled-view claim currently owns this path."
+          },
+          "/blog": {
+            "safe": false,
+            "reason": "Claimed by alias to /page/2, owned by published canvas_page entity 2 titled \"Blog\"."
+          },
+          "/search": {
+            "safe": false,
+            "reason": "Claimed by enabled Views page search:page at /search, config views.view.search."
+          },
+          "/admin/content/files": {
+            "safe": false,
+            "reason": "Risky latent claim: disabled view files:page_1 declares this path in views.view.files."
+          },
+          "/admin/content/media/scheduled": {
+            "safe": false,
+            "reason": "Risky latent claim: disabled view scheduler_scheduled_media:overview declares this path in views.view.scheduler_scheduled_media."
+          }
+        },
+        "command_count": 6
+      }
+    },
+    {
+      "condition": "blind",
+      "model": "gpt-5.5-codex",
+      "arm": "raw",
+      "n": 1,
+      "answer": {
+        "assessments": {
+          "/this-is-free-xyz": {
+            "safe": true,
+            "reason": "No alias or route matched on the live site."
+          },
+          "/moderated-content": {
+            "safe": true,
+            "reason": "No alias or route matched on the live site."
+          },
+          "/blog": {
+            "safe": false,
+            "reason": "Claimed by path alias to /page/2; resolves to route entity.canvas_page.canonical."
+          },
+          "/search": {
+            "safe": false,
+            "reason": "Claimed by route view.search.page."
+          },
+          "/admin/content/files": {
+            "safe": true,
+            "reason": "No alias or route matched on the live site."
+          },
+          "/admin/content/media/scheduled": {
+            "safe": true,
+            "reason": "No alias or route matched on the live site."
+          }
+        },
+        "command_count": 1
+      }
+    },
+    {
+      "condition": "blind",
+      "model": "gpt-5.5-codex",
+      "arm": "raw",
+      "n": 2,
+      "answer": {
+        "assessments": {
+          "/this-is-free-xyz": {
+            "safe": true,
+            "reason": "No live router match and no existing path alias found."
+          },
+          "/moderated-content": {
+            "safe": true,
+            "reason": "No live router match and no existing path alias found."
+          },
+          "/blog": {
+            "safe": false,
+            "reason": "Claimed by existing path alias to /page/2 and route entity.canvas_page.canonical."
+          },
+          "/search": {
+            "safe": false,
+            "reason": "Claimed by route view.search.page, view search:page."
+          },
+          "/admin/content/files": {
+            "safe": true,
+            "reason": "No live router match and no existing path alias found."
+          },
+          "/admin/content/media/scheduled": {
+            "safe": true,
+            "reason": "No live router match and no existing path alias found."
+          }
+        },
+        "command_count": 2
+      }
+    },
+    {
+      "condition": "blind",
+      "model": "gpt-5.5-codex",
+      "arm": "raw",
+      "n": 3,
+      "answer": {
+        "assessments": {
+          "/this-is-free-xyz": {
+            "safe": true,
+            "reason": "No alias or no-access route matched on the live site."
+          },
+          "/moderated-content": {
+            "safe": true,
+            "reason": "No alias or no-access route matched on the live site."
+          },
+          "/blog": {
+            "safe": false,
+            "reason": "Claimed by path alias to /page/2; route entity.canvas_page.canonical."
+          },
+          "/search": {
+            "safe": false,
+            "reason": "Claimed by route view.search.page."
+          },
+          "/admin/content/files": {
+            "safe": true,
+            "reason": "No alias or no-access route matched on the live site."
+          },
+          "/admin/content/media/scheduled": {
+            "safe": true,
+            "reason": "No alias or no-access route matched on the live site."
+          }
+        },
+        "command_count": 1
+      }
+    }
+  ]
+}

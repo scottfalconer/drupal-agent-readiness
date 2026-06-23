@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Reserved by the 'files' view (files:page_1 display). This is the main files management interface.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved by the 'scheduler_scheduled_media' view (scheduler_scheduled_media:overview display). Scheduled media management.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Reserved by the 'canvas_pages' view (canvas_pages:page_1 display). Route is entity.canvas_page.collection.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Reserved by the 'scheduler_scheduled_taxonomy_term' view (scheduler_scheduled_taxonomy_term:overview display). Scheduled taxonomy terms management.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route match, no path alias, no view claims this path. Safe to use as a new node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-b0ed0a": {
+      "reason": "No route match, no path alias, no view claims this path. Safe to use as a new node alias.",
+      "safe": true
+    }
+  }
+}

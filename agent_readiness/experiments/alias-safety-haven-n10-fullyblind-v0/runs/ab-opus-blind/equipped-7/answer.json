@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Risky: no enabled route responds right now, but the DISABLED view files:page_1 (views.view.files) declares this exact path. View confirmed disabled (status=false). If that view is ever enabled it will collide with anything created here; also under the reserved /admin namespace. Not safe to claim.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Risky: no enabled route responds right now, but the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path. View confirmed disabled (status=false). Enabling it later would collide; also under the reserved /admin namespace. Not safe to claim.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed: this is the canonical URL alias of canvas_page entity 2 (\"Blog\"), aliasing internal path /page/2 (canonical /canvas_page/2). Confirmed in the path_alias table via the alias repository. Creating another node with this alias would collide with / shadow that existing page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no path alias, no router route, no view or entity responds here. Verified via site-architecture:path-owner (claimed=false), alias repository (no alias), and live router match (ResourceNotFoundException). Safe to use as a new node's URL alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed: served by the enabled Views page display search:page (route view.search.page, config views.view.search), a computed listing over search_api_index_content. Confirmed by live router match returning view.search.page. A node alias here would shadow and hijack the search view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no path alias, no router route, no view or entity responds here. Verified via site-architecture:path-owner (claimed=false), alias repository (no alias), and live router match (ResourceNotFoundException). Safe to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

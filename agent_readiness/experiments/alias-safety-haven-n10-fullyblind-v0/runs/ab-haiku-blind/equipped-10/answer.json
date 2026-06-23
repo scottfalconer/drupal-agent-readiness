@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Path is currently unclaimed but has a latent claim from disabled view files:page_1. Risky; enabling the view would cause collision.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Path is currently unclaimed but has a latent claim from disabled view scheduler_scheduled_media:overview. Risky; enabling the view would cause collision.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Path is the canonical page of canvas_page 2 (the 'Blog' entity). Creating a node here would shadow and hijack the existing page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Path is unclaimed; no route, alias, view, or entity currently responds to it.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Path is owned by Views page display search:page. Creating a node here would shadow and hijack the computed search listing.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Path is unclaimed; no route, alias, view, or entity currently responds to it.",
+      "safe": true
+    }
+  }
+}

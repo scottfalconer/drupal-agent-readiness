@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/this-is-free-xyz": {
+      "safe": true,
+      "reason": "No route, no existing alias, no redirect, and no pathauto pattern produces it. Path is free now and not claimed by any module-owned route."
+    },
+    "/moderated-content": {
+      "safe": true,
+      "reason": "No route at this literal path (the moderated-content view lives at /admin/content/moderated), no alias, no redirect. Safe; the only pathauto pattern that could ever emit it is /[node:title], which would only fire for the node itself."
+    },
+    "/blog": {
+      "safe": false,
+      "reason": "Alias already exists: /blog maps to /page/2, a live canvas_page node titled 'Blog'. Reusing it would collide with that node's alias."
+    },
+    "/search": {
+      "safe": false,
+      "reason": "Live route view.search.page is bound to /search (search View, page display, enabled). A node alias of /search would be shadowed by the View route, which wins."
+    },
+    "/admin/content/files": {
+      "safe": false,
+      "reason": "The core 'files' View is present but disabled; its page_1 display is path /admin/content/files. Enabling it (routine config change) creates a route here that shadows the alias. Also under the admin/content section namespace."
+    },
+    "/admin/content/media/scheduled": {
+      "safe": false,
+      "reason": "The 'scheduler_scheduled_media' View is present but disabled; its overview display is path /admin/content/media/scheduled. Enabling scheduler for the Media entity type (routine config) activates this route and shadows the alias."
+    }
+  }
+}

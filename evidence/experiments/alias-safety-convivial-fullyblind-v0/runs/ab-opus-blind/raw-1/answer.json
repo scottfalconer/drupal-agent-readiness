@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Not claimed by any route, alias, or redirect. Parent /admin/content/media is entity.media.collection but the /scheduled child is unrouted (ResourceNotFoundException); scheduler module uses /admin/content/scheduled, not this path. Note: it sits under the /admin namespace, so using it as a node alias is operationally inadvisable even though nothing currently claims the exact path.",
+      "safe": true
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed. Resolves to route entity.canvas_page.collection (Canvas Pages admin listing, backed by view.canvas_pages.page_1) plus entity.canvas_page.add_page at /admin/content/pages/add. A real existing route owns this path, so a node alias here would be shadowed and is unsafe.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Not claimed by any route, alias, or redirect. Parent /admin/structure/taxonomy is entity.taxonomy_vocabulary.collection but the literal /scheduled child returns ResourceNotFoundException (no wildcard swallows it). Note: it lives under the /admin namespace, so a node alias here is operationally inadvisable, though the exact path is currently unclaimed.",
+      "safe": true
+    },
+    "/this-is-free-xyz": {
+      "reason": "Free. No route matches (ResourceNotFoundException), path.validator reports it is not a valid/routed path, no path_alias entity has this alias, and no redirect claims it. Available as a new node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "Free. No matching route, not a valid/routed path per path.validator, no existing path_alias with this value, no redirect. Available as a new node alias.",
+      "safe": true
+    }
+  }
+}

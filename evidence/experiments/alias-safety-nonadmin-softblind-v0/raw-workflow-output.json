@@ -1,0 +1,431 @@
+{
+  "summary": "Knowledge-blind alias-safety A/B (Haiku + Opus, raw vs site_architecture) on one parameterized substrate",
+  "agentCount": 12,
+  "logs": [
+    "substrate=haven-nonadmin candidates=6 rawClones=3 eqClones=3"
+  ],
+  "result": {
+    "blind": [
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "command_count": 15,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No existing node alias, route, or view; completely free to use."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No existing node alias, route, or view; completely free to use."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Actively routed by the enabled search View (view.search.page); conflict would occur immediately."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Reserved by the files View (page_1 display, currently disabled). If the view is enabled in routine config changes, conflict would occur."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Reserved by scheduler_scheduled_media View (overview display, currently disabled). Scheduler module is enabled; view can be activated by config changes."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Reserved by scheduler_scheduled_taxonomy_term View (overview display, currently disabled). Scheduler module is enabled; view can be activated by config changes."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Path is completely unclaimed. No route, alias, view, or entity responds to it. Safe to create a node with this URL alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Path is completely unclaimed. No route, alias, view, or entity responds to it. Safe to create a node with this URL alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Path is claimed by enabled Views page display 'search:page'. Creating a node alias here would shadow and hijack this search results listing."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Path has latent claim from disabled view files:page_1. If that view is later enabled, it will collide with a node alias created here."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Path has latent claim from disabled view scheduler_scheduled_media:overview. Routine feature enablement (Scheduler module) would cause collision."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Path has latent claim from disabled view scheduler_scheduled_taxonomy_term:overview. Routine feature enablement (Scheduler module) would cause collision."
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No route, alias, or view occupies this path. Completely free to use as node alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No route, alias, or view occupies this path. Completely free to use as node alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Occupied by view 'search' display 'page'. Creating a node alias here would conflict with the search results view."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Occupied by view 'files' display 'page_1'. Creating a node alias here would conflict with the research library view."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Occupied by view 'scheduler_scheduled_media' display 'overview'. Admin paths are reserved for core admin routes and cannot be used as node aliases."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Occupied by view 'scheduler_scheduled_taxonomy_term' display 'overview'. Admin paths are reserved for core admin routes and cannot be used as node aliases."
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed path with no routes, aliases, views, or entities currently responding to it. Safe to use as a node URL alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Unclaimed path with no routes, aliases, views, or entities currently responding to it. Safe to use as a node URL alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Path is claimed by the enabled 'Search' view (views.view.search, display_id: page). Creating a node with this alias would shadow and hijack the view."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Path is claimed by a disabled view (files:page_1). If that view is enabled during routine config changes, it will collide with any content created here."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Path is claimed by a disabled view (scheduler_scheduled_media:overview). Collision risk if the Scheduler module view is enabled."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Path is claimed by a disabled view (scheduler_scheduled_taxonomy_term:overview). Collision risk if the Scheduler module view is enabled."
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "command_count": 10,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No route, alias, or View uses this path"
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No route, alias, or View uses this path"
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Conflicts with Search module View (view.search.page route)"
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Conflicts with Files View page display"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Conflicts with Scheduled Media View (scheduler module)"
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Conflicts with Scheduled Taxonomy Terms View (scheduler module)"
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed path. No route, alias, view, or entity currently responds to it. Safe to use as a node URL alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Unclaimed path. No route, alias, view, or entity currently responds to it. Safe to use as a node URL alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by active Views page display (search:page). Creating a node alias here would shadow the view and hijack the page."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Path declared by disabled view files:page_1. If that view is enabled during routine config changes, it will collide with any node created here."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Path declared by disabled view scheduler_scheduled_media:overview. If that view is enabled, it will collide with any content created here."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Path declared by disabled view scheduler_scheduled_taxonomy_term:overview. If that view is enabled, it will collide with any content created here."
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "command_count": 7,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No live route, no existing alias, no redirect entity, and no view (enabled or disabled) claims this path. Free to use."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No live route, no existing alias, no redirect entity, and no view (enabled or disabled) claims this path. Free to use."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Already a live route: the enabled 'search' view provides display 'page' at /search (route view.search.page). A node alias here would be shadowed by the existing route."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Path of the 'files' view display page_1, which is currently DISABLED. No route today, but enabling that view (a routine config change) creates a route at /research-library that would shadow the alias."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Path of the DISABLED 'scheduler_scheduled_media' view (display 'overview'). The scheduler module is installed; enabling media scheduling activates this view and claims the route. Also sits under the existing /admin/content/media route (entity.media.collection) admin tree. Not safe."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Path of the DISABLED 'scheduler_scheduled_taxonomy_term' view (display 'overview'). The scheduler module is installed; enabling term scheduling activates this view and claims the route. Also under the existing /admin/structure/taxonomy route (entity.taxonomy_vocabulary.collection). Not safe."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "command_count": 8,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed. Live router returns no route, no path alias exists, and the path-owner tool reports no owner and no negative/latent contracts. Safe to use as a node URL alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Unclaimed. Live router returns no route, no path alias exists, no owner and no latent claims. Safe to use as a node URL alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Actively owned by the enabled 'search' view page display (route view.search.page, path /search). A node with this alias would shadow/hijack the search page. Not safe."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Claimed by a DISABLED view: views.view.files display page_1 declares path 'research-library'. No enabled route responds now, but if that view is ever enabled (a routine config change) it collides with a node placed here. Risky/unsafe."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Reserved by the Scheduler module's 'scheduler_scheduled_media' overview view, which declares path admin/content/media/scheduled. It is currently disabled only because scheduling isn't enabled on a media type yet; scheduler and media modules are both installed, so enabling scheduling on any media bundle imports/enables this view (via SchedulerManager::viewsUpdate) and reclaims the path. Also an admin namespace. Not safe."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Reserved by the Scheduler module's 'scheduler_scheduled_taxonomy_term' overview view, which declares path admin/structure/taxonomy/scheduled. Disabled now only because scheduling isn't enabled on a taxonomy vocabulary; scheduler and taxonomy modules are installed, so enabling scheduling routinely imports/enables this view and reclaims the path. Also an admin namespace. Not safe."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "command_count": 8,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No matching route, no existing path alias, and no view (enabled or disabled) declares this path. Free to use as a node URL alias now and after routine config changes."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No matching route, no existing path alias, and no view declares this path. Free to use."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Already an active route: the enabled 'search' view's page display owns /search (route view.search.page). A node alias here would collide with the live search results page immediately."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "The 'files' view is currently disabled but its page_1 display has a customized path of /research-library. As soon as that view is enabled (a routine config action), it claims this route and conflicts with a node alias placed here."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Reserved /admin namespace, and the disabled 'scheduler_scheduled_media' view (overview display) targets exactly this path. The scheduler module is installed; enabling scheduling on any media type re-syncs and enables this view (route view.scheduler_scheduled_media.overview), creating a conflict after routine config."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Reserved /admin namespace, and the disabled 'scheduler_scheduled_taxonomy_term' view (overview display) targets exactly this path. Scheduler is installed; enabling scheduling on any vocabulary enables this view (route view.scheduler_scheduled_taxonomy_term.overview), causing a conflict after routine config."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "command_count": 12,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed: no alias, no route, no view, no entity responds here, and no latent/disabled claim. Verified no existing path alias. Safe to use as a new node URL alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Unclaimed: no alias, no route, no view, no entity, and no latent/disabled claim. Verified no existing path alias. Safe to use as a new node URL alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Actively owned by the ENABLED Views page display search:page (route view.search.page, config views.view.search). A node with this alias would shadow the view and hijack the page. Conflict exists right now."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "No live route now, but the locally-configured view files:page_1 (views.view.files, currently status=false) declares path research-library. Re-enabling that view is a routine admin action and would collide with the node. Risky to claim."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Disabled view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this path. The scheduler module is ENABLED and this view ships in scheduler config/optional, so enabling media scheduling (routine config) re-enables it and collides. Also lives under the reserved /admin route namespace. Not safe."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Disabled view scheduler_scheduled_taxonomy_term:overview (views.view.scheduler_scheduled_taxonomy_term) declares this path. The scheduler module is ENABLED and this view ships in scheduler config/optional, so enabling taxonomy-term scheduling (routine config) re-enables it and collides. Also under the reserved /admin namespace. Not safe."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "command_count": 6,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No existing path alias, no system route matches it, and no View (enabled or disabled) claims this path. Free to use as a node alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No existing path alias, no system route, and no View display claims this path. Safe to use."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Already an active route: the enabled 'search' View has a page display at /search (route view.search.page). A node alias here would collide with the live search page immediately."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "No current route, but the 'files' View (display page_1) ships with path /research-library. That View is currently disabled; enabling it (a routine config change) registers /research-library and conflicts with a node alias placed here."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "No current route, but the scheduler module's 'scheduler_scheduled_media' View (display overview) defines path /admin/content/media/scheduled. It is disabled now; enabling media scheduling (routine scheduler config) activates this exact path and would conflict. Also sits under the admin /admin/content/media route tree."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "No current route, but the scheduler module's 'scheduler_scheduled_taxonomy_term' View (display overview) defines path /admin/structure/taxonomy/scheduled. Disabled now; enabling taxonomy term scheduling (routine scheduler config) registers this path and conflicts. Also under the admin /admin/structure/taxonomy route tree."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "command_count": 9,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity responds to this path, and there are no negative contracts or latent (disabled-view) claims. Safe to use as a new node URL alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity responds, and no latent claims. Safe to use as a new node URL alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Actively owned right now by the enabled Search view (views.view.search, display 'page', route view.search.page) which serves /search over the search_api index. A node with this alias would shadow/hijack the view page."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Latent conflict: the disabled 'files' view (views.view.files, page_1), provided by the core File module, declares path research-library. It is currently disabled so nothing responds today, but enabling it (routine config / a config import) would collide and shadow your node. Risky."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Latent conflict: the disabled view scheduler_scheduled_media:overview declares this path. The Scheduler module is installed and enabled, and this view is auto-enabled by routine Scheduler configuration (enabling scheduling on a media type). It also lives in the reserved /admin namespace. Risky."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Latent conflict: the disabled view scheduler_scheduled_taxonomy_term:overview declares this path. The Scheduler module is enabled and this view is turned on by routine Scheduler config (enabling scheduling on taxonomy). Also in the reserved /admin namespace. Risky."
+            }
+          }
+        }
+      }
+    ]
+  }
+}

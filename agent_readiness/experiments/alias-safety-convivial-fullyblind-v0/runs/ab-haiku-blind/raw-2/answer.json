@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by scheduler_scheduled_media view (overview display), serves the Scheduled Media admin interface.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by canvas_pages view (page_1 display), serves the Pages admin interface.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Claimed by scheduler_scheduled_taxonomy_term view (overview display), serves the Scheduled Taxonomy Terms admin interface.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed by router, path aliases, and views. Safe for new node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "Unclaimed by router, path aliases, and views. Safe for new node alias.",
+      "safe": true
+    }
+  }
+}

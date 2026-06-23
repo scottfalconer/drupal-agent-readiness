@@ -1,0 +1,46 @@
+{
+  "claim_scope": "constrained_v0_mechanical_evidence_loop",
+  "independent_event_passes": [
+    "event-independent-20260620151052"
+  ],
+  "independent_inventory_passes": [
+    "inventory-deleaked-equipped",
+    "inventory-enhanced-independent-20260620145648",
+    "inventory-independent-20260620144627",
+    "inventory-independent-pass3-20260620150332"
+  ],
+  "independent_recovery_passes": [
+    "recovery-independent-20260620151052"
+  ],
+  "independent_runs": [
+    "event-independent-20260620151052",
+    "inventory-deleaked-equipped",
+    "inventory-enhanced-independent-20260620145648",
+    "inventory-independent-20260620144627",
+    "inventory-independent-pass3-20260620150332",
+    "recovery-independent-20260620151052"
+  ],
+  "next_actions": [
+    "Repeat the non-Claude alias-safety run at n=10 and add another non-Claude stack before making a claim across model providers.",
+    "Repeat act.event_jsonapi and recover.event_jsonapi runs, not only inventory.read_only.",
+    "Add token cost alongside elapsed time in the public scorecard when token data is available.",
+    "Raise n on the remaining Drupal starting sites (core, Convivial) for the condition where the agent is not told the hidden risk; stock Haven is done at n=10 (haiku 80% / opus 70% hidden-claim flags vs 100% with site self-description).",
+    "Grow the task set before making any aggregate Drupal readiness claim."
+  ],
+  "numeric_claim_errors": [],
+  "numeric_claim_ready": true,
+  "private_circulation_ready": true,
+  "provenance_caveats": [
+    "Metrics (elapsed_seconds, tool_calls) for the inventory/event/recovery runs are operator-supplied, not harness-instrumented; only the v0.2 de-leaked inventory run and the alias-safety runs are instrumented.",
+    "'Independent' status is asserted via free-text agent metadata (name/model), not cryptographically bound to the answer; the gate trusts that metadata.",
+    "These flags certify the evidence-loop method plus N genuine evaluator passes on a fixed Drupal starting site \u2014 not a blinded or statistically-powered benchmark."
+  ],
+  "public_v0_package_errors": [],
+  "public_v0_package_ready": true,
+  "publication_errors": [],
+  "smoke_runs": [
+    "haven-event-v0-tooling-smoke",
+    "haven-inventory-v0-tooling-smoke",
+    "haven-recovery-v0-tooling-smoke"
+  ]
+}

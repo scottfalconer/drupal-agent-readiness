@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Path of the DISABLED 'scheduler_scheduled_media' view (display 'overview'). The scheduler module is installed; enabling media scheduling activates this view and claims the route. Also sits under the existing /admin/content/media route (entity.media.collection) admin tree. Not safe.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Path of the DISABLED 'scheduler_scheduled_taxonomy_term' view (display 'overview'). The scheduler module is installed; enabling term scheduling activates this view and claims the route. Also under the existing /admin/structure/taxonomy route (entity.taxonomy_vocabulary.collection). Not safe.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Path of the 'files' view display page_1, which is currently DISABLED. No route today, but enabling that view (a routine config change) creates a route at /research-library that would shadow the alias.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Already a live route: the enabled 'search' view provides display 'page' at /search (route view.search.page). A node alias here would be shadowed by the existing route.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No live route, no existing alias, no redirect entity, and no view (enabled or disabled) claims this path. Free to use.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No live route, no existing alias, no redirect entity, and no view (enabled or disabled) claims this path. Free to use.",
+      "safe": true
+    }
+  }
+}

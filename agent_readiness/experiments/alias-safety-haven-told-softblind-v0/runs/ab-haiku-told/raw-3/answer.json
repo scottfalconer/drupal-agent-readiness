@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "blocker_kind": "latent_disabled_view",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "blocker_kind": "latent_disabled_view",
+      "safe": false
+    },
+    "/blog": {
+      "blocker_kind": "entity",
+      "safe": false
+    },
+    "/moderated-content": {
+      "blocker_kind": null,
+      "safe": true
+    },
+    "/search": {
+      "blocker_kind": "route",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "blocker_kind": null,
+      "safe": true
+    }
+  }
+}

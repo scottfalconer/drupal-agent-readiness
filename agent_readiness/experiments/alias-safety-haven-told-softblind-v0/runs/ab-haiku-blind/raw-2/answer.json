@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "View path conflict: /admin/content/files is defined as a page display in the 'files' view (disabled now, but would activate if the view is enabled). Would cause routing conflict.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "View path conflict: /admin/content/media/scheduled is defined as a page display in the 'scheduler_scheduled_media' view (disabled now, but would activate if the view is enabled). Would cause routing conflict.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Alias conflict: /blog currently aliases to /page/2 (canvas_page entity). Creating a node with this alias would conflict with existing content.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route or alias currently exists. The 'moderated_content' view (admin/content/moderated) is disabled and doesn't conflict with this path. Safe to use.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Active route conflict: /search is an enabled view (view.search.page) that renders the search interface. Cannot use as node alias.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route or alias exists for this path. Safe to use as a new node alias.",
+      "safe": true
+    }
+  }
+}

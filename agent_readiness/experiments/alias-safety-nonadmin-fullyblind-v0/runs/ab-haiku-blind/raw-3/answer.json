@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "No route exists; path is under /admin namespace (reserved for admin UI, but not explicitly blocked for aliases)",
+      "safe": true
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "No route exists; path is under /admin namespace (reserved for admin UI, but not explicitly blocked for aliases)",
+      "safe": true
+    },
+    "/research-library": {
+      "reason": "No route, path alias, or view claims this path",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Route 'view.search.page' (Views-based search page) is already mapped to this path",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, path alias, or view claims this path",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No route, path alias, or view claims this path",
+      "safe": true
+    }
+  }
+}

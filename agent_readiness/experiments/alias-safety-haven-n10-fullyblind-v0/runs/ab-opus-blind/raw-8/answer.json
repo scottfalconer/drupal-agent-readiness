@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Reserved by the 'files' view page_1 display (provided by the enabled 'file' module), which declares the exact path /admin/content/files. The view is currently disabled so no live route resolves right now, but it is an /admin administrative path that would be reclaimed if the view is re-enabled. Not a clean alias target.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved by the 'scheduler_scheduled_media' view overview display, which declares the exact path /admin/content/media/scheduled (Scheduler module is enabled). The view is currently disabled so no route resolves now, but it sits under /admin and would be reclaimed if the view is re-enabled. Not a clean alias target.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed. /blog is an existing path alias pointing to /page/2 (a Canvas page node) and resolves to route entity.canvas_page.canonical. Reusing it would conflict with that node's alias.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no route, no alias, no redirect, no menu link. The moderated_content view exists but is mounted at /admin/content/moderated, a different path, so it does not collide with the hyphenated /moderated-content.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by the enabled 'search' view: its page display owns /search (route view.search.page). A node alias here would collide with the live search results route.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Nothing claims it: no route (path.validator returns no valid route), no path alias, no redirect, no menu link, and no view declares this path. Free to use as a node alias.",
+      "safe": true
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Path is claimed by 'files' view (display: page_1)",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Path is claimed by 'scheduler_scheduled_media' view (display: overview)",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Path is claimed by entity.canvas_page.canonical route and has active path alias /blog -> /page/2",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route or path alias claims this path. Safe to use as node URL alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Path is claimed by view.search.page route (Search view)",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route or path alias claims this path. Safe to use as node URL alias.",
+      "safe": true
+    }
+  }
+}

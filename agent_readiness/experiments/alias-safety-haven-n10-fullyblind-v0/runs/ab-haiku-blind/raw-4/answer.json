@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Reserved under /admin prefix (system admin area). /admin/content routes exist; /files would conflict with admin namespace.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved under /admin prefix (system admin area). /admin/content/media routes to entity.media.collection; /scheduled would conflict with admin namespace.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already used as path alias for node 2 (published page: 'Six months without a car: what actually changed')",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Not claimed by router or path aliases. Safe to use.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Reserved by enabled 'Search' view at route view.search.page",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Not claimed by router or path aliases. Safe to use.",
+      "safe": true
+    }
+  }
+}

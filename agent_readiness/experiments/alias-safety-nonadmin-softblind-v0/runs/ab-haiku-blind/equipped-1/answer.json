@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Path has latent claim from disabled view scheduler_scheduled_media:overview. Routine feature enablement (Scheduler module) would cause collision.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Path has latent claim from disabled view scheduler_scheduled_taxonomy_term:overview. Routine feature enablement (Scheduler module) would cause collision.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Path has latent claim from disabled view files:page_1. If that view is later enabled, it will collide with a node alias created here.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Path is claimed by enabled Views page display 'search:page'. Creating a node alias here would shadow and hijack this search results listing.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Path is completely unclaimed. No route, alias, view, or entity responds to it. Safe to create a node with this URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "Path is completely unclaimed. No route, alias, view, or entity responds to it. Safe to create a node with this URL alias.",
+      "safe": true
+    }
+  }
+}

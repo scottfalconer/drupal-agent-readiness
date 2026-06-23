@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Path is within /admin/content area which is reserved for administrative UI (routes like media_library.bulk_upload and other admin content management).",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Path conflicts with /admin/content/scheduled (route view.scheduler_scheduled_content.overview). The /admin/content area is reserved for admin UI.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Path alias already exists pointing to /page/2 (a node). Additionally, /blog/feed is a view route (view.blog.rss).",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Path is unclaimed as an alias. Related route is /admin/content/moderated (view.moderated_content.moderated_content), but /moderated-content itself is free.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Path is claimed by route view.search.page (/search is a core search results page).",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Path is unclaimed. No route, no path alias, no view uses this path.",
+      "safe": true
+    }
+  }
+}

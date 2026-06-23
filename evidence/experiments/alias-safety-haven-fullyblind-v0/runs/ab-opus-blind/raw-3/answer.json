@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No route, alias, redirect, or view claims this exact path (sibling admin views like /admin/content/node and /admin/content/media exist, but not this one). Technically free, though placing a public node under the /admin/content/* namespace is unusual and could be shadowed if a module later registers it.",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No route, alias, redirect, or view claims this exact path. /admin/content/media (media view) and /admin/content/scheduled (scheduler view) exist, but /admin/content/media/scheduled does not. Technically free, with the same /admin/content/* namespace caveat as above.",
+      "safe": true
+    },
+    "/blog": {
+      "reason": "Already claimed: path alias /blog resolves to internal /page/2, an existing canvas_page node titled 'Blog' (route entity.canvas_page.canonical).",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route, alias, or redirect claims it. The moderated_content view exists but is mounted at /admin/content/moderated, not /moderated-content, so this path is free.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by the enabled 'search' view: route view.search.page serves a page display at path /search.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No matching route, no path alias, and no redirect claims this path. Free to use as a node URL alias.",
+      "safe": true
+    }
+  }
+}

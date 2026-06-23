@@ -1,0 +1,126 @@
+{
+  "cells": {
+    "ab-gpt-5.5-codex-blind": {
+      "condition": "blind",
+      "model": "gpt-5.5-codex",
+      "model_id": "gpt-5.5-codex",
+      "runs": [
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 2,
+          "latent_reasoned": 2,
+          "latent_total": 2,
+          "passed": true,
+          "run_id": "equipped-3",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 1,
+          "failures": [
+            "/admin/content/files.safe",
+            "/admin/content/media/scheduled.safe"
+          ],
+          "latent_correct": 0,
+          "latent_reasoned": 0,
+          "latent_total": 2,
+          "passed": false,
+          "run_id": "raw-1",
+          "verdict_correct": 4
+        },
+        {
+          "arm": "raw",
+          "command_count": 2,
+          "failures": [
+            "/admin/content/files.safe",
+            "/admin/content/media/scheduled.safe"
+          ],
+          "latent_correct": 0,
+          "latent_reasoned": 0,
+          "latent_total": 2,
+          "passed": false,
+          "run_id": "raw-2",
+          "verdict_correct": 4
+        },
+        {
+          "arm": "raw",
+          "command_count": 1,
+          "failures": [
+            "/admin/content/files.safe",
+            "/admin/content/media/scheduled.safe"
+          ],
+          "latent_correct": 0,
+          "latent_reasoned": 0,
+          "latent_total": 2,
+          "passed": false,
+          "run_id": "raw-3",
+          "verdict_correct": 4
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-06-21T16:03:13.053865+00:00",
+  "latent_paths": [
+    "/admin/content/files",
+    "/admin/content/media/scheduled"
+  ],
+  "model_ids": {
+    "haiku": "claude-haiku-4-5",
+    "opus": "claude-opus-4-8"
+  },
+  "summary": {
+    "ab-gpt-5.5-codex-blind": {
+      "condition": "blind",
+      "model": "gpt-5.5-codex",
+      "model_id": "gpt-5.5-codex",
+      "raw_drush": {
+        "avg_commands": 1.3,
+        "latent_accuracy": 0.0,
+        "latent_correct": 0,
+        "latent_reasoned": 0,
+        "latent_reasoned_accuracy": 0.0,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 0,
+        "verdict_correct": 12,
+        "verdict_total": 18
+      },
+      "site_architecture": {
+        "avg_commands": 6.0,
+        "latent_accuracy": 1.0,
+        "latent_correct": 6,
+        "latent_reasoned": 6,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 6,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      }
+    }
+  }
+}

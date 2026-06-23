@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Reserved. No live route currently because the 'files' view is DISABLED, but the path /admin/content/files is declared in that view's page_1 display config and sits under the reserved /admin namespace; it would be reclaimed as soon as the view is enabled. Not safe for a node alias.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved. Currently no live route because the 'scheduler_scheduled_media' view is DISABLED, but the path /admin/content/media/scheduled is declared in that view's overview display config and is under the reserved /admin namespace; it would be reclaimed when the view is enabled. Not safe for a node alias.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed. There is a path alias /blog -> /page/2 and the router resolves it to entity.canvas_page.canonical for an existing canvas_page entity (id=2, label 'Blog'). A new node alias here would collide with that page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no route, alias, or redirect. Note the Content Moderation view lives at /admin/content/moderated (not /moderated-content), so despite the similar name there is no collision. Free to use.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by the enabled 'search' view: its page display is mounted at /search and the router resolves /search to route view.search.page. The path is live.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, no path alias, and no redirect claim this path. router.no_access_checks throws ResourceNotFoundException, path_alias.manager returns the path unchanged, and no path_alias/redirect entity references it. Free to use.",
+      "safe": true
+    }
+  }
+}

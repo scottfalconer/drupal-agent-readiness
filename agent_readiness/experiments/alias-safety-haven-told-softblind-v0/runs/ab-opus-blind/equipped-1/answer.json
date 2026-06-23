@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Currently no enabled route responds, but the disabled view files:page_1 (views.view.files) declares this exact path. Routine config (enabling the Files admin view) would collide with anything created here. Also under the reserved /admin namespace.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Currently unclaimed, but the disabled view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this path. The scheduler module is enabled, so enabling that view (routine config) would collide. Also under the reserved /admin namespace.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed: it is the canonical URL alias of canvas_page entity 2 (\"Blog\", internal /canvas_page/2). A new node aliased here would collide with / shadow the existing page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no current owner and no latent claim. Despite the name, content_moderation's actual admin path is the hyphen-free /admin/content/moderated (route content_moderation.admin_moderated_content), which does not collide. No view (enabled or disabled), alias, or redirect declares /moderated-content. Safe.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Owned by the Views page display search:page (route view.search.page, path /search), a search_api listing. A node alias here would shadow/hijack the search view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, redirect, or entity responds to this path, and no disabled view or other latent claim declares it. Safe to use as a new node URL alias.",
+      "safe": true
+    }
+  }
+}

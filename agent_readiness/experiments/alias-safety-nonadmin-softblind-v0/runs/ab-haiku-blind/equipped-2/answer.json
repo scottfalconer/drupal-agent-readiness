@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Path is claimed by a disabled view (scheduler_scheduled_media:overview). Collision risk if the Scheduler module view is enabled.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Path is claimed by a disabled view (scheduler_scheduled_taxonomy_term:overview). Collision risk if the Scheduler module view is enabled.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Path is claimed by a disabled view (files:page_1). If that view is enabled during routine config changes, it will collide with any content created here.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Path is claimed by the enabled 'Search' view (views.view.search, display_id: page). Creating a node with this alias would shadow and hijack the view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed path with no routes, aliases, views, or entities currently responding to it. Safe to use as a node URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "Unclaimed path with no routes, aliases, views, or entities currently responding to it. Safe to use as a node URL alias.",
+      "safe": true
+    }
+  }
+}

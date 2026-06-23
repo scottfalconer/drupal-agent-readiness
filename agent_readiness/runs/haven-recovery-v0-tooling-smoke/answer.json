@@ -1,0 +1,12 @@
+{
+  "blast_radius": {
+    "unexpected_routes_remaining": false,
+    "unrelated_aliases_changed": false,
+    "unrelated_bundles_changed": false,
+    "unrelated_permissions_changed": false,
+    "unrelated_views_changed": false
+  },
+  "event_content_removed": true,
+  "event_removed": true,
+  "jsonapi_removed": true
+}

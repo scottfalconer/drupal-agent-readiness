@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Unclaimed but risky: disabled view scheduler_scheduled_media:overview declares this path; if enabled it will collide with any content created here",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Unclaimed but risky: disabled view scheduler_scheduled_taxonomy_term:overview declares this path; if enabled it will collide with any content created here",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Unclaimed but risky: disabled view files:page_1 declares this path; if enabled it will collide with any content created here",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Claimed by enabled Views page display search:page (Search). Creating a node alias here would shadow the view and hijack the page",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, or entity currently responds to this path",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "Unclaimed: no route, alias, view, or entity currently responds to this path",
+      "safe": true
+    }
+  }
+}

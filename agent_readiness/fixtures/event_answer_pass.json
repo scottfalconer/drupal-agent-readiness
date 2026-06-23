@@ -1,0 +1,20 @@
+{
+  "event": {
+    "bundle_created": true,
+    "required_fields": [
+      "field_event_date",
+      "field_event_location"
+    ],
+    "published_sample_created": true
+  },
+  "jsonapi": {
+    "verified": true,
+    "sample_fetch_status": 200
+  },
+  "blast_radius": {
+    "unrelated_bundles_changed": false,
+    "unrelated_views_changed": false,
+    "unrelated_aliases_changed": false,
+    "unrelated_permissions_changed": false
+  }
+}

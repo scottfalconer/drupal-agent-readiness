@@ -1,0 +1,39 @@
+{
+  "candidates": [
+    {
+      "blocker_kind": null,
+      "path": "/this-is-free-xyz",
+      "safe": true
+    },
+    {
+      "blocker_kind": null,
+      "path": "/zzz-unclaimed-1ba269",
+      "safe": true
+    },
+    {
+      "blocker_kind": "view",
+      "path": "/search",
+      "safe": false
+    },
+    {
+      "blocker_kind": "latent_disabled_view",
+      "path": "/research-library",
+      "safe": false
+    },
+    {
+      "blocker_kind": "latent_disabled_view",
+      "path": "/admin/content/media/scheduled",
+      "safe": false
+    },
+    {
+      "blocker_kind": "latent_disabled_view",
+      "path": "/admin/structure/taxonomy/scheduled",
+      "safe": false
+    }
+  ],
+  "latent_paths": [
+    "/research-library",
+    "/admin/content/media/scheduled",
+    "/admin/structure/taxonomy/scheduled"
+  ]
+}

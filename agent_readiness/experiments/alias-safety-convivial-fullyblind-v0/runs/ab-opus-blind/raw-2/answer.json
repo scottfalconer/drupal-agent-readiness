@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed in configuration by the view 'scheduler_scheduled_media' (label \"Scheduled Media\", display overview, path /admin/content/media/scheduled) from the Scheduler module. The view is currently disabled, so the router 404s right now, but the path is reserved and would collide if that view is enabled. Not safe.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by a live route. The enabled view 'canvas_pages' (label \"Pages\", display page_1) serves /admin/content/pages, and the path also resolves to route entity.canvas_page.collection. The path is active and owned.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Claimed in configuration by the view 'scheduler_scheduled_taxonomy_term' (label \"Scheduled Taxonomy Terms\", display overview, path /admin/structure/taxonomy/scheduled) from the Scheduler module. The view is currently disabled (router 404s now), but the path is reserved and would collide if enabled. Not safe.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Free. Router returns 404 (no route), no path alias resolves it (path_alias.manager returns the input unchanged), no redirect entity points to it, and no view display uses this path. Nothing claims it.",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "Free. Router returns 404 (no route), no path alias, no redirect entity, and no view display targets this path. Nothing claims it.",
+      "safe": true
+    }
+  }
+}

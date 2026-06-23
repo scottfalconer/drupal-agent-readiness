@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Latent conflict: no route today, but the 'files' view is DISABLED with a page_1 display whose path is exactly admin/content/files. The file module is installed, so enabling this view (a routine admin/config action) would reclaim the path and collide with the node alias.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Latent conflict: no route today, but the 'scheduler_scheduled_media' view is DISABLED with an overview display whose path is exactly admin/content/media/scheduled. The scheduler module is installed, so enabling this view (routine config) would reclaim the path and collide with the node alias.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Conflict now: /blog is already an active path alias pointing to source /page/2, resolving to route entity.canvas_page.canonical. Using it as a new node alias would collide with the existing alias/page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route and no alias. The moderated_content view exists and is enabled but its page path is /admin/content/moderated, not /moderated-content, so there is no current or latent conflict.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Conflict now: a live route view.search.page (from the ENABLED 'search' view's page display, path 'search') already serves /search. The path is taken regardless of the core search module being uninstalled.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No matching route (ResourceNotFound), no existing path alias, and no view declares this path. Nothing in core or installed modules claims it now or after routine config changes.",
+      "safe": true
+    }
+  }
+}

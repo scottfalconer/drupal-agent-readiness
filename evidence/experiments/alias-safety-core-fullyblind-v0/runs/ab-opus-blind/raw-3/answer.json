@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Claimed by the 'files' View config entity (display page_1, path /admin/content/files). The view is currently DISABLED so no route resolves right now, but the path is owned by installed config; enabling the view would shadow/break the alias. Latent collision -- not safe.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by the 'scheduler_scheduled_media' View config entity (display overview, path /admin/content/media/scheduled). Currently DISABLED so no route resolves now, but the path is owned by installed config and enabling the view would override the alias. Latent collision -- not safe.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by a live route: router matches it to entity.canvas_page.collection, and the enabled 'canvas_pages' View (display page_1) also serves this exact path (view.canvas_pages.page_1). An alias here collides with an active route and would not resolve to the node.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Claimed by the 'scheduler_scheduled_taxonomy_term' View config entity (display overview, path /admin/structure/taxonomy/scheduled). Currently DISABLED so no route resolves now, but the path is owned by installed config and enabling the view would override the alias. Latent collision -- not safe.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. No path alias (getPathByAlias returns it unchanged), no router match (ResourceNotFound), no route by pattern, and no View display uses this path. Safe to use as a new node's URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-b0ed0a": {
+      "reason": "Unclaimed. No path alias, no router match (ResourceNotFound), no route by pattern, and no View display path. Safe to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

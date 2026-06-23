@@ -1,0 +1,71 @@
+{
+  "content_model": {
+    "bundles": [
+      "blog",
+      "person",
+      "project",
+      "resource"
+    ],
+    "event_required_fields": []
+  },
+  "content": {
+    "event_sample_count": 0
+  },
+  "jsonapi": {
+    "event_resource_available": false
+  },
+  "views": [
+    "blog",
+    "projects"
+  ],
+  "aliases": [
+    "/blog",
+    "/home"
+  ],
+  "permissions": {
+    "role_permissions": {
+      "anonymous": [
+        "access content"
+      ],
+      "authenticated": [
+        "access content"
+      ]
+    },
+    "event_permissions_granted": []
+  },
+  "routes": {
+    "event_add_route_available": false
+  },
+  "baseline": {
+    "bundles": [
+      "blog",
+      "person",
+      "project",
+      "resource"
+    ],
+    "views": [
+      "blog",
+      "projects"
+    ],
+    "aliases": [
+      "/blog",
+      "/home"
+    ],
+    "role_permissions": {
+      "anonymous": [
+        "access content"
+      ],
+      "authenticated": [
+        "access content"
+      ]
+    },
+    "event_add_route_available": false
+  },
+  "blast_radius": {
+    "unrelated_bundles_changed": false,
+    "unrelated_views_changed": false,
+    "unrelated_aliases_changed": false,
+    "unrelated_permissions_changed": false,
+    "unexpected_routes_remaining": false
+  }
+}

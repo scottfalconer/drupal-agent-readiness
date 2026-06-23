@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Path has a latent claim: disabled view files:page_1 declares this path. Enabling that view would cause collision.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Path has a latent claim: disabled view scheduler_scheduled_media:overview declares this path. Enabling that view would cause collision.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Path is claimed by canvas_page 2 (\"Blog\") as its canonical URL. Alias /blog points to /page/2.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Path is unclaimed. No route, alias, view, or entity currently responds to it.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Path is claimed by the Views page display search:page (Search view). Creating a node alias here would shadow this view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Path is unclaimed. No route, alias, view, or entity currently responds to it.",
+      "safe": true
+    }
+  }
+}

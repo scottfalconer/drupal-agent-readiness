@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by View 'Scheduled Media' (overview display)",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by View 'Pages' (entity.canvas_page.collection route)",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Claimed by View 'Scheduled Taxonomy Terms' (overview display)",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, alias, or view claims this path. Safe for new node.",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "No route, alias, or view claims this path. Safe for new node.",
+      "safe": true
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "/admin/content/files": {
+    "blocker_kind": "latent_disabled_view",
+    "detail": {
+      "disabled_views": [
+        {
+          "display_id": "page_1",
+          "status": false,
+          "view_id": "files"
+        }
+      ]
+    },
+    "safe": false
+  },
+  "/admin/content/media/scheduled": {
+    "blocker_kind": "latent_disabled_view",
+    "detail": {
+      "disabled_views": [
+        {
+          "display_id": "overview",
+          "status": false,
+          "view_id": "scheduler_scheduled_media"
+        }
+      ]
+    },
+    "safe": false
+  },
+  "/blog": {
+    "blocker_kind": "entity",
+    "detail": {
+      "entity_type": "canvas_page",
+      "id": "2",
+      "route": "entity.canvas_page.canonical"
+    },
+    "safe": false
+  },
+  "/moderated-content": {
+    "blocker_kind": null,
+    "detail": [],
+    "safe": true
+  },
+  "/search": {
+    "blocker_kind": "view",
+    "detail": {
+      "display_id": "page",
+      "route": "view.search.page",
+      "view_id": "search"
+    },
+    "safe": false
+  },
+  "/this-is-free-xyz": {
+    "blocker_kind": null,
+    "detail": [],
+    "safe": true
+  }
+}

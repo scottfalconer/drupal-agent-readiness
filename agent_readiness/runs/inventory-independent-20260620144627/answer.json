@@ -1,0 +1,133 @@
+{
+  "canvas": {
+    "embedded_listings": [
+      {
+        "component_id": "block.views_block.blog-all",
+        "display": "all",
+        "label": "Blog: All blog posts",
+        "page_entity_id": "2",
+        "page_label": "Blog",
+        "page_path": "/blog",
+        "slot": "main_slot",
+        "view": "blog"
+      },
+      {
+        "component_id": "block.views_block.projects-all",
+        "display": "all",
+        "label": "Projects: All projects",
+        "page_entity_id": "5",
+        "page_label": "Projects",
+        "page_path": "/projects",
+        "slot": "main_slot",
+        "view": "projects"
+      },
+      {
+        "component_id": "block.views_block.projects-featured",
+        "display": "featured",
+        "label": "Projects: Featured project",
+        "page_entity_id": "5",
+        "page_label": "Projects",
+        "page_path": "/projects",
+        "slot": null,
+        "view": "projects"
+      },
+      {
+        "component_id": "block.views_block.blog-latest",
+        "display": "latest",
+        "label": "Blog: Latest blog posts",
+        "page_entity_id": "6",
+        "page_label": "Home",
+        "page_path": "/home",
+        "slot": "main_slot",
+        "view": "blog"
+      }
+    ],
+    "page_count": 7
+  },
+  "command_runner": "vendor/bin/drush",
+  "content_model": {
+    "bundles": [
+      {
+        "bundle": "blog",
+        "entity_type": "node",
+        "label": "Blog post"
+      },
+      {
+        "bundle": "page",
+        "entity_type": "node",
+        "label": "Utility page"
+      },
+      {
+        "bundle": "person_profile",
+        "entity_type": "node",
+        "label": "Person profile"
+      },
+      {
+        "bundle": "project",
+        "entity_type": "node",
+        "label": "Project"
+      }
+    ],
+    "moderation_enabled": true
+  },
+  "pathauto": {
+    "enabled": true,
+    "patterns": [
+      {
+        "id": "blog_content",
+        "label": "Blog content",
+        "pattern": "/blog/[node:created:html_month]/[node:title]",
+        "status": true,
+        "type": "canonical_entities:node",
+        "weight": -5
+      },
+      {
+        "id": "menu_path",
+        "label": "Menu Path",
+        "pattern": "/[node:menu-link:parents:join-path]/[node:title]",
+        "status": true,
+        "type": "canonical_entities:node",
+        "weight": 10
+      },
+      {
+        "id": "page_content",
+        "label": "Page content",
+        "pattern": "/[node:title]",
+        "status": true,
+        "type": "canonical_entities:node",
+        "weight": -5
+      },
+      {
+        "id": "project_content",
+        "label": "Project content",
+        "pattern": "/projects/[node:created:html_month]/[node:title]",
+        "status": true,
+        "type": "canonical_entities:node",
+        "weight": -5
+      }
+    ]
+  },
+  "paths": {
+    "/blog": {
+      "claimed": true,
+      "entity_type": "canvas_page",
+      "owner_kind": "entity"
+    },
+    "/home": {
+      "claimed": true,
+      "entity_type": "canvas_page",
+      "owner_kind": "entity"
+    },
+    "/node": {
+      "claimed": false,
+      "owner_kind": "unclaimed"
+    }
+  },
+  "provenance": {
+    "active_config_source": "database",
+    "config_sync_status": "empty",
+    "project_name": "drupal/cms",
+    "project_version": "2.1.3",
+    "site_template": "haven"
+  }
+}

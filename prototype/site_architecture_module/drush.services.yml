@@ -1,0 +1,9 @@
+services:
+  site_architecture.commands:
+    class: Drupal\site_architecture\Drush\Commands\SiteArchitectureCommands
+    arguments:
+      - '@Drupal\site_architecture\PathOwnershipResolver'
+      - '@Drupal\site_architecture\SiteSurfaceInventoryBuilder'
+      - '@Drupal\site_architecture\SiteBriefBuilder'
+    tags:
+      - { name: drush.command }

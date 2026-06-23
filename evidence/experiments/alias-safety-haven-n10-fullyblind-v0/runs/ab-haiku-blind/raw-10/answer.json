@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Claimed by files view page_1 display",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by scheduler_scheduled_media view overview display",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed by Canvas Page entity node with alias /blog (points to /page/2)",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Claimed by moderated_content view (admin/content/moderated)",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Claimed by search view page display route",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, path alias, or view claims this path. Safe to use.",
+      "safe": true
+    }
+  }
+}

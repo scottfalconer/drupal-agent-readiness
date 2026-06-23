@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "No enabled route responds now, but the DISABLED view scheduler_scheduled_media:overview (config views.view.scheduler_scheduled_media, status:false) declares this exact path, and it sits under the /admin administrative namespace. Enabling Scheduler's media overview would collide. Risky to claim.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "No enabled route responds now, but the DISABLED view scheduler_scheduled_taxonomy_term:overview (config views.view.scheduler_scheduled_taxonomy_term, status:false) declares this exact path under the /admin administrative namespace. Enabling Scheduler's taxonomy overview would collide. Risky to claim.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "No enabled route responds now, but the DISABLED view files:page_1 (config views.view.files, status:false) declares this exact path. If that view is ever enabled it would collide with a node placed here. Risky to claim.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Claimed by the enabled Views page display search:page (config views.view.search, route view.search.page, a Search API listing over search_api_index_content). A node with this alias would shadow the view and hijack the page. Router match confirms it resolves to view.search.page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. path-owner reports claimed:false with no route, alias, view, or entity responding, and no negative or latent contracts. Router match confirms ResourceNotFoundException. Safe to use as a new node's URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "Unclaimed. path-owner reports claimed:false with no owner and no negative/latent contracts. Router match confirms no route responds. Safe to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No system routes or path aliases claim this path",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No system routes or path aliases claim this path",
+      "safe": true
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by system routes 'entity.canvas_page.collection' and 'view.canvas_pages.page_1' (Canvas Pages view)",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "No system routes or path aliases claim this path",
+      "safe": true
+    },
+    "/this-is-free-xyz": {
+      "reason": "No system routes or path aliases claim this path",
+      "safe": true
+    },
+    "/zzz-unclaimed-b0ed0a": {
+      "reason": "No system routes or path aliases claim this path",
+      "safe": true
+    }
+  }
+}

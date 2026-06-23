@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Although currently unclaimed, a disabled view (files:page_1) declares this path. Enabling that view would collide with any content created here, making this path risky to claim.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Although currently unclaimed, a disabled view (scheduler_scheduled_media:overview) declares this path. Enabling that view would collide with any content created here, making this path risky to claim.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by the enabled view canvas_pages:page_1, which produces a computed listing of canvas pages. Using this as a node alias would shadow the view and hijack the page.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Although currently unclaimed, a disabled view (scheduler_scheduled_taxonomy_term:overview) declares this path. Enabling that view would collide with any content created here, making this path risky to claim.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, alias, view, or entity currently responds to this path. It is unclaimed and safe to use for a new node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-b0ed0a": {
+      "reason": "No route, alias, view, or entity currently responds to this path. It is unclaimed and safe to use for a new node alias.",
+      "safe": true
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Conflicts with Scheduled Media View (scheduler module)",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Conflicts with Scheduled Taxonomy Terms View (scheduler module)",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Conflicts with Files View page display",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Conflicts with Search module View (view.search.page route)",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, alias, or View uses this path",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No route, alias, or View uses this path",
+      "safe": true
+    }
+  }
+}

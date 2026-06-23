@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No route, no alias, no redirect, and no view display at this path; no routes exist under the /admin/content/files prefix. Technically unclaimed. Note it lives in the /admin/content/ administrative namespace, so it is an unusual/ill-advised place for a content node alias, but nothing currently claims the exact path.",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No route, no alias, no redirect, and no view at this exact path. Routes under /admin/content/media/ are bulk-upload, bulk-upload/{media_type}, and the media collection at /admin/content/media; none match /scheduled. Scheduler's scheduled-content view is at /admin/content/scheduled (different path). Unclaimed, though it sits in the /admin namespace.",
+      "safe": true
+    },
+    "/blog": {
+      "reason": "Already claimed by a path alias: /blog -> /page/2, which resolves to route entity.canvas_page.canonical (an existing Canvas page node). Using it as a new node's alias would collide. (Separately, /blog/feed is an RSS view, but the conflict is the /blog alias itself.)",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No alias, no route, no redirect, and not a view path. The Content Moderation 'Moderated content' view is at /admin/content/moderated (different path), so /moderated-content is unclaimed.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by the core 'search' view page display (route view.search.page, view search:page) bound to path /search.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No path alias, no route (router.no_access_checks throws ResourceNotFoundException), no view display path, and no redirect entity claims it. Free to use as a node alias.",
+      "safe": true
+    }
+  }
+}

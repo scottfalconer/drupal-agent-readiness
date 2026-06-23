@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Risky latent claim: the (currently disabled) view scheduler_scheduled_media:overview declares this exact path. No route responds today, but if that Scheduler view is enabled it will collide with any node created here. Also an admin path. Not safe for new content.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by the enabled Views page display canvas_pages:page_1 ('Pages') at route entity.canvas_page.collection. A node alias here would shadow this view and hijack the admin listing page.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Risky latent claim: the (currently disabled) view scheduler_scheduled_taxonomy_term:overview declares this exact path. No route responds today, but enabling that Scheduler view would collide with a node here. Also an admin path. Not safe for new content.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds to this path, and no negative/latent contracts. Verified independently that there is no path alias and no router route. Safe for a new node URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds, and no negative/latent contracts. Verified no alias and no route exist. Safe for a new node URL alias.",
+      "safe": true
+    }
+  }
+}

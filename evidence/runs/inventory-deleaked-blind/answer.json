@@ -1,0 +1,53 @@
+{
+  "canvas": {
+    "embedded_listings": [
+      "blog:all",
+      "blog:latest",
+      "projects:all",
+      "projects:featured"
+    ],
+    "page_count": 7
+  },
+  "command_runner": "ddev drush",
+  "content_model": {
+    "bundles": [
+      "blog",
+      "page",
+      "person_profile",
+      "project"
+    ],
+    "moderation_enabled": true
+  },
+  "pathauto": {
+    "enabled": true,
+    "patterns": [
+      "/blog/[node:created:html_month]/[node:title]",
+      "/[node:title]",
+      "/projects/[node:created:html_month]/[node:title]",
+      "[node:menu-link:parents:join-path]/[node:title]"
+    ]
+  },
+  "paths": {
+    "/blog": {
+      "claimed": true,
+      "entity_type": "canvas_page",
+      "owner_kind": "entity"
+    },
+    "/home": {
+      "claimed": true,
+      "entity_type": "canvas_page",
+      "owner_kind": "entity"
+    },
+    "/node": {
+      "claimed": true,
+      "owner_kind": "route"
+    }
+  },
+  "provenance": {
+    "active_config_source": "database",
+    "config_sync_status": "empty",
+    "project_name": "drupal/cms",
+    "project_version": "2.1.3",
+    "site_template": "haven"
+  }
+}

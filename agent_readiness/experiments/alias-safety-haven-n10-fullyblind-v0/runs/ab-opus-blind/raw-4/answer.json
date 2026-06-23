@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Latent collision. No live route today because view 'files' (page_1) is disabled, but that view's page display config still claims path /admin/content/files. Re-enabling the Files view would collide with a node alias here.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Latent collision. No live route today because view 'scheduler_scheduled_media' (overview) is disabled, but its page display config still claims path /admin/content/media/scheduled. Enabling scheduler media would collide with a node alias here.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed: path_alias entity id 23 maps /blog -> /page/2 (canvas_page node 2, 'Blog'), resolving to route entity.canvas_page.canonical.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route, no alias, no view page display at this path. (The moderated_content admin view is at /admin/content/moderated, not here.) Free to use.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by a live route view.search.page (path /search) from the enabled 'search' view page display.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, no path alias, and no view claims this path. Free to use as a node alias.",
+      "safe": true
+    }
+  }
+}

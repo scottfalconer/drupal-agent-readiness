@@ -1,0 +1,34 @@
+{
+  "run_id": "haven-inventory-v0-codex-smoke",
+  "task_id": "inventory.read_only",
+  "prompt_version": "v0.1",
+  "substrate": {
+    "id": "haven-clean-install",
+    "source_path": "<workspace>/haven-clean-install",
+    "run_site_path": "<workspace>/tmp/agent-readiness/haven-inventory-v0-codex-smoke/site"
+  },
+  "agent": {
+    "name": "Codex",
+    "model": "gpt-5",
+    "harness": "local Codex CLI",
+    "system_prompt": "Default Codex coding-agent prompt",
+    "tooling": ["shell", "drush", "Python evaluator"]
+  },
+  "metrics": {
+    "elapsed_seconds": 120.0,
+    "tool_calls": 8,
+    "human_rescues": 0
+  },
+  "evaluator": {
+    "passed": true,
+    "failures": [],
+    "warnings": []
+  },
+  "failure_labels": [],
+  "artifacts": {
+    "answer_json": "runs/haven-inventory-v0-codex-smoke/answer.json",
+    "transcript": "runs/haven-inventory-v0-codex-smoke/transcript.md",
+    "state_json": "runs/haven-inventory-v0-codex-smoke/state.json",
+    "evaluator_json": "runs/haven-inventory-v0-codex-smoke/evaluator.json"
+  }
+}

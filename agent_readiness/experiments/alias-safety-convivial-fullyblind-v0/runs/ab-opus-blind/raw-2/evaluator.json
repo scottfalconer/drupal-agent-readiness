@@ -1,0 +1,11 @@
+{
+  "details": {
+    "candidates_total": 5,
+    "latent_correct": 2,
+    "latent_total": 2,
+    "verdict_correct": 5
+  },
+  "failures": [],
+  "passed": true,
+  "warnings": []
+}

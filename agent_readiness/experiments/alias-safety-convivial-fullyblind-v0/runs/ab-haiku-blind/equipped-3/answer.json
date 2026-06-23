@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Disabled view scheduler_scheduled_media:overview declares this path; collision risk if view is enabled.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by Views display canvas_pages:page_1 (Pages). Creating a node with this alias would shadow the view.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Disabled view scheduler_scheduled_taxonomy_term:overview declares this path; collision risk if view is enabled.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it.",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it.",
+      "safe": true
+    }
+  }
+}

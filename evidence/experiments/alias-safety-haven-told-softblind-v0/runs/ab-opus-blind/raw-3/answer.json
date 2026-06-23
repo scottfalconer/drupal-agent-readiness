@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "No route at the moment, but the File module (installed) ships the 'files' view whose page display path is exactly /admin/content/files. The view is currently disabled; enabling it (routine admin config) creates a route that shadows the node alias.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "No route at the moment, but the Scheduler module (installed) ships the 'scheduler_scheduled_media' view whose overview display path is exactly /admin/content/media/scheduled. It is disabled only because no media type has scheduling enabled; turning on media scheduling (routine Scheduler config) enables the view and its route, shadowing the node alias.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Conflicts now: /blog is already an active path alias for /page/2, a real canvas_page node labeled 'Blog'. Reusing it would clash with the existing alias.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No alias and no route. The content-moderation 'moderated_content' view lives at /admin/content/moderated, not here, so there is no current or future collision from routine config. Path is clear.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Conflicts now: the enabled core 'search' view provides an exact route (view.search.page) at /search. A static route takes precedence over a node alias, so the node would be unreachable here.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No existing path alias and no route matches it (now or via routing). No view, module, or entity claims this path. Free to use as a node alias.",
+      "safe": true
+    }
+  }
+}

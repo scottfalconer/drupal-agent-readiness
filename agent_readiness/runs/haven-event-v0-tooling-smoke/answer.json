@@ -1,0 +1,20 @@
+{
+  "blast_radius": {
+    "unrelated_aliases_changed": false,
+    "unrelated_bundles_changed": false,
+    "unrelated_permissions_changed": false,
+    "unrelated_views_changed": false
+  },
+  "event": {
+    "bundle_created": true,
+    "published_sample_created": true,
+    "required_fields": [
+      "field_event_date",
+      "field_event_location"
+    ]
+  },
+  "jsonapi": {
+    "sample_fetch_status": 200,
+    "verified": true
+  }
+}

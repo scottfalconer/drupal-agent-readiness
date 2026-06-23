@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Files view is disabled; route not active",
+      "safe": true
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Scheduler scheduled media view is disabled; route not active",
+      "safe": true
+    },
+    "/blog": {
+      "reason": "Claimed by canvas_page entity 'Blog' (route: entity.canvas_page.canonical)",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route match, no path alias, no entity claim",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by 'search' view display (route: view.search.page)",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route match, no path alias, no entity claim",
+      "safe": true
+    }
+  }
+}

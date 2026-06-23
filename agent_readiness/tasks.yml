@@ -1,0 +1,41 @@
+version: 1
+artifact: "State of Agents in Drupal"
+scorecard: "Drupal Agent Readiness Scorecard"
+substrate:
+  id: haven-clean-install
+  path: <workspace>/haven-clean-install
+  copy_root: <workspace>/tmp/agent-readiness
+tasks:
+  - id: inventory.read_only
+    order: 1
+    prompt: prompts/inventory.read_only.md
+    evaluator: evaluators/evaluate_inventory.py
+    mode: read_only
+    success: "Agent reports the live site's command runner, provenance, config truth source, path ownership, Canvas/listing surfaces, content model, Pathauto, moderation, and config sync state without human rescue."
+  - id: act.event_jsonapi
+    order: 2
+    prompt: prompts/act.event_jsonapi.md
+    evaluator: evaluators/evaluate_event.py
+    mode: write_disposable_clone
+    success: "Agent creates a minimal Event content type, required fields, one published sample event, and verifies JSON:API access without unrelated state changes. This is a minimal write/evaluator smoke task, not the fuller editorial Events-section roadmap task."
+  - id: recover.event_jsonapi
+    order: 3
+    prompt: prompts/recover.event_jsonapi.md
+    evaluator: evaluators/evaluate_recovery.py
+    mode: write_disposable_clone
+    success: "Agent removes or restores the Event work from the prior task without leaving content, routes, JSON:API resources, aliases, or unrelated blast radius behind."
+  - id: assess.alias_safety
+    order: 4
+    prompt: prompts/assess.alias_safety.fully_blind.md
+    control_prompt: prompts/assess.alias_safety.told.md
+    evaluator: evaluators/evaluate_alias_safety.py
+    candidates: prompts/assess.alias_safety.candidates.json
+    public_candidates: prompts/assess.alias_safety.candidates.public.json
+    ground_truth_reference: prompts/assess.alias_safety.ground_truth.json
+    mode: read_only
+    success: "Agent classifies each candidate path as safe/unsafe to claim with a node alias from a path-only candidate list, matching independently collected ground truth. Designed to test whether live site self-description (site_architecture path-owner) materially helps over raw inspection."
+future_tasks:
+  - id: act.events_section_editorial
+    prompt: prompts/act.events_section_editorial.md
+    status: future
+    success: "Future richer Events-section task: editorial workflow, View/listing ownership, content-editor access, public output, JSON:API, and operation-specific path safety."

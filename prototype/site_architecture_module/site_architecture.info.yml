@@ -1,0 +1,8 @@
+name: Site Architecture
+type: module
+description: 'PoC: resolves which subsystem owns a given path and projects it through the core CLI. Validates ai_context #3586150 against core CLI #3453474.'
+package: AI
+core_version_requirement: ^11.3 || ^11.4
+dependencies:
+  - drupal:path_alias
+  - drupal:views

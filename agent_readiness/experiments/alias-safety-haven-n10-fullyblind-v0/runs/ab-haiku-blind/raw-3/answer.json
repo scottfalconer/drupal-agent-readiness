@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Files view is already published at this administrative path.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Scheduler scheduled media view is already published at this administrative path.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Canvas page entity 'Blog' (ID 2) is already published at this URL via path alias.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No route, alias, or entity claims this path. Available for use. (Note: /admin/content/moderated exists as a view, but that's distinct.)",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Search view is published at this path as a core Drupal search page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route, alias, or entity claims this path. Available for use.",
+      "safe": true
+    }
+  }
+}

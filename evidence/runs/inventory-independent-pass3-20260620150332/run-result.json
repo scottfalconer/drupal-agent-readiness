@@ -1,0 +1,38 @@
+{
+  "agent": {
+    "harness": "fresh Codex subagent",
+    "model": "gpt-5",
+    "name": "Independent Codex subagent",
+    "system_prompt": "Default worker prompt plus fixed inventory.read_only task packet",
+    "tooling": [
+      "shell",
+      "drush",
+      "php-eval"
+    ]
+  },
+  "artifacts": {
+    "answer_json": "runs/inventory-independent-pass3-20260620150332/answer.json",
+    "evaluator_json": "runs/inventory-independent-pass3-20260620150332/evaluator.json",
+    "state_json": "runs/inventory-independent-pass3-20260620150332/state.json",
+    "transcript": "runs/inventory-independent-pass3-20260620150332/transcript.md"
+  },
+  "evaluator": {
+    "failures": [],
+    "passed": true,
+    "warnings": []
+  },
+  "failure_labels": [],
+  "metrics": {
+    "elapsed_seconds": 372.0,
+    "human_rescues": 0,
+    "tool_calls": 33
+  },
+  "prompt_version": "v0.1",
+  "run_id": "inventory-independent-pass3-20260620150332",
+  "substrate": {
+    "id": "haven-clean-install",
+    "run_site_path": "<workspace>/tmp/agent-readiness/inventory-independent-pass3-20260620150332/site",
+    "source_path": "<workspace>/haven-clean-install"
+  },
+  "task_id": "inventory.read_only"
+}

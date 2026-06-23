@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Sits under the live admin route entity.media.collection (/admin/content/media), and the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path. Admin namespace plus latent scheduler-view collision make it unsafe for a node alias.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Sits under the live admin route entity.taxonomy_vocabulary.collection (/admin/structure/taxonomy), and the DISABLED view scheduler_scheduled_taxonomy_term:overview (views.view.scheduler_scheduled_taxonomy_term) declares this exact path. Admin namespace plus latent scheduler-view collision make it unsafe for a node alias.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "No enabled route responds today, but the DISABLED view files:page_1 (views.view.files) declares this exact path. If that view is ever enabled it collides with the node. Latent claim makes this risky/unsafe.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Claimed by the Views page display search:page (route view.search.page, config views.view.search), a Search API listing over search_api_index_content. A node alias here would shadow the view and hijack the page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Fully unclaimed: no route, alias, view, or entity responds to this path, and no latent (disabled) claims exist. Safe to use as a new node's URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "Fully unclaimed: no route, alias, view, or entity responds, and no latent claims. Safe to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

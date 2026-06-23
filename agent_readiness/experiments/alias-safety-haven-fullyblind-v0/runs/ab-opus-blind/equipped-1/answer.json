@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Risky / latent claim. No enabled route currently responds, but a DISABLED view files:page_1 (views.view.files) declares this exact path; enabling it would collide. It is also in the reserved /admin namespace.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Risky / latent claim. No enabled route currently responds, but a DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path; enabling it would collide. It is also in the reserved /admin namespace.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed. It is the canonical URL alias of canvas_page entity 2 ('Blog'), aliasing internal path /page/2. A new node here would collide with that existing entity's page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed. path-owner reports claimed=false with no alias/owner/negative contracts; router match returns ResourceNotFoundException and no alias exists. The core Content Moderation 'moderated content' view is not enabled here, so the path is genuinely free.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by the Views page display search:page (config views.view.search, route view.search.page), a computed search listing over search_api_index_content. A node with this alias would shadow the view and hijack the page.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. No route, alias, view, or entity responds to this path, and no latent claims. Router match returns ResourceNotFoundException and there is no alias. Free to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "runs": [
+    {
+      "arm": "raw_drush",
+      "candidates_total": 6,
+      "failures": [],
+      "latent_correct": 2,
+      "latent_total": 2,
+      "passed": true,
+      "run_id": "raw-1",
+      "status": "scored",
+      "verdict_correct": 6
+    },
+    {
+      "arm": "raw_drush",
+      "candidates_total": 6,
+      "failures": [],
+      "latent_correct": 2,
+      "latent_total": 2,
+      "passed": true,
+      "run_id": "raw-2",
+      "status": "scored",
+      "verdict_correct": 6
+    },
+    {
+      "arm": "raw_drush",
+      "candidates_total": 6,
+      "failures": [],
+      "latent_correct": 2,
+      "latent_total": 2,
+      "passed": true,
+      "run_id": "raw-3",
+      "status": "scored",
+      "verdict_correct": 6
+    },
+    {
+      "arm": "site_architecture",
+      "candidates_total": 6,
+      "failures": [],
+      "latent_correct": 2,
+      "latent_total": 2,
+      "passed": true,
+      "run_id": "equipped-1",
+      "status": "scored",
+      "verdict_correct": 6
+    },
+    {
+      "arm": "site_architecture",
+      "candidates_total": 6,
+      "failures": [],
+      "latent_correct": 2,
+      "latent_total": 2,
+      "passed": true,
+      "run_id": "equipped-2",
+      "status": "scored",
+      "verdict_correct": 6
+    },
+    {
+      "arm": "site_architecture",
+      "candidates_total": 6,
+      "failures": [],
+      "latent_correct": 2,
+      "latent_total": 2,
+      "passed": true,
+      "run_id": "equipped-3",
+      "status": "scored",
+      "verdict_correct": 6
+    }
+  ],
+  "summary": {
+    "raw_drush": {
+      "latent_accuracy": 1.0,
+      "latent_correct": 6,
+      "latent_total": 6,
+      "passes": 3,
+      "runs": 3
+    },
+    "site_architecture": {
+      "latent_accuracy": 1.0,
+      "latent_correct": 6,
+      "latent_total": 6,
+      "passes": 3,
+      "runs": 3
+    }
+  }
+}

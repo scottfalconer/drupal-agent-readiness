@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Reserved admin route (view.files.page_1). Files management interface. Admin routes cannot be overridden by node aliases.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved admin route (view.scheduler_scheduled_media.overview). Scheduled media management. Admin routes cannot be overridden by node aliases.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Conflicts with Canvas page 'Blog' (canonical route) and existing path alias /blog\u2192/page/2. Cannot reuse this path.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No existing route or path alias. Note: /admin/content/moderated exists as a system view route, but /moderated-content itself is available.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Reserved system route (view.search.page). View displays the search form. Path cannot be used for a node alias.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No existing route or path alias. Safe to use as a new node URL alias.",
+      "safe": true
+    }
+  }
+}

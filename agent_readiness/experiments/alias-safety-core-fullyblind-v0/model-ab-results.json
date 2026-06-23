@@ -1,0 +1,224 @@
+{
+  "cells": {
+    "ab-haiku-blind": {
+      "condition": "blind",
+      "model": "haiku",
+      "model_id": "claude-haiku-4-5",
+      "runs": [
+        {
+          "arm": "raw",
+          "command_count": 6,
+          "failures": [
+            "/admin/content/files.safe",
+            "/admin/content/media/scheduled.safe",
+            "/admin/structure/taxonomy/scheduled.safe"
+          ],
+          "latent_correct": 0,
+          "latent_reasoned": 0,
+          "latent_total": 3,
+          "passed": false,
+          "run_id": "raw-1",
+          "verdict_correct": 3
+        },
+        {
+          "arm": "equipped",
+          "command_count": 7,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 3,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "equipped-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 7,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 0,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "raw-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 3,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "equipped-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 4,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 0,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "raw-3",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 3,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "equipped-3",
+          "verdict_correct": 6
+        }
+      ]
+    },
+    "ab-opus-blind": {
+      "condition": "blind",
+      "model": "opus",
+      "model_id": "claude-opus-4-8",
+      "runs": [
+        {
+          "arm": "raw",
+          "command_count": 5,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 3,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "raw-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 8,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 3,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "equipped-1",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 5,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 3,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "raw-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 9,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 3,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "equipped-2",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "raw",
+          "command_count": 6,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 3,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "raw-3",
+          "verdict_correct": 6
+        },
+        {
+          "arm": "equipped",
+          "command_count": 8,
+          "failures": [],
+          "latent_correct": 3,
+          "latent_reasoned": 3,
+          "latent_total": 3,
+          "passed": true,
+          "run_id": "equipped-3",
+          "verdict_correct": 6
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-06-21T13:40:20.762996+00:00",
+  "latent_paths": [
+    "/admin/content/files",
+    "/admin/content/media/scheduled",
+    "/admin/structure/taxonomy/scheduled"
+  ],
+  "model_ids": {
+    "haiku": "claude-haiku-4-5",
+    "opus": "claude-opus-4-8"
+  },
+  "summary": {
+    "ab-haiku-blind": {
+      "condition": "blind",
+      "model": "haiku",
+      "model_id": "claude-haiku-4-5",
+      "raw_drush": {
+        "avg_commands": 5.7,
+        "latent_accuracy": 0.667,
+        "latent_correct": 6,
+        "latent_reasoned": 0,
+        "latent_reasoned_accuracy": 0.0,
+        "latent_total": 9,
+        "n": 3,
+        "passes": 2,
+        "verdict_correct": 15,
+        "verdict_total": 18
+      },
+      "site_architecture": {
+        "avg_commands": 6.3,
+        "latent_accuracy": 1.0,
+        "latent_correct": 9,
+        "latent_reasoned": 9,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 9,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      }
+    },
+    "ab-opus-blind": {
+      "condition": "blind",
+      "model": "opus",
+      "model_id": "claude-opus-4-8",
+      "raw_drush": {
+        "avg_commands": 5.3,
+        "latent_accuracy": 1.0,
+        "latent_correct": 9,
+        "latent_reasoned": 9,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 9,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      },
+      "site_architecture": {
+        "avg_commands": 8.3,
+        "latent_accuracy": 1.0,
+        "latent_correct": 9,
+        "latent_reasoned": 9,
+        "latent_reasoned_accuracy": 1.0,
+        "latent_total": 9,
+        "n": 3,
+        "passes": 3,
+        "verdict_correct": 18,
+        "verdict_total": 18
+      }
+    }
+  }
+}

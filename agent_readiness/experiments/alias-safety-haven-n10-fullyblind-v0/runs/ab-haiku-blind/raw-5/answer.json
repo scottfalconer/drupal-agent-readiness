@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Admin path prefix /admin/ is reserved for site administration. Cannot use as node URL alias.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Admin path prefix /admin/ is reserved for site administration. Cannot use as node URL alias.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed by path alias (ID 23, published). Routes to /page/2.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No existing path alias or route. Available for new node URL alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Reserved route 'view.search.page' controls this path (search view).",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No existing path alias or route. Available for new node URL alias.",
+      "safe": true
+    }
+  }
+}

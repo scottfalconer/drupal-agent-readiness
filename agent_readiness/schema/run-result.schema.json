@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drupal.local/agent-readiness/run-result.schema.json",
+  "title": "Drupal Agent Readiness v0 Run Result",
+  "type": "object",
+  "required": [
+    "run_id",
+    "task_id",
+    "prompt_version",
+    "substrate",
+    "agent",
+    "metrics",
+    "evaluator",
+    "failure_labels",
+    "artifacts"
+  ],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "task_id": {
+      "type": "string",
+      "enum": ["inventory.read_only", "act.event_jsonapi", "recover.event_jsonapi"]
+    },
+    "prompt_version": {"type": "string", "minLength": 1},
+    "substrate": {
+      "type": "object",
+      "required": ["id", "source_path", "run_site_path"],
+      "properties": {
+        "id": {"type": "string"},
+        "source_path": {"type": "string"},
+        "run_site_path": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "agent": {
+      "type": "object",
+      "required": ["name", "model", "harness"],
+      "properties": {
+        "name": {"type": "string"},
+        "model": {"type": "string"},
+        "harness": {"type": "string"},
+        "system_prompt": {"type": "string"},
+        "tooling": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "metrics": {
+      "type": "object",
+      "required": ["elapsed_seconds", "tool_calls", "human_rescues"],
+      "properties": {
+        "elapsed_seconds": {"type": "number", "minimum": 0},
+        "tool_calls": {"type": "integer", "minimum": 0},
+        "human_rescues": {"type": "integer", "minimum": 0},
+        "tokens_input": {"type": "integer", "minimum": 0},
+        "tokens_output": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "evaluator": {
+      "type": "object",
+      "required": ["passed", "failures"],
+      "properties": {
+        "passed": {"type": "boolean"},
+        "failures": {"type": "array", "items": {"type": "string"}},
+        "warnings": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "failure_labels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "setup",
+          "command_runner",
+          "config_access",
+          "path_ownership",
+          "canvas_surface",
+          "content_model",
+          "pathauto",
+          "moderation",
+          "jsonapi",
+          "blast_radius",
+          "human_rescue",
+          "other"
+        ]
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "required": ["answer_json", "transcript"],
+      "properties": {
+        "answer_json": {"type": "string"},
+        "transcript": {"type": "string"},
+        "state_json": {"type": "string"},
+        "evaluator_json": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

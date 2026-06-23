@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Claimed by disabled view files:page_1. Currently unclaimed but risky; enabling that view would collide.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by disabled view scheduler_scheduled_media:overview. Currently unclaimed but risky; enabling that view would collide.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed as canonical alias of canvas_page 2 (\"Blog\" entity). Assigning it to a new node would shadow this entity.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by the enabled Views page display search:page. Creating a node alias here would shadow the search view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it.",
+      "safe": true
+    }
+  }
+}

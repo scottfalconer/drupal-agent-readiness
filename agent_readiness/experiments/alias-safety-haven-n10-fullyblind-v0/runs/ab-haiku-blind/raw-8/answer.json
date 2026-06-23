@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Claimed by files View (page_1 display at /admin/content/files)",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Claimed by scheduler_scheduled_media View (overview display at /admin/content/media/scheduled)",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed by blog View RSS display (/blog/feed) and path alias /blog -> /page/2",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "No path alias or View claims this path",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by search View (page display at /search)",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No path alias or View claims this path",
+      "safe": true
+    }
+  }
+}

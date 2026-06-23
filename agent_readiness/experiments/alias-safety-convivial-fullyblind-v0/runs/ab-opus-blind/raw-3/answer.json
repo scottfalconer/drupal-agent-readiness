@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved by the view 'scheduler_scheduled_media' (display 'overview', path admin/content/media/scheduled) from the enabled scheduler module. The view is currently DISABLED so no route is registered right now, but the config entity exists and enabling it would register this route and collide with the alias. Not safe.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Already claimed by two registered routes: the canvas_page entity collection (entity.canvas_page.collection) and an ENABLED view (view.canvas_pages.page_1, view 'canvas_pages' display page_1). Cannot be used as a node alias.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Reserved by the view 'scheduler_scheduled_taxonomy_term' (display 'overview', path admin/structure/taxonomy/scheduled) from the enabled scheduler module. The view is currently DISABLED so no route is registered now, but the config entity exists and enabling it would register this route and collide with the alias. Not safe.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No router route (router.no_access_checks + route_provider both return nothing), no path alias maps to or from it, and no view display claims this path. Genuinely unclaimed and safe as a new node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "No router route, no path alias, and no view display uses this path. Unclaimed and safe as a new node alias.",
+      "safe": true
+    }
+  }
+}

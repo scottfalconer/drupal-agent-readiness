@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "No route or path alias claims this path; safe for new node alias.",
+      "safe": true
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "No route or path alias claims this path; safe for new node alias.",
+      "safe": true
+    },
+    "/research-library": {
+      "reason": "No route or path alias claims this path; safe for new node alias.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by 'search' view (view.search.page route) \u2014 do not use as node alias.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No route or path alias claims this path; safe for new node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "No route or path alias claims this path; safe for new node alias.",
+      "safe": true
+    }
+  }
+}

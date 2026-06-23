@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Risky latent claim: disabled view files:page_1 declares this path.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Risky latent claim: disabled view scheduler_scheduled_media:overview declares this path.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Claimed by alias to /page/2, owned by published canvas_page 2, label \"Blog\".",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds to this path.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Claimed by Views page display search:page at /search.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds to this path.",
+      "safe": true
+    }
+  }
+}

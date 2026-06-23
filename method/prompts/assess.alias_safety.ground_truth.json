@@ -1,0 +1,36 @@
+{
+  "task_id": "assess.alias_safety",
+  "description": "Human/evaluator reference for the static Haven candidate set. Do not pass this file to agents in fully blind runs.",
+  "ground_truth": {
+    "/this-is-free-xyz": {
+      "safe": true,
+      "blocker_kind": null,
+      "note": "No route, alias, or View page declares it."
+    },
+    "/moderated-content": {
+      "safe": true,
+      "blocker_kind": null,
+      "note": "Distractor: sounds claimed, but the moderated_content View lives at /admin/content/moderated."
+    },
+    "/blog": {
+      "safe": false,
+      "blocker_kind": "entity",
+      "note": "Canonical page of a Canvas page entity."
+    },
+    "/search": {
+      "safe": false,
+      "blocker_kind": "view",
+      "note": "Active Views page display."
+    },
+    "/admin/content/files": {
+      "safe": false,
+      "blocker_kind": "latent_disabled_view",
+      "note": "Currently unrouted; a disabled files View declares this path."
+    },
+    "/admin/content/media/scheduled": {
+      "safe": false,
+      "blocker_kind": "latent_disabled_view",
+      "note": "Currently unrouted; a disabled scheduler_scheduled_media View declares this path."
+    }
+  }
+}

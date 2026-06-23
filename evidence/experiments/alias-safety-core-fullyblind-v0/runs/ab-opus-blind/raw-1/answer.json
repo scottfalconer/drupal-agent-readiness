@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Reserved by the DISABLED View 'files' (display page_1, path admin/content/files). No active route right now because the view is disabled, but the path is claimed by view config and would collide if the view is enabled, so it is not safe for a node alias.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved by the DISABLED View 'scheduler_scheduled_media' (display overview, path admin/content/media/scheduled). Currently no route resolves it, but the Scheduler module's view config claims this path and would own the route once enabled, so it is unsafe.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by a live system route: router matches entity.canvas_page.collection, served by the ENABLED 'canvas_pages' view (display page_1, path admin/content/pages). An active route already owns this path.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Reserved by the DISABLED View 'scheduler_scheduled_taxonomy_term' (display overview, path admin/structure/taxonomy/scheduled). No live route today since the view is disabled, but the path is claimed by Scheduler view config and would collide if enabled, so it is unsafe for a node alias.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "No router match (router.no_access_checks throws ResourceNotFoundException), no path_alias (alias manager returns the path unchanged, no path_alias entity), no redirect, and no enabled/disabled View claims this path. Genuinely free for a new node alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-b0ed0a": {
+      "reason": "No router match, no existing path_alias entity, no redirect, and no View display uses this path. Unclaimed and safe for a new node alias.",
+      "safe": true
+    }
+  }
+}

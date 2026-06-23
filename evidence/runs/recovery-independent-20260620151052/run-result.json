@@ -1,0 +1,38 @@
+{
+  "agent": {
+    "harness": "fresh Codex subagent",
+    "model": "gpt-5",
+    "name": "Independent Codex subagent",
+    "system_prompt": "Default worker prompt plus fixed recover.event_jsonapi task packet",
+    "tooling": [
+      "shell",
+      "drush",
+      "php-eval"
+    ]
+  },
+  "artifacts": {
+    "answer_json": "runs/recovery-independent-20260620151052/answer.json",
+    "evaluator_json": "runs/recovery-independent-20260620151052/evaluator.json",
+    "state_json": "runs/recovery-independent-20260620151052/state.json",
+    "transcript": "runs/recovery-independent-20260620151052/transcript.md"
+  },
+  "evaluator": {
+    "failures": [],
+    "passed": true,
+    "warnings": []
+  },
+  "failure_labels": [],
+  "metrics": {
+    "elapsed_seconds": 506.0,
+    "human_rescues": 0,
+    "tool_calls": 48
+  },
+  "prompt_version": "v0.1",
+  "run_id": "recovery-independent-20260620151052",
+  "substrate": {
+    "id": "haven-clean-install",
+    "run_site_path": "<workspace>/tmp/agent-readiness/event-independent-20260620151052/site",
+    "source_path": "<workspace>/haven-clean-install"
+  },
+  "task_id": "recover.event_jsonapi"
+}

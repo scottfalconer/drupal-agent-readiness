@@ -1,0 +1,431 @@
+{
+  "summary": "Knowledge-blind alias-safety A/B (Haiku + Opus, raw vs site_architecture) on one parameterized substrate",
+  "agentCount": 12,
+  "logs": [
+    "substrate=haven-nonadmin-fullyblind candidates=6 rawClones=3 eqClones=3"
+  ],
+  "result": {
+    "blind": [
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No path alias, node, or view claims this path. Free to use."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No path alias, node, or view claims this path. Free to use."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by View 'search' (view.search.page router route)"
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Claimed by View 'files'"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Claimed by View 'scheduler_scheduled_media'"
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Claimed by View 'scheduler_scheduled_taxonomy_term'"
+            }
+          },
+          "command_count": 9
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed path. No route, alias, view or entity currently responds to this path. Safe for a new node URL alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Unclaimed path. No route, alias, view or entity currently responds to this path. Safe for a new node URL alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by active Views page display search:page. Creating a node alias here would shadow and hijack this search results page."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Unclaimed currently but a disabled view (files:page_1) declares this path. If that view is enabled, it will collide with any content created here."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Unclaimed currently but a disabled view (scheduler_scheduled_media:overview) declares this path. If that view is enabled, it will collide with any content created here."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Unclaimed currently but a disabled view (scheduler_scheduled_taxonomy_term:overview) declares this path. If that view is enabled, it will collide with any content created here."
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No route or path alias claims this path; safe for new node alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No route or path alias claims this path; safe for new node alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by 'search' view (view.search.page route) — do not use as node alias."
+            },
+            "/research-library": {
+              "safe": true,
+              "reason": "No route or path alias claims this path; safe for new node alias."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": true,
+              "reason": "No route or path alias claims this path; safe for new node alias."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": true,
+              "reason": "No route or path alias claims this path; safe for new node alias."
+            }
+          },
+          "command_count": 5
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity currently responds to this path"
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity currently responds to this path"
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by enabled Views page display search:page (Search). Creating a node alias here would shadow the view and hijack the page"
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Unclaimed but risky: disabled view files:page_1 declares this path; if enabled it will collide with any content created here"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Unclaimed but risky: disabled view scheduler_scheduled_media:overview declares this path; if enabled it will collide with any content created here"
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Unclaimed but risky: disabled view scheduler_scheduled_taxonomy_term:overview declares this path; if enabled it will collide with any content created here"
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No route, path alias, or view claims this path"
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No route, path alias, or view claims this path"
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Route 'view.search.page' (Views-based search page) is already mapped to this path"
+            },
+            "/research-library": {
+              "safe": true,
+              "reason": "No route, path alias, or view claims this path"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": true,
+              "reason": "No route exists; path is under /admin namespace (reserved for admin UI, but not explicitly blocked for aliases)"
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": true,
+              "reason": "No route exists; path is under /admin namespace (reserved for admin UI, but not explicitly blocked for aliases)"
+            }
+          },
+          "command_count": 9
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "haiku",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity responds to this path"
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Unclaimed: no route, alias, view, or entity responds to this path"
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by enabled Views page display (search:page). Creating an alias would shadow the view."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "At risk: disabled view files:page_1 declares this path; collision if the view is enabled"
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "At risk: disabled view scheduler_scheduled_media:overview declares this path; collision if the view is enabled"
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "At risk: disabled view scheduler_scheduled_taxonomy_term:overview declares this path; collision if the view is enabled"
+            }
+          },
+          "command_count": 6
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 1,
+        "answer": {
+          "command_count": 5,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No URL alias, no route (router.no_access_checks returns ResourceNotFoundException), no redirect, and no view declares this path. Free to use as a new node alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No URL alias, no route, no redirect, and no view declares this path. Free to use as a new node alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by an active route view.search.page (the enabled 'search' view's page display at /search). A node alias here would collide with the live search page route."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Declared by the 'files' view (page_1 display) at path /research-library. The view is currently disabled so no route matches right now, but the path is reserved in view config; enabling the view would reclaim it and collide with a node alias. Treat as not safe."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Declared by the 'scheduler_scheduled_media' view (overview display) at this path. The view is currently disabled (no active route now), but the path is reserved in view config and sits under the reserved /admin namespace; enabling Scheduler's media view reclaims it. Not safe for a node alias."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Declared by the 'scheduler_scheduled_taxonomy_term' view (overview display) at this path. The view is currently disabled (no active route now), but the path is reserved in view config and lives under the reserved /admin namespace; enabling the view reclaims it. Not safe for a node alias."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 1,
+        "answer": {
+          "command_count": 9,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Unclaimed. path-owner reports claimed:false with no route, alias, view, or entity responding, and no negative or latent contracts. Router match confirms ResourceNotFoundException. Safe to use as a new node's URL alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Unclaimed. path-owner reports claimed:false with no owner and no negative/latent contracts. Router match confirms no route responds. Safe to use as a new node's URL alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by the enabled Views page display search:page (config views.view.search, route view.search.page, a Search API listing over search_api_index_content). A node with this alias would shadow the view and hijack the page. Router match confirms it resolves to view.search.page."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "No enabled route responds now, but the DISABLED view files:page_1 (config views.view.files, status:false) declares this exact path. If that view is ever enabled it would collide with a node placed here. Risky to claim."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "No enabled route responds now, but the DISABLED view scheduler_scheduled_media:overview (config views.view.scheduler_scheduled_media, status:false) declares this exact path, and it sits under the /admin administrative namespace. Enabling Scheduler's media overview would collide. Risky to claim."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "No enabled route responds now, but the DISABLED view scheduler_scheduled_taxonomy_term:overview (config views.view.scheduler_scheduled_taxonomy_term, status:false) declares this exact path under the /admin administrative namespace. Enabling Scheduler's taxonomy overview would collide. Risky to claim."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 2,
+        "answer": {
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No route, no path alias, no redirect, and no view page uses this path. Nothing on the live site claims it; safe as a new node alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No route match, no alias row, no redirect, and no view page path. Completely unclaimed; safe to use."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by the core Search view: route 'view.search.page' resolves to it (view:search, display 'page', path /search). Using it as a node alias would collide with the existing search results page."
+            },
+            "/research-library": {
+              "safe": true,
+              "reason": "No exact route (ResourceNotFound), no path_alias row, no redirect entity, and no enabled view uses this path. Unclaimed; safe as a new node alias."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "The exact leaf has no route/alias/redirect/view, but it sits under the live admin namespace (/admin/content/media is a routed view base). Aliases under /admin/* are reserved by admin routing and will not resolve to a node, so it is not usable as a node URL alias."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "No route/alias/redirect/view claims the exact path, but it falls under the live /admin/structure/taxonomy admin route space. /admin/* is reserved by admin routing; a node alias here would be shadowed and never resolve, so it is not safe to use."
+            }
+          },
+          "command_count": 7
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 2,
+        "answer": {
+          "command_count": 9,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Fully unclaimed: no route, alias, view, or entity responds to this path, and no latent (disabled) claims exist. Safe to use as a new node's URL alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Fully unclaimed: no route, alias, view, or entity responds, and no latent claims. Safe to use as a new node's URL alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by the Views page display search:page (route view.search.page, config views.view.search), a Search API listing over search_api_index_content. A node alias here would shadow the view and hijack the page."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "No enabled route responds today, but the DISABLED view files:page_1 (views.view.files) declares this exact path. If that view is ever enabled it collides with the node. Latent claim makes this risky/unsafe."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Sits under the live admin route entity.media.collection (/admin/content/media), and the DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path. Admin namespace plus latent scheduler-view collision make it unsafe for a node alias."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Sits under the live admin route entity.taxonomy_vocabulary.collection (/admin/structure/taxonomy), and the DISABLED view scheduler_scheduled_taxonomy_term:overview (views.view.scheduler_scheduled_taxonomy_term) declares this exact path. Admin namespace plus latent scheduler-view collision make it unsafe for a node alias."
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "raw",
+        "n": 3,
+        "answer": {
+          "command_count": 5,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "No router match, no path alias, no path_alias entity, and no view display (enabled or disabled) claims this path. Free to use."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "No router match, no path alias, no path_alias entity, and no view display claims this path. Free to use."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Claimed by the ENABLED 'Search' view (display 'page'), serving live route view.search.page at /search. Hard collision with an active route."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "Claimed by the 'Files' view (display page_1, path /research-library). The view is currently DISABLED so no live route exists right now, but the path is reserved in view config; enabling the view would collide with the node alias."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "Claimed by the 'Scheduled Media' view (scheduler_scheduled_media, display 'overview', path admin/content/media/scheduled). The view is currently DISABLED (no live route now), but the path is reserved in config; also sits under the reserved /admin namespace, an unsuitable place for a content node alias."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "Claimed by the 'Scheduled Taxonomy Terms' view (scheduler_scheduled_taxonomy_term, display 'overview', path admin/structure/taxonomy/scheduled). The view is currently DISABLED (no live route now), but the path is reserved in config; also under the reserved /admin namespace. (No vocabulary named 'scheduled' exists, so it is not a live taxonomy overview route, but it remains unsafe.)"
+            }
+          }
+        }
+      },
+      {
+        "condition": "blind",
+        "model": "opus",
+        "arm": "equipped",
+        "n": 3,
+        "answer": {
+          "command_count": 4,
+          "assessments": {
+            "/this-is-free-xyz": {
+              "safe": true,
+              "reason": "Fully unclaimed: no route, no URL alias, no view, and no latent/disabled-view claims. Router returns ResourceNotFoundException. Safe to use as a new node's alias."
+            },
+            "/zzz-unclaimed-1ba269": {
+              "safe": true,
+              "reason": "Fully unclaimed: no route, no URL alias, no view, and no latent claims. Router returns ResourceNotFoundException. Safe to use as a new node's alias."
+            },
+            "/search": {
+              "safe": false,
+              "reason": "Already claimed by an enabled Views page display (config views.view.search, route view.search.page, base table search_api_index_content). A node with this alias would shadow and hijack the live search page."
+            },
+            "/research-library": {
+              "safe": false,
+              "reason": "No enabled route today, but the DISABLED view files:page_1 (views.view.files) declares this exact path. If that view is ever enabled it collides with a node placed here. Latent claim makes it risky."
+            },
+            "/admin/content/media/scheduled": {
+              "safe": false,
+              "reason": "No enabled route today, but the DISABLED Scheduler view scheduler_scheduled_media:overview declares this path; enabling it would collide. Also under the reserved /admin namespace. Risky."
+            },
+            "/admin/structure/taxonomy/scheduled": {
+              "safe": false,
+              "reason": "No enabled route today, but the DISABLED Scheduler view scheduler_scheduled_taxonomy_term:overview declares this path; enabling it would collide. Also under the reserved /admin namespace. Risky."
+            }
+          }
+        }
+      }
+    ]
+  }
+}

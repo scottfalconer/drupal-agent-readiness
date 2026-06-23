@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/this-is-free-xyz": {
+      "safe": true,
+      "reason": "No matching route, no view page, and no existing path alias. Free to use."
+    },
+    "/moderated-content": {
+      "safe": true,
+      "reason": "No route or alias. The moderated_content view lives at /admin/content/moderated, not this path, so no conflict now or after enabling moderation views."
+    },
+    "/blog": {
+      "safe": false,
+      "reason": "Already an existing path alias (id=23) pointing to /page/2 (canvas_page 'Blog'). A new node alias /blog would duplicate/collide with this alias."
+    },
+    "/search": {
+      "safe": false,
+      "reason": "Matches the static route view.search.page (the enabled core search View page at /search). Routes win over aliases, so the node would be unreachable at this path."
+    },
+    "/admin/content/files": {
+      "safe": false,
+      "reason": "The core 'files' View is present but DISABLED, with a page display whose path is exactly /admin/content/files. Enabling that View (a routine config change) registers a route here that would shadow the alias."
+    },
+    "/admin/content/media/scheduled": {
+      "safe": false,
+      "reason": "The 'scheduler_scheduled_media' View (Scheduler module is installed) is present but DISABLED, with a page display at exactly /admin/content/media/scheduled. Turning on media scheduling / enabling that View registers a route that would shadow the alias."
+    }
+  }
+}

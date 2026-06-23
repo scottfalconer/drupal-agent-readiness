@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Risky: disabled view files:page_1 declares this path. If that view is enabled in future it would collide with any content created here.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Risky: disabled view scheduler_scheduled_media:overview declares this path. If that view is enabled in future it would collide with any content created here.",
+      "safe": false
+    },
+    "/blog": {
+      "reason": "Already claimed as the canonical page of canvas_page 2 (\"Blog\"). Creating a node here would shadow the existing canvas page.",
+      "safe": false
+    },
+    "/moderated-content": {
+      "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it. Safe to use for a new node.",
+      "safe": true
+    },
+    "/search": {
+      "reason": "Already claimed by the enabled Views page display search:page. A node URL alias here would shadow and hijack this computed listing view.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed path; no route, alias, view, or entity currently responds to it. Safe to use for a new node.",
+      "safe": true
+    }
+  }
+}

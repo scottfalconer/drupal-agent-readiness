@@ -1,0 +1,10 @@
+{
+  "assessments": {
+    "/this-is-free-xyz": {"safe": true, "blocker_kind": null},
+    "/moderated-content": {"safe": true, "blocker_kind": null},
+    "/blog": {"safe": false, "blocker_kind": "entity"},
+    "/search": {"safe": false, "blocker_kind": "view"},
+    "/admin/content/files": {"safe": false, "blocker_kind": "latent_disabled_view"},
+    "/admin/content/media/scheduled": {"safe": false, "blocker_kind": "latent_disabled_view"}
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Latent claim and reserved namespace. The DISABLED view scheduler_scheduled_media:overview (views.view.scheduler_scheduled_media) declares this exact path; enabling it would collide with any node placed here. The path also sits under the reserved /admin/* route namespace. Unsafe.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Claimed by the Views page display canvas_pages:page_1 ('Pages', route entity.canvas_page.collection, config views.view.canvas_pages). A node alias here would shadow this enabled view and hijack the admin listing page.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Latent claim and reserved namespace. The DISABLED view scheduler_scheduled_taxonomy_term:overview (views.view.scheduler_scheduled_taxonomy_term) declares this exact path; enabling it would collide with any node placed here. The path also sits under the reserved /admin/* route namespace. Unsafe.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds to this path and no latent/negative contracts. site-architecture:path-owner reports claimed=false and no path alias resolves to it. Safe to use as a new node's URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-a015b1": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds and no latent claims. site-architecture:path-owner reports claimed=false and no alias resolves to it. Safe to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

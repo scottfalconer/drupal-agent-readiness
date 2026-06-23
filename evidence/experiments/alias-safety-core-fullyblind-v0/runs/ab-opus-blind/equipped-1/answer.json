@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/files": {
+      "reason": "Nothing currently responds, but the DISABLED core 'files' view (views.view.files:page_1) declares this exact path, and the file module is enabled. Enabling the view would collide. It also sits under the reserved /admin namespace. Risky -- do not use.",
+      "safe": false
+    },
+    "/admin/content/media/scheduled": {
+      "reason": "Nothing currently responds, but the DISABLED 'scheduler_scheduled_media:overview' view declares this exact path, and the scheduler + media modules are enabled. Enabling the view would collide. Also under the reserved /admin namespace. Risky -- do not use.",
+      "safe": false
+    },
+    "/admin/content/pages": {
+      "reason": "Actively claimed by the enabled Views page display canvas_pages:page_1 ('Pages', route entity.canvas_page.collection). A node alias here would shadow the view and hijack the admin listing.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Nothing currently responds, but the DISABLED 'scheduler_scheduled_taxonomy_term:overview' view declares this exact path, and the scheduler module is enabled. Enabling the view would collide. Also under the reserved /admin namespace. Risky -- do not use.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds to this path and there are no latent claims. Safe to use as a new node's URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-b0ed0a": {
+      "reason": "Unclaimed: no route, alias, view, or entity responds to this path and there are no latent claims. Safe to use as a new node's URL alias.",
+      "safe": true
+    }
+  }
+}

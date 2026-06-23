@@ -1,0 +1,28 @@
+{
+  "assessments": {
+    "/admin/content/media/scheduled": {
+      "reason": "Reserved by the Scheduler module's 'scheduler_scheduled_media' overview view, which declares path admin/content/media/scheduled. It is currently disabled only because scheduling isn't enabled on a media type yet; scheduler and media modules are both installed, so enabling scheduling on any media bundle imports/enables this view (via SchedulerManager::viewsUpdate) and reclaims the path. Also an admin namespace. Not safe.",
+      "safe": false
+    },
+    "/admin/structure/taxonomy/scheduled": {
+      "reason": "Reserved by the Scheduler module's 'scheduler_scheduled_taxonomy_term' overview view, which declares path admin/structure/taxonomy/scheduled. Disabled now only because scheduling isn't enabled on a taxonomy vocabulary; scheduler and taxonomy modules are installed, so enabling scheduling routinely imports/enables this view and reclaims the path. Also an admin namespace. Not safe.",
+      "safe": false
+    },
+    "/research-library": {
+      "reason": "Claimed by a DISABLED view: views.view.files display page_1 declares path 'research-library'. No enabled route responds now, but if that view is ever enabled (a routine config change) it collides with a node placed here. Risky/unsafe.",
+      "safe": false
+    },
+    "/search": {
+      "reason": "Actively owned by the enabled 'search' view page display (route view.search.page, path /search). A node with this alias would shadow/hijack the search page. Not safe.",
+      "safe": false
+    },
+    "/this-is-free-xyz": {
+      "reason": "Unclaimed. Live router returns no route, no path alias exists, and the path-owner tool reports no owner and no negative/latent contracts. Safe to use as a node URL alias.",
+      "safe": true
+    },
+    "/zzz-unclaimed-1ba269": {
+      "reason": "Unclaimed. Live router returns no route, no path alias exists, no owner and no latent claims. Safe to use as a node URL alias.",
+      "safe": true
+    }
+  }
+}
