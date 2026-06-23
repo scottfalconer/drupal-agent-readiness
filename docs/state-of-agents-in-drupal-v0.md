@@ -14,25 +14,27 @@ Some Drupal paths look unused but are still claimed by disabled configuration. A
 
 In the headline run on stock Drupal CMS / Haven, each run asked the agent to judge two hidden path claims. Ten runs produced 20 latent-claim judgments per arm.
 
-| Model | Drush-only: hidden claims flagged | With site self-description: hidden claims flagged |
-| --- | --- | --- |
-| claude-haiku-4-5 | 16/20 (80%) | 20/20 (100%) |
-| claude-opus-4-8 | 14/20 (70%) | 20/20 (100%) |
+| Model | Runs / hidden judgments | Drush-only verdict | Drush-only reason named disabled View | With self-description verdict | With self-description reason |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| claude-haiku-4-5 | 10 / 20 | 16/20 (80%) | 0/20 (0%) | 20/20 (100%) | 20/20 (100%) |
+| claude-opus-4-8 | 10 / 20 | 14/20 (70%) | 14/20 (70%) | 20/20 (100%) | 20/20 (100%) |
 
 Put differently: Drush-only agents incorrectly judged hidden claimed paths as safe in roughly 20-30% of latent-claim judgments. With site self-description through `site-architecture:path-owner`, we observed 0 such misses in the headline run.
 
+The stock Haven hidden paths are under `/admin`, so the verdict and the reason are separated. A verdict can be correct because an agent treats `/admin` paths as conventionally unsafe; the reasoned column shows whether the agent actually identified the disabled-View declaration.
+
 Initial non-Claude evidence shows the same pattern: OpenAI Codex (gpt-5.5) missed 6/6 hidden claims with Drush-only inspection and flagged 6/6 with site self-description. That is encouraging breadth evidence, not yet a claim across model providers.
 
-Full write-up: `finding-site-self-description-v0.md`. Why this bench exists: `why-this-bench.md`. Full method and reproduction steps: `../method/HARNESS.md`.
+Full write-up: `finding-site-self-description-v0.md` (source package path: `public/finding-site-self-description-v0.md`). Why this bench exists: `why-this-bench.md` (source package path: `public/why-this-bench.md`). Full method and reproduction steps: `method/HARNESS.md` in the repo root.
 
 ## What the method proves
 
-The package is an evidence loop: fixed public tasks, prompts, transcripts, live-state capture, mechanical evaluators, scorecard rows, readiness flags, and package hashes.
+The package is an evidence loop: fixed public tasks, prompts, retained answers, scorecard run transcripts, live-state capture, mechanical evaluators, scorecard rows, readiness flags, and package hashes.
 
 **This release makes three claims:**
 
-1. **Finding:** site self-description prevents a measured alias-safety failure in this constrained task.
-2. **Method:** Drupal agent-readiness can be measured with public tasks, transcripts, state capture, and mechanical evaluators.
+1. **Finding:** site self-description changed behavior and reduced measured alias-safety misses in this constrained task.
+2. **Method:** constrained Drupal agent tasks can be measured with public tasks, retained answers, scorecard transcripts, state capture, and mechanical evaluators.
 3. **Roadmap signal:** site self-description is a concrete Drupal roadmap item because it changes agent behavior.
 
 The package may include tooling/evaluator smoke runs. Treat those as proof that the evidence loop works, not as blinded independent-agent results.
@@ -50,7 +52,7 @@ The package may include tooling/evaluator smoke runs. Treat those as proof that 
 
 - Hold the Drupal starting site fixed: Drupal CMS/Haven.
 - Keep prompts and evaluators versioned.
-- Require `answer.json`, transcript, live-state collection, evaluator output, and run-result JSON for each scored run.
+- Require `answer.json`, transcript or command log, live-state collection, evaluator output, and run-result JSON for each scored run.
 - Treat low v0 numbers as baseline evidence, not a failed initiative.
 
 ## Scorecard
@@ -65,7 +67,7 @@ These are constrained v0 tasks. They prove the evidence loop and evaluator contr
 
 | This scorecard proves | This scorecard does not prove |
 | --- | --- |
-| The harness can collect runs, transcripts, state, and evaluator output. | Drupal is broadly agent-ready. |
+| The harness can collect runs, retained answers, transcripts/logs, state, and evaluator output. | Drupal is broadly agent-ready. |
 | The evaluator can pass correct answers and fail incorrect answers. | Agents can complete realistic Drupal projects. |
 | Public, repeatable Drupal agent tasks are feasible. | The task set is statistically powered. |
 | A retained failure can identify concrete missing context. | The current pass rate generalizes beyond these constrained tasks. |
@@ -133,9 +135,9 @@ What the experiment found:
 - When the agent is not told the hidden risk, Drush-only inspection misses disabled-View hidden path claims.
 - On stock Haven at n=10 runs per arm, with two hidden-claim judgments per run, Drush-only inspection flagged 80% (haiku) and 70% (opus) of hidden claims.
 - With `path-owner`, both models flagged 100% of those hidden claims.
-- Initial OpenAI Codex evidence shows the same direction: Drush-only missed 6/6 hidden claims and site self-description flagged 6/6. That is non-Claude breadth evidence, not a provider-general claim.
+- Initial OpenAI Codex evidence shows the same direction: Drush-only missed 6/6 hidden claims and site self-description flagged 6/6. That is non-Claude breadth evidence at n=3, not a provider-general claim.
 
-So the tool's narrow correctness value is preventing hidden-path misses for lightly prompted agents. Evidence, not proof. See `experiments/alias-safety-SYNTHESIS.md`.
+So the tool's narrow correctness value is reducing observed hidden-path misses for lightly prompted agents. Evidence, not proof. See the retained `alias-safety-SYNTHESIS.md` in the experiment evidence package.
 
 ## Publication Notes
 
@@ -152,12 +154,13 @@ Completed in v0.2:
 - De-leaked the inventory prompt (v0.2): expected values are no longer printed in the prompt, so passing requires live discovery.
 - Retained a failing run to validate failure classification and demonstrate that the evaluator separates correct from incorrect answers on identical ground truth.
 - Hardened the inventory evaluator: list fields are graded as sets (hallucinated surfaces fail) and Canvas page count must match exactly.
-- Built and ran the assess.alias_safety A/B (`site-architecture:path-owner` vs Drush-only inspection) across two models, three stock Drupal starting sites plus a controlled non-admin hidden path claim, and three prompt framings; finding: the tool prevents hidden-path misses for lightly-prompted agents (stock Haven n=10: 80% haiku / 70% opus hidden-claim flags vs 100% with site self-description).
+- Built and ran the assess.alias_safety A/B (`site-architecture:path-owner` vs Drush-only inspection) across two models, three stock Drupal starting sites plus a controlled non-admin hidden path claim, and three prompt framings; finding: the tool reduced observed hidden-path misses for lightly-prompted agents (stock Haven n=10: 80% haiku / 70% opus hidden-claim flags vs 100% with site self-description).
 
 Remaining:
 
 1. Repeat the non-Claude alias-safety run at n=10 and add another non-Claude stack before making a claim across model providers.
-2. Repeated runs for act.event_jsonapi and recover.event_jsonapi, not only inventory.read_only.
-3. Token cost alongside elapsed time in the public scorecard.
-4. Raise n on the remaining Drupal starting sites (core, Convivial) for the condition where the agent is not told the hidden risk; stock Haven is done at n=10.
-5. A larger task set before any aggregate readiness claim.
+2. Repeat a fully blind non-admin hidden-path condition at n=10 before making that the headline rather than a breadth check.
+3. Repeated runs for act.event_jsonapi and recover.event_jsonapi, not only inventory.read_only.
+4. Token cost alongside elapsed time in the public scorecard.
+5. Raise n on the remaining Drupal starting sites (core, Convivial) for the condition where the agent is not told the hidden risk; stock Haven is done at n=10.
+6. A larger task set before any aggregate readiness claim.

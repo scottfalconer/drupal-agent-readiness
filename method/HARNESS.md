@@ -1,7 +1,7 @@
 # alias-safety harness — reproducible, bring-your-own-agent
 
 This is the harness behind the alias-safety finding (see
-`experiments/alias-safety-SYNTHESIS.md`). It is vendor-neutral: prepare a
+`../evidence/experiments/alias-safety-SYNTHESIS.md`). It is vendor-neutral: prepare a
 substrate, run **any** agent against it through a documented contract, and score
 the result against a core-only referee. The site clones are disposable; the
 scripts and the per-run artifacts are what's retained.
@@ -50,7 +50,7 @@ headline finding prompt.
 
 ### Example runners
 
-- **Claude (workflow):** see `scripts/_n10_workflow.js` / `_substrate_ab_workflow.js`
+- **Claude (workflow):** see `../repro/scripts/_n10_workflow.js` / `../repro/scripts/_substrate_ab_workflow.js`
   (retained run-specific scratch; set the clone/candidate consts and run via the
   Workflow tool).
 - **Codex (OpenAI):** writes the schema'd answer straight to a file —

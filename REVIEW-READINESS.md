@@ -47,7 +47,9 @@ This v0 package covers only the middle of that loop:
 5. `evidence/experiments/alias-safety-SYNTHESIS.md`
    - Technical synthesis and retained evidence behind the finding.
 6. `CLEAN-MANIFEST.sha256`
-   - Clean-folder hash manifest for review-package integrity.
+   - Tracked-file hash manifest for review-package integrity. It is generated
+     from repository files only and excludes `.git`, caches, and the manifest
+     itself.
 
 ## Safe claims
 
@@ -77,6 +79,7 @@ This v0 package covers only the middle of that loop:
 
 ## Package note
 
-`CLEAN-MANIFEST.sha256` is the manifest for this clean review folder.
+`CLEAN-MANIFEST.sha256` is the manifest for this clean review folder's tracked
+files.
 `docs/package-manifest.json` is the generated source-package manifest retained
 for reproducibility of the original `agent_readiness/` layout.

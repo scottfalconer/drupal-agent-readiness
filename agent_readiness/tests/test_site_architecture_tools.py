@@ -37,6 +37,12 @@ class SiteArchitectureToolsTest(unittest.TestCase):
         self.assertTrue(plan["drush"].is_absolute())
         self.assertTrue(plan["module_source"].is_absolute())
 
+    def test_default_module_source_points_to_bundled_prototype(self) -> None:
+        from agent_readiness.site_architecture_tools import DEFAULT_MODULE_SOURCE
+
+        self.assertEqual("site_architecture_module", DEFAULT_MODULE_SOURCE.name)
+        self.assertTrue((DEFAULT_MODULE_SOURCE / "site_architecture.info.yml").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,26 +1,6 @@
 {
   "candidates": [
     {
-      "blocker_kind": null,
-      "path": "/this-is-free-xyz",
-      "safe": true
-    },
-    {
-      "blocker_kind": null,
-      "path": "/moderated-content",
-      "safe": true
-    },
-    {
-      "blocker_kind": "entity",
-      "path": "/blog",
-      "safe": false
-    },
-    {
-      "blocker_kind": "view",
-      "path": "/search",
-      "safe": false
-    },
-    {
       "blocker_kind": "latent_disabled_view",
       "path": "/admin/content/files",
       "safe": false
@@ -29,6 +9,26 @@
       "blocker_kind": "latent_disabled_view",
       "path": "/admin/content/media/scheduled",
       "safe": false
+    },
+    {
+      "blocker_kind": "entity",
+      "path": "/blog",
+      "safe": false
+    },
+    {
+      "blocker_kind": null,
+      "path": "/moderated-content",
+      "safe": true
+    },
+    {
+      "blocker_kind": "view",
+      "path": "/search",
+      "safe": false
+    },
+    {
+      "blocker_kind": null,
+      "path": "/this-is-free-xyz",
+      "safe": true
     }
   ],
   "latent_paths": [

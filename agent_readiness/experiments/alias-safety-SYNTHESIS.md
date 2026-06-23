@@ -8,10 +8,12 @@ is enabled. We swept **model** (`claude-haiku-4-5`, `claude-opus-4-8`), **prompt
 (told the criterion → soft-blind → fully-blind), and **substrate** (Haven, core-std,
 Convivial — all stock — plus a Haven clone with a controlled non-admin latent injected).
 
-All numbers are latent-claim accuracy, n=3 per cell. **verdict** = flagged the path
-unsafe (the actionable answer). **reasoned** = a supporting free-text heuristic for
-whether the reason recognized the *disabled* nature, vs. getting the verdict right by an
-"admin path is reserved" shortcut or by treating the disabled view as active.
+All numbers are latent-claim accuracy. The headline stock Haven run is n=10 per
+arm; cross-substrate and initial non-Claude breadth runs are n=3 per cell.
+**verdict** = flagged the path unsafe (the actionable answer). **reasoned** = a
+supporting free-text heuristic for whether the reason recognized the *disabled*
+nature, vs. getting the verdict right by an "admin path is reserved" shortcut or
+by treating the disabled view as active.
 
 ## Headline
 
@@ -25,6 +27,11 @@ latent observations per arm/model):
 |---|---|---|---|---|
 | **claude-haiku-4-5** | **16/20 (80%)** | 20/20 (100%) | 0/20 (0%) | 20/20 (100%) |
 | **claude-opus-4-8** | **14/20 (70%)** | 20/20 (100%) | 14/20 (70%) | 20/20 (100%) |
+
+The two stock Haven latent paths in this headline run are under `/admin`, so the
+verdict and reasoned metrics need to be read together. The verdict is the
+actionable safety decision; the reasoned metric shows whether the agent found the
+disabled-View layer instead of only applying an admin-path convention.
 
 So unprompted, raw drush incorrectly judged latent claimed paths safe in ~20% (Haiku) /
 ~30% (Opus) of latent-claim judgments; with site self-description, we observed 0 such
@@ -112,7 +119,7 @@ The verdict number is concrete behavior, not a metric artifact:
 ## Conclusion
 
 The thesis is **supported, narrowly and concretely**: live self-description (`path-owner`)
-**prevents a measured alias-safety failure — a lightly-prompted agent incorrectly judging
+**reduced a measured alias-safety failure — a lightly-prompted agent incorrectly judging
 a latent claimed path safe.** The benefit is largest for the weaker model and for
 unprompted tasks, and it consistently produces correct *reasoning* (raw agents that get the
 verdict right often do so by heuristic, not understanding). It adds nothing once the agent
@@ -124,7 +131,8 @@ workflows, this task does not justify it.**
 
 ## Caveats
 
-- n=3 per cell; the per-cell numbers are noisy (the aggregate is the reliable signal).
+- Cross-substrate and initial non-Claude breadth cells are n=3; those per-cell
+  numbers are noisy. The headline stock Haven run is n=10 per arm.
 - `reasoned` is a free-text substring heuristic (requires "disabl"/"latent"); it is a
   supporting metric — read the cited answers above, not the percentage alone.
 - The non-admin latent claim was injected (disabled `files` view retargeted to
@@ -146,7 +154,7 @@ workflows, this task does not justify it.**
    opus 70% vs 100%. Raise n on core/Convivial too if a cross-substrate number is needed.
 2. A second off-the-shelf (non-Claude) tool consumer to confirm the effect generalizes beyond
    the Claude family.
-3. If publishing: lead with "live self-description prevents latent-path collisions for
+3. If publishing: lead with "live self-description reduced observed latent-path misses for
    lightly-prompted agents (and even careful ones can over-trust 'unrouted now = free')",
    citing the n=10 Haven figures (haiku 80% vs 100%, opus 70% vs 100% verdict) — not "site
    architecture helps agents" generally.

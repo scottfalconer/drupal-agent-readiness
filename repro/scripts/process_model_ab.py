@@ -33,6 +33,11 @@ from agent_readiness.evaluators.result import EvaluationResult
 MODEL_IDS = {"haiku": "claude-haiku-4-5", "opus": "claude-opus-4-8"}
 
 
+def _copy_if_different(src: Path, dest: Path) -> None:
+    if src.resolve() != dest.resolve():
+        shutil.copyfile(src, dest)
+
+
 def reason_recognizes_latent(reason: str) -> bool:
     """Strict: the reason must name the disabled / latent nature of the view.
 
@@ -55,7 +60,7 @@ def process(workflow_output: Path, state_path: Path, out_dir: Path) -> dict[str,
     out_dir.mkdir(parents=True, exist_ok=True)
     runs_root = out_dir / "runs"
     # Persist raw inputs for auditability.
-    shutil.copyfile(workflow_output, out_dir / "raw-workflow-output.json")
+    _copy_if_different(workflow_output, out_dir / "raw-workflow-output.json")
     (out_dir / "ground-truth.json").write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (out_dir / "candidates.json").write_text(json.dumps({
         "candidates": [{"path": p, "blocker_kind": v.get("blocker_kind"), "safe": v.get("safe")} for p, v in state.items()],
@@ -111,8 +116,9 @@ def process(workflow_output: Path, state_path: Path, out_dir: Path) -> dict[str,
         })
 
     summary = _summarize(cells)
+    model_ids = {data["model"]: data["model_id"] for data in cells.values()}
     (out_dir / "model-ab-results.json").write_text(
-        json.dumps({"generated_at": stamp, "model_ids": MODEL_IDS, "latent_paths": latent_keys,
+        json.dumps({"generated_at": stamp, "model_ids": model_ids, "latent_paths": latent_keys,
                     "cells": cells, "summary": summary}, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (out_dir / "model-ab-FINDING.md").write_text(_render(summary, state), encoding="utf-8")
     return summary
@@ -148,29 +154,38 @@ def _summarize(cells: dict[str, dict[str, Any]]) -> dict[str, Any]:
 
 def _render(summary: dict[str, Any], state: dict[str, Any]) -> str:
     latent_paths = [p for p, v in state.items() if v.get("blocker_kind") == "latent_disabled_view"]
-    order = ["ab-haiku-told", "ab-opus-told", "ab-haiku-blind", "ab-opus-blind"]
+    model_ids = sorted({s["model_id"] for s in summary.values()})
+    condition_order = {"told": 0, "blind": 1}
+    order = sorted(
+        summary,
+        key=lambda cell: (
+            condition_order.get(summary[cell]["condition"], 99),
+            summary[cell]["model_id"],
+            cell,
+        ),
+    )
     lines = [
-        "# Finding: alias-safety A/B across models (claude-haiku-4-5 vs claude-opus-4-8)",
+        "# Finding: alias-safety A/B across models",
         "",
-        "Latent-claim accuracy, n=3 per cell. **verdict** = flagged the latent path unsafe (the",
+        f"Models: {', '.join(model_ids)}.",
+        "",
+        "Latent-claim accuracy. **n** is runs per arm. **verdict** = flagged the latent path unsafe (the",
         "actionable answer). **reasoned** (supporting metric, free-text heuristic) = the reason",
         "explicitly recognized the path is declared by a *disabled* view.",
         "",
         f"Discriminating cases = disabled-view latent claims: {', '.join('`'+p+'`' for p in latent_paths)}.",
         "",
-        "| Model | Condition | raw verdict | equip verdict | raw reasoned | equip reasoned | raw cmds | equip cmds |",
-        "| --- | --- | --- | --- | --- | --- | ---: | ---: |",
+        "| Model | Condition | raw n | equip n | raw verdict | equip verdict | raw reasoned | equip reasoned | raw cmds | equip cmds |",
+        "| --- | --- | ---: | ---: | --- | --- | --- | --- | ---: | ---: |",
     ]
     for cell in order:
-        s = summary.get(cell)
-        if not s:
-            continue
+        s = summary[cell]
         r, e = s["raw_drush"], s["site_architecture"]
         def vacc(a):
             return "n/a" if a["latent_accuracy"] is None else f"{a['latent_correct']}/{a['latent_total']} ({a['latent_accuracy']:.0%})"
         def racc(a):
             return "n/a" if a["latent_reasoned_accuracy"] is None else f"{a['latent_reasoned']}/{a['latent_total']} ({a['latent_reasoned_accuracy']:.0%})"
-        lines.append(f"| {s['model_id']} | {s['condition']} | {vacc(r)} | {vacc(e)} | {racc(r)} | {racc(e)} | {r['avg_commands']} | {e['avg_commands']} |")
+        lines.append(f"| {s['model_id']} | {s['condition']} | {r['n']} | {e['n']} | {vacc(r)} | {vacc(e)} | {racc(r)} | {racc(e)} | {r['avg_commands']} | {e['avg_commands']} |")
     lines.extend([
         "",
         "Per-run artifacts (answer.json, evaluator.json, meta.json), raw workflow output, ground",

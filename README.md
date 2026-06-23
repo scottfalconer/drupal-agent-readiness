@@ -18,29 +18,37 @@ reclaim that path when someone re-enables the View. An agent that only asks
 
 This package tests that failure mode. In a constrained path-safety task on stock
 Drupal CMS/Haven, agents inspected path-only candidates and had to decide
-whether each path was safe for a new node alias.
+whether each path was safe for a new node alias. The table reports hidden-claim
+judgments, not a model leaderboard or a broad Drupal readiness score.
 
-| Agent setup | Hidden path claims flagged |
-| --- | --- |
-| Claude Haiku, Drush-only inspection | 16/20 |
-| Claude Haiku, with `site-architecture:path-owner` | 20/20 |
-| Claude Opus, Drush-only inspection | 14/20 |
-| Claude Opus, with `site-architecture:path-owner` | 20/20 |
-| OpenAI Codex, Drush-only inspection | 0/6 |
-| OpenAI Codex, with `site-architecture:path-owner` | 6/6 |
+| Agent setup | Runs / hidden judgments | Flagged unsafe | Reason named disabled View |
+| --- | ---: | ---: | ---: |
+| Claude Haiku, Drush-only inspection | 10 / 20 | 16/20 | 0/20 |
+| Claude Haiku, with `site-architecture:path-owner` | 10 / 20 | 20/20 | 20/20 |
+| Claude Opus, Drush-only inspection | 10 / 20 | 14/20 | 14/20 |
+| Claude Opus, with `site-architecture:path-owner` | 10 / 20 | 20/20 | 20/20 |
+| OpenAI Codex, Drush-only inspection | 3 / 6 | 0/6 | 0/6 |
+| OpenAI Codex, with `site-architecture:path-owner` | 3 / 6 | 6/6 | 6/6 |
+
+The stock Haven hidden paths are under `/admin`, so the verdict and the reason
+are separated. A verdict can be correct because an agent treats `/admin` paths
+as conventionally unsafe; the reasoned column shows whether the agent actually
+identified the disabled-View declaration.
 
 Safe public claim:
 
 > In one constrained Drupal path-safety task, exposing live site
 > self-description changed agent behavior: Drush-only inspection missed hidden
 > disabled-View path claims, while `site-architecture:path-owner` made those
-> claims visible and prevented the unsafe alias decision.
+> claims visible and produced 0 observed unsafe alias decisions in the headline
+> run.
 
 ## What This Is
 
 This is a public, inspectable evidence package for `State of Agents in Drupal`.
-It includes fixed prompts, transcripts, live-state captures, evaluator outputs,
-scorecard rows, a package manifest, and a prototype Drupal module.
+It includes fixed prompts, retained answers, evaluator outputs, scorecard run
+transcripts, live-state captures, a package manifest, and a prototype Drupal
+module.
 
 The goal is not to rank AI models. The goal is to make Drupal's agent-facing
 gaps visible, reproducible, and fixable.
@@ -62,11 +70,13 @@ gaps visible, reproducible, and fixable.
 - Inspect the scorecard: read
   [`docs/state-of-agents-in-drupal-v0.md`](docs/state-of-agents-in-drupal-v0.md)
   and [`docs/scorecard.csv`](docs/scorecard.csv).
+- Check claim boundaries and denominators:
+  [`docs/claims-ledger.md`](docs/claims-ledger.md).
 - Reproduce the alias-safety method: start with
   [`method/HARNESS.md`](method/HARNESS.md).
 - Audit the release package: run the tests and checks below, then inspect
-  `CLEAN-MANIFEST.sha256`, prompts, transcripts, ground truth, and evaluator
-  code.
+  `CLEAN-MANIFEST.sha256`, prompts, retained answers/transcripts where present,
+  ground truth, and evaluator code.
 - Challenge or extend the bench: propose a task, a starting site, a rubric, an
   evaluator, or an adversarial case.
 
@@ -93,7 +103,7 @@ method/PUBLISHING.md
 | Statistical benchmark | Not claimed |
 | Cross-CMS comparison | Not claimed |
 | Current headline task | Alias safety / hidden path claims |
-| Reproducibility | Harness, prompts, evaluators, traces, manifest included |
+| Reproducibility | Harness, prompts, evaluators, retained artifacts, manifest included |
 | Prototype module | Included for reproduction, not production/contrib readiness |
 
 ## Current Tasks
@@ -115,8 +125,9 @@ method/PUBLISHING.md
   steps in [`docs/state-of-agents-in-drupal-v0.md`](docs/state-of-agents-in-drupal-v0.md).
 - Reproducers: start with [`method/HARNESS.md`](method/HARNESS.md) and
   [`method/PUBLISHING.md`](method/PUBLISHING.md).
-- Skeptics: inspect the prompts, evaluator code, transcripts, ground truth,
-  retained failures, package manifest, and `CLEAN-MANIFEST.sha256`.
+- Skeptics: inspect the prompts, evaluator code, retained answers/transcripts
+  where present, ground truth, retained failures, package manifest, and
+  `CLEAN-MANIFEST.sha256`.
 - Claim reviewers: read [`REVIEW-READINESS.md`](REVIEW-READINESS.md).
 
 ## What Is Included
@@ -133,6 +144,12 @@ method/PUBLISHING.md
   commands in `method/PUBLISHING.md`.
 - `prototype/site_architecture_module/`: the Drupal prototype module used by
   the finding.
+
+`agent_readiness/` is the runnable source package. `repro/` is a retained
+review copy of the same evaluator/script code so the public evidence package can
+be audited without relying on generated docs alone. Patch source behavior in
+`agent_readiness/`; treat `repro/` as release-package material unless a change
+is intentionally mirrored.
 
 ## How Claims Should Be Interpreted
 

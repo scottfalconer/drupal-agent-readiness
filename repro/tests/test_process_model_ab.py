@@ -60,6 +60,34 @@ class ProcessTest(unittest.TestCase):
             self.assertEqual("blind", meta["condition"])
             self.assertIn("processed_at", meta)
 
+    def test_render_includes_non_claude_models(self) -> None:
+        workflow = {"result": {"blind": [
+            {"condition": "blind", "model": "gpt-5.5-codex", "arm": "raw", "n": 1, "answer": {"command_count": 5, "assessments": {
+                "/free": {"safe": True, "reason": "free"},
+                "/lat": {"safe": True, "reason": "nothing claims it"}}}},
+            {"condition": "blind", "model": "gpt-5.5-codex", "arm": "equipped", "n": 1, "answer": {"command_count": 6, "assessments": {
+                "/free": {"safe": True, "reason": "free"},
+                "/lat": {"safe": False, "reason": "Disabled view files declares this path"}}}},
+        ]}}
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            (base / "wf.json").write_text(json.dumps(workflow), encoding="utf-8")
+            (base / "state.json").write_text(json.dumps(STATE), encoding="utf-8")
+            pmab.process(base / "wf.json", base / "state.json", base / "out")
+            finding = (base / "out" / "model-ab-FINDING.md").read_text()
+            self.assertIn("gpt-5.5-codex", finding)
+            self.assertIn("| gpt-5.5-codex | blind | 1 | 1 | 0/1 (0%) | 1/1 (100%)", finding)
+
+    def test_can_regenerate_in_place(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            out = base / "out"
+            out.mkdir()
+            (out / "raw-workflow-output.json").write_text(json.dumps(_workflow_output()), encoding="utf-8")
+            (out / "ground-truth.json").write_text(json.dumps(STATE), encoding="utf-8")
+            summary = pmab.process(out / "raw-workflow-output.json", out / "ground-truth.json", out)
+            self.assertIn("ab-haiku-blind", summary)
+
     def test_verdict_and_strict_reasoned_scoring(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)

@@ -18,7 +18,7 @@
     "run_id": {"type": "string", "minLength": 1},
     "task_id": {
       "type": "string",
-      "enum": ["inventory.read_only", "act.event_jsonapi", "recover.event_jsonapi"]
+      "enum": ["inventory.read_only", "act.event_jsonapi", "recover.event_jsonapi", "assess.alias_safety"]
     },
     "prompt_version": {"type": "string", "minLength": 1},
     "substrate": {

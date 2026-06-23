@@ -83,14 +83,13 @@
       ]
     }
   },
-  "generated_at": "2026-06-21T16:03:13.053865+00:00",
+  "generated_at": "2026-06-23T17:11:14.433086+00:00",
   "latent_paths": [
     "/admin/content/files",
     "/admin/content/media/scheduled"
   ],
   "model_ids": {
-    "haiku": "claude-haiku-4-5",
-    "opus": "claude-opus-4-8"
+    "gpt-5.5-codex": "gpt-5.5-codex"
   },
   "summary": {
     "ab-gpt-5.5-codex-blind": {

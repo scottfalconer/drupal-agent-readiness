@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_MODULE_SOURCE = Path("<workspace>/site_architecture/module")
+DEFAULT_MODULE_SOURCE = Path(__file__).resolve().parents[1] / "prototype" / "site_architecture_module"
 
 
 def build_install_plan(

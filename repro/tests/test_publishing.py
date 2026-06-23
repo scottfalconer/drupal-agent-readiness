@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 
-FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"
+FIXTURES = Path(__file__).resolve().parents[2] / "agent_readiness" / "fixtures"
 
 
 def load_fixture(name: str) -> dict:

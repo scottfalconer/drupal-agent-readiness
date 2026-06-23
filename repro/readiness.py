@@ -10,8 +10,8 @@ CLAIM_SCOPE = "constrained_v0_mechanical_evidence_loop"
 # Completed in v0.2: the inventory prompt is de-leaked (discovery required), a
 # failing run is retained, and the assess.alias_safety A/B has been run across two
 # models (claude-haiku-4-5, claude-opus-4-8), three Drupal starting sites, and three prompt
-# framings (finding: live self-description prevents latent-path collisions for
-# lightly-prompted/weaker agents; see experiments/alias-safety-SYNTHESIS.md). The
+# framings (finding: live self-description reduced observed latent-path misses
+# for lightly-prompted/weaker agents; see experiments/alias-safety-SYNTHESIS.md). The
 # remaining actions below still gate any broad readiness claim.
 V0_HARDENING_ACTIONS = [
     "Repeat the non-Claude alias-safety run at n=10 and add another non-Claude stack before making a claim across model providers.",

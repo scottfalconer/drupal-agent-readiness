@@ -1,6 +1,9 @@
 # Publishing Checklist
 
 Use this checklist before circulating `State of Agents in Drupal` v0.
+Unless a path is explicitly prefixed with `docs/`, `evidence/`, `method/`, or
+`prototype/`, package paths in this checklist refer to the runnable
+`agent_readiness/` source package.
 
 ## Required Assets
 
@@ -15,6 +18,7 @@ Use this checklist before circulating `State of Agents in Drupal` v0.
 - Generated public report: `public/state-of-agents-in-drupal-v0.md`
 - Public finding: `public/finding-site-self-description-v0.md`
 - Public bench rationale: `public/why-this-bench.md`
+- Public claims ledger in the repo front door: `docs/claims-ledger.md`
 - Generated readiness snapshot: `public/readiness.json`
 - Generated package manifest with file hashes: `public/package-manifest.json`
 

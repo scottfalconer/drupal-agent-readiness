@@ -7,7 +7,7 @@
   "model": "gpt-5.5-codex",
   "model_id": "gpt-5.5-codex",
   "n": 1,
-  "processed_at": "2026-06-21T16:03:13.053865+00:00",
+  "processed_at": "2026-06-23T17:11:14.193316+00:00",
   "run_id": "raw-1",
-  "workflow_output": "codex-wf.json"
+  "workflow_output": "raw-workflow-output.json"
 }

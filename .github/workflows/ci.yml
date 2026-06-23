@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: python3 -B -m unittest discover -s agent_readiness/tests -v
+      - name: Compile Python sources
+        run: PYTHONDONTWRITEBYTECODE=1 python3 -m py_compile agent_readiness/*.py agent_readiness/evaluators/*.py agent_readiness/scripts/*.py
+      - name: Audit publication package
+        run: |
+          RUN_ARGS="$(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort | sed 's#^#--run-result #')"
+          python3 agent_readiness/scripts/audit_publication_package.py --base-dir agent_readiness $RUN_ARGS
+      - name: Audit readiness flags
+        run: |
+          RUN_ARGS="$(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort | sed 's#^#--run-result #')"
+          python3 agent_readiness/scripts/audit_readiness.py --base-dir agent_readiness $RUN_ARGS
+      - name: Verify package manifest
+        run: shasum -a 256 -c CLEAN-MANIFEST.sha256

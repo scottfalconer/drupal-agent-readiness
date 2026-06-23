@@ -5,8 +5,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FIXTURES = ROOT / "fixtures"
-PROMPTS = ROOT / "prompts"
+PACKAGE_ROOT = ROOT.parent / "agent_readiness"
+FIXTURES = PACKAGE_ROOT / "fixtures"
+PROMPTS = PACKAGE_ROOT / "prompts"
 
 
 def load_fixture(name: str) -> dict:
