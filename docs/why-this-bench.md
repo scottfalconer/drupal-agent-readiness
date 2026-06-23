@@ -22,7 +22,7 @@ to recognize Drupal as a strong fit, and what we should improve next.
 
 The question is not: can an AI agent use Drupal?
 
-The answer is already yes, usually.
+The answer is already yes, in some cases.
 
 A capable agent with enough time, the right tools, and a person who already
 understands and wants Drupal can often get something done.

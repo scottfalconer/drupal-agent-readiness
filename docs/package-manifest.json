@@ -2616,9 +2616,9 @@
       "sha256": "1686b9857ead2105f36fab23ff01aaca7265252fcc34a2198421987aae4c4c83"
     },
     {
-      "bytes": 23535,
+      "bytes": 23541,
       "path": "public/why-this-bench.md",
-      "sha256": "0f8b244e6f8f0617fdd269f8258ebc0d906f5c381dc4a9d9a9b9d0143d3c592c"
+      "sha256": "a28d168951c352d968ba37754be75b0802a6413c1610cb7b629f5954ea87969e"
     },
     {
       "bytes": 24583,
@@ -3046,7 +3046,7 @@
       "sha256": "d22a11607c50a808e8442dd2f9aedcab7689f92b2cdda281ca4aa8d569372674"
     }
   ],
-  "generated_at": "2026-06-23T18:33:49.897989+00:00",
+  "generated_at": "2026-06-23T22:56:04.670298+00:00",
   "package": "State of Agents in Drupal v0 evidence package",
   "run_ids": [
     "event-independent-20260620151052",
