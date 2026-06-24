@@ -77,14 +77,15 @@ inventory/event/recovery scorecard runs do retain transcripts.
 
 ## The result
 
-We ran the headline task on stock Drupal CMS / Haven. The agent was not told
-that disabled Views might matter. Each run asked the agent to judge two hidden
-path claims, so 10 runs produced 20 hidden disabled-View path judgments per arm.
+We ran the headline task on stock Drupal CMS with the Haven testbed profile. The
+agent was not told that disabled Views might matter. Each run asked the agent to
+judge two hidden path claims, so 10 runs produced 20 hidden disabled-View path
+judgments per arm.
 
-| Model | Runs / hidden judgments | Drush-only verdict | Drush-only reason named disabled View | With self-description verdict | With self-description reason |
+| Model | Runs (hidden judgments) | Drush-only correctly flagged unsafe | Drush-only reason named disabled View | With self-description correctly flagged unsafe | With self-description reason |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| claude-haiku-4-5 | 10 / 20 | **16/20 (80%)** | **0/20 (0%)** | **20/20 (100%)** | **20/20 (100%)** |
-| claude-opus-4-8 | 10 / 20 | **14/20 (70%)** | **14/20 (70%)** | **20/20 (100%)** | **20/20 (100%)** |
+| claude-haiku-4-5 | 10 runs (20 judgments) | **16/20 (80%)** | **0/20 (0%)** | **20/20 (100%)** | **20/20 (100%)** |
+| claude-opus-4-8 | 10 runs (20 judgments) | **14/20 (70%)** | **14/20 (70%)** | **20/20 (100%)** | **20/20 (100%)** |
 
 Put differently: Drush-only agents incorrectly judged hidden path claims as
 safe in roughly **20-30% of hidden disabled-View path judgments**. With site
@@ -106,10 +107,14 @@ current-routing question instead of the safer operation-specific Drupal
 question: what will happen if the agent creates the proposed alias here?
 
 We saw the same direction across additional Drupal starting sites (core and
-Convivial) and in initial non-Claude evidence. OpenAI Codex (gpt-5.5), on
-stock Haven at n=3, judged **6 of 6** hidden claims safe with Drush-only
-inspection and flagged **6 of 6** with site self-description. That is
-encouraging breadth evidence, not yet a claim across model providers.
+Convivial) and in initial non-Claude evidence. OpenAI Codex[^codex], on stock
+Haven at n=3, judged **6 of 6** hidden claims safe with Drush-only inspection
+and flagged **6 of 6** with site self-description. That is encouraging breadth
+evidence, not yet a claim across model providers.
+
+[^codex]: In this repo, "OpenAI Codex" names the Codex agent/model id used in
+    the retained run artifacts (`gpt-5.5-codex`), not the legacy OpenAI Codex API
+    models that were retired in 2023.
 
 ## What it means next
 

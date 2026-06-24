@@ -2591,14 +2591,14 @@
       "sha256": "dd0884055919e5f2f41c53486a4becbaf6fb51b018668e33070e79fc3a4561b9"
     },
     {
-      "bytes": 4568,
+      "bytes": 4604,
       "path": "public/claims-ledger.md",
-      "sha256": "175b8c32ece2b98c76fbc6a7971d62b6c48389e3982b6f75680a3fa8255a8d34"
+      "sha256": "30417c025f2ab1a6af1430703dd57c9495182434064144aa3932707d35c9ab0d"
     },
     {
-      "bytes": 8035,
+      "bytes": 8319,
       "path": "public/finding-site-self-description-v0.md",
-      "sha256": "ae9b47324a9ae7dc97e6142df904019a8e4ee0b6e0b76eaedd0d5f15cd4cb56e"
+      "sha256": "38563d94b1e112861a68245b28f7bb5efbdf4942790d3b7b6ea9539abd266588"
     },
     {
       "bytes": 2310,
@@ -2611,9 +2611,9 @@
       "sha256": "0ea8c39f36cf437eb6e7fc8bb2c56014815a23e3867b0948b781beddd4fa06a3"
     },
     {
-      "bytes": 11583,
+      "bytes": 11813,
       "path": "public/state-of-agents-in-drupal-v0.md",
-      "sha256": "b87d6c22134d0c8df4d52f9386cd7d0fa6e4dc54037ad5079dcc28fadea05ec3"
+      "sha256": "4aefba964e6b492b669c8d322eb28e230102856a84d649ba8a2dda686c3b3522"
     },
     {
       "bytes": 23541,
@@ -2621,9 +2621,9 @@
       "sha256": "a28d168951c352d968ba37754be75b0802a6413c1610cb7b629f5954ea87969e"
     },
     {
-      "bytes": 24687,
+      "bytes": 24917,
       "path": "publishing.py",
-      "sha256": "67c3daa454022427b645874d445579dce1beb449d83400600ee85d7952fcc064"
+      "sha256": "03ad979a9b2f507d77c6f4205d745e5999bb1ff3b100f8998873b160c0730d91"
     },
     {
       "bytes": 5876,
@@ -3046,7 +3046,7 @@
       "sha256": "d22a11607c50a808e8442dd2f9aedcab7689f92b2cdda281ca4aa8d569372674"
     }
   ],
-  "generated_at": "2026-06-24T14:42:48.628729+00:00",
+  "generated_at": "2026-06-24T15:32:17.482912+00:00",
   "package": "State of Agents in Drupal v0 evidence package",
   "run_ids": [
     "event-independent-20260620151052",

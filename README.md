@@ -18,13 +18,43 @@ or never picks Drupal at all. The point is to watch Drupal the way an agent
 experiences it from the outside and turn rough edges into things someone can
 fix.
 
-This is early: one finding so far, plus the harness to produce more. The first
-thing we measured: asked whether a Drupal URL path is free to use as a new node
-alias, an agent can say "yes" while a disabled View owns a path that returns
-nothing right now; giving the agent Drupal's own record of who owns what changed
-that behavior.
+This is early: one finding so far, plus the harness to produce more. For the
+first test, we asked agents whether a Drupal URL path was free to use as a new
+node alias. An agent can incorrectly say "yes" because a disabled View owns the
+path but currently returns nothing. Giving the agent access to Drupal's own
+record of path ownership changed that behavior.
 
 This repo is the public package for `State of Agents in Drupal` v0.
+
+## Where Should I Start?
+
+- Skimmers: read the v0 finding below, then
+  [`docs/finding-site-self-description-v0.md`](docs/finding-site-self-description-v0.md).
+- Drupal roadmap reviewers: read
+  [`docs/why-this-bench.md`](docs/why-this-bench.md), then the next hardening
+  steps in [`docs/state-of-agents-in-drupal-v0.md`](docs/state-of-agents-in-drupal-v0.md).
+- Reproducers: start with [`method/HARNESS.md`](method/HARNESS.md) and
+  [`method/PUBLISHING.md`](method/PUBLISHING.md).
+- Skeptics: inspect the prompts, evaluator code, retained answers/transcripts
+  where present, ground truth, retained failures, package manifest, and
+  `CLEAN-MANIFEST.sha256`.
+- Claim reviewers: read [`docs/claims-ledger.md`](docs/claims-ledger.md) and
+  [`REVIEW-READINESS.md`](REVIEW-READINESS.md).
+- Contributors: propose a task, a starting site, a rubric, an evaluator, or an
+  adversarial case.
+
+Quick local checks:
+
+```bash
+python3 -B -m unittest discover -s agent_readiness/tests -v
+shasum -a 256 -c CLEAN-MANIFEST.sha256
+```
+
+Full maintainer checklist:
+
+```text
+method/PUBLISHING.md
+```
 
 ## The v0 Finding
 
@@ -37,18 +67,23 @@ reclaim that path when someone re-enables the View. An agent that only asks
 "does anything respond at this URL right now?" can make the wrong decision.
 
 This package tests that failure mode. In a constrained path-safety task on stock
-Drupal CMS/Haven, agents inspected path-only candidates and had to decide
-whether each path was safe for a new node alias. The table reports hidden-claim
-judgments, not a model leaderboard or a broad Drupal readiness score.
+Drupal CMS (the Haven testbed profile), agents inspected path-only candidates
+and had to decide whether each path was safe for a new node alias. The table
+reports hidden-claim judgments, not a model leaderboard or a broad Drupal
+readiness score.
 
-| Agent setup | Runs / hidden judgments | Flagged unsafe | Reason named disabled View |
+| Agent setup | Runs (hidden judgments) | Correctly flagged unsafe | Reason named disabled View |
 | --- | ---: | ---: | ---: |
-| Claude Haiku, Drush-only inspection | 10 / 20 | 16/20 | 0/20 |
-| Claude Haiku, with `site-architecture:path-owner` | 10 / 20 | 20/20 | 20/20 |
-| Claude Opus, Drush-only inspection | 10 / 20 | 14/20 | 14/20 |
-| Claude Opus, with `site-architecture:path-owner` | 10 / 20 | 20/20 | 20/20 |
-| OpenAI Codex, Drush-only inspection | 3 / 6 | 0/6 | 0/6 |
-| OpenAI Codex, with `site-architecture:path-owner` | 3 / 6 | 6/6 | 6/6 |
+| Claude Haiku, Drush-only inspection | 10 runs (20 judgments) | 16/20 | 0/20 |
+| Claude Haiku, with the `site-architecture:path-owner` tool | 10 runs (20 judgments) | 20/20 | 20/20 |
+| Claude Opus, Drush-only inspection | 10 runs (20 judgments) | 14/20 | 14/20 |
+| Claude Opus, with the `site-architecture:path-owner` tool | 10 runs (20 judgments) | 20/20 | 20/20 |
+| OpenAI Codex[^codex], Drush-only inspection | 3 runs (6 judgments) | 0/6 | 0/6 |
+| OpenAI Codex[^codex], with the `site-architecture:path-owner` tool | 3 runs (6 judgments) | 6/6 | 6/6 |
+
+[^codex]: In this repo, "OpenAI Codex" names the Codex agent/model id used in
+    the retained run artifacts (`gpt-5.5-codex`), not the legacy OpenAI Codex API
+    models that were retired in 2023.
 
 The Claude rows are the headline n=10 run; the Codex rows are initial breadth
 evidence at n=3 and should not be read as provider-general.
@@ -63,8 +98,8 @@ Safe public claim:
 > In one constrained Drupal path-safety task, exposing live site
 > self-description changed agent behavior: Drush-only inspection judged some
 > hidden disabled-View path claims safe, while `site-architecture:path-owner`
-> made those claims visible and produced 0 observed hidden-claim safe judgments
-> in the headline run.
+> made those claims visible, reducing false "safe" judgments to zero in the
+> headline run.
 
 ## What This Is
 
@@ -84,47 +119,12 @@ gaps visible, reproducible, and fixable.
 - Not a private held-out model exam.
 - Not a production-ready Drupal.org contrib module.
 
-## What Can I Do Here?
-
-- Understand the finding: read
-  [`docs/finding-site-self-description-v0.md`](docs/finding-site-self-description-v0.md).
-- Understand why this exists: read
-  [`docs/why-this-bench.md`](docs/why-this-bench.md).
-- Inspect the scorecard: read
-  [`docs/state-of-agents-in-drupal-v0.md`](docs/state-of-agents-in-drupal-v0.md)
-  and [`docs/scorecard.csv`](docs/scorecard.csv).
-- Check claim boundaries and denominators:
-  [`docs/claims-ledger.md`](docs/claims-ledger.md).
-- Reproduce the alias-safety method: start with
-  [`method/HARNESS.md`](method/HARNESS.md).
-- Audit the release package: run the tests and checks below, then inspect
-  `CLEAN-MANIFEST.sha256`, prompts, retained answers/transcripts where present,
-  ground truth, and evaluator code.
-- Challenge or extend the bench: propose a task, a starting site, a rubric, an
-  evaluator, or an adversarial case.
-
-Quick local checks:
-
-```bash
-python3 -B -m unittest discover -s agent_readiness/tests -v
-shasum -a 256 -c CLEAN-MANIFEST.sha256
-```
-
-Full maintainer checklist:
-
-```text
-method/PUBLISHING.md
-```
-
 ## Current Status
 
 | Area | Status |
 | --- | --- |
 | v0 finding | Ready for review/public preview |
 | Claim scope | `constrained_v0_mechanical_evidence_loop` |
-| Broad Drupal readiness verdict | Not claimed |
-| Statistical benchmark | Not claimed |
-| Cross-CMS comparison | Not claimed |
 | Current headline task | Alias safety / hidden path claims |
 | Reproducibility | Harness, prompts, evaluators, retained answers/evaluator outputs, raw workflow outputs, and manifest included |
 | Prototype module | Included for reproduction, not production/contrib readiness |
@@ -138,20 +138,6 @@ method/PUBLISHING.md
 | `recover.event_jsonapi` | Can the agent remove or restore Event work without leaving content, routes, JSON:API resources, aliases, or unrelated blast radius? | Constrained recovery task |
 | `assess.alias_safety` | Can the agent classify paths as safe or unsafe from a path-only candidate list? | Headline v0 finding |
 | `act.events_section_editorial` | Future fuller Events-section task with editorial workflow, listing ownership, content-editor access, public output, JSON:API, and operation-specific path safety. | Future task |
-
-## How To Read This Repo
-
-- Skimmers: start with the v0 finding above, then read
-  [`docs/finding-site-self-description-v0.md`](docs/finding-site-self-description-v0.md).
-- Drupal roadmap reviewers: read the finding, then
-  [`docs/why-this-bench.md`](docs/why-this-bench.md) and the next hardening
-  steps in [`docs/state-of-agents-in-drupal-v0.md`](docs/state-of-agents-in-drupal-v0.md).
-- Reproducers: start with [`method/HARNESS.md`](method/HARNESS.md) and
-  [`method/PUBLISHING.md`](method/PUBLISHING.md).
-- Skeptics: inspect the prompts, evaluator code, retained answers/transcripts
-  where present, ground truth, retained failures, package manifest, and
-  `CLEAN-MANIFEST.sha256`.
-- Claim reviewers: read [`REVIEW-READINESS.md`](REVIEW-READINESS.md).
 
 ## What Is Included
 
@@ -168,11 +154,12 @@ method/PUBLISHING.md
 - `prototype/site_architecture_module/`: the Drupal prototype module used by
   the finding.
 
-`agent_readiness/` is the runnable source package. `repro/` is a retained
-review copy of the same evaluator/script code so the public evidence package can
-be audited without relying on generated docs alone. Patch source behavior in
-`agent_readiness/`; treat `repro/` as release-package material unless a change
-is intentionally mirrored.
+- **`agent_readiness/`**: the active runnable source package. Make source
+  behavior changes here.
+- **`repro/`**: a retained review copy of the same evaluator/script code so the
+  public evidence package can be audited without relying on generated docs
+  alone. Do not edit it for source behavior; update it only when intentionally
+  mirroring release-package material.
 
 ## How Claims Should Be Interpreted
 
