@@ -4,17 +4,15 @@
 
 ## Plain-English summary
 
-We tested whether an external AI agent can safely decide if a URL path is free
-to use in Drupal.
+A Drupal path can look empty while disabled configuration has already claimed
+it. For example, a disabled View may reserve `/events` even though nothing
+currently responds there. If an agent only asks whether a URL routes right now,
+it can wrongly conclude the path is safe to use as a new node alias.
 
-Some Drupal paths look unused but are still claimed by disabled configuration.
-For example, a disabled View may reserve `/events` even though nothing currently
-responds there. An agent using only ordinary Drush inspection can wrongly
-conclude the path is safe.
-
-In this v0 test, agents using Drush-only inspection missed some of those hidden
-claims. Agents given the prototype site self-description command,
-`site-architecture:path-owner`, caught all of them in the headline run.
+In this v0 test, agents using Drush-only inspection judged some hidden
+disabled-View path claims safe. Agents given the prototype site
+self-description command, `site-architecture:path-owner`, found those claims and
+flagged them unsafe in the headline run.
 
 This does not prove Drupal is broadly agent-ready. It proves one narrower point:
 when Drupal exposes its structured state clearly, agents make safer decisions.
@@ -33,7 +31,7 @@ measured result behind that bet. The broader release context is in
 | What this proves | What this does not prove |
 | --- | --- |
 | Site self-description changed agent behavior in one constrained path-safety task. | Drupal is broadly agent-ready. |
-| Prototype Drupal-reported state caught hidden path claims that Drush-only inspection missed. | The prototype resolver is production-ready or a Drupal core/contrib feature. |
+| Prototype Drupal-reported state made hidden path claims visible that Drush-only inspection sometimes judged safe. | The prototype resolver is production-ready or a Drupal core/contrib feature. |
 | Public, repeatable tasks can make agent failure modes concrete. | The result is statistically powered or a claim across model providers. |
 
 ## The concrete Drupal trap
@@ -46,7 +44,7 @@ page. The hard case is a **hidden path claim** (a latent claim): a path declared
 by disabled configuration. For example, a disabled View may declare `/events`.
 Nothing responds at `/events` right now, so a surface-level check says the path
 is free. But if that View is enabled later, Drupal can reclaim the path and
-collide with the content the agent created.
+collide with content the agent is trying to place there.
 
 This v0 task tests path safety for one operation: creating a new node alias. It
 does not cover the full Drupal path-ownership problem. A future path task should
@@ -90,9 +88,9 @@ path claims, so 10 runs produced 20 hidden disabled-View path judgments per arm.
 
 Put differently: Drush-only agents incorrectly judged hidden path claims as
 safe in roughly **20-30% of hidden disabled-View path judgments**. With site
-self-description, we observed **0 such misses** in the headline run. In a real
-write flow, those are the cases where the agent could proceed toward creating
-content on a path already claimed by disabled configuration.
+self-description, we observed **0 hidden-claim safe judgments** in the headline
+run. In a real write flow, those are the cases where the agent could proceed
+toward creating content on a path already claimed by disabled configuration.
 
 The two stock Haven hidden paths in the headline run are under `/admin`. That
 matters: a Drush-only agent can mark an admin path unsafe for the right
@@ -103,15 +101,15 @@ controlled non-admin fixture is included as breadth evidence, but the non-admin
 case should be repeated at n=10 before making it the headline.
 
 The important point is not that one model was weak. The stronger model also
-missed the hidden claim in some runs, because the failure mode is to answer a
-current-routing question instead of the safer operation-specific Drupal question:
-what will happen if the agent creates the proposed alias here?
+judged hidden claims safe in some runs, because the failure mode is to answer a
+current-routing question instead of the safer operation-specific Drupal
+question: what will happen if the agent creates the proposed alias here?
 
 We saw the same direction across additional Drupal starting sites (core and
 Convivial) and in initial non-Claude evidence. OpenAI Codex (gpt-5.5), on
-stock Haven at n=3, missed **6 of 6** hidden claims with Drush-only inspection
-and flagged **6 of 6** with site self-description. That is encouraging breadth
-evidence, not yet a claim across model providers.
+stock Haven at n=3, judged **6 of 6** hidden claims safe with Drush-only
+inspection and flagged **6 of 6** with site self-description. That is
+encouraging breadth evidence, not yet a claim across model providers.
 
 ## What it means next
 

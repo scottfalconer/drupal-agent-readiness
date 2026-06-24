@@ -2591,14 +2591,14 @@
       "sha256": "dd0884055919e5f2f41c53486a4becbaf6fb51b018668e33070e79fc3a4561b9"
     },
     {
-      "bytes": 4219,
+      "bytes": 4568,
       "path": "public/claims-ledger.md",
-      "sha256": "6c3d2b0340ebef2675c649252fe9fe4c4e099c586ca60eabaacba385485b0b63"
+      "sha256": "175b8c32ece2b98c76fbc6a7971d62b6c48389e3982b6f75680a3fa8255a8d34"
     },
     {
-      "bytes": 7996,
+      "bytes": 8035,
       "path": "public/finding-site-self-description-v0.md",
-      "sha256": "0fb6f99448485ee4c684d9fbcd0f78bac4b4a4235ee56242b9a3ce422eea17ec"
+      "sha256": "ae9b47324a9ae7dc97e6142df904019a8e4ee0b6e0b76eaedd0d5f15cd4cb56e"
     },
     {
       "bytes": 2310,
@@ -2611,9 +2611,9 @@
       "sha256": "0ea8c39f36cf437eb6e7fc8bb2c56014815a23e3867b0948b781beddd4fa06a3"
     },
     {
-      "bytes": 11479,
+      "bytes": 11583,
       "path": "public/state-of-agents-in-drupal-v0.md",
-      "sha256": "1686b9857ead2105f36fab23ff01aaca7265252fcc34a2198421987aae4c4c83"
+      "sha256": "b87d6c22134d0c8df4d52f9386cd7d0fa6e4dc54037ad5079dcc28fadea05ec3"
     },
     {
       "bytes": 23541,
@@ -2621,9 +2621,9 @@
       "sha256": "a28d168951c352d968ba37754be75b0802a6413c1610cb7b629f5954ea87969e"
     },
     {
-      "bytes": 24583,
+      "bytes": 24687,
       "path": "publishing.py",
-      "sha256": "17d849d5b6e9f7ee001c12501ba2304c8b2d3c5c1219c6f67df468ef718362ce"
+      "sha256": "67c3daa454022427b645874d445579dce1beb449d83400600ee85d7952fcc064"
     },
     {
       "bytes": 5876,
@@ -3021,9 +3021,9 @@
       "sha256": "4b501f933d94b4859bd8f96c860e2827dd1a69ea57b88a1498c2965fe394a7da"
     },
     {
-      "bytes": 13547,
+      "bytes": 13550,
       "path": "tests/test_publishing.py",
-      "sha256": "ac1c5002e8f6a0639a931679fe06d8b01f2a8b4376fc4d6b51ffdae2c24f1c51"
+      "sha256": "80652a18dbebb6df61a216e93d7ba5422aed1bcb6d2e48b1f508977ec8f5b5f6"
     },
     {
       "bytes": 6020,
@@ -3046,7 +3046,7 @@
       "sha256": "d22a11607c50a808e8442dd2f9aedcab7689f92b2cdda281ca4aa8d569372674"
     }
   ],
-  "generated_at": "2026-06-23T22:56:04.670298+00:00",
+  "generated_at": "2026-06-24T14:42:48.628729+00:00",
   "package": "State of Agents in Drupal v0 evidence package",
   "run_ids": [
     "event-independent-20260620151052",

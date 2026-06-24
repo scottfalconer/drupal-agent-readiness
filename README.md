@@ -1,15 +1,22 @@
 # Drupal Agent Readiness: State of Agents in Drupal v0
 
-This repo is a public test bench for Drupal's agent experience: how external AI
-agents inspect a Drupal site, decide what is safe, act through Drupal, verify
-the result, and recover from mistakes.
+Can an AI agent safely decide whether a Drupal URL path is free to use as a new
+node alias? In this task, not reliably: a path can look empty while a disabled
+View has silently claimed it, ready to reclaim the URL when someone re-enables
+that View.
 
-v0 is not a benchmark verdict. It is a first finding and a reproducible evidence
-loop.
+This repo measures that failure on a real Drupal CMS/Haven site and tests a
+prototype command that lets Drupal report what owns the path. In the headline
+run, Drush-only agents judged some hidden disabled-View path claims safe; with
+live site self-description, we observed 0 hidden-claim safe judgments.
+
+That is the first finding in `State of Agents in Drupal` v0: a reproducible
+evidence loop for Drupal's agent experience, not a benchmark verdict.
 
 ## The v0 Finding
 
-Can an agent safely decide whether a Drupal URL path is free to use?
+Can an agent safely decide whether a Drupal URL path is free to use as a new
+node alias?
 
 In Drupal, a path can look unused while still being claimed by site state. For
 example, a disabled View can declare a path that currently returns nothing, then
@@ -30,6 +37,9 @@ judgments, not a model leaderboard or a broad Drupal readiness score.
 | OpenAI Codex, Drush-only inspection | 3 / 6 | 0/6 | 0/6 |
 | OpenAI Codex, with `site-architecture:path-owner` | 3 / 6 | 6/6 | 6/6 |
 
+The Claude rows are the headline n=10 run; the Codex rows are initial breadth
+evidence at n=3 and should not be read as provider-general.
+
 The stock Haven hidden paths are under `/admin`, so the verdict and the reason
 are separated. A verdict can be correct because an agent treats `/admin` paths
 as conventionally unsafe; the reasoned column shows whether the agent actually
@@ -38,10 +48,10 @@ identified the disabled-View declaration.
 Safe public claim:
 
 > In one constrained Drupal path-safety task, exposing live site
-> self-description changed agent behavior: Drush-only inspection missed hidden
-> disabled-View path claims, while `site-architecture:path-owner` made those
-> claims visible and produced 0 observed unsafe alias decisions in the headline
-> run.
+> self-description changed agent behavior: Drush-only inspection judged some
+> hidden disabled-View path claims safe, while `site-architecture:path-owner`
+> made those claims visible and produced 0 observed hidden-claim safe judgments
+> in the headline run.
 
 ## What This Is
 
@@ -103,7 +113,7 @@ method/PUBLISHING.md
 | Statistical benchmark | Not claimed |
 | Cross-CMS comparison | Not claimed |
 | Current headline task | Alias safety / hidden path claims |
-| Reproducibility | Harness, prompts, evaluators, retained artifacts, manifest included |
+| Reproducibility | Harness, prompts, evaluators, retained answers/evaluator outputs, raw workflow outputs, and manifest included |
 | Prototype module | Included for reproduction, not production/contrib readiness |
 
 ## Current Tasks

@@ -33,7 +33,7 @@ class PublishingTest(unittest.TestCase):
         report = render_report([load_fixture("run_result_inventory_pass.json")])
 
         self.assertIn("State of Agents in Drupal", report)
-        self.assertIn("qualitative baseline", report)
+        self.assertIn("qualitative v0 snapshot", report)
         self.assertIn("not a cross-CMS comparison", report)
         self.assertIn("public/why-this-bench.md", report)
         self.assertIn("tooling/evaluator smoke", report)
