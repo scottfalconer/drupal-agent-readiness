@@ -1,4 +1,4 @@
-# Finding: a Drupal self-description prototype can warn agents about hidden path conflicts
+# Finding: Drupal site self-description can warn agents about hidden path conflicts
 
 *State of Agents in Drupal v0 — proof of direction, not a readiness verdict. June 2026.*
 
@@ -10,9 +10,9 @@ currently responds there. If an agent only asks whether a URL routes right now,
 it can wrongly conclude the path is safe to use as a new node alias.
 
 In this v0 test, agents using Drush-only inspection judged some hidden
-disabled-View path claims safe. Agents given the prototype site
-self-description command, `site-architecture:path-owner`, found those claims and
-flagged them unsafe in the headline run.
+disabled-View path claims safe. Agents given the bundled site self-description
+fixture command, `site-architecture:path-owner`, found those claims and flagged
+them unsafe in the headline run.
 
 This does not prove Drupal is broadly agent-ready. It proves one narrower point:
 when Drupal exposes its structured state clearly, agents make safer decisions.
@@ -58,9 +58,9 @@ that path for the operation the agent is about to perform.
 We ran the same task on the same Drupal starting site in two conditions:
 
 - **Drush-only inspection** — the agent inspects with ordinary Drush commands.
-- **Site self-description** — the agent also has the prototype
-  `site-architecture:path-owner` command, which reports what claims or owns a
-  path, including hidden disabled-View declarations.
+- **Site self-description** — the agent also has the bundled
+  `site-architecture:path-owner` fixture command, which reports what claims or
+  owns a path, including hidden disabled-View declarations.
 
 The agent was not told that disabled Views might matter. Ground truth is computed
 by an independent Drupal evaluator that does not use the tested tool, so it

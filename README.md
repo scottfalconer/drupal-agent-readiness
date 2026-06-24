@@ -105,8 +105,8 @@ Safe public claim:
 
 This is a public, inspectable evidence package for `State of Agents in Drupal`.
 It includes fixed prompts, retained answers, evaluator outputs, scorecard run
-transcripts, live-state captures, a package manifest, and a prototype Drupal
-module.
+transcripts, live-state captures, a package manifest, and a bundled Drupal
+fixture used to reproduce the self-description condition.
 
 The goal is not to rank AI models. The goal is to make Drupal's agent-facing
 gaps visible, reproducible, and fixable.

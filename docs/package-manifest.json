@@ -2646,14 +2646,14 @@
       "sha256": "dd0884055919e5f2f41c53486a4becbaf6fb51b018668e33070e79fc3a4561b9"
     },
     {
-      "bytes": 4604,
+      "bytes": 4638,
       "path": "public/claims-ledger.md",
-      "sha256": "30417c025f2ab1a6af1430703dd57c9495182434064144aa3932707d35c9ab0d"
+      "sha256": "099f0ebde64bddcba6bbae1bf4715c604820452264f2c7f34b3da682f0256487"
     },
     {
-      "bytes": 8345,
+      "bytes": 8350,
       "path": "public/finding-site-self-description-v0.md",
-      "sha256": "e407a3c429126e835f0f694cf03f9a93ae7e0901a88837b781dba6c8f58bb8fb"
+      "sha256": "f8150e95d6de5f46899ac2807f80b0c38b53f6cb37011b96068f8992d22684ae"
     },
     {
       "bytes": 2310,
@@ -3101,7 +3101,7 @@
       "sha256": "e005ecea5d8daea5f261918dbcbc3a4c3a57cb791fc7ff895669876647deb783"
     }
   ],
-  "generated_at": "2026-06-24T15:39:56.314370+00:00",
+  "generated_at": "2026-06-24T15:46:04.004067+00:00",
   "package": "State of Agents in Drupal v0 evidence package",
   "run_ids": [
     "event-independent-20260620151052",
