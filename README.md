@@ -1,17 +1,30 @@
-# Drupal Agent Readiness: State of Agents in Drupal v0
+# Drupal Agent Readiness
 
-Can an AI agent safely decide whether a Drupal URL path is free to use as a new
-node alias? In this task, not reliably: a path can look empty while a disabled
-View has silently claimed it, ready to reclaim the URL when someone re-enables
-that View.
+A public test bench that measures how safely AI agents can operate Drupal sites
+and publishes what they get wrong.
 
-This repo measures that failure on a real Drupal CMS/Haven site and tests a
-prototype command that lets Drupal report what owns the path. In the headline
-run, Drush-only agents judged some hidden disabled-View path claims safe; with
-live site self-description, we observed 0 hidden-claim safe judgments.
+This project gives an AI agent a real Drupal site and a real job: figure out
+the site, decide what is safe to change, make a governed change when the task
+calls for it, check the result, and recover from a mistake. Each test ships with
+the task, exact prompts, retained answers and transcripts/logs where available,
+scoring code, and captured site state so someone else can rerun or challenge the
+result.
 
-That is the first finding in `State of Agents in Drupal` v0: a reproducible
-evidence loop for Drupal's agent experience, not a benchmark verdict.
+It is built for Drupal core and module developers, agent and tool builders, and
+anyone deciding whether Drupal is a safe choice for AI-driven work. The reason
+it matters: when Drupal is hard for an agent to understand or operate safely,
+you almost never get a bug report. The agent quietly works around the problem,
+or never picks Drupal at all. The point is to watch Drupal the way an agent
+experiences it from the outside and turn rough edges into things someone can
+fix.
+
+This is early: one finding so far, plus the harness to produce more. The first
+thing we measured: asked whether a Drupal URL path is free to use as a new node
+alias, an agent can say "yes" while a disabled View owns a path that returns
+nothing right now; giving the agent Drupal's own record of who owns what changed
+that behavior.
+
+This repo is the public package for `State of Agents in Drupal` v0.
 
 ## The v0 Finding
 
