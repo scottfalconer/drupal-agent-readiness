@@ -69,7 +69,7 @@ This v0 package covers only the middle of that loop:
 - Drupal is broadly agent-ready.
 - The result is statistically powered.
 - The result proves behavior across model providers.
-- The prototype `site_architecture` module is production-ready or
+- The bundled `site_architecture` reproduction fixture is production-ready or
   Drupal.org-ready.
 - Drupal has solved scoped agent identity, action governance, audit, revoke, or
   full reversibility.

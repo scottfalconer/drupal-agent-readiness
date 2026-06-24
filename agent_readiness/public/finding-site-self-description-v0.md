@@ -31,7 +31,7 @@ measured result behind that bet. The broader release context is in
 | What this proves | What this does not prove |
 | --- | --- |
 | Site self-description changed agent behavior in one constrained path-safety task. | Drupal is broadly agent-ready. |
-| Prototype Drupal-reported state made hidden path claims visible that Drush-only inspection sometimes judged safe. | The prototype resolver is production-ready or a Drupal core/contrib feature. |
+| Drupal-reported state from the bundled resolver fixture made hidden path claims visible that Drush-only inspection sometimes judged safe. | The resolver fixture is production-ready or a Drupal core/contrib feature. |
 | Public, repeatable tasks can make agent failure modes concrete. | The result is statistically powered or a claim across model providers. |
 
 ## The concrete Drupal trap
@@ -146,9 +146,9 @@ path if the agent creates the proposed alias?
 - One latent path in the breadth set was injected to remove an "admin path is
   reserved" confound; the headline (stock Haven) and the other stock Drupal
   starting sites are not injected.
-- The tool here is a working `site_architecture` resolver, not yet a contributed
-  module. The roadmap path is to land this as site self-description through the
-  normal Drupal process (work items #10, #11).
+- The tool here is a working `site_architecture` resolver fixture, not a
+  contributed module. The roadmap path is to land this as site self-description
+  through the normal Drupal process (work items #10, #11).
 
 ## Reproduce it
 

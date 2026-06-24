@@ -45,7 +45,7 @@ The package may include tooling/evaluator smoke runs. Treat those as proof that 
 - This result is statistically powered.
 - This is a cross-CMS comparison or model leaderboard.
 - The public tasks are held out or uncontaminated.
-- The prototype resolver is production-ready.
+- The bundled resolver fixture is production-ready.
 - That the initial Codex result proves behavior across model providers.
 
 ## Method

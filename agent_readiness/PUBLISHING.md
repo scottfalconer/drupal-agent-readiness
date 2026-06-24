@@ -1,9 +1,9 @@
 # Publishing Checklist
 
 Use this checklist before circulating `State of Agents in Drupal` v0.
-Unless a path is explicitly prefixed with `docs/`, `evidence/`, `method/`, or
-`prototype/`, package paths in this checklist refer to the runnable
-`agent_readiness/` source package.
+Unless a path is explicitly prefixed with `docs/`, `evidence/`, or `method/`,
+package paths in this checklist refer to the runnable `agent_readiness/` source
+package.
 
 ## Required Assets
 

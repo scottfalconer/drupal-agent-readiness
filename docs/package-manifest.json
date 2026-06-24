@@ -1,9 +1,9 @@
 {
   "files": [
     {
-      "bytes": 6495,
+      "bytes": 6481,
       "path": "PUBLISHING.md",
-      "sha256": "cda27feb2fe0cb1bd8acaa7c0538e179f99763c1ebea20152f192f58849ca12c"
+      "sha256": "9417eb97059d1997a095c6f8bc8b367468bbf948010607d9117b43274d2f6456"
     },
     {
       "bytes": 983,
@@ -2541,6 +2541,61 @@
       "sha256": "3e3f99d5e4b4d0882dcdc3b51db6485a0d14272f8496d954e7f5416799c9177e"
     },
     {
+      "bytes": 348,
+      "path": "fixtures/site_architecture_module/drush.services.yml",
+      "sha256": "4317d5a5a14ff3fee257fd14bc16c878c071fba489bf72eaef9414cb9ef95da6"
+    },
+    {
+      "bytes": 174,
+      "path": "fixtures/site_architecture_module/recipe/recipe.yml",
+      "sha256": "6ae857dce88fd32b9561afdc9d5ae849187669395086198ec10d021b1891be25"
+    },
+    {
+      "bytes": 301,
+      "path": "fixtures/site_architecture_module/site_architecture.info.yml",
+      "sha256": "9ecfbc28bc066ace4b55f0e02cc6fd67e0cc8812b39274c977676b7d0767c0de"
+    },
+    {
+      "bytes": 199,
+      "path": "fixtures/site_architecture_module/site_architecture.services.yml",
+      "sha256": "6a0a1ee3eefc8753241e850f947fb6bb96a7456d670da8f27efe13dc8a70c0f9"
+    },
+    {
+      "bytes": 963,
+      "path": "fixtures/site_architecture_module/src/Command/BriefCommand.php",
+      "sha256": "5ea8d64167a1e87f78c8ee1ca0e70dcccaf154b334b24c20a3dc3c784f8a452b"
+    },
+    {
+      "bytes": 2415,
+      "path": "fixtures/site_architecture_module/src/Command/PathOwnerCommand.php",
+      "sha256": "2f6337191742320ee75b3b14ca734f86585ac50e30359dcfe671c037986ab964"
+    },
+    {
+      "bytes": 2486,
+      "path": "fixtures/site_architecture_module/src/Command/SurfacesCommand.php",
+      "sha256": "e6cb5aa6d20634c61d1451043cd8150943baeb18187072ca59806995297a1b55"
+    },
+    {
+      "bytes": 3594,
+      "path": "fixtures/site_architecture_module/src/Drush/Commands/SiteArchitectureCommands.php",
+      "sha256": "67eccd5eba9978e85f654150b7765ac5591a1e4e5daee13fcf0553d97c1f9869"
+    },
+    {
+      "bytes": 8985,
+      "path": "fixtures/site_architecture_module/src/PathOwnershipResolver.php",
+      "sha256": "393daf424c4e9fe1df52620114f33b59d1b3c4c959677ddc6cc7c9496998ab38"
+    },
+    {
+      "bytes": 6837,
+      "path": "fixtures/site_architecture_module/src/SiteBriefBuilder.php",
+      "sha256": "c90748f795c4df2774700e377d1e45c095eac660698cd7f34412cb99449ec125"
+    },
+    {
+      "bytes": 7876,
+      "path": "fixtures/site_architecture_module/src/SiteSurfaceInventoryBuilder.php",
+      "sha256": "0fafde37a4dfe5d2a05898a04ff542da51cc3e6c0ee7e8094c8cb6d646bfdd72"
+    },
+    {
       "bytes": 4837,
       "path": "inventory_run_packet.py",
       "sha256": "17a5f4b4154b658a6b25994de86b45b6d77fc18e9ed6c25cd25785c6646f3e14"
@@ -2596,9 +2651,9 @@
       "sha256": "30417c025f2ab1a6af1430703dd57c9495182434064144aa3932707d35c9ab0d"
     },
     {
-      "bytes": 8319,
+      "bytes": 8345,
       "path": "public/finding-site-self-description-v0.md",
-      "sha256": "38563d94b1e112861a68245b28f7bb5efbdf4942790d3b7b6ea9539abd266588"
+      "sha256": "e407a3c429126e835f0f694cf03f9a93ae7e0901a88837b781dba6c8f58bb8fb"
     },
     {
       "bytes": 2310,
@@ -2611,9 +2666,9 @@
       "sha256": "0ea8c39f36cf437eb6e7fc8bb2c56014815a23e3867b0948b781beddd4fa06a3"
     },
     {
-      "bytes": 11813,
+      "bytes": 11819,
       "path": "public/state-of-agents-in-drupal-v0.md",
-      "sha256": "4aefba964e6b492b669c8d322eb28e230102856a84d649ba8a2dda686c3b3522"
+      "sha256": "5d95930ad3386cfb2efbbc206e18f5e6a75b14276b4fa88eb8a35870f84e5761"
     },
     {
       "bytes": 23541,
@@ -2621,9 +2676,9 @@
       "sha256": "a28d168951c352d968ba37754be75b0802a6413c1610cb7b629f5954ea87969e"
     },
     {
-      "bytes": 24917,
+      "bytes": 24923,
       "path": "publishing.py",
-      "sha256": "03ad979a9b2f507d77c6f4205d745e5999bb1ff3b100f8998873b160c0730d91"
+      "sha256": "5b78a56ca5b6fc33ab70e2eaee5418cdcd9c981cfd2643579213f3e2e8df510d"
     },
     {
       "bytes": 5876,
@@ -2981,9 +3036,9 @@
       "sha256": "eb4fc43a5c02af8ffd3094fc6bb1b8724ea148fc12251f0da06aeba4fb876939"
     },
     {
-      "bytes": 3011,
+      "bytes": 3006,
       "path": "site_architecture_tools.py",
-      "sha256": "51aeaa9a684e04b57ea5418e687a581ae17455df0b477865c63341368a85106b"
+      "sha256": "766d657398ff7a434f244eb1f6ab5a682be020a600318a04943c1a27dce4a7ae"
     },
     {
       "bytes": 2375,
@@ -3041,12 +3096,12 @@
       "sha256": "46f0bd6c2cd7ac701b6d7a9836fb3d22543b6ec7e034e4b56d38b3397322c43d"
     },
     {
-      "bytes": 1816,
+      "bytes": 1886,
       "path": "tests/test_site_architecture_tools.py",
-      "sha256": "d22a11607c50a808e8442dd2f9aedcab7689f92b2cdda281ca4aa8d569372674"
+      "sha256": "e005ecea5d8daea5f261918dbcbc3a4c3a57cb791fc7ff895669876647deb783"
     }
   ],
-  "generated_at": "2026-06-24T15:32:17.482912+00:00",
+  "generated_at": "2026-06-24T15:39:56.314370+00:00",
   "package": "State of Agents in Drupal v0 evidence package",
   "run_ids": [
     "event-independent-20260620151052",

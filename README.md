@@ -127,7 +127,7 @@ gaps visible, reproducible, and fixable.
 | Claim scope | `constrained_v0_mechanical_evidence_loop` |
 | Current headline task | Alias safety / hidden path claims |
 | Reproducibility | Harness, prompts, evaluators, retained answers/evaluator outputs, raw workflow outputs, and manifest included |
-| Prototype module | Included for reproduction, not production/contrib readiness |
+| Site self-description fixture | Bundled only for reproduction, not as a public module artifact |
 
 ## Current Tasks
 
@@ -150,9 +150,8 @@ gaps visible, reproducible, and fixable.
   scorecard.
 - `repro/`: evaluator, script, and test copy retained for package review.
 - `agent_readiness/`: runnable Python/source-package layout used by the
-  commands in `method/PUBLISHING.md`.
-- `prototype/site_architecture_module/`: the Drupal prototype module used by
-  the finding.
+  commands in `method/PUBLISHING.md`. It also contains the internal
+  `site_architecture` Drupal fixture used to reproduce the equipped arm.
 
 - **`agent_readiness/`**: the active runnable source package. Make source
   behavior changes here.
@@ -160,6 +159,9 @@ gaps visible, reproducible, and fixable.
   public evidence package can be audited without relying on generated docs
   alone. Do not edit it for source behavior; update it only when intentionally
   mirroring release-package material.
+- **`agent_readiness/fixtures/site_architecture_module/`**: the internal Drupal
+  fixture copied into disposable sites for reproduction. Treat it as test-bench
+  evidence infrastructure, not a public module surface.
 
 ## How Claims Should Be Interpreted
 

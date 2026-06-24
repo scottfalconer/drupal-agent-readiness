@@ -20,7 +20,7 @@ Do not expand v0 results into broad claims. In particular, do not claim:
 - Drupal is broadly agent-ready.
 - The v0 result is statistically powered.
 - The result is a model leaderboard.
-- The prototype module is production-ready.
+- The bundled `site_architecture` reproduction fixture is production-ready.
 - Public tasks are held out or uncontaminated.
 
 Use [docs/claims-ledger.md](docs/claims-ledger.md) as the claim boundary.
