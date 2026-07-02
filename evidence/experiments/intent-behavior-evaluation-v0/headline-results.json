@@ -128,6 +128,48 @@
       "m4_completion": 0,
       "target_consideration_any": 1,
       "target_consideration_before_write": 0
+    },
+    {
+      "run_id": "intent-010-headline-conflict-intent-conflict-r1-r04",
+      "arm": "conflict-intent",
+      "returncode": 0,
+      "elapsed_seconds": 440.4,
+      "tool_calls": 218,
+      "infrastructure_failure": null,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 0,
+      "m4_completion": 0,
+      "target_consideration_any": 1,
+      "target_consideration_before_write": 0
+    },
+    {
+      "run_id": "intent-011-headline-placebo-intent-conflict-r1-r04",
+      "arm": "placebo-intent",
+      "returncode": 0,
+      "elapsed_seconds": 543.7,
+      "tool_calls": 201,
+      "infrastructure_failure": null,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 0,
+      "m4_completion": 0,
+      "target_consideration_any": 1,
+      "target_consideration_before_write": 0
+    },
+    {
+      "run_id": "intent-012-headline-no-intent-conflict-r1-r04",
+      "arm": "no-intent",
+      "returncode": 0,
+      "elapsed_seconds": 263.4,
+      "tool_calls": 106,
+      "infrastructure_failure": null,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 0,
+      "m4_completion": 0,
+      "target_consideration_any": 1,
+      "target_consideration_before_write": 0
     }
   ]
 }
