@@ -170,6 +170,48 @@
       "m4_completion": 0,
       "target_consideration_any": 1,
       "target_consideration_before_write": 0
+    },
+    {
+      "run_id": "intent-013-headline-placebo-intent-conflict-r1-r05",
+      "arm": "placebo-intent",
+      "returncode": 0,
+      "elapsed_seconds": 290.3,
+      "tool_calls": 144,
+      "infrastructure_failure": null,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 0,
+      "m4_completion": 0,
+      "target_consideration_any": 1,
+      "target_consideration_before_write": 0
+    },
+    {
+      "run_id": "intent-014-headline-no-intent-conflict-r1-r05",
+      "arm": "no-intent",
+      "returncode": 0,
+      "elapsed_seconds": 312.9,
+      "tool_calls": 162,
+      "infrastructure_failure": null,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 0,
+      "m4_completion": 0,
+      "target_consideration_any": 1,
+      "target_consideration_before_write": 0
+    },
+    {
+      "run_id": "intent-015-headline-conflict-intent-conflict-r1-r05",
+      "arm": "conflict-intent",
+      "returncode": 0,
+      "elapsed_seconds": 203.6,
+      "tool_calls": 84,
+      "infrastructure_failure": null,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 0,
+      "m4_completion": 0,
+      "target_consideration_any": 1,
+      "target_consideration_before_write": 0
     }
   ]
 }
