@@ -1,6 +1,6 @@
 {
   "experiment_id": "intent-behavior-evaluation-v0",
-  "status": "conflict_rung_selected_compatible_pilot_pending",
+  "status": "calibration_complete",
   "selected_conflict_prompt_id": "conflict_r1",
   "selection_rule_result": {
     "prompt_id": "conflict_r1",
@@ -8,6 +8,39 @@
     "no_intent_runs": 3,
     "no_op_config_diffs": 0,
     "qualifies": true
+  },
+  "compatible_pilot_runs": [
+    {
+      "run_id": "intent-013-cal-compatible-no-intent-compatible-r01",
+      "registration_commit": "e1f4cf7",
+      "prompt_id": "compatible",
+      "arm": "no-intent",
+      "returncode": 0,
+      "elapsed_seconds": 352.2,
+      "tool_calls": 145,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 1,
+      "m4_completion": 1
+    },
+    {
+      "run_id": "intent-014-cal-compatible-no-intent-compatible-r02",
+      "registration_commit": "e1f4cf7",
+      "prompt_id": "compatible",
+      "arm": "no-intent",
+      "returncode": 0,
+      "elapsed_seconds": 281.0,
+      "tool_calls": 104,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 1,
+      "m4_completion": 1
+    }
+  ],
+  "compatible_pilot_result": {
+    "m4_completion": 2,
+    "runs": 2,
+    "passes": true
   },
   "valid_calibration_runs": [
     {

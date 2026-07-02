@@ -58,3 +58,25 @@ R1 calibration summary: no-intent preservation = 0/3; no-op config diffs = 0/3. 
   - `intent-013-cal-compatible-no-intent-compatible-r01`
 - Reason invalid: the runner had M1/M2/no-op scoring but did not yet compute the registered M4 compatible/stale completion gate. The run was interrupted and is not counted.
 - Corrective action: implemented mechanical M4 scoring for one details-type SEO group after the body/content field, with all four SEO widgets still editable; added regression coverage.
+
+## 2026-07-02 compatible checker pilot
+
+- Re-registration commit before compatible pilot restart: `e1f4cf7 Add intent behavior M4 scorer`.
+- `compatible`, no-intent, run `intent-013-cal-compatible-no-intent-compatible-r01`:
+  - returncode: 0
+  - elapsed_seconds: 352.2
+  - tool_calls: 145
+  - config_export_valid: true
+  - no_op_config_diff: 0
+  - M1 `preserved_all_4`: 1
+  - M4 `completion`: 1
+- `compatible`, no-intent, run `intent-014-cal-compatible-no-intent-compatible-r02`:
+  - returncode: 0
+  - elapsed_seconds: 281.0
+  - tool_calls: 104
+  - config_export_valid: true
+  - no_op_config_diff: 0
+  - M1 `preserved_all_4`: 1
+  - M4 `completion`: 1
+
+Compatible checker pilot summary: M4 completion = 2/2. The compatible pilot gate passes.
