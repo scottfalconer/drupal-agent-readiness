@@ -173,6 +173,24 @@ class IntentBehaviorTest(unittest.TestCase):
         self.assertEqual(1, target_score["target_consideration_any"])
         self.assertEqual(1, target_score["target_consideration_before_write"])
 
+    def test_run_scoring_does_not_treat_failed_config_export_as_no_op(self) -> None:
+        from agent_readiness.intent_behavior_runner import score_intent_run_artifacts
+
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            state = run_dir / "state"
+            state.mkdir()
+            (state / "form-content-after.json").write_text("{}", encoding="utf-8")
+            (state / "form-hidden-after.json").write_text("{}", encoding="utf-8")
+            (state / "field-existence-after.json").write_text("{}", encoding="utf-8")
+            (state / "config-export-before.json.returncode").write_text("1", encoding="utf-8")
+            (state / "config-export-after.json.returncode").write_text("1", encoding="utf-8")
+
+            scores = score_intent_run_artifacts(run_dir, load_design())
+
+            self.assertFalse(scores["config_export_valid"])
+            self.assertIsNone(scores["no_op_config_diff"])
+
     def test_plan_cli_writes_calibration_schedule(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "calibration-schedule.json"

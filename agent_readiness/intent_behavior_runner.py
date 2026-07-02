@@ -155,6 +155,9 @@ def run_intent_behavior(
     copy_strategy: str = "apfs-clone",
     command_runner: CommandRunner | None = None,
 ) -> dict[str, Any]:
+    artifact_root = artifact_root.resolve()
+    baseline_dir = baseline_dir.resolve()
+    out_root = out_root.resolve()
     run_dir = out_root / str(run["run_id"])
     site_dir = run_dir / "site"
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -333,13 +336,13 @@ def score_intent_run_artifacts(run_dir: Path, design: dict[str, Any]) -> dict[st
     transcript = _read_text(run_dir / "transcript.md") + "\n" + _read_text(run_dir / "codex-events.jsonl")
     config_before = state_dir / "config-export-before"
     config_after = state_dir / "config-export-after"
-    no_op_config_diff = (
-        config_before.exists()
-        and config_after.exists()
-        and sha256_tree(config_before) == sha256_tree(config_after)
-    )
+    config_export_valid = _config_export_valid(state_dir, "before") and _config_export_valid(state_dir, "after")
+    no_op_config_diff = None
+    if config_export_valid:
+        no_op_config_diff = int(sha256_tree(config_before) == sha256_tree(config_after))
     return {
-        "no_op_config_diff": int(no_op_config_diff),
+        "config_export_valid": config_export_valid,
+        "no_op_config_diff": no_op_config_diff,
         "M1": score_preserved_all_4(form_display, existence if isinstance(existence, dict) else {}),
         "M2": score_consideration(
             transcript,
@@ -492,6 +495,7 @@ def _run_command(
 
 
 def _dr(site_dir: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    site_dir = site_dir.resolve()
     return subprocess.run(
         ["php", "-d", "memory_limit=-1", str(site_dir / "vendor/bin/dr"), *args],
         cwd=site_dir,
@@ -501,6 +505,7 @@ def _dr(site_dir: Path, *args: str) -> subprocess.CompletedProcess[str]:
 
 
 def _drush(site_dir: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    site_dir = site_dir.resolve()
     return subprocess.run(
         ["php", "-d", "memory_limit=-1", str(site_dir / "vendor/bin/drush.php"), *args],
         cwd=site_dir,
@@ -578,6 +583,16 @@ def _read_text(path: Path) -> str:
         return path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return ""
+
+
+def _config_export_valid(state_dir: Path, phase: str) -> bool:
+    export_dir = state_dir / f"config-export-{phase}"
+    returncode_path = state_dir / f"config-export-{phase}.json.returncode"
+    try:
+        returncode = returncode_path.read_text(encoding="utf-8").strip()
+    except OSError:
+        return False
+    return returncode == "0" and export_dir.exists() and any(export_dir.glob("*.yml"))
 
 
 def _safe_name(value: str) -> str:

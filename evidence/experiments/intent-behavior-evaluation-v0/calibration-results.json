@@ -1,0 +1,18 @@
+{
+  "experiment_id": "intent-behavior-evaluation-v0",
+  "status": "calibration_not_started_after_reregistration",
+  "valid_calibration_runs": [],
+  "invalid_attempts": [
+    {
+      "date": "2026-07-02",
+      "registration_commit": "d56c0d5",
+      "reason": "relative-path capture bug in runner caused invalid Drupal state capture and false no-op scoring",
+      "artifact_root": "evidence/experiments/intent-behavior-evaluation-v0/invalid-runs/20260702-relative-path-capture-bug",
+      "run_ids": [
+        "intent-001-cal-conflict-ladder-no-intent-conflict-r1-r01",
+        "intent-002-cal-conflict-ladder-no-intent-conflict-r1-r02"
+      ],
+      "counted": false
+    }
+  ]
+}

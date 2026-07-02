@@ -5,3 +5,5 @@ __pycache__/
 .DS_Store
 tmp/
 method/intent-behavior/sites/
+evidence/experiments/intent-behavior-evaluation-v0/runs/
+evidence/experiments/intent-behavior-evaluation-v0/invalid-runs/
