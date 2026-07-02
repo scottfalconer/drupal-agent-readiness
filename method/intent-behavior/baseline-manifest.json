@@ -1,0 +1,15 @@
+{
+  "baseline_a11y": null,
+  "baseline_main": "/Users/scott/dev/drupal-agent-readiness/method/intent-behavior/sites/baseline-main",
+  "baseline_stale": "/Users/scott/dev/drupal-agent-readiness/method/intent-behavior/sites/baseline-stale",
+  "file_hashes": {
+    "baselines/baseline-main.sql.gz": "8555b70f633a79de7dfc30cb0ceee253b3a932c5ac01e365a18d7049b42b4cf0",
+    "baselines/baseline-stale.sql.gz": "39cfd5cacc64e8073cf068f986bdd171c74ee04a92ab75dfa9285db4e2ab4d07",
+    "baselines/config-export-main.tar.gz": "8f5c60272146ab8ba29072077050ee9140fe1b5982fb2f45eadadb0711994c20",
+    "baselines/module-dir-intent.tar.gz": "d3da0626b7bf27d7f6054256a4f18b1b4b4671b098f767e165965731e535e16d"
+  },
+  "site_hashes": {
+    "baseline-main": "f31cfeedefa98d7385191de57de2c1417f101ca4a9303db9b8ed679136188c99",
+    "baseline-stale": "4bc865db701ca2dc83809c3fb77b973ca5d7c59d3f75dc833dedc6b6e88990d5"
+  }
+}

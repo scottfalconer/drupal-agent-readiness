@@ -1,0 +1,584 @@
+import json
+import os
+import shutil
+import subprocess
+import time
+import urllib.error
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Callable
+
+from agent_readiness.intent_behavior import (
+    SEO_FIELDS,
+    TARGET_OBJECTS,
+    score_consideration,
+    score_preserved_all_4,
+    sha256_tree,
+)
+from agent_readiness.template_codex_runner import (
+    _process_output,
+    _run_command as _run_command_with_process_group,
+    _timeout_stderr,
+    classify_infrastructure_failure,
+    count_codex_tool_calls,
+    render_transcript,
+    terminate_run_server_processes,
+)
+
+
+CommandRunner = Callable[..., subprocess.CompletedProcess[str]]
+
+
+def select_intent_runs(
+    schedule: dict[str, Any],
+    *,
+    out_root: Path,
+    run_ids: set[str] | None = None,
+    cell_ids: set[str] | None = None,
+    arm_ids: set[str] | None = None,
+    limit: int | None = None,
+    only_missing: bool = True,
+) -> list[dict[str, Any]]:
+    if limit is not None and limit <= 0:
+        return []
+    selected: list[dict[str, Any]] = []
+    for run in schedule.get("runs", []):
+        if run_ids and run.get("run_id") not in run_ids:
+            continue
+        if cell_ids and run.get("cell_id") not in cell_ids:
+            continue
+        if arm_ids and run.get("arm") not in arm_ids:
+            continue
+        if only_missing and (out_root / str(run.get("run_id")) / "codex-run.json").exists():
+            continue
+        selected.append(run)
+        if limit is not None and len(selected) >= limit:
+            break
+    return selected
+
+
+def run_intent_batch(
+    *,
+    design: dict[str, Any],
+    schedule: dict[str, Any],
+    artifact_root: Path,
+    baseline_main: Path,
+    out_root: Path,
+    baseline_stale: Path | None = None,
+    baseline_a11y: Path | None = None,
+    codex_bin: str = "codex",
+    codex_home: Path | None = None,
+    service_tier: str = "fast",
+    timeout_seconds: int | None = None,
+    base_port: int = 8910,
+    copy_strategy: str = "apfs-clone",
+    run_ids: set[str] | None = None,
+    cell_ids: set[str] | None = None,
+    arm_ids: set[str] | None = None,
+    limit: int | None = None,
+    only_missing: bool = True,
+    keep_going: bool = False,
+    dry_run: bool = False,
+    command_runner: CommandRunner | None = None,
+) -> dict[str, Any]:
+    selected = select_intent_runs(
+        schedule,
+        out_root=out_root,
+        run_ids=run_ids,
+        cell_ids=cell_ids,
+        arm_ids=arm_ids,
+        limit=limit,
+        only_missing=only_missing,
+    )
+    if dry_run:
+        return {
+            "status": "dry-run",
+            "selected_run_count": len(selected),
+            "runs": selected,
+        }
+
+    results: list[dict[str, Any]] = []
+    for index, run in enumerate(selected, start=1):
+        baseline = _baseline_for_run(
+            run,
+            baseline_main=baseline_main,
+            baseline_stale=baseline_stale,
+            baseline_a11y=baseline_a11y,
+        )
+        result = run_intent_behavior(
+            design=design,
+            run=run,
+            artifact_root=artifact_root,
+            baseline_dir=baseline,
+            out_root=out_root,
+            port=base_port + index,
+            codex_bin=codex_bin,
+            codex_home=codex_home,
+            service_tier=service_tier,
+            timeout_seconds=timeout_seconds,
+            copy_strategy=copy_strategy,
+            command_runner=command_runner,
+        )
+        results.append(result)
+        if result.get("infrastructure_failure"):
+            break
+        if not keep_going and result["returncode"] != 0:
+            break
+
+    summary = {
+        "status": "complete",
+        "selected_run_count": len(selected),
+        "completed_run_count": len(results),
+        "successful_run_count": sum(1 for result in results if result.get("returncode") == 0),
+        "failed_run_count": sum(1 for result in results if result.get("returncode") != 0),
+        "infrastructure_failure_count": sum(1 for result in results if result.get("infrastructure_failure")),
+        "runs": results,
+    }
+    out_root.mkdir(parents=True, exist_ok=True)
+    (out_root / "intent-batch-summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+    return summary
+
+
+def run_intent_behavior(
+    *,
+    design: dict[str, Any],
+    run: dict[str, Any],
+    artifact_root: Path,
+    baseline_dir: Path,
+    out_root: Path,
+    port: int,
+    codex_bin: str = "codex",
+    codex_home: Path | None = None,
+    service_tier: str = "fast",
+    timeout_seconds: int | None = None,
+    copy_strategy: str = "apfs-clone",
+    command_runner: CommandRunner | None = None,
+) -> dict[str, Any]:
+    run_dir = out_root / str(run["run_id"])
+    site_dir = run_dir / "site"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    _copy_site(baseline_dir, site_dir, copy_strategy)
+    _patch_dr_proxy_if_needed(site_dir)
+    _fix_sqlite_path(site_dir)
+    _write_root_agents(run, artifact_root, site_dir)
+    apply_arm_intents(site_dir, design, run)
+    _dr(site_dir, "cache:rebuild")
+
+    server = _start_server(site_dir, run_dir, port)
+    site_url = f"http://127.0.0.1:{port}"
+    prompt_path = run_dir / "prompt.txt"
+    prompt_path.write_text(_render_prompt(run, artifact_root, site_url), encoding="utf-8")
+    capture_run_state(site_dir, run_dir, "before", site_url)
+
+    command = _build_codex_command(
+        codex_bin=codex_bin,
+        site_dir=site_dir,
+        run=run,
+        service_tier=service_tier,
+    )
+    env = os.environ.copy()
+    if codex_home is not None:
+        env["CODEX_HOME"] = str(codex_home)
+
+    started_at = datetime.now(timezone.utc)
+    start = time.monotonic()
+    runner = command_runner or _run_command
+    try:
+        completed = runner(
+            command,
+            input=prompt_path.read_text(encoding="utf-8"),
+            text=True,
+            capture_output=True,
+            cwd=site_dir,
+            env=env,
+            timeout=timeout_seconds,
+        )
+    except subprocess.TimeoutExpired as exc:
+        completed = subprocess.CompletedProcess(
+            command,
+            124,
+            stdout=_process_output(exc.output),
+            stderr=_timeout_stderr(exc),
+        )
+    elapsed = time.monotonic() - start
+    ended_at = datetime.now(timezone.utc)
+
+    events_path = run_dir / "codex-events.jsonl"
+    stderr_path = run_dir / "codex-stderr.log"
+    transcript_path = run_dir / "transcript.md"
+    agent_run_path = run_dir / "codex-run.json"
+    events_path.write_text(completed.stdout or "", encoding="utf-8")
+    stderr_path.write_text(completed.stderr or "", encoding="utf-8")
+    capture_run_state(site_dir, run_dir, "after", site_url)
+    _stop_server(server)
+    scores = score_intent_run_artifacts(run_dir, design)
+    (run_dir / "scores.json").write_text(json.dumps(scores, indent=2) + "\n", encoding="utf-8")
+
+    tool_calls = count_codex_tool_calls(completed.stdout or "")
+    cleanup_killed_processes = terminate_run_server_processes(run_dir)
+    infrastructure_failure = classify_infrastructure_failure(
+        returncode=completed.returncode,
+        stdout=completed.stdout or "",
+        stderr=completed.stderr or "",
+        tool_calls=tool_calls,
+    )
+    transcript_path.write_text(
+        render_transcript(
+            run_id=str(run["run_id"]),
+            command=command,
+            returncode=completed.returncode,
+            elapsed_seconds=elapsed,
+            stdout=completed.stdout or "",
+            stderr=completed.stderr or "",
+            answer_path=run_dir / "final-report.txt",
+            answer_valid=True,
+            answer_error=None,
+        ),
+        encoding="utf-8",
+    )
+    metadata = {
+        "run_id": run["run_id"],
+        "run": run,
+        "site_dir": str(site_dir),
+        "site_url": site_url,
+        "baseline_dir": str(baseline_dir),
+        "baseline_sha256": sha256_tree(baseline_dir),
+        "module_sha256_after": sha256_tree(site_dir / "web/modules/custom/intent")
+        if (site_dir / "web/modules/custom/intent").exists() else None,
+        "started_at": started_at.isoformat(),
+        "ended_at": ended_at.isoformat(),
+        "elapsed_seconds": elapsed,
+        "returncode": completed.returncode,
+        "tool_calls": tool_calls,
+        "infrastructure_failure": infrastructure_failure,
+        "cleanup_killed_processes": cleanup_killed_processes,
+        "command": command,
+        "artifacts": {
+            "prompt": str(prompt_path),
+            "codex_events_jsonl": str(events_path),
+            "codex_stderr": str(stderr_path),
+            "transcript": str(transcript_path),
+            "scores": str(run_dir / "scores.json"),
+        },
+        "scores": scores,
+    }
+    agent_run_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+    return metadata
+
+
+def apply_arm_intents(site_dir: Path, design: dict[str, Any], run: dict[str, Any]) -> list[dict[str, Any]]:
+    writes: list[dict[str, Any]] = []
+    arm = str(run.get("arm"))
+    values = _intent_values_for_arm(design, arm)
+    for config_name, value in values.items():
+        result = _dr(site_dir, "intent:set", config_name, "--value", value, "--format=json")
+        writes.append({
+            "config_name": config_name,
+            "returncode": result.returncode,
+            "stdout": result.stdout,
+            "stderr": result.stderr,
+        })
+    return writes
+
+
+def capture_run_state(site_dir: Path, run_dir: Path, phase: str, site_url: str) -> None:
+    state_dir = run_dir / "state"
+    state_dir.mkdir(parents=True, exist_ok=True)
+    _write_command_output(state_dir / f"intent-list-{phase}.json", _dr(site_dir, "intent:list", "--format=json"))
+    for target in TARGET_OBJECTS:
+        _write_command_output(
+            state_dir / f"intent-get-{_safe_name(target)}-{phase}.json",
+            _dr(site_dir, "intent:get", target, "--format=json"),
+        )
+    _write_command_output(
+        state_dir / f"form-content-{phase}.json",
+        _drush(site_dir, "config:get", "core.entity_form_display.node.page.default", "content", "--format=json"),
+    )
+    _write_command_output(
+        state_dir / f"form-hidden-{phase}.json",
+        _drush(site_dir, "config:get", "core.entity_form_display.node.page.default", "hidden", "--format=json"),
+    )
+    _write_command_output(
+        state_dir / f"field-group-{phase}.json",
+        _drush(site_dir, "config:get", "core.entity_form_display.node.page.default", "third_party_settings.field_group", "--format=json"),
+    )
+    config_export_dir = state_dir / f"config-export-{phase}"
+    if config_export_dir.exists():
+        shutil.rmtree(config_export_dir)
+    config_export_dir.mkdir(parents=True)
+    _write_command_output(
+        state_dir / f"config-export-{phase}.json",
+        _drush(site_dir, "config:export", f"--destination={config_export_dir}", "-y"),
+    )
+    field_existence = {}
+    for field in SEO_FIELDS:
+        for config_name in [f"field.field.node.page.{field}", f"field.storage.node.{field}"]:
+            field_existence[config_name] = _drush(site_dir, "config:get", config_name, "id", "--format=string").returncode == 0
+    (state_dir / f"field-existence-{phase}.json").write_text(json.dumps(field_existence, indent=2) + "\n", encoding="utf-8")
+    try:
+        html = urllib.request.urlopen(f"{site_url}/seo-intent-live-proof", timeout=10).read().decode("utf-8", errors="replace")
+    except (urllib.error.URLError, TimeoutError):
+        html = ""
+    (state_dir / f"page-{phase}.html").write_text(html, encoding="utf-8")
+
+
+def score_intent_run_artifacts(run_dir: Path, design: dict[str, Any]) -> dict[str, Any]:
+    state_dir = run_dir / "state"
+    form_display = {
+        "content": _config_value(_load_json(state_dir / "form-content-after.json")),
+        "hidden": _config_value(_load_json(state_dir / "form-hidden-after.json")),
+    }
+    existence = _load_json(state_dir / "field-existence-after.json")
+    transcript = _read_text(run_dir / "transcript.md") + "\n" + _read_text(run_dir / "codex-events.jsonl")
+    config_before = state_dir / "config-export-before"
+    config_after = state_dir / "config-export-after"
+    no_op_config_diff = (
+        config_before.exists()
+        and config_after.exists()
+        and sha256_tree(config_before) == sha256_tree(config_after)
+    )
+    return {
+        "no_op_config_diff": int(no_op_config_diff),
+        "M1": score_preserved_all_4(form_display, existence if isinstance(existence, dict) else {}),
+        "M2": score_consideration(
+            transcript,
+            TARGET_OBJECTS,
+            design.get("intent_values", {}).get("conflict", {}),
+        ),
+    }
+
+
+def _baseline_for_run(
+    run: dict[str, Any],
+    *,
+    baseline_main: Path,
+    baseline_stale: Path | None,
+    baseline_a11y: Path | None,
+) -> Path:
+    if run.get("cell_id") == "nc-stale":
+        return baseline_stale or baseline_main
+    if run.get("cell_id") == "e3-multi-config":
+        return baseline_a11y or baseline_main
+    return baseline_main
+
+
+def _intent_values_for_arm(design: dict[str, Any], arm: str) -> dict[str, str]:
+    values = design.get("intent_values", {})
+    if arm == "conflict-intent":
+        return dict(values.get("conflict", {}))
+    if arm == "placebo-intent":
+        placebo = values.get("placebo", {})
+        expanded = {}
+        form_value = placebo.get("core.entity_form_display.node.page.default")
+        if form_value:
+            expanded["core.entity_form_display.node.page.default"] = form_value
+        field_value = placebo.get("field.field.node.page.field_seo_*")
+        if field_value:
+            for field in SEO_FIELDS:
+                expanded[f"field.field.node.page.{field}"] = field_value
+        return expanded
+    if arm == "stale-intent":
+        return dict(values.get("stale", {}))
+    if arm == "view-intent":
+        return dict(values.get("e3_view", {}))
+    return {}
+
+
+def _copy_site(source: Path, destination: Path, copy_strategy: str) -> None:
+    if destination.exists():
+        shutil.rmtree(destination)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if copy_strategy == "apfs-clone":
+        result = subprocess.run(["cp", "-cR", str(source), str(destination)], text=True, capture_output=True)
+        if result.returncode == 0:
+            return
+    shutil.copytree(source, destination, symlinks=True)
+
+
+def _write_root_agents(run: dict[str, Any], artifact_root: Path, site_dir: Path) -> None:
+    framing = str(run.get("framing"))
+    name = "fully-blind-root-AGENTS.md" if framing == "fully-blind" else "soft-root-AGENTS.md"
+    shutil.copyfile(artifact_root / "agents" / name, site_dir / "AGENTS.md")
+
+
+def _render_prompt(run: dict[str, Any], artifact_root: Path, site_url: str) -> str:
+    prompt = (artifact_root / "prompts" / f"{run['prompt_id']}.txt").read_text(encoding="utf-8")
+    prompt = prompt.replace("{SITE_URL}", site_url)
+    if run.get("framing") == "told":
+        prompt += "\n\n" + (artifact_root / "prompts" / "told_paragraph.txt").read_text(encoding="utf-8")
+    return prompt
+
+
+def _start_server(site_dir: Path, run_dir: Path, port: int) -> subprocess.Popen[str]:
+    server_log = (run_dir / "server.log").open("w", encoding="utf-8")
+    process = subprocess.Popen(
+        [
+            "php",
+            "-d",
+            "memory_limit=-1",
+            str(site_dir / "vendor/bin/dr"),
+            "server",
+            "--host=127.0.0.1",
+            f"--port={port}",
+            "--suppress-login",
+        ],
+        cwd=site_dir,
+        stdout=server_log,
+        stderr=subprocess.STDOUT,
+        text=True,
+        start_new_session=True,
+    )
+    (run_dir / "server.pid").write_text(str(process.pid), encoding="utf-8")
+    url = f"http://127.0.0.1:{port}/seo-intent-live-proof"
+    for _ in range(80):
+        if process.poll() is not None:
+            break
+        try:
+            urllib.request.urlopen(url, timeout=2).read()
+            return process
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.5)
+    return process
+
+
+def _stop_server(process: subprocess.Popen[str]) -> None:
+    if process.poll() is not None:
+        return
+    process.terminate()
+    try:
+        process.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        process.kill()
+        process.wait(timeout=5)
+
+
+def _build_codex_command(*, codex_bin: str, site_dir: Path, run: dict[str, Any], service_tier: str) -> list[str]:
+    return [
+        codex_bin,
+        "exec",
+        "-C",
+        str(site_dir.resolve()),
+        "--skip-git-repo-check",
+        "--dangerously-bypass-approvals-and-sandbox",
+        "--json",
+        "-m",
+        str(run.get("model")),
+        "-c",
+        f'service_tier="{service_tier}"',
+        "-",
+    ]
+
+
+def _run_command(
+    command: list[str],
+    *,
+    input: str | None,
+    text: bool,
+    capture_output: bool,
+    cwd: Path,
+    env: dict[str, str],
+    timeout: int | None,
+) -> subprocess.CompletedProcess[str]:
+    return _run_command_with_process_group(
+        command,
+        input=input,
+        text=text,
+        capture_output=capture_output,
+        cwd=cwd,
+        env=env,
+        timeout=timeout,
+    )
+
+
+def _dr(site_dir: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        ["php", "-d", "memory_limit=-1", str(site_dir / "vendor/bin/dr"), *args],
+        cwd=site_dir,
+        text=True,
+        capture_output=True,
+    )
+
+
+def _drush(site_dir: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        ["php", "-d", "memory_limit=-1", str(site_dir / "vendor/bin/drush.php"), *args],
+        cwd=site_dir,
+        text=True,
+        capture_output=True,
+    )
+
+
+def _write_command_output(path: Path, completed: subprocess.CompletedProcess[str]) -> None:
+    path.write_text(completed.stdout or "", encoding="utf-8")
+    path.with_suffix(path.suffix + ".stderr").write_text(completed.stderr or "", encoding="utf-8")
+    path.with_suffix(path.suffix + ".returncode").write_text(str(completed.returncode), encoding="utf-8")
+
+
+def _patch_dr_proxy_if_needed(site_dir: Path) -> None:
+    dr_path = site_dir / "vendor/bin/dr"
+    if not dr_path.exists():
+        return
+    text = dr_path.read_text(encoding="utf-8", errors="replace")
+    import re
+
+    patched = re.sub(
+        r'include\("phpvfscomposer://" \. __DIR__ \. ([^)]+)\);\s*exit\(0\);',
+        r'return include("phpvfscomposer://" . __DIR__ . \1);',
+        text,
+        flags=re.S,
+    )
+    patched = re.sub(
+        r"\ninclude __DIR__ \. ([^;]+);",
+        r"\nreturn include __DIR__ . \1;",
+        patched,
+    )
+    if patched != text:
+        dr_path.write_text(patched, encoding="utf-8")
+
+
+def _fix_sqlite_path(site_dir: Path) -> None:
+    settings = site_dir / "web/sites/default/settings.php"
+    if not settings.exists():
+        return
+    sqlite = site_dir / "web/sites/default/files/.sqlite"
+    text = settings.read_text(encoding="utf-8", errors="replace")
+    import re
+
+    patched = re.sub(
+        r"'database'\s*=>\s*'[^']*\.sqlite'",
+        "'database' => '" + str(sqlite).replace("'", "\\'") + "'",
+        text,
+        count=1,
+    )
+    if patched != text:
+        settings.chmod(0o644)
+        settings.write_text(patched, encoding="utf-8")
+        settings.chmod(0o444)
+
+
+def _config_value(data: Any) -> dict[str, Any]:
+    if not isinstance(data, dict):
+        return {}
+    for value in data.values():
+        if isinstance(value, dict):
+            return value
+    return data
+
+
+def _load_json(path: Path) -> Any:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def _read_text(path: Path) -> str:
+    try:
+        return path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return ""
+
+
+def _safe_name(value: str) -> str:
+    return "".join(char if char.isalnum() or char in "._-" else "-" for char in value)

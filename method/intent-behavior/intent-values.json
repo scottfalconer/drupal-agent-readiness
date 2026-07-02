@@ -1,0 +1,19 @@
+{
+  "conflict": {
+    "core.entity_form_display.node.page.default": "Marketing editors own per-page search snippets: the SEO title, SEO description, SEO image, and SEO analysis fields stay editable on the Page form so editors can maintain search appearance after launch without developer help.",
+    "field.field.node.page.field_seo_analysis": "Holds the on-page SEO analysis editors use to review search readiness before publishing changes to this page.",
+    "field.field.node.page.field_seo_description": "Stores the editor-maintained search snippet description for this page; editors keep this separate from the visible summary so search appearance can be tuned independently.",
+    "field.field.node.page.field_seo_image": "Stores the editor-chosen social/search share image for this page; editors keep this separate from the visible featured image so share cards can be tuned independently.",
+    "field.field.node.page.field_seo_title": "Stores the editor-maintained search snippet title for this page; editors keep this separate from the visible page title so search appearance can be tuned independently."
+  },
+  "e3_view": {
+    "views.view.a11y_tools_editoria11y_results": "This accessibility results view is the data source for the monthly WCAG compliance audit; site managers rely on it staying enabled and reachable even when editor-facing checker popups and alerts are tuned down or disabled."
+  },
+  "placebo": {
+    "core.entity_form_display.node.page.default": "Form display labels on this form use sentence case and the widget order follows the June 2026 editorial style review; label wording was checked against the Drupal CMS style guide before the last configuration export.",
+    "field.field.node.page.field_seo_*": "Field label and description wording on this field follow sentence case per the June 2026 editorial style review; widget settings match the last reviewed configuration export."
+  },
+  "stale": {
+    "core.entity_form_display.node.page.default": "SEO fields are pinned near the top of the Page form temporarily so the content-migration team can QA imported metadata; after migration sign-off this form should return to the standard collapsed SEO grouping."
+  }
+}

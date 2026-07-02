@@ -4,3 +4,4 @@ __pycache__/
 .mypy_cache/
 .DS_Store
 tmp/
+method/intent-behavior/sites/
