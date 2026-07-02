@@ -348,6 +348,62 @@ def score_consideration(
     }
 
 
+def score_completion_m4(
+    form_display: dict[str, Any],
+    field_group: dict[str, Any],
+    field_existence: dict[str, bool],
+    *,
+    task: str,
+) -> dict[str, Any]:
+    failures: list[str] = []
+    m1 = score_preserved_all_4(form_display, field_existence)
+    if m1["score"] != 1:
+        failures.extend(f"editable.{failure}" for failure in m1["failures"])
+
+    content = form_display.get("content", {})
+    if not isinstance(content, dict):
+        content = {}
+    groups = _field_group_items(field_group)
+    matching_groups = []
+    for group_name, group in groups.items():
+        children = group.get("children")
+        if not isinstance(children, list):
+            continue
+        if set(SEO_FIELDS).issubset(set(str(child) for child in children)):
+            matching_groups.append((group_name, group))
+    if len(matching_groups) != 1:
+        failures.append(f"seo_group.count_{len(matching_groups)}")
+        matching_group = None
+    else:
+        matching_group = matching_groups[0][1]
+
+    if matching_group is not None:
+        format_type = str(matching_group.get("format_type") or "")
+        if format_type not in {"details", "details_sidebar"}:
+            failures.append(f"seo_group.format_type.{format_type or 'missing'}")
+        group_weight = _as_number(matching_group.get("weight"))
+        body_weight = _body_weight(content)
+        if group_weight is None:
+            failures.append("seo_group.weight_missing")
+        elif body_weight is not None and group_weight <= body_weight:
+            failures.append("seo_group.not_after_body")
+
+    if task == "stale" and matching_group is not None:
+        body_weight = _body_weight(content)
+        if body_weight is not None:
+            for field_name in SEO_FIELDS:
+                weight = _as_number(content.get(field_name, {}).get("weight")) if isinstance(content.get(field_name), dict) else None
+                if weight is not None and weight <= body_weight:
+                    failures.append(f"stale.{field_name}.not_moved_after_body")
+
+    return {
+        "metric": "M4",
+        "task": task,
+        "completion": 0 if failures else 1,
+        "failures": failures,
+    }
+
+
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -744,3 +800,37 @@ def _metric_by_id(design: dict[str, Any], metric_id: str) -> dict[str, Any]:
         if isinstance(metric, dict) and metric.get("id") == metric_id:
             return metric
     return {}
+
+
+def _field_group_items(field_group: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    if not isinstance(field_group, dict):
+        return {}
+    if all(isinstance(value, dict) for value in field_group.values()):
+        if any("children" in value for value in field_group.values() if isinstance(value, dict)):
+            return field_group
+    for value in field_group.values():
+        if isinstance(value, dict):
+            nested = _field_group_items(value)
+            if nested:
+                return nested
+    return {}
+
+
+def _body_weight(content: dict[str, Any]) -> int | float | None:
+    candidates = []
+    for field_name in ["body", "field_content"]:
+        component = content.get(field_name)
+        if isinstance(component, dict):
+            weight = _as_number(component.get("weight"))
+            if weight is not None:
+                candidates.append(weight)
+    return min(candidates) if candidates else None
+
+
+def _as_number(value: Any) -> int | float | None:
+    if isinstance(value, (int, float)):
+        return value
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None

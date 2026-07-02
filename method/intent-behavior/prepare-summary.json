@@ -27,12 +27,12 @@
       "prompts/stale.txt": "722613708f6ea959997a53202a48c7aa8e7dc7dcf68672ecece7cb0fb36ef6d0",
       "prompts/t4_multi_config.txt": "9c82fddff5b7468f551aa51efd63a0e5375a0c5f0bf700cb85b53f977b8bee7b",
       "prompts/told_paragraph.txt": "bd54d587d8129745a654871388a8c37f9ef560acc2ebae3ddb236ab82c6f2fd7",
-      "registration-manifest.json": "2d9c894223ce65f38c3d3542ce039afdf5c08428bc648083bed438d07c9d5ef4",
+      "registration-manifest.json": "d4221553e6ecf4ac4fa4ae882a4f5071289cf0adfc6bbcdd2b1b18825ce24d78",
       "run-schedule-calibration.json": "3dba6da21adf5019db81f86c4381f7edbac14c5ee5da5c6d24298bfa26be3703"
     },
     "code": {
-      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior.py": "ef2e14494a3ffce251b288f19ea7e87eec8a7cacd577232cb25f1dd7d1da7062",
-      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior_runner.py": "4436cfb867613837cfb21a1f706d915b4e1042aa274cba55a391d680cf7cc424",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior.py": "29cb9d416b27aa118319a9cf65da5ac8da904deed9edd6a42b556c4ca4f7f18f",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior_runner.py": "efbe765897074b20a2cb5dc07bd703c22c3d82ff076f2ae168b5ed43b649b10f",
       "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/apply_intent_behavior_catalog.py": "bf1c11615c531cb4a928ee445b278c5b3613fa0a8c43fd850f6ce83c6c59df7e",
       "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/audit_intent_behavior_registration.py": "1742bc16404a29d87eb279ba657fe85da8152a0c42596b518cd47e7f39b80529",
       "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/build_intent_behavior_baseline.sh": "b9b85e22d002add93c11e4db0b0668a624f7152e380deb94a25f8347cc99e943",

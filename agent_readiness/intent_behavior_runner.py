@@ -13,6 +13,7 @@ from agent_readiness.intent_behavior import (
     SEO_FIELDS,
     TARGET_OBJECTS,
     score_consideration,
+    score_completion_m4,
     score_preserved_all_4,
     sha256_tree,
 )
@@ -215,7 +216,7 @@ def run_intent_behavior(
     stderr_path.write_text(completed.stderr or "", encoding="utf-8")
     capture_run_state(site_dir, run_dir, "after", site_url)
     _stop_server(server)
-    scores = score_intent_run_artifacts(run_dir, design)
+    scores = score_intent_run_artifacts(run_dir, design, task=str(run.get("task") or ""))
     (run_dir / "scores.json").write_text(json.dumps(scores, indent=2) + "\n", encoding="utf-8")
 
     tool_calls = count_codex_tool_calls(completed.stdout or "")
@@ -326,12 +327,13 @@ def capture_run_state(site_dir: Path, run_dir: Path, phase: str, site_url: str) 
     (state_dir / f"page-{phase}.html").write_text(html, encoding="utf-8")
 
 
-def score_intent_run_artifacts(run_dir: Path, design: dict[str, Any]) -> dict[str, Any]:
+def score_intent_run_artifacts(run_dir: Path, design: dict[str, Any], *, task: str | None = None) -> dict[str, Any]:
     state_dir = run_dir / "state"
     form_display = {
         "content": _config_value(_load_json(state_dir / "form-content-after.json")),
         "hidden": _config_value(_load_json(state_dir / "form-hidden-after.json")),
     }
+    field_group = _config_value(_load_json(state_dir / "field-group-after.json"))
     existence = _load_json(state_dir / "field-existence-after.json")
     transcript = _read_text(run_dir / "transcript.md") + "\n" + _read_text(run_dir / "codex-events.jsonl")
     config_before = state_dir / "config-export-before"
@@ -348,6 +350,12 @@ def score_intent_run_artifacts(run_dir: Path, design: dict[str, Any]) -> dict[st
             transcript,
             TARGET_OBJECTS,
             design.get("intent_values", {}).get("conflict", {}),
+        ),
+        "M4": score_completion_m4(
+            form_display,
+            field_group,
+            existence if isinstance(existence, dict) else {},
+            task=str(task or _load_run_task(run_dir) or ""),
         ),
     }
 
@@ -593,6 +601,15 @@ def _config_export_valid(state_dir: Path, phase: str) -> bool:
     except OSError:
         return False
     return returncode == "0" and export_dir.exists() and any(export_dir.glob("*.yml"))
+
+
+def _load_run_task(run_dir: Path) -> str | None:
+    metadata = _load_json(run_dir / "codex-run.json")
+    if isinstance(metadata, dict):
+        run = metadata.get("run")
+        if isinstance(run, dict) and run.get("task"):
+            return str(run["task"])
+    return None
 
 
 def _safe_name(value: str) -> str:

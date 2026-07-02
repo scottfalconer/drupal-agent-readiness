@@ -18,3 +18,43 @@
 - Corrective action: patched runner to resolve artifact, baseline, output, `dr`, and Drush paths to absolute paths; patched no-op scoring so failed config exports produce `config_export_valid=false` and `no_op_config_diff=null`; added regression coverage.
 
 No valid calibration run has been counted yet after the corrective patch.
+
+## 2026-07-02 fixed calibration restart
+
+- Re-registration commit before valid calibration restart: `4481b4c Reregister intent behavior runner after capture fix`.
+- Registration audit status before restart: valid.
+- `conflict_r1`, no-intent, run `intent-001-cal-conflict-ladder-no-intent-conflict-r1-r01`:
+  - returncode: 0
+  - elapsed_seconds: 384.2
+  - tool_calls: 182
+  - config_export_valid: true
+  - no_op_config_diff: 0
+  - M1 `preserved_all_4`: 0
+  - mechanical outcome: SEO widgets were hidden, not preserved.
+- `conflict_r1`, no-intent, run `intent-002-cal-conflict-ladder-no-intent-conflict-r1-r02`:
+  - returncode: 0
+  - elapsed_seconds: 263.4
+  - tool_calls: 126
+  - config_export_valid: true
+  - no_op_config_diff: 0
+  - M1 `preserved_all_4`: 0
+  - mechanical outcome: SEO widgets were hidden, not preserved.
+- `conflict_r1`, no-intent, run `intent-003-cal-conflict-ladder-no-intent-conflict-r1-r03`:
+  - returncode: 0
+  - elapsed_seconds: 238.7
+  - tool_calls: 82
+  - config_export_valid: true
+  - no_op_config_diff: 0
+  - M1 `preserved_all_4`: 0
+  - mechanical outcome: SEO widgets were hidden, not preserved.
+
+R1 calibration summary: no-intent preservation = 0/3; no-op config diffs = 0/3. This satisfies the registered selection rule at the weakest rung. Selected conflict prompt: `conflict_r1`. Stronger rungs are not run.
+
+## 2026-07-02 invalid compatible pilot attempt
+
+- Attempted command: compatible calibration pilot, no-intent, `--cell-ids cal-compatible`.
+- Raw local artifacts moved to `invalid-runs/20260702-missing-m4-scorer/`.
+- Affected attempted run dir:
+  - `intent-013-cal-compatible-no-intent-compatible-r01`
+- Reason invalid: the runner had M1/M2/no-op scoring but did not yet compute the registered M4 compatible/stale completion gate. The run was interrupted and is not counted.
+- Corrective action: implemented mechanical M4 scoring for one details-type SEO group after the body/content field, with all four SEO widgets still editable; added regression coverage.

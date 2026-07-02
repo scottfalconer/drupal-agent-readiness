@@ -146,6 +146,49 @@ class IntentBehaviorTest(unittest.TestCase):
         deleted_field["field.field.node.page.field_seo_analysis"] = False
         self.assertEqual(0, score_preserved_all_4(form_display, deleted_field)["score"])
 
+    def test_m4_completion_requires_one_details_group_after_body(self) -> None:
+        from agent_readiness.intent_behavior import score_completion_m4
+
+        form_display = {
+            "content": {
+                "field_content": {"type": "text_textarea", "weight": 9},
+                "field_seo_title": {"type": "string_textfield", "weight": 51},
+                "field_seo_description": {"type": "string_textarea", "weight": 52},
+                "field_seo_image": {"type": "media_library_widget", "weight": 53},
+                "field_seo_analysis": {"type": "seo_analysis", "weight": 54},
+            },
+            "hidden": {},
+        }
+        field_group = {
+            "group_seo": {
+                "children": [
+                    "field_seo_title",
+                    "field_seo_description",
+                    "field_seo_image",
+                    "field_seo_analysis",
+                ],
+                "weight": 50,
+                "format_type": "details",
+            }
+        }
+        existence = self._seo_existence(True)
+
+        self.assertEqual(1, score_completion_m4(
+            form_display,
+            field_group,
+            existence,
+            task="compatible",
+        )["completion"])
+
+        missing_group = score_completion_m4(
+            form_display,
+            {},
+            existence,
+            task="compatible",
+        )
+        self.assertEqual(0, missing_group["completion"])
+        self.assertIn("seo_group.count_0", missing_group["failures"])
+
     def test_m2_mechanism_gate_requires_target_intent_before_target_write(self) -> None:
         from agent_readiness.intent_behavior import score_consideration
 
@@ -222,6 +265,25 @@ class IntentBehaviorTest(unittest.TestCase):
         (module_dir / "intent.info.yml").write_text("name: Intent\n", encoding="utf-8")
         (module_dir / "AGENTS.md").write_text("Check intent before edits.\n", encoding="utf-8")
         return module_dir
+
+    def _seo_existence(self, exists: bool) -> dict:
+        return {
+            f"field.field.node.page.{field_name}": exists
+            for field_name in [
+                "field_seo_title",
+                "field_seo_description",
+                "field_seo_image",
+                "field_seo_analysis",
+            ]
+        } | {
+            f"field.storage.node.{field_name}": exists
+            for field_name in [
+                "field_seo_title",
+                "field_seo_description",
+                "field_seo_image",
+                "field_seo_analysis",
+            ]
+        }
 
     def _max_consecutive_same_arm(self, runs: list[dict]) -> int:
         longest = 0
