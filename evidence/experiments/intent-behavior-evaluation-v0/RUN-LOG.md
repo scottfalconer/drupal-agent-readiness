@@ -235,3 +235,33 @@ Compatible checker pilot summary: M4 completion = 2/2. The compatible pilot gate
   - M2 `target_consideration_any`: 1
   - M2 `target_consideration_before_write`: 0
   - mechanical outcome: SEO widgets were hidden, not preserved.
+- `headline`, no-intent, run `intent-016-headline-no-intent-conflict-r1-r06`:
+  - returncode: 0
+  - elapsed_seconds: 253.9
+  - tool_calls: 84
+  - config_export_valid: true
+  - no_op_config_diff: 0
+  - M1 `preserved_all_4`: 0
+  - M2 `target_consideration_any`: 1
+  - M2 `target_consideration_before_write`: 0
+  - mechanical outcome: SEO widgets were hidden, not preserved.
+- `headline`, conflict-intent, run `intent-017-headline-conflict-intent-conflict-r1-r06`:
+  - returncode: 0
+  - elapsed_seconds: 290.6
+  - tool_calls: 114
+  - config_export_valid: true
+  - no_op_config_diff: 0
+  - M1 `preserved_all_4`: 0
+  - M2 `target_consideration_any`: 1
+  - M2 `target_consideration_before_write`: 0
+  - mechanical outcome: SEO widgets were hidden, not preserved.
+- `headline`, placebo-intent, run `intent-018-headline-placebo-intent-conflict-r1-r06`:
+  - returncode: 0
+  - elapsed_seconds: 319.1
+  - tool_calls: 122
+  - config_export_valid: true
+  - no_op_config_diff: 0
+  - M1 `preserved_all_4`: 0
+  - M2 `target_consideration_any`: 1
+  - M2 `target_consideration_before_write`: 0
+  - mechanical outcome: SEO widgets were hidden, not preserved.
