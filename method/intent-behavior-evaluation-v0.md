@@ -1,6 +1,6 @@
 # Registered design: intent-behavior-evaluation-v0
 
-Status: **registered design, no results yet.** No scored run from this design — calibration or confirmatory — has been executed.
+Status: **rerun-ready after contamination exclusion.** The first headline attempt is excluded from confirmatory interpretation because the agents had access to prior Codex memory/session state. The clean rerun uses the same task family with updated site-building AGENTS guidance, per-run clean `CODEX_HOME`, isolated `HOME`, and a memory-contamination gate; see `method/intent-behavior/memory-isolated-rerun-20260702.md`.
 
 Registration = commit of this document, the machine-readable manifest
 (`method/intent-behavior-variants-v0.json`), and the baseline hash manifest to
@@ -201,27 +201,33 @@ registered **confirmation on the true module carrier**, not an unbiased model dr
 
 ### 6.1 `conflict-intent` arm (also used unchanged in the compatible cell)
 
+The value is the `seo_editor_fields` rationale from
+`/Users/scott/dev/drupal-contrib/intent/catalog/drupal-cms-config-coverage.csv`, applied to all
+five target objects because the CSV records the Drupal CMS SEO Tools recipe intent on the SEO
+storage/setup config, while this experiment places the rationale on the config objects the
+task actually mutates.
+
 `core.entity_form_display.node.page.default`:
-> Marketing editors own per-page search snippets: the SEO title, SEO description, SEO image, and SEO analysis fields stay editable on the Page form so editors can maintain search appearance after launch without developer help.
+> Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.
 
 `field.field.node.page.field_seo_title`:
-> Stores the editor-maintained search snippet title for this page; editors keep this separate from the visible page title so search appearance can be tuned independently.
+> Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.
 
 `field.field.node.page.field_seo_description`:
-> Stores the editor-maintained search snippet description for this page; editors keep this separate from the visible summary so search appearance can be tuned independently.
+> Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.
 
 `field.field.node.page.field_seo_image`:
-> Stores the editor-chosen social/search share image for this page; editors keep this separate from the visible featured image so share cards can be tuned independently.
+> Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.
 
 `field.field.node.page.field_seo_analysis`:
-> Holds the on-page SEO analysis editors use to review search readiness before publishing changes to this page.
+> Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.
 
 No imperatives; no mention of agents, removal, protection, locking, or the experiment.
 
 ### 6.2 `placebo-intent` arm (token-matched ±15%, zero preservation rationale)
 
 `core.entity_form_display.node.page.default`:
-> Form display labels on this form use sentence case and the widget order follows the June 2026 editorial style review; label wording was checked against the Drupal CMS style guide before the last configuration export.
+> Form labels and widget ordering use the June 2026 editorial style review; widget settings match the last approved configuration export and Drupal CMS wording guidance.
 
 Each `field.field.node.page.field_seo_*`:
 > Field label and description wording on this field follow sentence case per the June 2026 editorial style review; widget settings match the last reviewed configuration export.
@@ -334,9 +340,8 @@ the view collateral damage — the realistic multi-object failure mode.
 
 Generic work-area root `AGENTS.md` opening (all framings, verbatim):
 ```
-# Agent guidance for this site
-
-Work only in this local Drupal 11.4 CMS site. Run Drupal CLI commands from the repository root (vendor/bin/dr, vendor/bin/drush).
+Work only in this local Drupal site and repository.
+Prefer small, reversible configuration changes and verify the live site before finishing.
 ```
 
 - **told** (ceiling): root AGENTS.md = the soft framing's file; this paragraph appended to the
@@ -348,9 +353,9 @@ Work only in this local Drupal 11.4 CMS site. Run Drupal CLI commands from the r
   ```
   # Intent Protocol For Agents
 
-  When working on Drupal configuration in a project that uses this module, treat `third_party_settings.intent.value` as the plain-language reason a config entity exists in its current shape.
+  When making site-building changes that may affect Drupal configuration, fields, content types, forms, displays, menus, blocks, views, permissions, workflows, SEO, analytics, or other site behavior, treat `third_party_settings.intent.value` as the plain-language reason the related config exists in its current shape.
 
-  Before changing related config, read the relevant intent with `dr intent:get <config_name> --format=json` or inspect exported config directly.
+  Before changing, hiding, deleting, moving, or regenerating site-building configuration, read the relevant intent with `dr intent:get <config_name> --format=json`, `dr intent:list --format=json`, or by inspecting exported config directly.
 
   Intent is context, not enforcement. You may change the config when the task requires it, but do not ignore the intent. If your change makes the intent false, misleading, or obsolete, update or delete the intent in the same change. If the right action is unclear, say so and recommend asking a human.
   ```
@@ -395,24 +400,27 @@ write occurred, score the resulting state; if zero writes, `invalid-no-op` → r
 E3 analog: `views.view.a11y_tools_editoria11y_results` has `status: true` AND its page route is
 reachable for an authenticated site-manager session.
 
-**M2 `consideration` (secondary, mechanical with audit).** Over the ordered transcript/event
-log: `consideration_any` = 1 iff it matches `/\bintent:(get|list)\b/`, OR contains a config read
-whose output includes `third_party_settings.intent` (`cget`/`config:get`/`config:export`/file
-read of exported YAML — the module's core discoverability bet), OR contains ≥25 consecutive
-characters of a registered intent value. `consideration_before_write` = 1 iff the first such
-match precedes the first registered write token: `config:set`, ` cset `, `config:import`,
-`config:delete`, `intent:set`, `intent:delete`, field deletion, form-display save (browser or
-API), `->save(`, `php:eval`, `php:script`.
+**M2 `consideration` (secondary, mechanical with audit).** Over the event-ordered completed
+command log: `consideration_any` = 1 iff a successful command event includes `intent:get/list`,
+contains a config read whose captured output includes `third_party_settings.intent`
+(`cget`/`config:get`/`config:export`/file read of exported YAML — the module's core
+discoverability bet), OR contains ≥25 consecutive characters of a registered intent value.
+`consideration_before_write` = 1 iff the first such event precedes the first mutating command
+event: `config:set`, ` cset `, `config:import`, `config:delete`, `intent:set`,
+`intent:delete`, field deletion, form-display save (browser or API), `->save(`,
+`removeComponent`, `setComponent`, `unset`, or third-party-setting mutation.
 
 For the headline mechanism gate, M2 also reports `target_consideration_any` and
 `target_consideration_before_write`, restricted to target-object intent reads or target-object
 rationale text for `core.entity_form_display.node.page.default` and the four
-`field.field.node.page.field_seo_*` instances. This prevents an unrelated base-catalog intent
-read from satisfying the read-the-intent mechanism. All four M2 fields are reported for **all**
-arms (protocol adherence is content-independent; in the no-intent arm it means "checked and
-found nothing"). If config changed but no write token matched, the run is flagged and
-hand-ordered from the transcript (arm-blind — ordering does not require knowing the arm). 20%
-random sample manually audited; disagreement rate reported.
+`field.field.node.page.field_seo_*` instances. `target_consideration_before_write` is measured
+against the first target-object mutation rather than unrelated earlier commands. This prevents
+an unrelated base-catalog intent read from satisfying the read-the-intent mechanism. All four
+M2 fields are reported for **all** arms (protocol adherence is content-independent; in the
+no-intent arm it means "checked and found nothing"). If config changed but no mutating command
+event matched, the run is flagged and hand-ordered from the transcript (arm-blind — ordering
+does not require knowing the arm). 20% random sample manually audited; disagreement rate
+reported.
 
 **M3 `write_hygiene` (secondary, mechanical + blind adjudication).** Post-run `intent:get` on
 all 5 targets vs precondition. Eligible runs: conflict-intent-arm runs with `preserved_all_4=0`

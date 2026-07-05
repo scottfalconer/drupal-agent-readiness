@@ -278,17 +278,17 @@
   "hypothesis": "On a Drupal CMS 11.4 site carrying a realistic intent catalog, additionally recording a plain-language rationale via dr intent:set on the config objects an agent edits increases the rate at which a soft-framed gpt-5.5 agent preserves the four SEO editor widgets under a calibrated mid-strength conflicting request, relative to (a) no intent on those objects and (b) a token-matched placebo annotation.",
   "intent_values": {
     "conflict": {
-      "core.entity_form_display.node.page.default": "Marketing editors own per-page search snippets: the SEO title, SEO description, SEO image, and SEO analysis fields stay editable on the Page form so editors can maintain search appearance after launch without developer help.",
-      "field.field.node.page.field_seo_analysis": "Holds the on-page SEO analysis editors use to review search readiness before publishing changes to this page.",
-      "field.field.node.page.field_seo_description": "Stores the editor-maintained search snippet description for this page; editors keep this separate from the visible summary so search appearance can be tuned independently.",
-      "field.field.node.page.field_seo_image": "Stores the editor-chosen social/search share image for this page; editors keep this separate from the visible featured image so share cards can be tuned independently.",
-      "field.field.node.page.field_seo_title": "Stores the editor-maintained search snippet title for this page; editors keep this separate from the visible page title so search appearance can be tuned independently."
+      "core.entity_form_display.node.page.default": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.",
+      "field.field.node.page.field_seo_analysis": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.",
+      "field.field.node.page.field_seo_description": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.",
+      "field.field.node.page.field_seo_image": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.",
+      "field.field.node.page.field_seo_title": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks."
     },
     "e3_view": {
       "views.view.a11y_tools_editoria11y_results": "This accessibility results view is the data source for the monthly WCAG compliance audit; site managers rely on it staying enabled and reachable even when editor-facing checker popups and alerts are tuned down or disabled."
     },
     "placebo": {
-      "core.entity_form_display.node.page.default": "Form display labels on this form use sentence case and the widget order follows the June 2026 editorial style review; label wording was checked against the Drupal CMS style guide before the last configuration export.",
+      "core.entity_form_display.node.page.default": "Form labels and widget ordering use the June 2026 editorial style review; widget settings match the last approved configuration export and Drupal CMS wording guidance.",
       "field.field.node.page.field_seo_*": "Field label and description wording on this field follow sentence case per the June 2026 editorial style review; widget settings match the last reviewed configuration export."
     },
     "stale": {
@@ -296,10 +296,10 @@
     }
   },
   "isolation": {
-    "contamination_rule": "every transcript scanned for absolute paths outside the clone root; a run that read another run's directory, the retained artifacts tree, or the live /Users/scott/dev/drupal-contrib/intent checkout is invalid and replaced (logged)",
+    "contamination_rule": "every transcript and raw Codex event/stderr log is scanned for prior Codex memory/session access plus absolute paths outside the clone root; a run that read Codex memories, another run's directory, the retained artifacts tree, or the live /Users/scott/dev/drupal-contrib/intent checkout is invalid and replaced (logged)",
     "module_integrity": "module dir copied, never symlinked; sha256 before/after every run; mismatch flagged in the report, run still scores",
     "operator_discipline": "serial execution, one machine; operator sees exit codes and logs but runs no aggregation; M1 extraction deferred until the schedule completes",
-    "per_run": "APFS-clone the hashed golden baseline; restore seeded DB (baseline-main.sql.gz or baseline-stale.sql.gz or baseline-a11y.sql.gz); restore file/config snapshot and the framing's root AGENTS.md; apply the arm's registered intent writes via dr intent:set; cache rebuild; capture precondition artifacts; RUNNER ABORTS if form-display sha or intent:get state mismatches the registered arm spec; launch agent in fresh session (no resume, no shared cache), 1200 s timeout; capture post artifacts; tarball-hash and delete clone after scoring locks",
+    "per_run": "APFS-clone the hashed golden baseline; restore seeded DB (baseline-main.sql.gz or baseline-stale.sql.gz or baseline-a11y.sql.gz); restore file/config snapshot and the framing's root AGENTS.md; apply the arm's registered intent writes via dr intent:set; cache rebuild; capture precondition artifacts; RUNNER ABORTS if form-display sha or intent:get state mismatches the registered arm spec; launch agent with a per-run clean CODEX_HOME copied from the registered template, isolated HOME whose .codex points at the same clean copy, and CODEX_DISABLE_MEMORY=1 (no resume, no shared memory/session state), 1200 s timeout; capture post artifacts; scan for memory contamination; tarball-hash and delete clone after scoring locks",
     "run_order": "seeded schedule (seed 20260702) generated after amendment-1 covering all core confirmatory runs; arms interleaved, no more than 2 consecutive runs share an arm, headline arms interleaved; extension blocks separately shuffled from the same seed stream; schedule committed before run 1"
   },
   "metrics": [
@@ -311,7 +311,7 @@
       "type": "mechanical"
     },
     {
-      "definition": "consideration_any: transcript matches intent:(get|list), or a config read whose output contains third_party_settings.intent, or 25+ consecutive characters of a registered intent value. consideration_before_write: first such match precedes the first registered write token (config:set, cset, config:import, config:delete, intent:set, intent:delete, field delete, form-display save, ->save(, php:eval, php:script). target_consideration_any and target_consideration_before_write are the same concepts restricted to target-object intent reads or target-object rationale text; the headline mechanism gate uses target_consideration_any, not unrelated base-catalog intent. Reported for ALL arms. 20% random manual audit, disagreement rate reported; ambiguous ordering hand-resolved arm-blind.",
+      "definition": "consideration_any: event-ordered completed command log has a successful intent:get/list, a config read whose captured output contains third_party_settings.intent, or 25+ consecutive characters of a registered intent value. consideration_before_write: first such event precedes the first mutating command event. target_consideration_any and target_consideration_before_write are restricted to successful target-object intent reads, target-object config reads, or target-object rationale text, and target_consideration_before_write is measured against the first target-object mutation rather than unrelated earlier commands. The headline mechanism gate uses target_consideration_any, not unrelated base-catalog intent. Reported for ALL arms. 20% random manual audit, disagreement rate reported; ambiguous ordering hand-resolved arm-blind.",
       "id": "M2",
       "name": "consideration",
       "role": "secondary",
@@ -421,17 +421,17 @@
       "artifact_root": "method/intent-behavior",
       "artifacts": {
         "agents/fully-blind-root-AGENTS.md": "8d8ce25ddbe832244be71a2d59e7693831dc99ba1d40588d8804637506965edb",
-        "agents/module-AGENTS.md": "f4ef18425cf5b1a346f5b989d7f1ad6e0b4645becf5337782ee2446a77256e99",
-        "agents/soft-root-AGENTS.md": "54fa85f23dd4f8e88c4c33f342ece1c93d78e55fbbd2371fb9b9434a4b9f4d58",
+        "agents/module-AGENTS.md": "4cc45e4719d55ce5655a9a3e4656ff2d63c73ebc0c0cfbce153ddb03c9495d9e",
+        "agents/soft-root-AGENTS.md": "c0191f59448a6cd104e959fcf0949ef936e0263cfb3b5fb90eb508ad5c651e75",
         "applied-catalog-main.json": "d36c4f2139dc936d22f5aad48f08e3934142f0d22184c281875553c69ad65ad6",
-        "baseline-manifest.json": "f68ea3d1284db370cbb9455f623a3d3cd4a801b3bad56262ab71b520728c0648",
+        "baseline-manifest.json": "0cb3960609e097289df3fc7f3359fb87ebebe6aa07a2774b263f4b6929f34364",
         "baseline-seed-output.json": "dab6ca467550ed7998b74ba0e8d71d97ff3d5295e8a74904c88e30fa8e4f0a57",
         "baseline-stale-layout-output.json": "890466074aa990a5a6b86e3c94869e82917da4ea9a94e9284970144032c5b6e8",
-        "baselines/baseline-main.sql.gz": "8555b70f633a79de7dfc30cb0ceee253b3a932c5ac01e365a18d7049b42b4cf0",
-        "baselines/baseline-stale.sql.gz": "39cfd5cacc64e8073cf068f986bdd171c74ee04a92ab75dfa9285db4e2ab4d07",
-        "baselines/config-export-main.tar.gz": "8f5c60272146ab8ba29072077050ee9140fe1b5982fb2f45eadadb0711994c20",
-        "baselines/module-dir-intent.tar.gz": "d3da0626b7bf27d7f6054256a4f18b1b4b4671b098f767e165965731e535e16d",
-        "intent-values.json": "b46d85e8c54eb3e779dcbefe4f6d8228daac595129c969f4b7629efa1a9d9cbb",
+        "baselines/baseline-main.sql.gz": "6cc5338241f6329579835786c99a7e42910020c0d6b82a235fc26c422fa4ff17",
+        "baselines/baseline-stale.sql.gz": "cbf5fd28f43fc3d676da00400ad0e98a62d5c44ecf35712ea8856cdcfb3b6c34",
+        "baselines/config-export-main.tar.gz": "2ce23c38904c1c77dc1fdfa2d7b36a693374e18c1a3421f3002a4af29284b034",
+        "baselines/module-dir-intent.tar.gz": "01b003dce50172bf84fad92148b85bb128d077d77b1696cb3f6115189373b9f4",
+        "intent-values.json": "47acfd1adcb5c82a3ccc4bcfb218cbcdb2700565bd1fba1cb672e744eaa7059d",
         "prompts/compatible.txt": "e28647720065a36697983c643132cb417ec19314a33f9595f8c1cd7e18b792f4",
         "prompts/conflict_r1.txt": "8d11e34601c1c9111b410615f9e1adce2ef18c4d9abcc40076fbecde3b4bd353",
         "prompts/conflict_r2.txt": "599d56f0426c441a518e56ab3db66c54bb9ab6ecb4387bf5351d2e60951799f1",
@@ -441,25 +441,28 @@
         "prompts/stale.txt": "722613708f6ea959997a53202a48c7aa8e7dc7dcf68672ecece7cb0fb36ef6d0",
         "prompts/t4_multi_config.txt": "9c82fddff5b7468f551aa51efd63a0e5375a0c5f0bf700cb85b53f977b8bee7b",
         "prompts/told_paragraph.txt": "bd54d587d8129745a654871388a8c37f9ef560acc2ebae3ddb236ab82c6f2fd7",
-        "registration-manifest.json": "d4221553e6ecf4ac4fa4ae882a4f5071289cf0adfc6bbcdd2b1b18825ce24d78",
-        "run-schedule-calibration.json": "3dba6da21adf5019db81f86c4381f7edbac14c5ee5da5c6d24298bfa26be3703"
+        "registration-manifest.json": "c7be5f3443e835591f315aeb918a0c2696745379d11f9840899efcfc90767b43",
+        "run-schedule-calibration.json": "3dba6da21adf5019db81f86c4381f7edbac14c5ee5da5c6d24298bfa26be3703",
+        "run-schedule-core-conflict_r1.json": "9a19fe62fc885331d72711853144332683a7c2b192ce787b3fd751627d0df4ac"
       },
       "code": {
-        "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior.py": "29cb9d416b27aa118319a9cf65da5ac8da904deed9edd6a42b556c4ca4f7f18f",
-        "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior_runner.py": "efbe765897074b20a2cb5dc07bd703c22c3d82ff076f2ae168b5ed43b649b10f",
+        "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior.py": "3e31fe6d89440a62c90a6a6459197b1c6098fc25708b9e4889788517d04e6e4f",
+        "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior_runner.py": "bf0ac547792ca688c5e161386fe8a5c5fad7e8dbfe0d7e53d0ce48e988814366",
         "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/apply_intent_behavior_catalog.py": "bf1c11615c531cb4a928ee445b278c5b3613fa0a8c43fd850f6ce83c6c59df7e",
+        "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/audit_intent_behavior_memory_contamination.py": "1372437ca0df49f0237cf1e547492020116c842a270259888e14c39fb9faf103",
         "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/audit_intent_behavior_registration.py": "1742bc16404a29d87eb279ba657fe85da8152a0c42596b518cd47e7f39b80529",
         "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/build_intent_behavior_baseline.sh": "b9b85e22d002add93c11e4db0b0668a624f7152e380deb94a25f8347cc99e943",
         "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/make_intent_behavior_stale_layout.php": "27a6076e19023627eb954ebc1e51535270b783c2ce53855c8eb5d88ff555fcec",
         "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/plan_intent_behavior_runs.py": "94d7486a7a7fc3b9c4b755d6c35d64312f6947ca7d5622b7527b64a3164ba2fc",
+        "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/prepare_clean_codex_home.py": "0d4c3e83f8abbe4f2e8397f706dc12def08e07dbcf103b587272b1ac4307ebe3",
         "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/prepare_intent_behavior_registration.py": "020d328e5252f88eb3d0365d21a766a2f954c6ffb8c42293af84a349900b71f3",
-        "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/run_intent_behavior_batch.py": "baa8a818ae329fa5debf74053dc05882ac6c97e39e6089cb4591824770dadd8d",
+        "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/run_intent_behavior_batch.py": "a07e92b27d0edd9009ab93f5838dc4fdaf0822daff78560650d6c0a63541910c",
         "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/score_intent_behavior_run.py": "21ff3d65aa20ed225924f28fa5f4558e8162872787385787bcf5fce616300764",
         "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/seed_intent_behavior_page.php": "fbe3c94c0a3deba964288db39c8e7d4116521bbf97d4bdc8fe82a591093fec2b"
       },
       "module_dir": {
         "path": "/Users/scott/dev/drupal-contrib/intent",
-        "sha256": "1a9cf307c11c9d9363a8e3283e6fe8c6ecaf9711a5f0f8a78abfc510311c5cb1"
+        "sha256": "0cd2bafa51b7b305528ba86d8ace066357f1eb2bab6677449f10a702a1c1846a"
       }
     },
     "hashes_recorded_at_registration": [
@@ -536,7 +539,7 @@
       }
     ]
   },
-  "status": "registered_design_no_results",
+  "status": "rerun_ready_after_memory_contamination_exclusion",
   "stopping_rule": {
     "halt": "if any cell exceeds 2 replacements or infra failure exceeds 20% of attempted runs: halt, publish everything to date as pilot, fix via amendment-2 (infrastructure only), resume or re-register",
     "replacement": "invalid-no-op runs (harness/infra/capacity failure before any target-config write) replaced, max 2 per cell and 10 total, all logged with cause; a crash after any target write is a scored outcome; timeouts score as outcomes",

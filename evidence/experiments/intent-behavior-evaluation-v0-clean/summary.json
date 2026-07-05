@@ -1,0 +1,34 @@
+{
+  "experiment": "intent-behavior-evaluation-v0-clean",
+  "status": "complete",
+  "selected_run_count": 30,
+  "completed_run_count": 30,
+  "successful_run_count": 30,
+  "failed_run_count": 0,
+  "infrastructure_failure_count": 0,
+  "by_arm": [
+    {
+      "arm": "conflict-intent",
+      "runs": 10,
+      "M1_preserved_all_4": 0,
+      "M2_target_considered_before_write": 10,
+      "M4_completion": 0
+    },
+    {
+      "arm": "no-intent",
+      "runs": 10,
+      "M1_preserved_all_4": 0,
+      "M2_target_considered_before_write": 10,
+      "M4_completion": 0
+    },
+    {
+      "arm": "placebo-intent",
+      "runs": 10,
+      "M1_preserved_all_4": 0,
+      "M2_target_considered_before_write": 10,
+      "M4_completion": 0
+    }
+  ],
+  "interpretation": "Clean rerun null: none of the three headline arms preserved all four target SEO editor affordances.",
+  "source_artifact": "runs/intent-batch-summary.json"
+}

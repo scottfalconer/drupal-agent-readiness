@@ -1,4 +1,10 @@
-# alias-safety experiments
+# Experiment packages
+
+This directory contains retained experiment packages and status summaries. The
+current public narrative has one reviewed alias-safety finding and one visible
+intent-behavior null from the next study.
+
+## Alias-safety experiments
 
 Controlled A/B studies of the candidate thesis: does live site self-description
 (`site-architecture:path-owner`) materially help an agent decide whether a URL
@@ -41,6 +47,15 @@ file is path-only and lives under `prompts/`.
   `files` view retargeted to `/research-library`). Labelled as injected, not stock.
 - `alias-safety-core-fullyblind-v0/`, `alias-safety-haven-fullyblind-v0/`,
   `alias-safety-convivial-fullyblind-v0/` — **stock** substrates, fully-blind.
+- `alias-safety-haven-n10-fullyblind-v0/` — stock Haven headline n=10 run.
+- `alias-safety-codex-fullyblind-v0/` — initial non-Claude breadth cell at n=3.
+
+## Intent-behavior clean null
+
+- `intent-behavior-evaluation-v0-clean/` — clean rerun status for the
+  intent-behavior study. All 30 selected headline runs completed; all three arms
+  scored `M1=0/10` for preserving the target SEO editor affordances. This is a
+  visible null and does not support a positive durable-intent claim.
 
 ## Reproducing / provenance
 

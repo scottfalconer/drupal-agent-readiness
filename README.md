@@ -18,11 +18,12 @@ or never picks Drupal at all. The point is to watch Drupal the way an agent
 experiences it from the outside and turn rough edges into things someone can
 fix.
 
-This is early: one finding so far, plus the harness to produce more. For the
-first test, we asked agents whether a Drupal URL path was free to use as a new
-node alias. An agent can incorrectly say "yes" because a disabled View owns the
-path but currently returns nothing. Giving the agent access to Drupal's own
-record of path ownership changed that behavior.
+This is early: one reviewed finding so far, plus the harness to produce more
+and one visible null result from the next intent-behavior study. For the first
+test, we asked agents whether a Drupal URL path was free to use as a new node
+alias. An agent can incorrectly say "yes" because a disabled View owns the path
+but currently returns nothing. Giving the agent access to Drupal's own record of
+path ownership changed that behavior.
 
 This repo is the public package for `State of Agents in Drupal` v0.
 
@@ -86,20 +87,27 @@ readiness score.
     models that were retired in 2023.
 
 The Claude rows are the headline n=10 run; the Codex rows are initial breadth
-evidence at n=3 and should not be read as provider-general.
+evidence at n=3 and should not be read as provider-general. The independent
+grain is the run, not the individual hidden-path judgment: each run produced two
+hidden judgments from the same transcript, and those judgments are correlated.
 
 The stock Haven hidden paths are under `/admin`, so the verdict and the reason
 are separated. A verdict can be correct because an agent treats `/admin` paths
 as conventionally unsafe; the reasoned column shows whether the agent actually
 identified the disabled-View declaration.
 
-Safe public claim:
+Safe public claim, with the v0 provenance caveat:
 
 > In one constrained Drupal path-safety task, exposing live site
 > self-description changed agent behavior: Drush-only inspection judged some
 > hidden disabled-View path claims safe, while `site-architecture:path-owner`
-> made those claims visible, reducing false "safe" judgments to zero in the
-> headline run.
+> made those claims visible through a verdict-instructing path-owner command,
+> reducing false "safe" judgments to zero in the headline run.
+
+That is reviewable and re-scoreable from retained artifacts, but it is still an
+exploratory v0 finding rather than a pinned replication package: the original
+Claude workflow harness, starting-site hash, resolved model snapshot, budget,
+and prompt-as-run provenance are not all independently captured.
 
 ## What This Is
 
@@ -123,10 +131,10 @@ gaps visible, reproducible, and fixable.
 
 | Area | Status |
 | --- | --- |
-| v0 finding | Ready for review/public preview |
-| Claim scope | `constrained_v0_mechanical_evidence_loop` |
+| v0 finding | Exploratory v0 finding ready for review/public preview |
+| Claim scope | `constrained_v0_mechanical_evidence_loop`; not statistically powered |
 | Current headline task | Alias safety / hidden path claims |
-| Reproducibility | Harness, prompts, evaluators, retained answers/evaluator outputs, raw workflow outputs, and manifest included |
+| Reproducibility | Retained evidence is re-scoreable; exact original-run replication has documented prompt, harness, substrate, and model-pin caveats |
 | Site self-description fixture | Bundled only for reproduction, not as a public module artifact |
 
 ## Current Tasks
@@ -145,7 +153,8 @@ gaps visible, reproducible, and fixable.
 - `method/`: harness, prompts, task definitions, publishing checklist, and
   schema.
 - `evidence/experiments/`: alias-safety experiment packages, including n=10
-  Haven and Codex runs.
+  Haven and Codex runs, plus visible intent-behavior experiment status/null
+  artifacts.
 - `evidence/runs/`: Inventory, Event, and recovery run packages used by the
   scorecard.
 - `repro/`: evaluator, script, and test copy retained for package review.
@@ -170,8 +179,10 @@ want to make easier: inspect live site state, act through governed surfaces,
 verify mechanically, and record blast radius.
 
 Fresh variants are measurement. A stronger Drupal-side progress claim should pin
-the model, harness, prompt, allowed tools, task version, starting-site hash,
-evaluator version, rubric version, budget, and scoring rules.
+the model, harness, prompt-as-run, allowed tools, task version, starting-site
+hash, evaluator version, rubric version, budget, and scoring rules. If those
+pins are missing, use exploratory or anecdotal language even when the retained
+answers re-score cleanly.
 
 This release supports a narrow first finding and a reusable evidence loop. It
 does not prove aggregate Drupal agent readiness.

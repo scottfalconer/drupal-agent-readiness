@@ -4,7 +4,7 @@ Short version: this is a qualitative v0 snapshot and first finding, not a statis
 
 This is not a cross-CMS comparison, not a model leaderboard, and not a migration-to-launch claim.
 
-**This is an instrument and a first finding, not a readiness verdict.** The loop below is a Drupal agent-evaluation harness; the scorecard shows the loop runs and discriminates, not that Drupal is agent-ready.
+**This is an instrument and a first finding, not a readiness verdict.** The loop below is a Drupal agent-evaluation harness; the scorecard shows the loop runs and discriminates, not that Drupal is agent-ready. A clean rerun from the next intent-behavior study is also visible because it produced a null result.
 
 ## What we found
 
@@ -31,11 +31,11 @@ Full write-up: `finding-site-self-description-v0.md` (source package path: `publ
 
 The package is an evidence loop: fixed public tasks, prompts, retained answers, scorecard run transcripts, live-state capture, mechanical evaluators, scorecard rows, readiness flags, and package hashes.
 
-**This release makes three claims:**
+**This release makes three bounded claims:**
 
-1. **Finding:** site self-description changed behavior and reduced measured hidden-claim safe judgments in this constrained task.
+1. **Finding:** site self-description changed behavior and reduced measured hidden-claim safe judgments in this constrained task, with v0 replication caveats.
 2. **Method:** constrained Drupal agent tasks can be measured with public tasks, retained answers, scorecard transcripts, state capture, and mechanical evaluators.
-3. **Roadmap signal:** site self-description is a concrete Drupal roadmap item because it changes agent behavior.
+3. **Roadmap signal:** site self-description is a concrete Drupal roadmap item worth testing further because it changed agent behavior in this task.
 
 The package may include tooling/evaluator smoke runs. Treat those as proof that the evidence loop works, not as blinded independent-agent results.
 
@@ -45,14 +45,17 @@ The package may include tooling/evaluator smoke runs. Treat those as proof that 
 - This result is statistically powered.
 - This is a cross-CMS comparison or model leaderboard.
 - The public tasks are held out or uncontaminated.
+- The headline Claude A/B run is exactly rerunnable from only public, pinned harness and substrate inputs.
 - The bundled resolver fixture is production-ready.
 - That the initial Codex result proves behavior across model providers.
+- That durable intent improved preservation in the clean intent-behavior rerun.
 
 ## Method
 
 - Hold the Drupal starting site fixed: Drupal CMS with the Haven testbed profile.
 - Keep prompts and evaluators versioned.
-- Require `answer.json`, transcript or command log, live-state collection, evaluator output, and run-result JSON for each scored run.
+- For scorecard runs, require `answer.json`, transcript or command log, live-state collection, evaluator output, and run-result JSON.
+- For the headline alias-safety A/B package, retain `answer.json`, evaluator output, raw workflow output, ground truth, and scorer outputs; full per-command transcripts were not retained for those 40 Claude runs.
 - Treat low v0 numbers as baseline evidence, not a failed initiative.
 
 ## Scorecard
@@ -138,6 +141,20 @@ What the experiment found:
 - Initial OpenAI Codex evidence shows the same direction: Drush-only judged 6/6 hidden claims safe and site self-description flagged 6/6. That is non-Claude breadth evidence at n=3, not a provider-general claim.
 
 So the tool's narrow correctness value is reducing observed hidden-claim safe judgments for lightly prompted agents. Evidence, not proof. See the retained `alias-safety-SYNTHESIS.md` in the experiment evidence package.
+
+The clean `intent-behavior-evaluation-v0` rerun is visible as a null. In 30
+completed headline runs, all three arms scored `M1=0/10` for preserving all four
+target SEO editor affordances:
+
+| Arm | Runs | M1 preserved all 4 | M2 considered target before write |
+| --- | ---: | ---: | ---: |
+| `conflict-intent` | 10 | 0/10 | 10/10 |
+| `placebo-intent` | 10 | 0/10 | 10/10 |
+| `no-intent` | 10 | 0/10 | 10/10 |
+
+This does not support a positive durable-intent claim. It also does not prove
+durable intent cannot help generally; it is one task shape and the broader
+registered schedule is not complete.
 
 ## Publication Notes
 

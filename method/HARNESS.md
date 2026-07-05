@@ -20,7 +20,10 @@ Produces `sub-X/` with `raw-1..5/` (no module), `eq-1..5/` (site_architecture
 installed), `candidates.json` (agent-facing path list only),
 `candidate-notes.json` (human/provenance notes), `ground-truth.json` (the
 referee), and `substrate.json` (manifest). Different sites yield different
-candidate paths — the harness does not hardcode them.
+candidate paths — the harness does not hardcode them. New measurement claims
+must retain this substrate manifest and a starting-site hash; the original
+headline Claude run is re-scoreable from retained outputs but does not include a
+complete starting-site build/hash pin.
 
 ## 2. The agent contract
 
@@ -30,8 +33,8 @@ assessment for every candidate path. Output schema (`safe` + free-text `reason`
 per path, plus `command_count`): see `prepare`'s `candidates.json` for the paths; the schema is
 `{ "assessments": { "<path>": {"safe": bool, "reason": str}, ... }, "command_count": int }`.
 
-Prompt (substitute the arm's tooling line). This is also captured in
-`prompts/assess.alias_safety.fully_blind.md`:
+Reusable prompt contract (substitute the arm's tooling line). This is captured
+in `prompts/assess.alias_safety.fully_blind.md`:
 
 > Inspect this running Drupal site (read-only). For each candidate path decide:
 > is it SAFE to use as the URL alias of a new node, or is that path already
@@ -43,6 +46,13 @@ Prompt (substitute the arm's tooling line). This is also captured in
 > --format=json` reports what claims/owns a path. Read-only; do not read anything
 > under `agent_readiness/`. Return `safe` + a short reason for every path, plus
 > `command_count`.
+
+The exact prompt-as-run for the retained n=10 Claude headline package is the
+`blindPrompt()` string in `../repro/scripts/_n10_workflow.js`. It differs from
+the reusable prompt template because the raw arm was explicitly steered toward
+`router.no_access_checks`, `path_alias.manager`, and `view` entity storage. Use
+the scratch workflow as provenance for the published n=10 result; use the prompt
+template as the rerun contract for new packages.
 
 The told/control variant is `prompts/assess.alias_safety.told.md`. It
 intentionally tells the agent the hidden safety criterion and is not the

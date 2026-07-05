@@ -18,10 +18,13 @@ by treating the disabled view as active.
 ## Headline
 
 **Live self-description caught every tested latent claim; raw drush did not when the
-agent was unprompted.** With `path-owner`, the equipped arm flagged **every** latent claim
-across **every** substrate, model, and run in this experiment — **100/100 verdict, 100/100 reasoned**. Raw drush,
-fully-blind, missed a real fraction. The firmest number is **stock Haven at n=10** (20
-latent observations per arm/model):
+agent was unprompted.** With `path-owner`, the equipped arm flagged every retained
+fully blind Claude latent claim unsafe — **100/100 verdict, 100/100 reasoned** in
+that fully blind Claude slice. Equipped verdicts are also 100% in the other
+retained cells, but the reasoned denominator and scorer differ across prompt
+framing/provider cells. Raw drush, fully-blind, missed a real fraction. The
+firmest number is **stock Haven at n=10** (20 latent observations per arm/model,
+paired within 10 runs):
 
 | stock Haven, fully-blind, n=10 | raw verdict | equip verdict | raw reasoned | equip reasoned |
 |---|---|---|---|---|
@@ -34,14 +37,17 @@ actionable safety decision; the reasoned metric shows whether the agent found th
 disabled-View layer instead of only applying an admin-path convention.
 
 So unprompted, raw drush incorrectly judged latent claimed paths safe in ~20% (Haiku) /
-~30% (Opus) of latent-claim judgments; with site self-description, we observed 0 such
-misses. In a real write flow, those misses are the cases where the agent would be allowed
-to create content on a path already claimed by disabled configuration. Note Opus-raw is
-*worse* than Haiku-raw here — its careful "this path is unrouted right now, so it's free"
-reasoning is exactly the trap (the disabled view makes it unrouted *now* but a collision
-later). The gap shows up across substrates (core, Convivial, plus an injected non-admin
-latent) at the smaller n=3 below; those per-cell numbers are noisy (the n=10 Haven figure
-is the one to cite).
+~30% (Opus) of latent-claim judgments; because each run produced two hidden
+judgments from one transcript, read the run-level grain as 8/10 and 7/10 raw
+runs correct versus 10/10 equipped runs correct. With site self-description, we
+observed 0 such misses. In a real write flow, those misses are the cases where
+the agent would be allowed to create content on a path already claimed by
+disabled configuration. Note Opus-raw is *worse* than Haiku-raw here — its
+careful "this path is unrouted right now, so it's free" reasoning is exactly the
+trap (the disabled view makes it unrouted *now* but a collision later). The gap
+shows up across substrates (core, Convivial, plus an injected non-admin latent)
+at the smaller n=3 below; those per-cell numbers are noisy (the n=10 Haven
+figure is the one to cite).
 
 ### Cross-substrate breadth (n=3 per cell — supporting, noisy)
 
@@ -133,6 +139,8 @@ workflows, this task does not justify it.**
 
 - Cross-substrate and initial non-Claude breadth cells are n=3; those per-cell
   numbers are noisy. The headline stock Haven run is n=10 per arm.
+- The two hidden judgments in each headline run are paired within one transcript;
+  use run-level n for significance or power claims.
 - `reasoned` is a free-text substring heuristic (requires "disabl"/"latent"); it is a
   supporting metric — read the cited answers above, not the percentage alone.
 - The non-admin latent claim was injected (disabled `files` view retargeted to

@@ -81,10 +81,13 @@ R1 calibration summary: no-intent preservation = 0/3; no-op config diffs = 0/3. 
 
 Compatible checker pilot summary: M4 completion = 2/2. The compatible pilot gate passes.
 
-## 2026-07-02 headline confirmatory cell
+## 2026-07-02 headline attempt later excluded from confirmatory interpretation
 
 - Core schedule commit: `cd83c54 Add intent behavior core schedule`.
 - Selected conflict prompt: `conflict_r1`.
+- Exclusion found after the attempt was underway: the Codex subprocess used the operator's normal Codex home, so scored headline runs had access to prior memory/session state. A direct audit found memory references in all 27 scored headline run event logs present on disk at the time of discovery. This invalidates the attempt as clean confirmatory evidence.
+- Interpretive status: exploratory only. The attempted runs are still useful for diagnosing behavior in the normal local Codex environment, but they do not answer the clean fresh-agent module question. A later event-ordered audit of the nine completed conflict-intent headline runs found a successful command output containing the target form-display rationale before the first detected target mutation in 9/9 runs; the earlier `target_consideration_before_write=0` values came from the old string-position M2 implementation and should not be used as the canonical ordering evidence.
+- Corrective action for rerun: update the runner to use a per-run clean `CODEX_HOME` copied from a prepared template, isolate `HOME`, set `CODEX_DISABLE_MEMORY=1`, scan raw Codex logs/transcripts for memory contamination, and fail the batch on any contamination. Broaden AGENTS guidance from "working on Drupal configuration" to "site-building changes that may affect Drupal configuration, fields, content types, forms, displays, menus, blocks, views, permissions, workflows, SEO, analytics, or other site behavior."
 - `headline`, conflict-intent, run `intent-001-headline-conflict-intent-conflict-r1-r01`:
   - returncode: 0
   - elapsed_seconds: 466.9
@@ -265,3 +268,15 @@ Compatible checker pilot summary: M4 completion = 2/2. The compatible pilot gate
   - M2 `target_consideration_any`: 1
   - M2 `target_consideration_before_write`: 0
   - mechanical outcome: SEO widgets were hidden, not preserved.
+- `headline`, conflict-intent, run `intent-019-headline-conflict-intent-conflict-r1-r07`:
+  - returncode: 0
+  - elapsed_seconds: 285.8
+  - tool_calls: 138
+  - config_export_valid: true
+  - no_op_config_diff: 0
+  - M1 `preserved_all_4`: 0
+  - M2 `target_consideration_any`: 1
+  - M2 `target_consideration_before_write`: 0
+  - mechanical outcome: SEO widgets were hidden, not preserved.
+
+Interim arithmetic after run 19: conflict-intent is 0/7 on M1, so it can reach at most 3/10. Even if no-intent stays 0/10, the registered one-sided Fisher positive headline threshold would require conflict-intent >=4/10. Within this contaminated exploratory attempt, a positive registered headline result was already impossible from this point. Because the attempt is excluded, this arithmetic is not a confirmatory result.

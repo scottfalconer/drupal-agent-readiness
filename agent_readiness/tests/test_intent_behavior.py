@@ -54,6 +54,10 @@ class IntentBehaviorTest(unittest.TestCase):
             self.assertIn("prompts/conflict_r1.txt", hash_values["artifacts"])
             self.assertIn("agents/module-AGENTS.md", hash_values["artifacts"])
             self.assertIn("module_dir", hash_values)
+            self.assertIn(
+                str(REPO_ROOT / "agent_readiness" / "scripts" / "audit_intent_behavior_memory_contamination.py"),
+                hash_values["code"],
+            )
             self.assertEqual([], summary["errors"])
 
             audit = audit_intent_behavior_registration(
@@ -108,6 +112,27 @@ class IntentBehaviorTest(unittest.TestCase):
 
         self.assertIn("selected_conflict_prompt_id.required_for_core", plan["errors"])
         self.assertEqual(0, plan["run_count"])
+
+    def test_select_intent_runs_can_filter_calibration_by_prompt_id(self) -> None:
+        from agent_readiness.intent_behavior import build_intent_behavior_schedule
+        from agent_readiness.intent_behavior_runner import select_intent_runs
+
+        plan = build_intent_behavior_schedule(
+            load_design(),
+            phase="calibration",
+            seed=20260702,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            selected = select_intent_runs(
+                plan,
+                out_root=Path(tmp),
+                cell_ids={"cal-conflict-ladder"},
+                prompt_ids={"conflict_r1"},
+            )
+
+        self.assertEqual(3, len(selected))
+        self.assertEqual({"conflict_r1"}, {run["prompt_id"] for run in selected})
 
     def test_m1_preserved_all_four_requires_editable_existing_seo_fields(self) -> None:
         from agent_readiness.intent_behavior import score_preserved_all_4
@@ -216,6 +241,109 @@ class IntentBehaviorTest(unittest.TestCase):
         self.assertEqual(1, target_score["target_consideration_any"])
         self.assertEqual(1, target_score["target_consideration_before_write"])
 
+    def test_event_ordered_m2_uses_successful_command_output_before_target_write(self) -> None:
+        from agent_readiness.intent_behavior_runner import score_event_ordered_consideration
+
+        design = load_design()
+        targets = design["target_objects"]
+        values = design["intent_values"]["conflict"]
+        target = "core.entity_form_display.node.page.default"
+        value = values[target]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            self._write_codex_events(run_dir, [
+                self._command_event(
+                    "rg php:eval /Users/scott/.codex/memories/MEMORY.md",
+                    "prior memory text mentions php:eval but is not a target write",
+                    0,
+                ),
+                self._command_event(
+                    f"vendor/bin/dr intent:get {target} --format=json",
+                    json.dumps({"config": target, "intent": value}),
+                    0,
+                ),
+                self._command_event(
+                    "vendor/bin/drush php:eval '$display->removeComponent(\"field_seo_title\")->save();'",
+                    "",
+                    0,
+                ),
+            ])
+
+            score = score_event_ordered_consideration(run_dir, targets, values)
+
+            self.assertEqual("event_ordered_codex_events", score["source"])
+            self.assertEqual(1, score["target_consideration_any"])
+            self.assertEqual(1, score["target_consideration_before_write"])
+            self.assertEqual(2, score["first_target_consideration_event"]["event_index"])
+            self.assertEqual(3, score["first_target_write_event"]["event_index"])
+
+    def test_event_ordered_m2_flags_target_write_before_read(self) -> None:
+        from agent_readiness.intent_behavior_runner import score_event_ordered_consideration
+
+        design = load_design()
+        targets = design["target_objects"]
+        values = design["intent_values"]["conflict"]
+        target = "core.entity_form_display.node.page.default"
+        value = values[target]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            self._write_codex_events(run_dir, [
+                self._command_event(
+                    "vendor/bin/drush php:eval '$display->removeComponent(\"field_seo_title\")->save();'",
+                    "",
+                    0,
+                ),
+                self._command_event(
+                    f"vendor/bin/dr intent:get {target} --format=json",
+                    json.dumps({"config": target, "intent": value}),
+                    0,
+                ),
+            ])
+
+            score = score_event_ordered_consideration(run_dir, targets, values)
+
+            self.assertEqual(1, score["target_consideration_any"])
+            self.assertEqual(0, score["target_consideration_before_write"])
+            self.assertEqual(1, score["first_target_write_event"]["event_index"])
+            self.assertEqual(2, score["first_target_consideration_event"]["event_index"])
+
+    def test_event_ordered_m2_does_not_count_rg_pattern_discovery_as_write(self) -> None:
+        from agent_readiness.intent_behavior_runner import score_event_ordered_consideration
+
+        design = load_design()
+        targets = design["target_objects"]
+        values = design["intent_values"]["conflict"]
+        target = "core.entity_form_display.node.page.default"
+        value = values[target]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            self._write_codex_events(run_dir, [
+                self._command_event(
+                    "vendor/bin/drush list --format=json | rg 'intent|config:get|config:set|config:export'",
+                    "config:set\nconfig:get\n",
+                    0,
+                ),
+                self._command_event(
+                    f"vendor/bin/dr intent:get {target} --format=json",
+                    json.dumps({"config": target, "intent": value}),
+                    0,
+                ),
+                self._command_event(
+                    f"vendor/bin/drush config:set {target} content.field_seo_title.weight 99 -y",
+                    "",
+                    0,
+                ),
+            ])
+
+            score = score_event_ordered_consideration(run_dir, targets, values)
+
+            self.assertEqual(3, score["first_write_event"]["event_index"])
+            self.assertEqual(3, score["first_target_write_event"]["event_index"])
+            self.assertEqual(1, score["target_consideration_before_write"])
+
     def test_run_scoring_does_not_treat_failed_config_export_as_no_op(self) -> None:
         from agent_readiness.intent_behavior_runner import score_intent_run_artifacts
 
@@ -233,6 +361,85 @@ class IntentBehaviorTest(unittest.TestCase):
 
             self.assertFalse(scores["config_export_valid"])
             self.assertIsNone(scores["no_op_config_diff"])
+
+    def test_memory_contamination_scan_flags_codex_memory_reads(self) -> None:
+        from agent_readiness.intent_behavior_runner import scan_memory_contamination
+
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            (run_dir / "codex-events.jsonl").write_text(
+                '{"cmd": "sed -n 1,20p /Users/scott/.codex/memories/MEMORY.md"}\n',
+                encoding="utf-8",
+            )
+
+            result = scan_memory_contamination(run_dir)
+
+            self.assertTrue(result["contaminated"], result)
+            self.assertEqual(1, result["finding_count"])
+            self.assertIn("MEMORY.md", result["findings"][0]["patterns"])
+
+    def test_memory_contamination_scan_allows_clean_run_artifacts(self) -> None:
+        from agent_readiness.intent_behavior_runner import scan_memory_contamination
+
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            (run_dir / "codex-events.jsonl").write_text(
+                '{"cmd": "vendor/bin/dr intent:list --format=json"}\n',
+                encoding="utf-8",
+            )
+            (run_dir / "transcript.md").write_text(
+                "Read the related intent before changing form display config.\n",
+                encoding="utf-8",
+            )
+
+            result = scan_memory_contamination(run_dir)
+
+            self.assertFalse(result["contaminated"], result)
+            self.assertEqual(0, result["finding_count"])
+
+    def test_effective_codex_home_strips_memory_state_from_template(self) -> None:
+        from agent_readiness.intent_behavior_runner import _effective_codex_home, _effective_home
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            template = root / "template"
+            template.mkdir()
+            (template / "auth.json").write_text('{"ok": true}\n', encoding="utf-8")
+            (template / "config.toml").write_text('model = "gpt-5.5"\n', encoding="utf-8")
+            (template / "MEMORY.md").write_text("prior intent result\n", encoding="utf-8")
+            (template / "history.jsonl").write_text("{}\n", encoding="utf-8")
+            (template / "memories").mkdir()
+            (template / "memories" / "memory_summary.md").write_text("summary\n", encoding="utf-8")
+            (template / "sessions").mkdir()
+            (template / "sessions" / "session.jsonl").write_text("{}\n", encoding="utf-8")
+            (template / "memories.sqlite").write_text("sqlite\n", encoding="utf-8")
+            (template / "state.sqlite").write_text("sqlite\n", encoding="utf-8")
+            (template / "logs.sqlite").write_text("sqlite\n", encoding="utf-8")
+            (template / "goals.sqlite").write_text("sqlite\n", encoding="utf-8")
+
+            effective = _effective_codex_home(
+                run_dir=root / "run",
+                codex_home=None,
+                codex_home_template=template,
+            )
+
+            self.assertIsNotNone(effective)
+            assert effective is not None
+            self.assertTrue((effective / "auth.json").exists())
+            self.assertTrue((effective / "config.toml").exists())
+            self.assertFalse((effective / "MEMORY.md").exists())
+            self.assertFalse((effective / "history.jsonl").exists())
+            self.assertFalse((effective / "memories").exists())
+            self.assertFalse((effective / "sessions").exists())
+            self.assertFalse((effective / "memories.sqlite").exists())
+            self.assertFalse((effective / "state.sqlite").exists())
+            self.assertFalse((effective / "logs.sqlite").exists())
+            self.assertFalse((effective / "goals.sqlite").exists())
+
+            home = _effective_home(root / "run", codex_home=effective)
+            dot_codex = home / ".codex"
+            self.assertTrue(dot_codex.exists())
+            self.assertEqual(effective.resolve(), dot_codex.resolve())
 
     def test_plan_cli_writes_calibration_schedule(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -284,6 +491,24 @@ class IntentBehaviorTest(unittest.TestCase):
                 "field_seo_analysis",
             ]
         }
+
+    def _command_event(self, command: str, output: str, exit_code: int) -> dict:
+        return {
+            "type": "item.completed",
+            "item": {
+                "type": "command_execution",
+                "command": command,
+                "aggregated_output": output,
+                "exit_code": exit_code,
+                "status": "completed" if exit_code == 0 else "failed",
+            },
+        }
+
+    def _write_codex_events(self, run_dir: Path, events: list[dict]) -> None:
+        (run_dir / "codex-events.jsonl").write_text(
+            "\n".join(json.dumps(event) for event in events) + "\n",
+            encoding="utf-8",
+        )
 
     def _max_consecutive_same_arm(self, runs: list[dict]) -> int:
         longest = 0

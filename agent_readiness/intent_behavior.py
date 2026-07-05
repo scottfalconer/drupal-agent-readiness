@@ -499,6 +499,8 @@ def _registration_code_hashes() -> dict[str, str]:
         repo_root / "agent_readiness" / "scripts" / "plan_intent_behavior_runs.py",
         repo_root / "agent_readiness" / "scripts" / "prepare_intent_behavior_registration.py",
         repo_root / "agent_readiness" / "scripts" / "audit_intent_behavior_registration.py",
+        repo_root / "agent_readiness" / "scripts" / "prepare_clean_codex_home.py",
+        repo_root / "agent_readiness" / "scripts" / "audit_intent_behavior_memory_contamination.py",
         repo_root / "agent_readiness" / "scripts" / "run_intent_behavior_batch.py",
         repo_root / "agent_readiness" / "scripts" / "score_intent_behavior_run.py",
         repo_root / "agent_readiness" / "scripts" / "apply_intent_behavior_catalog.py",
