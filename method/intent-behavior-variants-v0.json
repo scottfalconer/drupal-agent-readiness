@@ -1,4 +1,13 @@
 {
+  "retrospective_status": {
+    "assessed_at": "2026-07-09",
+    "evidence_class": "exploratory_summary_only",
+    "registration_status": "invalid_against_current_code_and_not_portable_due_to_historical_absolute_paths",
+    "supported_result": "The retained clean summary reports equal zero-of-ten preservation of all four SEO widgets in each headline arm.",
+    "construct_limit": "M1 measures preservation, not whether preserving, removing, adapting, or escalating was the appropriate authority-aware response. A no-change deferral can pass M1 and any completed removal fails M1.",
+    "claim_boundary": "Do not infer appropriate conflict handling, durable-intent value generally, or a Drupal-side improvement from this experiment.",
+    "replacement_contract": "method/task-families-v1.json"
+  },
   "arms": {
     "conflict-intent": "5 registered conflict rationale strings set on the target objects via dr intent:set; shared base catalog present",
     "no-intent": "no intent on the 5 target objects (intent:get returns null); shared base catalog present; module installed; identical AGENTS.md and prompt",

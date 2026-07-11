@@ -217,10 +217,18 @@ def audit_intent_behavior_registration(
     elif expected_module_hash and sha256_tree(module_dir) != expected_module_hash:
         errors.append("module_dir.hash_mismatch")
 
+    repo_root = Path(__file__).resolve().parents[1]
     for label, expected_hash in sorted((hash_values.get("code") or {}).items()):
         path = Path(label)
+        if not path.is_absolute():
+            path = (repo_root / path).resolve()
+            try:
+                path.relative_to(repo_root)
+            except ValueError:
+                errors.append(f"code_hash.path_escapes_repo:{label}")
+                continue
         if not path.exists():
-            warnings.append(f"code_hash.path_not_available:{label}")
+            errors.append(f"code_hash.path_not_available:{label}")
             continue
         if sha256_file(path) != expected_hash:
             errors.append(f"code_hash.hash_mismatch:{label}")
@@ -495,7 +503,9 @@ def _registration_code_hashes() -> dict[str, str]:
     repo_root = Path(__file__).resolve().parents[1]
     paths = [
         Path(__file__).resolve(),
+        repo_root / "agent_readiness" / "codex_runner_utils.py",
         repo_root / "agent_readiness" / "intent_behavior_runner.py",
+        repo_root / "agent_readiness" / "scripts" / "audit_clean_checkout_integrity.py",
         repo_root / "agent_readiness" / "scripts" / "plan_intent_behavior_runs.py",
         repo_root / "agent_readiness" / "scripts" / "prepare_intent_behavior_registration.py",
         repo_root / "agent_readiness" / "scripts" / "audit_intent_behavior_registration.py",
@@ -509,7 +519,7 @@ def _registration_code_hashes() -> dict[str, str]:
         repo_root / "agent_readiness" / "scripts" / "make_intent_behavior_stale_layout.php",
     ]
     return {
-        str(path): sha256_file(path)
+        path.relative_to(repo_root).as_posix(): sha256_file(path)
         for path in paths
         if path.exists()
     }

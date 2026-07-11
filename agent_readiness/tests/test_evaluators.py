@@ -1,9 +1,11 @@
 import json
 import subprocess
 import sys
+import tempfile
 import unittest
 from copy import deepcopy
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "fixtures"
@@ -70,6 +72,17 @@ class InventoryEvaluatorTest(unittest.TestCase):
 
         self.assertFalse(result.passed)
         self.assertIn("canvas.page_count", result.failures)
+
+    def test_inventory_fails_when_answer_invents_entity_type_for_unclaimed_path(self) -> None:
+        from agent_readiness.evaluators.inventory import evaluate
+
+        answer = load_fixture("inventory_answer_pass.json")
+        answer["paths"]["/node"]["entity_type"] = "node"
+
+        result = evaluate(load_fixture("inventory_state_pass.json"), answer)
+
+        self.assertFalse(result.passed)
+        self.assertIn("paths./node.entity_type.unexpected", result.failures)
 
     def test_inventory_accepts_rich_collection_rows_when_facts_match(self) -> None:
         from agent_readiness.evaluators.inventory import evaluate
@@ -203,6 +216,63 @@ class CommandLineEvaluatorTest(unittest.TestCase):
 
         self.assertNotEqual(0, completed.returncode)
         self.assertIn("paths./blog.owner_kind", completed.stdout)
+
+
+class LiveStateCollectorTest(unittest.TestCase):
+
+    def test_collector_falls_back_to_ddev_without_shell_interpolation(self) -> None:
+        from agent_readiness.evaluators.common import collect_live_state
+
+        state = {
+            "provenance": {},
+            "paths": {},
+            "canvas": {"page_count": 0, "embedded_listings": []},
+            "content_model": {"bundles": [], "moderation_enabled": False},
+            "pathauto": {"enabled": False, "patterns": []},
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            site = Path(tmp)
+            (site / "vendor/bin").mkdir(parents=True)
+            (site / "vendor/bin/drush").write_text("#!/bin/sh\n", encoding="utf-8")
+            (site / ".ddev").mkdir()
+            (site / "config/sync").mkdir(parents=True)
+            (site / "config/sync/system.site.yml").write_text(
+                "name: test\n", encoding="utf-8"
+            )
+            results = [
+                subprocess.CompletedProcess(
+                    ["local-drush", "status"],
+                    0,
+                    json.dumps({"bootstrap": "Failed"}),
+                    "",
+                ),
+                subprocess.CompletedProcess(
+                    ["local-drush", "php:script"], 1, "", "db failed"
+                ),
+                subprocess.CompletedProcess(
+                    ["ddev", "drush", "status"],
+                    0,
+                    json.dumps({"config-sync": "/var/www/html/config/sync"}),
+                    "",
+                ),
+                subprocess.CompletedProcess(
+                    ["ddev", "drush", "php:eval"],
+                    0,
+                    json.dumps(state),
+                    "",
+                ),
+            ]
+            with patch(
+                "agent_readiness.evaluators.common.subprocess.run",
+                side_effect=results,
+            ) as run:
+                collected = collect_live_state(site)
+
+        self.assertEqual("populated", collected["provenance"]["config_sync_status"])
+        self.assertTrue(collected["command_runner"]["ddev"])
+        self.assertEqual("ddev", run.call_args_list[2].args[0][0])
+        self.assertEqual("php:eval", run.call_args_list[3].args[0][2])
+        self.assertNotIn("<?php", run.call_args_list[3].args[0][3])
 
 
 if __name__ == "__main__":

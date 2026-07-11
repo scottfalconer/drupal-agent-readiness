@@ -1,7 +1,10 @@
 import collections
 import copy
+import hashlib
 import json
+import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -55,7 +58,12 @@ class IntentBehaviorTest(unittest.TestCase):
             self.assertIn("agents/module-AGENTS.md", hash_values["artifacts"])
             self.assertIn("module_dir", hash_values)
             self.assertIn(
-                str(REPO_ROOT / "agent_readiness" / "scripts" / "audit_intent_behavior_memory_contamination.py"),
+                "agent_readiness/scripts/audit_intent_behavior_memory_contamination.py",
+                hash_values["code"],
+            )
+            self.assertIn("agent_readiness/codex_runner_utils.py", hash_values["code"])
+            self.assertIn(
+                "agent_readiness/scripts/audit_clean_checkout_integrity.py",
                 hash_values["code"],
             )
             self.assertEqual([], summary["errors"])
@@ -66,6 +74,43 @@ class IntentBehaviorTest(unittest.TestCase):
                 module_dir=module_dir,
             )
             self.assertEqual("valid", audit["status"], audit)
+
+    def test_registration_fails_closed_when_hashed_code_is_unavailable(self) -> None:
+        from agent_readiness.intent_behavior import (
+            audit_intent_behavior_registration,
+            prepare_registration_artifacts,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            module_dir = self._module_dir(root)
+            design_path = root / "intent-behavior-variants-v0.json"
+            design = load_design()
+            design["module_under_test"]["path"] = str(module_dir)
+            design_path.write_text(json.dumps(design, indent=2), encoding="utf-8")
+            prepare_registration_artifacts(
+                design_path=design_path,
+                out_dir=root / "intent-behavior",
+                module_dir=module_dir,
+                update_design_manifest=True,
+            )
+            updated = json.loads(design_path.read_text(encoding="utf-8"))
+            updated["registration"]["hash_values"]["code"][
+                "agent_readiness/does-not-exist.py"
+            ] = "0" * 64
+            design_path.write_text(json.dumps(updated, indent=2), encoding="utf-8")
+
+            audit = audit_intent_behavior_registration(
+                design_path=design_path,
+                artifact_root=root / "intent-behavior",
+                module_dir=module_dir,
+            )
+
+        self.assertEqual("invalid", audit["status"])
+        self.assertIn(
+            "code_hash.path_not_available:agent_readiness/does-not-exist.py",
+            audit["errors"],
+        )
 
     def test_core_schedule_is_deterministic_interleaved_and_openai_only(self) -> None:
         from agent_readiness.intent_behavior import build_intent_behavior_schedule
@@ -465,6 +510,274 @@ class IntentBehaviorTest(unittest.TestCase):
             plan = json.loads(out.read_text(encoding="utf-8"))
             self.assertEqual("calibration", plan["phase"])
             self.assertEqual(14, plan["run_count"])
+
+    def test_intent_runner_imports_from_minimal_clean_checkout(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "agent_readiness"
+            package.mkdir()
+            for filename in [
+                "__init__.py",
+                "codex_runner_utils.py",
+                "intent_behavior.py",
+                "intent_behavior_runner.py",
+            ]:
+                shutil.copy2(REPO_ROOT / "agent_readiness" / filename, package / filename)
+
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    "-c",
+                    (
+                        "import sys; "
+                        f"sys.path.insert(0, {str(root)!r}); "
+                        "import agent_readiness.intent_behavior_runner as runner; "
+                        "print(runner.__file__)"
+                    ),
+                ],
+                cwd=root,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(0, completed.returncode, completed.stderr)
+            self.assertTrue(completed.stdout.strip().startswith(str(root)), completed.stdout)
+            self.assertNotIn("template_codex_runner", (package / "intent_behavior_runner.py").read_text())
+
+    def test_import_closure_rejects_missing_local_module(self) -> None:
+        from agent_readiness.scripts.audit_clean_checkout_integrity import (
+            audit_python_import_closure,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "agent_readiness"
+            package.mkdir()
+            (package / "__init__.py").write_text("", encoding="utf-8")
+            (package / "runner.py").write_text(
+                "import agent_readiness.missing_dependency\n",
+                encoding="utf-8",
+            )
+
+            result = audit_python_import_closure(
+                repo_root=root,
+                entrypoints=[Path("agent_readiness/runner.py")],
+                tracked_paths={
+                    "agent_readiness/__init__.py",
+                    "agent_readiness/runner.py",
+                },
+            )
+
+            self.assertEqual("invalid", result["status"])
+            self.assertIn(
+                "python_import.missing:agent_readiness/runner.py:agent_readiness.missing_dependency",
+                result["errors"],
+            )
+
+    def test_import_closure_checks_package_level_submodule_import(self) -> None:
+        from agent_readiness.scripts.audit_clean_checkout_integrity import (
+            audit_python_import_closure,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "agent_readiness"
+            package.mkdir()
+            (package / "__init__.py").write_text("", encoding="utf-8")
+            (package / "runner.py").write_text(
+                "from agent_readiness import missing_dependency\n",
+                encoding="utf-8",
+            )
+
+            result = audit_python_import_closure(
+                repo_root=root,
+                entrypoints=[Path("agent_readiness/runner.py")],
+                tracked_paths={
+                    "agent_readiness/__init__.py",
+                    "agent_readiness/runner.py",
+                },
+            )
+
+            self.assertEqual("invalid", result["status"])
+            self.assertIn(
+                "python_import.missing:agent_readiness/runner.py:agent_readiness.missing_dependency",
+                result["errors"],
+            )
+
+    def test_valid_checksum_does_not_hide_untracked_import_dependency(self) -> None:
+        from agent_readiness.scripts.audit_clean_checkout_integrity import (
+            audit_clean_checkout_integrity,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "agent_readiness"
+            package.mkdir()
+            package_init = package / "__init__.py"
+            runner = package / "runner.py"
+            dependency = package / "hidden_dependency.py"
+            package_init.write_text("", encoding="utf-8")
+            runner.write_text("import agent_readiness.hidden_dependency\n", encoding="utf-8")
+            dependency.write_text("VALUE = 1\n", encoding="utf-8")
+            manifest = root / "CLEAN-MANIFEST.sha256"
+            manifest.write_text(
+                "\n".join([
+                    f"{hashlib.sha256(package_init.read_bytes()).hexdigest()}  agent_readiness/__init__.py",
+                    f"{hashlib.sha256(runner.read_bytes()).hexdigest()}  agent_readiness/runner.py",
+                ]) + "\n",
+                encoding="utf-8",
+            )
+
+            result = audit_clean_checkout_integrity(
+                repo_root=root,
+                entrypoints=[Path("agent_readiness/runner.py")],
+                checksum_manifest=manifest,
+                tracked_paths={
+                    "CLEAN-MANIFEST.sha256",
+                    "agent_readiness/__init__.py",
+                    "agent_readiness/runner.py",
+                },
+            )
+
+            self.assertEqual("valid", result["checks"]["checksum"]["status"])
+            self.assertEqual("invalid", result["status"])
+            self.assertIn(
+                "python_import.untracked:agent_readiness/hidden_dependency.py",
+                result["errors"],
+            )
+            self.assertIn(
+                "python_import.not_in_checksum_manifest:agent_readiness/hidden_dependency.py",
+                result["errors"],
+            )
+
+    def test_checksum_manifest_must_enumerate_every_tracked_file(self) -> None:
+        from agent_readiness.scripts.audit_clean_checkout_integrity import (
+            audit_clean_checkout_integrity,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "agent_readiness"
+            package.mkdir()
+            package_init = package / "__init__.py"
+            runner = package / "runner.py"
+            omitted = root / "tracked-but-omitted.txt"
+            package_init.write_text("", encoding="utf-8")
+            runner.write_text("VALUE = 1\n", encoding="utf-8")
+            omitted.write_text("must be listed\n", encoding="utf-8")
+            manifest = root / "CLEAN-MANIFEST.sha256"
+            manifest.write_text(
+                "\n".join([
+                    f"{hashlib.sha256(package_init.read_bytes()).hexdigest()}  agent_readiness/__init__.py",
+                    f"{hashlib.sha256(runner.read_bytes()).hexdigest()}  agent_readiness/runner.py",
+                ]) + "\n",
+                encoding="utf-8",
+            )
+
+            result = audit_clean_checkout_integrity(
+                repo_root=root,
+                entrypoints=[Path("agent_readiness/runner.py")],
+                checksum_manifest=manifest,
+                tracked_paths={
+                    "CLEAN-MANIFEST.sha256",
+                    "agent_readiness/__init__.py",
+                    "agent_readiness/runner.py",
+                    "tracked-but-omitted.txt",
+                },
+            )
+
+        self.assertEqual("invalid", result["status"])
+        self.assertIn(
+            "checksum_manifest.unlisted_tracked:tracked-but-omitted.txt",
+            result["errors"],
+        )
+
+    def test_checksum_manifest_rejects_unsafe_duplicate_and_nonhex_entries(self) -> None:
+        from agent_readiness.scripts.audit_clean_checkout_integrity import (
+            audit_checksum_manifest,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            tracked = root / "tracked.txt"
+            tracked.write_text("tracked\n", encoding="utf-8")
+            digest = hashlib.sha256(tracked.read_bytes()).hexdigest()
+            manifest = root / "CLEAN-MANIFEST.sha256"
+            manifest.write_text(
+                "\n".join(
+                    [
+                        f"{digest}  tracked.txt",
+                        f"{digest}  tracked.txt",
+                        f"{digest}  ../outside.txt",
+                        f"{'z' * 64}  other.txt",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            result = audit_checksum_manifest(root, manifest)
+
+            self.assertEqual("invalid", result["status"])
+            self.assertIn("checksum_manifest.path_duplicate:tracked.txt", result["errors"])
+            self.assertIn("checksum_manifest.path_unsafe:3", result["errors"])
+            self.assertIn("checksum_manifest.line_invalid:4", result["errors"])
+
+    def test_generated_evidence_audit_rejects_ignored_required_artifact(self) -> None:
+        from agent_readiness.scripts.audit_clean_checkout_integrity import (
+            audit_required_generated_artifacts,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            summary_path = root / "evidence" / "summary.json"
+            artifact_path = root / "evidence" / "runs" / "batch.json"
+            summary_path.parent.mkdir()
+            artifact_path.parent.mkdir()
+            summary_path.write_text(
+                json.dumps({"source_artifact": "runs/batch.json"}),
+                encoding="utf-8",
+            )
+            artifact_path.write_text("{}\n", encoding="utf-8")
+
+            result = audit_required_generated_artifacts(
+                repo_root=root,
+                summaries=[summary_path],
+                tracked_paths={"evidence/summary.json"},
+                ignored_paths={"evidence/runs/batch.json"},
+            )
+
+            self.assertEqual("invalid", result["status"])
+            self.assertIn(
+                "generated.required_ignored:evidence/summary.json:evidence/runs/batch.json",
+                result["errors"],
+            )
+
+    def test_registration_audit_cli_returns_nonzero_for_invalid_json_status(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            design_path = root / "design.json"
+            output_path = root / "audit.json"
+            design_path.write_text('{"registration": {}}\n', encoding="utf-8")
+
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    "agent_readiness/scripts/audit_intent_behavior_registration.py",
+                    "--design",
+                    str(design_path),
+                    "--out",
+                    str(output_path),
+                ],
+                cwd=REPO_ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(1, completed.returncode, completed.stderr)
+            self.assertEqual("invalid", json.loads(output_path.read_text())["status"])
 
     def _module_dir(self, root: Path) -> Path:
         module_dir = root / "intent"

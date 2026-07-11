@@ -2,7 +2,7 @@ import argparse
 import json
 import subprocess
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, Sequence
 
 from agent_readiness.evaluators.result import EvaluationResult
 
@@ -74,29 +74,60 @@ def command_runner_from_state(state: dict[str, Any]) -> str:
     return ""
 
 
-def collect_live_state(site_root: Path) -> dict[str, Any]:
+CommandRunner = Callable[
+    [Sequence[str], Path], subprocess.CompletedProcess[str]
+]
+
+
+def _default_command_runner(
+    argv: Sequence[str], cwd: Path
+) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        list(argv),
+        cwd=cwd,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+
+def collect_live_state(
+    site_root: Path, *, runner: CommandRunner | None = None
+) -> dict[str, Any]:
+    site_root = site_root.resolve()
+    run = runner or _default_command_runner
     drush = site_root / "vendor" / "bin" / "drush"
     if not drush.exists():
         raise RuntimeError(f"Cannot collect live state: {drush} does not exist")
 
-    status = subprocess.run(
-        [str(drush), "status", "--format=json"],
-        cwd=site_root,
-        text=True,
-        capture_output=True,
-        check=True,
-    )
-    drupal_state = subprocess.run(
-        [str(drush), "php:script", str(COLLECTOR)],
-        cwd=site_root,
-        text=True,
-        capture_output=True,
-        check=True,
-    )
+    status = run([str(drush), "status", "--format=json"], site_root)
+    if status.returncode == 0:
+        drupal_state = run([str(drush), "php:script", str(COLLECTOR)], site_root)
+    else:
+        drupal_state = None
+    if status.returncode != 0 or drupal_state.returncode != 0:
+        if not (site_root / ".ddev").is_dir():
+            (status if status.returncode != 0 else drupal_state).check_returncode()
+            raise AssertionError("unreachable")
+        # Host Drush cannot normally reach DDEV's database hostname. Run the
+        # same collector through DDEV without copying source into the target
+        # repository or interpolating PHP through a shell.
+        status = run(["ddev", "drush", "status", "--format=json"], site_root)
+        status.check_returncode()
+        collector_source = COLLECTOR.read_text(encoding="utf-8")
+        if collector_source.startswith("<?php"):
+            collector_source = collector_source[len("<?php"):].lstrip()
+        drupal_state = run(
+            ["ddev", "drush", "php:eval", collector_source], site_root
+        )
+        drupal_state.check_returncode()
 
     state = json.loads(drupal_state.stdout)
     status_data = json.loads(status.stdout)
-    sync_dir = Path(status_data.get("config-sync") or status_data.get("config") or "")
+    sync_dir = _host_drush_path(
+        site_root,
+        status_data.get("config-sync") or status_data.get("config") or "",
+    )
     sync_files = []
     if sync_dir.exists():
         sync_files = [
@@ -114,6 +145,16 @@ def collect_live_state(site_root: Path) -> dict[str, Any]:
     state["provenance"]["config_sync_status"] = "populated" if sync_files else "empty"
     state["provenance"]["active_config_source"] = "database"
     return state
+
+
+def _host_drush_path(site_root: Path, raw_path: Any) -> Path:
+    path = Path(str(raw_path))
+    container_root = Path("/var/www/html")
+    try:
+        relative = path.relative_to(container_root)
+    except ValueError:
+        return path
+    return site_root / relative
 
 
 def build_parser(description: str) -> argparse.ArgumentParser:

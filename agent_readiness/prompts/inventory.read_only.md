@@ -24,9 +24,9 @@ Produce `answer.json` with this shape:
     "config_sync_status": "<'empty' | 'populated'>"
   },
   "paths": {
-    "/blog": {"claimed": "<bool>", "owner_kind": "<'entity' | 'view' | 'route' | 'unclaimed'>", "entity_type": "<entity type id if owner_kind=entity, else omit>"},
+    "/blog": {"claimed": "<bool>", "owner_kind": "<'entity' | 'view' | 'route' | 'unclaimed'>", "entity_type": "<entity type id if owner_kind=entity, else null>"},
     "/node": {"claimed": "<bool>", "owner_kind": "<...>"},
-    "/home": {"claimed": "<bool>", "owner_kind": "<...>", "entity_type": "<...>"}
+    "/home": {"claimed": "<bool>", "owner_kind": "<...>", "entity_type": "<entity type id or null>"}
   },
   "canvas": {
     "page_count": "<int: number of Canvas pages>",

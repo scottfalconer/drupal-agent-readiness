@@ -29,6 +29,7 @@
       "M4_completion": 0
     }
   ],
-  "interpretation": "Clean rerun null: none of the three headline arms preserved all four target SEO editor affordances.",
-  "source_artifact": "runs/intent-batch-summary.json"
+  "interpretation": "Clean rerun preservation-only null: none of the three headline arms preserved all four target SEO editor affordances. This does not score whether removal, adaptation, deferral, or escalation was the appropriate authority-aware response.",
+  "source_artifact_status": "The derived per-run batch summary and raw run directories are not included in the public package; this public artifact is summary-only.",
+  "claim_boundary": "Do not infer appropriate conflict handling, durable-intent value generally, or a Drupal-side improvement."
 }

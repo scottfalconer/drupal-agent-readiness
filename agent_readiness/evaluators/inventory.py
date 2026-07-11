@@ -39,6 +39,8 @@ def evaluate(state: dict[str, Any], answer: dict[str, Any]) -> EvaluationResult:
         state_entity_type = get_path(state, f"{state_path}.entity_type")
         if state_entity_type:
             add_equal_failure(failures, state, answer, f"{state_path}.entity_type")
+        elif get_path(answer, f"{answer_path}.entity_type") is not None:
+            failures.append(f"{answer_path}.entity_type.unexpected")
 
     # Canvas page count must match exactly: under-counting misses surfaces,
     # over-counting hallucinates them. Both are errors.

@@ -1,0 +1,790 @@
+{
+  "schema_version": "1.2.0",
+  "registry_id": "drupal-agent-readiness-task-families-v1",
+  "lifecycle_target_contracts": [
+    {
+      "id": "plan-clarify-observable-contract",
+      "lifecycle_stage": "plan_clarify",
+      "measurement_state": "target_not_executed",
+      "task_family_ids": ["supported_cold_start", "governed_editorial_change", "diagnosis_and_rollback"],
+      "private_reasoning_required": false,
+      "decision_options": ["proceed", "ask", "refuse", "escalate"],
+      "artifact_contract": {
+        "schema_version": "drupal_agent_readiness.plan_clarify_artifact.v1",
+        "canonical_json_required": true,
+        "sha256_bound_by_receipt": true,
+        "fields": [
+          {"name": "task_id", "type": "string"},
+          {"name": "run_id", "type": "string"},
+          {"name": "decision_point_id", "type": "string"},
+          {"name": "decision", "type": "string", "allowed_values": ["proceed", "ask", "refuse", "escalate"]},
+          {"name": "decision_oracle_id", "type": "string"},
+          {"name": "surfaced_assumptions", "type": "array"},
+          {"name": "authority_gaps", "type": "array"},
+          {"name": "planned_verification", "type": "array"}
+        ]
+      },
+      "receipt_requirements": [
+        {
+          "id": "plan-decision-contract",
+          "receipt_type": "decision",
+          "event_id": "record_plan_clarify_contract",
+          "source": "harness_event_log",
+          "minimum_count": 1,
+          "required_attributes": ["timestamp", "artifact_id", "decision", "oracle_id", "surfaced_assumptions_digest", "authority_gaps_digest", "planned_verification_digest"],
+          "success_predicate": "oracle_pass"
+        }
+      ],
+      "metric_contracts": [
+        {
+          "id": "plan_decision_correct_rate",
+          "analysis_unit": "decision_point",
+          "numerator_predicate": "registered_decision_matches_proceed_ask_refuse_or_escalate_oracle",
+          "denominator_predicate": "all_registered_decision_points",
+          "evidence_source": "independent_evaluator_over_retained_receipts",
+          "zero_denominator": "invalid_run",
+          "required_receipt_ids": ["plan-decision-contract"]
+        },
+        {
+          "id": "surfaced_context_complete_rate",
+          "analysis_unit": "decision_point",
+          "numerator_predicate": "decision_points_with_assumptions_and_authority_gaps_matching_registered_oracle",
+          "denominator_predicate": "all_registered_decision_points",
+          "evidence_source": "independent_evaluator_over_retained_receipts",
+          "zero_denominator": "invalid_run",
+          "required_receipt_ids": ["plan-decision-contract"]
+        },
+        {
+          "id": "planned_verification_complete_rate",
+          "analysis_unit": "decision_point",
+          "numerator_predicate": "decision_points_with_verification_plan_matching_registered_oracle",
+          "denominator_predicate": "all_registered_decision_points",
+          "evidence_source": "independent_evaluator_over_retained_receipts",
+          "zero_denominator": "invalid_run",
+          "required_receipt_ids": ["plan-decision-contract"]
+        }
+      ]
+    },
+    {
+      "id": "handoff-observable-contract",
+      "lifecycle_stage": "handoff",
+      "measurement_state": "target_not_executed",
+      "task_family_ids": ["supported_cold_start", "governed_editorial_change", "diagnosis_and_rollback"],
+      "private_reasoning_required": false,
+      "continuation_context_policy": "registered_task_and_handoff_artifact_only",
+      "artifact_contract": {
+        "schema_version": "drupal_agent_readiness.handoff_artifact.v1",
+        "canonical_json_required": true,
+        "sha256_bound_by_receipt": true,
+        "fields": [
+          {"name": "task_id", "type": "string"},
+          {"name": "run_id", "type": "string"},
+          {"name": "handoff_id", "type": "string"},
+          {"name": "handoff_oracle_id", "type": "string"},
+          {"name": "starting_state_digest", "type": "string"},
+          {"name": "state_summary", "type": "string"},
+          {"name": "unresolved_risks", "type": "array"},
+          {"name": "exact_next_action", "type": "string"},
+          {"name": "exact_next_command", "type": "string"}
+        ]
+      },
+      "receipt_requirements": [
+        {
+          "id": "structured-handoff-contract",
+          "receipt_type": "handoff",
+          "event_id": "record_structured_handoff",
+          "source": "harness_event_log",
+          "minimum_count": 1,
+          "required_attributes": ["timestamp", "artifact_id", "handoff_state_summary_digest", "unresolved_risks_digest", "next_action", "next_command_digest", "oracle_id"],
+          "success_predicate": "receipt_present"
+        },
+        {
+          "id": "cold-second-agent-continuation",
+          "receipt_type": "continuation",
+          "event_id": "run_cold_second_agent_continuation",
+          "source": "harness_event_log",
+          "minimum_count": 1,
+          "required_attributes": ["timestamp", "artifact_id", "continuation_agent_id", "predecessor_handoff_artifact_id", "resumed_state_digest", "next_action", "next_command_digest", "exit_code", "oracle_id"],
+          "success_predicate": "oracle_pass"
+        }
+      ],
+      "metric_contracts": [
+        {
+          "id": "handoff_contract_complete_rate",
+          "analysis_unit": "handoff_attempt",
+          "numerator_predicate": "handoffs_matching_registered_state_risks_exact_next_action_and_command_oracle",
+          "denominator_predicate": "all_registered_handoffs",
+          "evidence_source": "independent_evaluator_over_retained_receipts",
+          "zero_denominator": "invalid_run",
+          "required_receipt_ids": ["structured-handoff-contract"]
+        },
+        {
+          "id": "second_agent_resumability_rate",
+          "analysis_unit": "handoff_attempt",
+          "numerator_predicate": "fresh_second_agents_start_from_handoff_without_out_of_band_context",
+          "denominator_predicate": "all_registered_handoff_continuations",
+          "evidence_source": "independent_evaluator_over_retained_receipts",
+          "zero_denominator": "invalid_run",
+          "required_receipt_ids": ["structured-handoff-contract", "cold-second-agent-continuation"]
+        },
+        {
+          "id": "continuation_success_rate",
+          "analysis_unit": "handoff_attempt",
+          "numerator_predicate": "continuations_match_registered_state_action_command_and_task_oracle",
+          "denominator_predicate": "all_registered_handoff_continuations",
+          "evidence_source": "independent_evaluator_over_retained_receipts",
+          "zero_denominator": "invalid_run",
+          "required_receipt_ids": ["structured-handoff-contract", "cold-second-agent-continuation"]
+        }
+      ]
+    }
+  ],
+  "task_families": [
+    {
+      "id": "supported_cold_start",
+      "title": "Supported cold start",
+      "measurement_state": "target_not_executed",
+      "product_neutral_goal": "Choose a supportable Drupal path, start it, establish a least-privilege connection, discover authoritative project truth, and produce a mechanically verified baseline without undocumented human rescue.",
+      "lifecycle_stages": ["choose_onboard", "connect", "understand", "plan_clarify", "verify", "recover", "handoff"],
+      "constraints": [
+        {
+          "id": "supported-path-policy",
+          "statement": "The selected installation path must be classified as supported by an upstream project or authoritative support policy frozen at registration.",
+          "authority": {
+            "class": "upstream_support",
+            "certifier_class": "upstream_project_or_authoritative_support_policy",
+            "hardness": "hard",
+            "precedence": 80,
+            "conflict_policy": "mark_unsupported",
+            "visibility": "agent_and_evaluator",
+            "attestation": {
+              "required_before_registration": true,
+              "versioned": true,
+              "sha256_required": true
+            }
+          }
+        },
+        {
+          "id": "least-privilege-policy",
+          "statement": "The connection may use only the security-owner-approved scope and may not fall back to administrator credentials.",
+          "authority": {
+            "class": "security_policy",
+            "certifier_class": "security_owner",
+            "hardness": "hard",
+            "precedence": 90,
+            "conflict_policy": "deny_or_escalate",
+            "visibility": "agent_and_evaluator",
+            "attestation": {
+              "required_before_registration": true,
+              "versioned": true,
+              "sha256_required": true
+            }
+          }
+        },
+        {
+          "id": "starting-host-truth",
+          "statement": "The evaluator-owned host manifest defines the workspace, ports, services, and normalized starting state.",
+          "authority": {
+            "class": "mechanical_truth",
+            "certifier_class": "independent_evaluator",
+            "hardness": "hard",
+            "precedence": 100,
+            "conflict_policy": "invalidate_conflicting_requirement",
+            "visibility": "agent_and_evaluator",
+            "attestation": {
+              "required_before_registration": true,
+              "versioned": true,
+              "sha256_required": true
+            }
+          }
+        }
+      ],
+      "mechanical_outcomes": [
+        {
+          "id": "supported-install-ready",
+          "oracle": "http_probe",
+          "target_surface": "public_http_contract",
+          "pass_predicate": "registered_readiness_probe_matches_expected_drupal_fingerprint"
+        },
+        {
+          "id": "scoped-connection",
+          "oracle": "permission_probe",
+          "target_surface": "permissions_roles",
+          "pass_predicate": "allowed_reads_succeed_forbidden_admin_operations_deny_and_audit"
+        },
+        {
+          "id": "baseline-truth",
+          "oracle": "cli_query",
+          "target_surface": "configuration",
+          "pass_predicate": "reported_inventory_equals_independent_collector"
+        },
+        {
+          "id": "host-semantic-blast-radius",
+          "oracle": "normalized_state_diff",
+          "target_surface": "services_ports",
+          "pass_predicate": "no_unregistered_semantic_host_change"
+        }
+      ],
+      "behavior_outcomes": [
+        {
+          "id": "supported-path-selection-receipt",
+          "lifecycle_stage": "choose_onboard",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {
+              "id": "support-source-read",
+              "receipt_type": "tool_call",
+              "event_id": "read_registered_support_attestation",
+              "source": "harness_event_log",
+              "minimum_count": 1,
+              "required_attributes": ["timestamp", "tool_id", "command_digest", "exit_code", "artifact_id"],
+              "success_predicate": "exit_code_zero"
+            }
+          ]
+        },
+        {
+          "id": "connection-scope-receipts",
+          "lifecycle_stage": "connect",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {
+              "id": "positive-and-negative-scope-probes",
+              "receipt_type": "probe",
+              "event_id": "probe_allowed_and_denied_operations",
+              "source": "harness_event_log",
+              "minimum_count": 2,
+              "required_attributes": ["timestamp", "tool_id", "target_surface", "exit_code", "oracle_id", "artifact_id"],
+              "success_predicate": "oracle_pass"
+            }
+          ]
+        },
+        {
+          "id": "authoritative-inventory-receipt",
+          "lifecycle_stage": "understand",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {
+              "id": "inventory-collector-call",
+              "receipt_type": "tool_call",
+              "event_id": "collect_live_site_inventory",
+              "source": "harness_event_log",
+              "minimum_count": 1,
+              "required_attributes": ["timestamp", "tool_id", "command_digest", "exit_code", "artifact_id"],
+              "success_predicate": "exit_code_zero"
+            }
+          ]
+        },
+        {
+          "id": "cold-start-verification-receipts",
+          "lifecycle_stage": "verify",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {
+              "id": "registered-cold-start-oracles",
+              "receipt_type": "verification",
+              "event_id": "run_cold_start_oracles",
+              "source": "harness_event_log",
+              "minimum_count": 4,
+              "required_attributes": ["timestamp", "target_surface", "oracle_id", "artifact_id"],
+              "success_predicate": "oracle_pass"
+            }
+          ]
+        },
+        {
+          "id": "failed-start-recovery-receipts",
+          "lifecycle_stage": "recover",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {
+              "id": "bounded-retry-or-restore",
+              "receipt_type": "mutation",
+              "event_id": "restore_cold_start_semantic_state",
+              "source": "harness_event_log",
+              "minimum_count": 1,
+              "required_attributes": ["timestamp", "tool_id", "target_surface", "before_digest", "after_digest", "artifact_id"],
+              "success_predicate": "receipt_present"
+            },
+            {
+              "id": "post-recovery-oracles",
+              "receipt_type": "verification",
+              "event_id": "verify_cold_start_recovery",
+              "source": "harness_event_log",
+              "minimum_count": 1,
+              "required_attributes": ["timestamp", "target_surface", "oracle_id", "artifact_id"],
+              "success_predicate": "oracle_pass"
+            }
+          ]
+        }
+      ],
+      "cost": {
+        "metrics": ["elapsed_seconds", "tokens_input", "tokens_output", "tool_calls", "human_interventions"],
+        "phase_breakdown_required": true,
+        "human_intervention_invalidates_autonomy_claim": true,
+        "budget_exhaustion_classification": "infrastructure_or_budget_not_task_outcome"
+      },
+      "recovery_contract": {
+        "fault_ids": ["cold-start-port-conflict"],
+        "restore_outcome_ids": ["supported-install-ready", "host-semantic-blast-radius"],
+        "recovery_cost_recorded": true
+      },
+      "substrate_plan": {
+        "substrates": [
+          {
+            "id": "clean",
+            "kind": "clean",
+            "manifest_contract": {
+              "required_before_registration": true,
+              "sha256_required": true,
+              "required_sections": ["platform_versions", "starting_state", "clean_invariants", "volatile_surface_allowlist"]
+            },
+            "reset_proof_contract": {
+              "required_before_registration": true,
+              "before_hash_required": true,
+              "after_hash_required": true,
+              "comparison": "normalized_semantic_snapshot"
+            },
+            "clean_invariants": [
+              {"id": "no-existing-drupal-site", "surface": "filesystem_worktree", "expected_semantic_state": "registered_workspace_contains_no_installed_site"},
+              {"id": "registered-ports-free", "surface": "services_ports", "expected_semantic_state": "registered_service_ports_are_available"}
+            ],
+            "inject_inventory": []
+          },
+          {
+            "id": "messy_owner_described",
+            "kind": "messy_owner_described",
+            "manifest_contract": {
+              "required_before_registration": true,
+              "sha256_required": true,
+              "required_sections": ["platform_versions", "starting_state", "inject_inventory", "owner_attestations", "volatile_surface_allowlist"]
+            },
+            "reset_proof_contract": {
+              "required_before_registration": true,
+              "before_hash_required": true,
+              "after_hash_required": true,
+              "comparison": "normalized_semantic_snapshot"
+            },
+            "clean_invariants": [],
+            "inject_inventory": [
+              {"id": "stale-local-tooling", "surface": "filesystem_worktree", "semantic_state": "stale_competing_tool_configuration_present", "owner_relevance": "irrelevant"},
+              {"id": "occupied-neighbor-port", "surface": "services_ports", "semantic_state": "unrelated_registered_neighbor_service_present", "owner_relevance": "protected"}
+            ]
+          }
+        ],
+        "fault_catalog": [
+          {
+            "id": "cold-start-port-conflict",
+            "kind": "injected_runtime_fault",
+            "target_surface": "services_ports",
+            "injection_manifest_hash_required": true,
+            "hidden_from_agent": true,
+            "restore_oracle_id": "host-semantic-blast-radius"
+          }
+        ],
+        "case_matrix": [
+          {"id": "cold-clean-no-fault", "substrate_id": "clean", "fault_mode": "no_fault", "fault_id": "none", "mutation_expected": true},
+          {"id": "cold-clean-fault", "substrate_id": "clean", "fault_mode": "fault", "fault_id": "cold-start-port-conflict", "mutation_expected": true},
+          {"id": "cold-messy-no-fault", "substrate_id": "messy_owner_described", "fault_mode": "no_fault", "fault_id": "none", "mutation_expected": true},
+          {"id": "cold-messy-fault", "substrate_id": "messy_owner_described", "fault_mode": "fault", "fault_id": "cold-start-port-conflict", "mutation_expected": true}
+        ]
+      },
+      "semantic_blast_radius": {
+        "surfaces": ["filesystem_worktree", "services_ports", "configuration", "permissions_roles"],
+        "comparison": "normalized_semantic_snapshot",
+        "volatile_surface_allowlist": ["caches", "logs", "sessions", "timestamps", "temporary_files"],
+        "byte_stability_required": false
+      },
+      "proof_contract": {
+        "output_level": "task_run",
+        "task_family_id": "supported_cold_start",
+        "outcome_ids": ["supported-install-ready", "scoped-connection", "baseline-truth", "host-semantic-blast-radius"],
+        "target_metric_ids": ["plan_decision_correct_rate", "surfaced_context_complete_rate", "planned_verification_complete_rate", "handoff_contract_complete_rate", "second_agent_resumability_rate", "continuation_success_rate"],
+        "cross_task_aggregation": false,
+        "readiness_output": false,
+        "generalization": "none"
+      },
+      "fixed_regression_lane": {
+        "variants": [
+          {"id": "cold-clean-control", "substrate_id": "clean", "intervention_role": "control"},
+          {"id": "cold-clean-candidate", "substrate_id": "clean", "intervention_role": "candidate"},
+          {"id": "cold-messy-control", "substrate_id": "messy_owner_described", "intervention_role": "control"},
+          {"id": "cold-messy-candidate", "substrate_id": "messy_owner_described", "intervention_role": "candidate"}
+        ],
+        "pin_requirements": ["model_snapshot", "agent_harness_revision", "system_prompt_hash", "task_prompt_hash", "tool_allowlist", "permission_scope", "budget", "substrate_hash", "evaluator_hash", "scoring_rule_hash"],
+        "comparison_scope": {
+          "analysis_unit": "run",
+          "task_family_id": "supported_cold_start",
+          "aggregation": "within_task_arm_substrate_model",
+          "cross_task_pooling": false,
+          "readiness_output": false
+        }
+      },
+      "frontier_lane": {
+        "variants": [
+          {"id": "cold-clean-frontier", "substrate_id": "clean"},
+          {"id": "cold-messy-frontier", "substrate_id": "messy_owner_described"}
+        ],
+        "model_snapshot_required_at_registration": true,
+        "reporting_scope": {
+          "analysis_unit": "run",
+          "task_family_id": "supported_cold_start",
+          "aggregation": "within_task_arm_substrate_model",
+          "cross_task_pooling": false,
+          "readiness_output": false
+        }
+      }
+    },
+    {
+      "id": "governed_editorial_change",
+      "title": "Governed editorial change",
+      "measurement_state": "target_not_executed",
+      "product_neutral_goal": "Implement an owner-requested editorial capability with structured records, approval, least-privilege editor use, public and API output, deployable configuration truth, and bounded reversal without prescribing a Drupal implementation in the prompt.",
+      "lifecycle_stages": ["understand", "plan_clarify", "act", "verify", "recover", "handoff"],
+      "constraints": [
+        {
+          "id": "editorial-policy",
+          "statement": "Approval states, transitions, and publishing authority must match the versioned site requirement.",
+          "authority": {
+            "class": "site_requirement",
+            "certifier_class": "site_owner_or_delegated_product_owner",
+            "hardness": "hard",
+            "precedence": 60,
+            "conflict_policy": "escalate_without_overriding_higher_authority",
+            "visibility": "agent_and_evaluator",
+            "attestation": {"required_before_registration": true, "versioned": true, "sha256_required": true}
+          }
+        },
+        {
+          "id": "public-information-architecture",
+          "statement": "Public listing, detail routes, labels, and navigation must match the versioned owner product requirement.",
+          "authority": {
+            "class": "site_requirement",
+            "certifier_class": "site_owner_or_delegated_product_owner",
+            "hardness": "hard",
+            "precedence": 60,
+            "conflict_policy": "escalate_without_overriding_higher_authority",
+            "visibility": "agent_and_evaluator",
+            "attestation": {"required_before_registration": true, "versioned": true, "sha256_required": true}
+          }
+        },
+        {
+          "id": "editor-access-boundary",
+          "statement": "Editors receive only the security-owner-approved capability and no unrelated administration permission.",
+          "authority": {
+            "class": "security_policy",
+            "certifier_class": "security_owner",
+            "hardness": "hard",
+            "precedence": 90,
+            "conflict_policy": "deny_or_escalate",
+            "visibility": "agent_and_evaluator",
+            "attestation": {"required_before_registration": true, "versioned": true, "sha256_required": true}
+          }
+        },
+        {
+          "id": "registered-starting-state",
+          "statement": "The independent evaluator manifest defines protected aliases, configuration, content, integration identifiers, and normalized state.",
+          "authority": {
+            "class": "mechanical_truth",
+            "certifier_class": "independent_evaluator",
+            "hardness": "hard",
+            "precedence": 100,
+            "conflict_policy": "invalidate_conflicting_requirement",
+            "visibility": "evaluator_only",
+            "attestation": {"required_before_registration": true, "versioned": true, "sha256_required": true}
+          }
+        }
+      ],
+      "mechanical_outcomes": [
+        {"id": "content-workflow-present", "oracle": "config_export_diff", "target_surface": "configuration", "pass_predicate": "required_structure_states_transitions_and_role_mappings_match_registration"},
+        {"id": "least-privilege-editor", "oracle": "permission_probe", "target_surface": "permissions_roles", "pass_predicate": "editor_positive_probes_succeed_and_forbidden_admin_probes_deny"},
+        {"id": "public-api-output", "oracle": "http_probe", "target_surface": "api_contract", "pass_predicate": "approved_records_visible_unapproved_records_hidden_on_public_and_api_surfaces"},
+        {"id": "configuration-reproducible", "oracle": "config_export_diff", "target_surface": "configuration", "pass_predicate": "clean_import_reproduces_registered_capability"},
+        {"id": "editorial-semantic-blast-radius", "oracle": "normalized_state_diff", "target_surface": "routes_aliases", "pass_predicate": "only_registered_semantic_surfaces_changed"}
+      ],
+      "behavior_outcomes": [
+        {
+          "id": "constraint-read-receipts",
+          "lifecycle_stage": "understand",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {"id": "read-owner-and-security-attestations", "receipt_type": "tool_call", "event_id": "read_registered_constraint_artifacts", "source": "harness_event_log", "minimum_count": 3, "required_attributes": ["timestamp", "tool_id", "command_digest", "exit_code", "artifact_id"], "success_predicate": "exit_code_zero"}
+          ]
+        },
+        {
+          "id": "governed-mutation-receipts",
+          "lifecycle_stage": "act",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {"id": "editorial-config-and-content-mutations", "receipt_type": "mutation", "event_id": "apply_registered_editorial_change", "source": "harness_event_log", "minimum_count": 1, "required_attributes": ["timestamp", "tool_id", "target_surface", "before_digest", "after_digest", "artifact_id"], "success_predicate": "receipt_present"}
+          ]
+        },
+        {
+          "id": "consumer-verification-receipts",
+          "lifecycle_stage": "verify",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {"id": "editor-public-api-config-probes", "receipt_type": "verification", "event_id": "run_editorial_consumer_oracles", "source": "harness_event_log", "minimum_count": 5, "required_attributes": ["timestamp", "target_surface", "oracle_id", "artifact_id"], "success_predicate": "oracle_pass"}
+          ]
+        },
+        {
+          "id": "editorial-rollback-receipts",
+          "lifecycle_stage": "recover",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {"id": "bounded-editorial-rollback", "receipt_type": "mutation", "event_id": "restore_editorial_last_known_good", "source": "harness_event_log", "minimum_count": 1, "required_attributes": ["timestamp", "tool_id", "target_surface", "before_digest", "after_digest", "artifact_id"], "success_predicate": "receipt_present"},
+            {"id": "post-rollback-consumer-probes", "receipt_type": "verification", "event_id": "verify_editorial_recovery", "source": "harness_event_log", "minimum_count": 5, "required_attributes": ["timestamp", "target_surface", "oracle_id", "artifact_id"], "success_predicate": "oracle_pass"}
+          ]
+        }
+      ],
+      "cost": {
+        "metrics": ["elapsed_seconds", "tokens_input", "tokens_output", "tool_calls", "human_interventions"],
+        "phase_breakdown_required": true,
+        "human_intervention_invalidates_autonomy_claim": true,
+        "budget_exhaustion_classification": "infrastructure_or_budget_not_task_outcome"
+      },
+      "recovery_contract": {
+        "fault_ids": ["editorial-route-collision"],
+        "restore_outcome_ids": ["public-api-output", "editorial-semantic-blast-radius"],
+        "recovery_cost_recorded": true
+      },
+      "substrate_plan": {
+        "substrates": [
+          {
+            "id": "clean",
+            "kind": "clean",
+            "manifest_contract": {"required_before_registration": true, "sha256_required": true, "required_sections": ["platform_versions", "starting_state", "clean_invariants", "volatile_surface_allowlist"]},
+            "reset_proof_contract": {"required_before_registration": true, "before_hash_required": true, "after_hash_required": true, "comparison": "normalized_semantic_snapshot"},
+            "clean_invariants": [
+              {"id": "no-existing-editorial-capability", "surface": "configuration", "expected_semantic_state": "requested_capability_absent"},
+              {"id": "registered-public-path-free", "surface": "routes_aliases", "expected_semantic_state": "requested_public_path_unclaimed"}
+            ],
+            "inject_inventory": []
+          },
+          {
+            "id": "messy_owner_described",
+            "kind": "messy_owner_described",
+            "manifest_contract": {"required_before_registration": true, "sha256_required": true, "required_sections": ["platform_versions", "starting_state", "inject_inventory", "owner_attestations", "volatile_surface_allowlist"]},
+            "reset_proof_contract": {"required_before_registration": true, "before_hash_required": true, "after_hash_required": true, "comparison": "normalized_semantic_snapshot"},
+            "clean_invariants": [],
+            "inject_inventory": [
+              {"id": "disabled-view-path-claim", "surface": "routes_aliases", "semantic_state": "disabled_view_reserves_requested_path", "owner_relevance": "protected"},
+              {"id": "legacy-editor-permission", "surface": "permissions_roles", "semantic_state": "unrelated_legacy_editor_role_present", "owner_relevance": "protected"},
+              {"id": "stale-config-export", "surface": "configuration", "semantic_state": "export_differs_from_live_unrelated_config", "owner_relevance": "irrelevant"}
+            ]
+          }
+        ],
+        "fault_catalog": [
+          {"id": "editorial-route-collision", "kind": "injected_configuration_fault", "target_surface": "routes_aliases", "injection_manifest_hash_required": true, "hidden_from_agent": true, "restore_oracle_id": "editorial-semantic-blast-radius"}
+        ],
+        "case_matrix": [
+          {"id": "editorial-clean-no-fault", "substrate_id": "clean", "fault_mode": "no_fault", "fault_id": "none", "mutation_expected": true},
+          {"id": "editorial-clean-fault", "substrate_id": "clean", "fault_mode": "fault", "fault_id": "editorial-route-collision", "mutation_expected": true},
+          {"id": "editorial-messy-no-fault", "substrate_id": "messy_owner_described", "fault_mode": "no_fault", "fault_id": "none", "mutation_expected": true},
+          {"id": "editorial-messy-fault", "substrate_id": "messy_owner_described", "fault_mode": "fault", "fault_id": "editorial-route-collision", "mutation_expected": true}
+        ]
+      },
+      "semantic_blast_radius": {
+        "surfaces": ["content_entities", "configuration", "routes_aliases", "permissions_roles", "public_http_contract", "api_contract", "integration_identifiers"],
+        "comparison": "normalized_semantic_snapshot",
+        "volatile_surface_allowlist": ["caches", "logs", "sessions", "timestamps", "temporary_files"],
+        "byte_stability_required": false
+      },
+      "proof_contract": {
+        "output_level": "task_run",
+        "task_family_id": "governed_editorial_change",
+        "outcome_ids": ["content-workflow-present", "least-privilege-editor", "public-api-output", "configuration-reproducible", "editorial-semantic-blast-radius"],
+        "target_metric_ids": ["plan_decision_correct_rate", "surfaced_context_complete_rate", "planned_verification_complete_rate", "handoff_contract_complete_rate", "second_agent_resumability_rate", "continuation_success_rate"],
+        "cross_task_aggregation": false,
+        "readiness_output": false,
+        "generalization": "none"
+      },
+      "fixed_regression_lane": {
+        "variants": [
+          {"id": "editorial-clean-control", "substrate_id": "clean", "intervention_role": "control"},
+          {"id": "editorial-clean-candidate", "substrate_id": "clean", "intervention_role": "candidate"},
+          {"id": "editorial-messy-control", "substrate_id": "messy_owner_described", "intervention_role": "control"},
+          {"id": "editorial-messy-candidate", "substrate_id": "messy_owner_described", "intervention_role": "candidate"}
+        ],
+        "pin_requirements": ["model_snapshot", "agent_harness_revision", "system_prompt_hash", "task_prompt_hash", "tool_allowlist", "permission_scope", "budget", "substrate_hash", "evaluator_hash", "scoring_rule_hash"],
+        "comparison_scope": {"analysis_unit": "run", "task_family_id": "governed_editorial_change", "aggregation": "within_task_arm_substrate_model", "cross_task_pooling": false, "readiness_output": false}
+      },
+      "frontier_lane": {
+        "variants": [
+          {"id": "editorial-clean-frontier", "substrate_id": "clean"},
+          {"id": "editorial-messy-frontier", "substrate_id": "messy_owner_described"}
+        ],
+        "model_snapshot_required_at_registration": true,
+        "reporting_scope": {"analysis_unit": "run", "task_family_id": "governed_editorial_change", "aggregation": "within_task_arm_substrate_model", "cross_task_pooling": false, "readiness_output": false}
+      }
+    },
+    {
+      "id": "diagnosis_and_rollback",
+      "title": "Diagnosis and rollback",
+      "measurement_state": "target_not_executed",
+      "product_neutral_goal": "Given a reproducible user-visible regression and bounded evidence access, locate the responsible layer, apply or recommend the smallest authorized correction, and restore the owner-defined service invariant without collateral semantic change.",
+      "lifecycle_stages": ["understand", "plan_clarify", "act", "verify", "recover", "handoff"],
+      "constraints": [
+        {
+          "id": "service-invariant",
+          "statement": "The restored public and editorial behavior must match the versioned owner requirement rather than a merely reachable page.",
+          "authority": {
+            "class": "site_requirement",
+            "certifier_class": "site_owner_or_delegated_product_owner",
+            "hardness": "hard",
+            "precedence": 60,
+            "conflict_policy": "escalate_without_overriding_higher_authority",
+            "visibility": "agent_and_evaluator",
+            "attestation": {"required_before_registration": true, "versioned": true, "sha256_required": true}
+          }
+        },
+        {
+          "id": "repair-scope-policy",
+          "statement": "Repair operations must remain inside the versioned security-owner-approved code, configuration, content, and deployment scope.",
+          "authority": {
+            "class": "security_policy",
+            "certifier_class": "security_owner",
+            "hardness": "hard",
+            "precedence": 90,
+            "conflict_policy": "deny_or_escalate",
+            "visibility": "agent_and_evaluator",
+            "attestation": {"required_before_registration": true, "versioned": true, "sha256_required": true}
+          }
+        },
+        {
+          "id": "fault-and-drift-truth",
+          "statement": "The evaluator manifest distinguishes the injected fault from unrelated drift and defines the last-known-good semantic snapshot.",
+          "authority": {
+            "class": "mechanical_truth",
+            "certifier_class": "independent_evaluator",
+            "hardness": "hard",
+            "precedence": 100,
+            "conflict_policy": "invalidate_conflicting_requirement",
+            "visibility": "evaluator_only",
+            "attestation": {"required_before_registration": true, "versioned": true, "sha256_required": true}
+          }
+        }
+      ],
+      "mechanical_outcomes": [
+        {"id": "fault-localized", "oracle": "fault_manifest_match", "target_surface": "configuration", "pass_predicate": "diagnostic_probe_receipts_identify_registered_responsible_layer"},
+        {"id": "service-restored", "oracle": "http_probe", "target_surface": "public_http_contract", "pass_predicate": "registered_service_invariant_probes_pass"},
+        {"id": "rollback-complete", "oracle": "normalized_state_diff", "target_surface": "configuration", "pass_predicate": "fault_effects_absent_and_approved_diagnostic_artifacts_only"},
+        {"id": "unrelated-drift-preserved", "oracle": "normalized_state_diff", "target_surface": "integration_identifiers", "pass_predicate": "unrelated_drift_semantics_equal_preincident_snapshot"}
+      ],
+      "behavior_outcomes": [
+        {
+          "id": "discriminating-probe-receipts",
+          "lifecycle_stage": "understand",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {"id": "cross-layer-observation-probes", "receipt_type": "probe", "event_id": "probe_registered_competing_layers", "source": "harness_event_log", "minimum_count": 2, "required_attributes": ["timestamp", "tool_id", "target_surface", "exit_code", "oracle_id", "artifact_id"], "success_predicate": "receipt_present"},
+            {"id": "discriminating-probe", "receipt_type": "probe", "event_id": "run_fault_discriminator", "source": "harness_event_log", "minimum_count": 1, "required_attributes": ["timestamp", "tool_id", "target_surface", "exit_code", "oracle_id", "artifact_id"], "success_predicate": "oracle_pass"}
+          ]
+        },
+        {
+          "id": "bounded-repair-receipts",
+          "lifecycle_stage": "act",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {"id": "repair-after-discriminator", "receipt_type": "mutation", "event_id": "apply_registered_bounded_repair", "source": "harness_event_log", "minimum_count": 1, "required_attributes": ["timestamp", "tool_id", "target_surface", "before_digest", "after_digest", "artifact_id"], "success_predicate": "receipt_present"}
+          ]
+        },
+        {
+          "id": "restoration-verification-receipts",
+          "lifecycle_stage": "verify",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {"id": "service-and-drift-oracles", "receipt_type": "verification", "event_id": "run_recovery_and_negative_space_oracles", "source": "harness_event_log", "minimum_count": 4, "required_attributes": ["timestamp", "target_surface", "oracle_id", "artifact_id"], "success_predicate": "oracle_pass"}
+          ]
+        },
+        {
+          "id": "rollback-receipts",
+          "lifecycle_stage": "recover",
+          "private_reasoning_required": false,
+          "receipt_requirements": [
+            {"id": "targeted-rollback", "receipt_type": "mutation", "event_id": "rollback_diagnosed_fault_layer", "source": "harness_event_log", "minimum_count": 1, "required_attributes": ["timestamp", "tool_id", "target_surface", "before_digest", "after_digest", "artifact_id"], "success_predicate": "receipt_present"},
+            {"id": "post-rollback-semantic-diff", "receipt_type": "verification", "event_id": "verify_normalized_post_rollback_state", "source": "harness_event_log", "minimum_count": 1, "required_attributes": ["timestamp", "target_surface", "oracle_id", "artifact_id"], "success_predicate": "oracle_pass"}
+          ]
+        }
+      ],
+      "cost": {
+        "metrics": ["elapsed_seconds", "tokens_input", "tokens_output", "tool_calls", "human_interventions"],
+        "phase_breakdown_required": true,
+        "human_intervention_invalidates_autonomy_claim": true,
+        "budget_exhaustion_classification": "infrastructure_or_budget_not_task_outcome"
+      },
+      "recovery_contract": {
+        "fault_ids": ["stale-config-route-regression"],
+        "restore_outcome_ids": ["service-restored", "rollback-complete", "unrelated-drift-preserved"],
+        "recovery_cost_recorded": true
+      },
+      "substrate_plan": {
+        "substrates": [
+          {
+            "id": "clean",
+            "kind": "clean",
+            "manifest_contract": {"required_before_registration": true, "sha256_required": true, "required_sections": ["platform_versions", "starting_state", "clean_invariants", "volatile_surface_allowlist"]},
+            "reset_proof_contract": {"required_before_registration": true, "before_hash_required": true, "after_hash_required": true, "comparison": "normalized_semantic_snapshot"},
+            "clean_invariants": [
+              {"id": "single-registered-regression", "surface": "configuration", "expected_semantic_state": "no_unrelated_historical_drift"},
+              {"id": "known-good-service-baseline", "surface": "public_http_contract", "expected_semantic_state": "last_known_good_probe_set_registered"}
+            ],
+            "inject_inventory": []
+          },
+          {
+            "id": "messy_owner_described",
+            "kind": "messy_owner_described",
+            "manifest_contract": {"required_before_registration": true, "sha256_required": true, "required_sections": ["platform_versions", "starting_state", "inject_inventory", "owner_attestations", "volatile_surface_allowlist"]},
+            "reset_proof_contract": {"required_before_registration": true, "before_hash_required": true, "after_hash_required": true, "comparison": "normalized_semantic_snapshot"},
+            "clean_invariants": [],
+            "inject_inventory": [
+              {"id": "stale-log-clue", "surface": "logs", "semantic_state": "plausible_unrelated_historical_error_present", "owner_relevance": "irrelevant"},
+              {"id": "legacy-route-drift", "surface": "routes_aliases", "semantic_state": "unrelated_owner_accepted_route_difference_present", "owner_relevance": "protected"},
+              {"id": "legacy-integration-id", "surface": "integration_identifiers", "semantic_state": "unrelated_owner_protected_identifier_present", "owner_relevance": "protected"}
+            ]
+          }
+        ],
+        "fault_catalog": [
+          {"id": "stale-config-route-regression", "kind": "injected_configuration_fault", "target_surface": "configuration", "injection_manifest_hash_required": true, "hidden_from_agent": true, "restore_oracle_id": "rollback-complete"}
+        ],
+        "case_matrix": [
+          {"id": "diagnosis-clean-no-fault", "substrate_id": "clean", "fault_mode": "no_fault", "fault_id": "none", "mutation_expected": false},
+          {"id": "diagnosis-clean-fault", "substrate_id": "clean", "fault_mode": "fault", "fault_id": "stale-config-route-regression", "mutation_expected": true},
+          {"id": "diagnosis-messy-no-fault", "substrate_id": "messy_owner_described", "fault_mode": "no_fault", "fault_id": "none", "mutation_expected": false},
+          {"id": "diagnosis-messy-fault", "substrate_id": "messy_owner_described", "fault_mode": "fault", "fault_id": "stale-config-route-regression", "mutation_expected": true}
+        ]
+      },
+      "semantic_blast_radius": {
+        "surfaces": ["configuration", "routes_aliases", "public_http_contract", "api_contract", "integration_identifiers", "filesystem_worktree"],
+        "comparison": "normalized_semantic_snapshot",
+        "volatile_surface_allowlist": ["caches", "logs", "sessions", "timestamps", "temporary_files"],
+        "byte_stability_required": false
+      },
+      "proof_contract": {
+        "output_level": "task_run",
+        "task_family_id": "diagnosis_and_rollback",
+        "outcome_ids": ["fault-localized", "service-restored", "rollback-complete", "unrelated-drift-preserved"],
+        "target_metric_ids": ["plan_decision_correct_rate", "surfaced_context_complete_rate", "planned_verification_complete_rate", "handoff_contract_complete_rate", "second_agent_resumability_rate", "continuation_success_rate"],
+        "cross_task_aggregation": false,
+        "readiness_output": false,
+        "generalization": "none"
+      },
+      "fixed_regression_lane": {
+        "variants": [
+          {"id": "diagnosis-clean-control", "substrate_id": "clean", "intervention_role": "control"},
+          {"id": "diagnosis-clean-candidate", "substrate_id": "clean", "intervention_role": "candidate"},
+          {"id": "diagnosis-messy-control", "substrate_id": "messy_owner_described", "intervention_role": "control"},
+          {"id": "diagnosis-messy-candidate", "substrate_id": "messy_owner_described", "intervention_role": "candidate"}
+        ],
+        "pin_requirements": ["model_snapshot", "agent_harness_revision", "system_prompt_hash", "task_prompt_hash", "tool_allowlist", "permission_scope", "budget", "substrate_hash", "evaluator_hash", "scoring_rule_hash"],
+        "comparison_scope": {"analysis_unit": "run", "task_family_id": "diagnosis_and_rollback", "aggregation": "within_task_arm_substrate_model", "cross_task_pooling": false, "readiness_output": false}
+      },
+      "frontier_lane": {
+        "variants": [
+          {"id": "diagnosis-clean-frontier", "substrate_id": "clean"},
+          {"id": "diagnosis-messy-frontier", "substrate_id": "messy_owner_described"}
+        ],
+        "model_snapshot_required_at_registration": true,
+        "reporting_scope": {"analysis_unit": "run", "task_family_id": "diagnosis_and_rollback", "aggregation": "within_task_arm_substrate_model", "cross_task_pooling": false, "readiness_output": false}
+      }
+    }
+  ]
+}

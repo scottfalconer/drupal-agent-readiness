@@ -1,0 +1,349 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drupal.org/agent-readiness/benchmark-coverage-v1.schema.json",
+  "title": "Drupal Agent Readiness Benchmark Coverage v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "registry_id",
+    "evidence_records",
+    "lifecycle",
+    "claim_policy",
+    "published_claims"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "registry_id": {"const": "drupal-agent-readiness-benchmark-coverage-v1"},
+    "evidence_records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/evidence_record"}
+    },
+    "lifecycle": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/lifecycle_stage"}
+    },
+    "claim_policy": {"$ref": "#/$defs/claim_scope"},
+    "published_claims": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/published_claim"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "stage_id": {
+      "type": "string",
+      "enum": [
+        "choose_onboard",
+        "connect",
+        "understand",
+        "plan_clarify",
+        "act",
+        "verify",
+        "recover",
+        "handoff"
+      ]
+    },
+    "evidence_record": {
+      "type": "object",
+      "required": [
+        "id",
+        "evidence_class",
+        "evidence_role",
+        "semantic_binding",
+        "path",
+        "sha256",
+        "media_type",
+        "task_id",
+        "lifecycle_stages",
+        "claim_unit",
+        "analysis_unit",
+        "metric_ids",
+        "current_observation",
+        "target_method"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "evidence_class": {
+          "type": "string",
+          "enum": [
+            "current_run_artifact",
+            "constrained_legacy_run_bundle",
+            "current_experiment_artifact",
+            "current_evaluator_output",
+            "current_derived_metrics"
+          ]
+        },
+        "evidence_role": {
+          "type": "string",
+          "enum": [
+            "raw_runs",
+            "mechanical_ground_truth",
+            "derived_metrics",
+            "run_result",
+            "evaluator_output"
+            ,"recomputed_run_result"
+          ]
+        },
+        "semantic_binding": {
+          "type": "string",
+          "enum": ["embedded_task_id", "companion_run_result", "legacy_recomputed_run", "alias_raw_runs", "alias_ground_truth", "alias_derived_metrics"]
+        },
+        "companion_evidence_id": {"$ref": "#/$defs/id"},
+        "companions": {
+          "type": "object",
+          "required": ["answer", "state", "evaluator", "evaluator_source"],
+          "properties": {
+            "answer": {"$ref": "#/$defs/pinned_companion"},
+            "state": {"$ref": "#/$defs/pinned_companion"},
+            "evaluator": {"$ref": "#/$defs/pinned_companion"},
+            "evaluator_source": {"$ref": "#/$defs/pinned_companion"}
+          },
+          "additionalProperties": false
+        },
+        "legacy_limitations": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"type": "string", "enum": ["evaluator_version_not_registered_at_run_time", "agent_stack_pins_incomplete"]}
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^evidence/(runs|experiments)/[A-Za-z0-9._/-]+$"
+        },
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "media_type": {
+          "type": "string",
+          "enum": ["application/json", "text/markdown"]
+        },
+        "task_id": {"$ref": "#/$defs/id"},
+        "lifecycle_stages": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/stage_id"}
+        },
+        "claim_unit": {
+          "type": "string",
+          "enum": ["run", "candidate_path", "experiment_run_set"]
+        },
+        "analysis_unit": {"const": "run"},
+        "metric_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "current_observation": {"const": true},
+        "target_method": {"const": false}
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"semantic_binding": {"const": "companion_run_result"}}, "required": ["semantic_binding"]},
+          "then": {"required": ["companion_evidence_id"]},
+          "else": {"properties": {"companion_evidence_id": false}}
+        },
+        {
+          "if": {"properties": {"semantic_binding": {"const": "legacy_recomputed_run"}}, "required": ["semantic_binding"]},
+          "then": {"required": ["companions", "legacy_limitations"]},
+          "else": {"properties": {"companions": false, "legacy_limitations": false}}
+        }
+      ]
+    },
+    "pinned_companion": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "pattern": "^(evidence/runs|agent_readiness/evaluators)/[A-Za-z0-9._/-]+$"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": ["outcome_id", "required_proof_layers"],
+      "properties": {
+        "outcome_id": {"$ref": "#/$defs/id"},
+        "required_proof_layers": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "required_metric_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "lifecycle_stage": {
+      "type": "object",
+      "required": [
+        "id",
+        "current_status",
+        "current_evidence_ids",
+        "target",
+        "target_task_family_ids"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/stage_id"},
+        "current_status": {
+          "type": "string",
+          "enum": ["not_covered", "constrained", "target_met"]
+        },
+        "current_evidence_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "target": {"$ref": "#/$defs/target"},
+        "target_task_family_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {"current_status": {"const": "not_covered"}},
+            "required": ["current_status"]
+          },
+          "then": {"properties": {"current_evidence_ids": {"maxItems": 0}}},
+          "else": {"properties": {"current_evidence_ids": {"minItems": 1}}}
+        }
+      ]
+    },
+    "claim_scope": {
+      "type": "object",
+      "required": [
+        "allowed_output_level",
+        "analysis_unit",
+        "aggregation",
+        "cross_task_inference",
+        "readiness_output",
+        "target_counts_as_current_evidence"
+      ],
+      "properties": {
+        "allowed_output_level": {"const": "task_metric"},
+        "analysis_unit": {"const": "run"},
+        "aggregation": {"const": "within_task_only"},
+        "cross_task_inference": {"const": false},
+        "readiness_output": {"const": false},
+        "target_counts_as_current_evidence": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "published_scope": {
+      "type": "object",
+      "required": [
+        "output_level",
+        "task_id",
+        "metric_ids",
+        "analysis_unit",
+        "aggregation",
+        "cross_task_inference",
+        "readiness_output"
+      ],
+      "properties": {
+        "output_level": {"const": "task_metric"},
+        "task_id": {"$ref": "#/$defs/id"},
+        "metric_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "analysis_unit": {"const": "run"},
+        "aggregation": {"const": "within_task_only"},
+        "cross_task_inference": {"const": false},
+        "readiness_output": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "published_claim": {
+      "type": "object",
+      "required": [
+        "id",
+        "claim_type",
+        "evidence_lane",
+        "claim_grade",
+        "causal_attribution",
+        "task_id",
+        "lifecycle_stages",
+        "observed_outcome",
+        "scope",
+        "limitations",
+        "evidence_ids",
+        "action_required"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "claim_type": {
+          "type": "string",
+          "enum": ["task_result", "bounded_observed_difference"]
+        },
+        "evidence_lane": {"const": "historical_frontier_observation"},
+        "claim_grade": {"const": false},
+        "causal_attribution": {"const": false},
+        "task_id": {"$ref": "#/$defs/id"},
+        "lifecycle_stages": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/stage_id"}
+        },
+        "observed_outcome": {
+          "type": "object",
+          "required": ["metric_id", "comparison_id", "effect_status"],
+          "properties": {
+            "metric_id": {"$ref": "#/$defs/id"},
+            "comparison_id": {"$ref": "#/$defs/id"},
+            "effect_status": {
+              "type": "string",
+              "enum": ["difference_observed", "no_difference_observed"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "scope": {"$ref": "#/$defs/published_scope"},
+        "limitations": {
+          "type": "object",
+          "required": ["provider_general", "model_snapshots_pinned", "production_ready", "upstream_accepted"],
+          "properties": {
+            "provider_general": {"const": false},
+            "model_snapshots_pinned": {"const": false},
+            "production_ready": {"const": false},
+            "upstream_accepted": {"const": false}
+          },
+          "additionalProperties": false
+        },
+        "evidence_ids": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "action_required": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

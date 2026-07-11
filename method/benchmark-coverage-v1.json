@@ -1,0 +1,284 @@
+{
+  "schema_version": "1.2.0",
+  "registry_id": "drupal-agent-readiness-benchmark-coverage-v1",
+  "evidence_records": [
+    {
+      "id": "inventory-deleaked-run-result",
+      "evidence_class": "constrained_legacy_run_bundle",
+      "evidence_role": "recomputed_run_result",
+      "semantic_binding": "legacy_recomputed_run",
+      "path": "evidence/runs/inventory-deleaked-blind/run-result.json",
+      "sha256": "92ac2dfc86d0554ef9fb414c29d214e77604902dc9a8a938764de59dd98ec2e9",
+      "companions": {
+        "answer": {"path": "evidence/runs/inventory-deleaked-blind/answer.json", "sha256": "909fe7b3868b06e87b8f5f76e189e1c6a1160b3615f0d72b532d10063a87690e"},
+        "state": {"path": "evidence/runs/inventory-deleaked-blind/state.json", "sha256": "2bf05089ebe2b5266b9fca2a7ba933b075a65ef44747527ba7ea7946fa801e41"},
+        "evaluator": {"path": "evidence/runs/inventory-deleaked-blind/evaluator.json", "sha256": "3bae87deab9137e3bc1c029f318bbfeb7cc86e39361ca57782498d0fa79d7a41"},
+        "evaluator_source": {"path": "agent_readiness/evaluators/inventory.py", "sha256": "28aaa8506427530856965cc576198abe9628f47e02546e5bb1e7ff73b9d503a8"}
+      },
+      "legacy_limitations": ["evaluator_version_not_registered_at_run_time", "agent_stack_pins_incomplete"],
+      "media_type": "application/json",
+      "task_id": "inventory.read_only",
+      "lifecycle_stages": ["understand", "verify"],
+      "claim_unit": "run",
+      "analysis_unit": "run",
+      "metric_ids": ["inventory_mechanical_pass"],
+      "current_observation": true,
+      "target_method": false
+    },
+    {
+      "id": "alias-safety-raw-runs",
+      "evidence_class": "current_experiment_artifact",
+      "evidence_role": "raw_runs",
+      "semantic_binding": "alias_raw_runs",
+      "path": "evidence/experiments/alias-safety-haven-n10-fullyblind-v0/raw-workflow-output.json",
+      "sha256": "dcd6f09d55eb5d96271955a0cf3897d1fae4adc853c6e4d142b39918cd3f83f7",
+      "media_type": "application/json",
+      "task_id": "assess.alias_safety",
+      "lifecycle_stages": ["understand", "verify"],
+      "claim_unit": "experiment_run_set",
+      "analysis_unit": "run",
+      "metric_ids": ["hidden_claim_false_safe_rate"],
+      "current_observation": true,
+      "target_method": false
+    },
+    {
+      "id": "alias-safety-ground-truth",
+      "evidence_class": "current_experiment_artifact",
+      "evidence_role": "mechanical_ground_truth",
+      "semantic_binding": "alias_ground_truth",
+      "path": "evidence/experiments/alias-safety-haven-n10-fullyblind-v0/ground-truth.json",
+      "sha256": "d4f38cd51df3a8f0b881583fac6a8ceda6c8731fbce209a1adb8c83b32ea0260",
+      "media_type": "application/json",
+      "task_id": "assess.alias_safety",
+      "lifecycle_stages": ["understand", "verify"],
+      "claim_unit": "candidate_path",
+      "analysis_unit": "run",
+      "metric_ids": ["hidden_claim_false_safe_rate"],
+      "current_observation": true,
+      "target_method": false
+    },
+    {
+      "id": "alias-safety-derived-metrics",
+      "evidence_class": "current_derived_metrics",
+      "evidence_role": "derived_metrics",
+      "semantic_binding": "alias_derived_metrics",
+      "path": "evidence/experiments/alias-safety-haven-n10-fullyblind-v0/model-ab-results.json",
+      "sha256": "5fd6d32cee6a7bfa8858d946f6e21bc806f16f43622fa186aae0f662fa2fa6f0",
+      "media_type": "application/json",
+      "task_id": "assess.alias_safety",
+      "lifecycle_stages": ["understand", "verify"],
+      "claim_unit": "experiment_run_set",
+      "analysis_unit": "run",
+      "metric_ids": ["hidden_claim_false_safe_rate"],
+      "current_observation": true,
+      "target_method": false
+    },
+    {
+      "id": "event-run-result",
+      "evidence_class": "constrained_legacy_run_bundle",
+      "evidence_role": "recomputed_run_result",
+      "semantic_binding": "legacy_recomputed_run",
+      "path": "evidence/runs/event-independent-20260620151052/run-result.json",
+      "sha256": "c9e4a4713a08f16125b0f2d8b9b06e6c05b408ba54024e3532930bb3df7cb069",
+      "companions": {
+        "answer": {"path": "evidence/runs/event-independent-20260620151052/answer.json", "sha256": "159d37648485dd8165b6551f04a6823db0e3688e1caab65cb29c081c696fe263"},
+        "state": {"path": "evidence/runs/event-independent-20260620151052/state.json", "sha256": "5bafc76f9c1856fe5b59daadb6ebccea3de6f974dd7f32abe7ad36722bb5973d"},
+        "evaluator": {"path": "evidence/runs/event-independent-20260620151052/evaluator.json", "sha256": "af4fba92e76014bcd07f5b7d72de45ce255408467768913ac93fbac9ebcd76b2"},
+        "evaluator_source": {"path": "agent_readiness/evaluators/event.py", "sha256": "4a11bee1636576fbec7cdc700a1e90df0d18ae08f73b7debea728c4a13497369"}
+      },
+      "legacy_limitations": ["evaluator_version_not_registered_at_run_time", "agent_stack_pins_incomplete"],
+      "media_type": "application/json",
+      "task_id": "act.event_jsonapi",
+      "lifecycle_stages": ["act", "verify"],
+      "claim_unit": "run",
+      "analysis_unit": "run",
+      "metric_ids": ["event_mechanical_pass", "event_blast_radius_pass"],
+      "current_observation": true,
+      "target_method": false
+    },
+    {
+      "id": "recovery-run-result",
+      "evidence_class": "constrained_legacy_run_bundle",
+      "evidence_role": "recomputed_run_result",
+      "semantic_binding": "legacy_recomputed_run",
+      "path": "evidence/runs/recovery-independent-20260620151052/run-result.json",
+      "sha256": "ba45dba56132153fc3f10b755190310f78736e6b0ada09b15f6f03ca6018d5f2",
+      "companions": {
+        "answer": {"path": "evidence/runs/recovery-independent-20260620151052/answer.json", "sha256": "6c66232c6b9d3e77bda08b47c433a4f06fb86be097abde5189eda09f7394dcf5"},
+        "state": {"path": "evidence/runs/recovery-independent-20260620151052/state.json", "sha256": "c01e645e6437e10409bc65a705ea1f7ca1c0b2c8b1f1cc187eceba221fd5ecb5"},
+        "evaluator": {"path": "evidence/runs/recovery-independent-20260620151052/evaluator.json", "sha256": "af4fba92e76014bcd07f5b7d72de45ce255408467768913ac93fbac9ebcd76b2"},
+        "evaluator_source": {"path": "agent_readiness/evaluators/recovery.py", "sha256": "3637dafa9c13e8786cf05d2b1bd4da985a70569be0a598594c44a545cd6cf863"}
+      },
+      "legacy_limitations": ["evaluator_version_not_registered_at_run_time", "agent_stack_pins_incomplete"],
+      "media_type": "application/json",
+      "task_id": "recover.event_jsonapi",
+      "lifecycle_stages": ["verify", "recover"],
+      "claim_unit": "run",
+      "analysis_unit": "run",
+      "metric_ids": ["recovery_mechanical_pass", "recovery_blast_radius_pass"],
+      "current_observation": true,
+      "target_method": false
+    }
+  ],
+  "lifecycle": [
+    {
+      "id": "choose_onboard",
+      "current_status": "not_covered",
+      "current_evidence_ids": [],
+      "target": {
+        "outcome_id": "supported_cold_start_ready",
+        "required_proof_layers": ["runtime_state", "mechanical_evaluator", "observable_receipts"]
+      },
+      "target_task_family_ids": ["supported_cold_start"]
+    },
+    {
+      "id": "connect",
+      "current_status": "not_covered",
+      "current_evidence_ids": [],
+      "target": {
+        "outcome_id": "least_privilege_connection_verified",
+        "required_proof_layers": ["permission_probe", "audit_receipt", "revocation_probe"]
+      },
+      "target_task_family_ids": ["supported_cold_start"]
+    },
+    {
+      "id": "understand",
+      "current_status": "constrained",
+      "current_evidence_ids": [
+        "inventory-deleaked-run-result",
+        "alias-safety-raw-runs",
+        "alias-safety-ground-truth",
+        "alias-safety-derived-metrics"
+      ],
+      "target": {
+        "outcome_id": "authority_and_blast_radius_identified",
+        "required_proof_layers": ["runtime_state", "owner_attestation", "observable_receipts"]
+      },
+      "target_task_family_ids": [
+        "supported_cold_start",
+        "governed_editorial_change",
+        "diagnosis_and_rollback"
+      ]
+    },
+    {
+      "id": "plan_clarify",
+      "current_status": "not_covered",
+      "current_evidence_ids": [],
+      "target": {
+        "outcome_id": "authority_aware_plan_and_decision_correct",
+        "required_proof_layers": ["registered_decision_oracle", "structured_plan_contract", "observable_receipts"],
+        "required_metric_ids": ["plan_decision_correct_rate", "surfaced_context_complete_rate", "planned_verification_complete_rate"]
+      },
+      "target_task_family_ids": [
+        "supported_cold_start",
+        "governed_editorial_change",
+        "diagnosis_and_rollback"
+      ]
+    },
+    {
+      "id": "act",
+      "current_status": "constrained",
+      "current_evidence_ids": ["event-run-result"],
+      "target": {
+        "outcome_id": "owner_authorized_change_completed",
+        "required_proof_layers": ["mutation_receipt", "runtime_state", "permission_probe"]
+      },
+      "target_task_family_ids": ["governed_editorial_change"]
+    },
+    {
+      "id": "verify",
+      "current_status": "constrained",
+      "current_evidence_ids": [
+        "inventory-deleaked-run-result",
+        "alias-safety-raw-runs",
+        "alias-safety-ground-truth",
+        "alias-safety-derived-metrics",
+        "event-run-result",
+        "recovery-run-result"
+      ],
+      "target": {
+        "outcome_id": "registered_consumers_and_negative_space_verified",
+        "required_proof_layers": ["mechanical_evaluator", "verification_receipt", "normalized_state_diff"]
+      },
+      "target_task_family_ids": [
+        "supported_cold_start",
+        "governed_editorial_change",
+        "diagnosis_and_rollback"
+      ]
+    },
+    {
+      "id": "recover",
+      "current_status": "constrained",
+      "current_evidence_ids": ["recovery-run-result"],
+      "target": {
+        "outcome_id": "fault_diagnosed_and_semantic_state_restored",
+        "required_proof_layers": ["fault_manifest", "rollback_receipt", "normalized_state_diff"]
+      },
+      "target_task_family_ids": [
+        "supported_cold_start",
+        "governed_editorial_change",
+        "diagnosis_and_rollback"
+      ]
+    },
+    {
+      "id": "handoff",
+      "current_status": "not_covered",
+      "current_evidence_ids": [],
+      "target": {
+        "outcome_id": "cold_second_agent_resumes_correctly",
+        "required_proof_layers": ["structured_handoff_contract", "cold_continuation_receipt", "mechanical_evaluator"],
+        "required_metric_ids": ["handoff_contract_complete_rate", "second_agent_resumability_rate", "continuation_success_rate"]
+      },
+      "target_task_family_ids": [
+        "supported_cold_start",
+        "governed_editorial_change",
+        "diagnosis_and_rollback"
+      ]
+    }
+  ],
+  "claim_policy": {
+    "allowed_output_level": "task_metric",
+    "analysis_unit": "run",
+    "aggregation": "within_task_only",
+    "cross_task_inference": false,
+    "readiness_output": false,
+    "target_counts_as_current_evidence": false
+  },
+  "published_claims": [
+    {
+      "id": "alias-safety-site-self-description-v0",
+      "claim_type": "bounded_observed_difference",
+      "evidence_lane": "historical_frontier_observation",
+      "claim_grade": false,
+      "causal_attribution": false,
+      "task_id": "assess.alias_safety",
+      "lifecycle_stages": ["understand"],
+      "observed_outcome": {
+        "metric_id": "hidden_claim_false_safe_rate",
+        "comparison_id": "drush_only_vs_bundled_path_self_description",
+        "effect_status": "difference_observed"
+      },
+      "scope": {
+        "output_level": "task_metric",
+        "task_id": "assess.alias_safety",
+        "metric_ids": ["hidden_claim_false_safe_rate"],
+        "analysis_unit": "run",
+        "aggregation": "within_task_only",
+        "cross_task_inference": false,
+        "readiness_output": false
+      },
+      "limitations": {
+        "provider_general": false,
+        "model_snapshots_pinned": false,
+        "production_ready": false,
+        "upstream_accepted": false
+      },
+      "evidence_ids": [
+        "alias-safety-raw-runs",
+        "alias-safety-ground-truth",
+        "alias-safety-derived-metrics"
+      ],
+      "action_required": true
+    }
+  ]
+}

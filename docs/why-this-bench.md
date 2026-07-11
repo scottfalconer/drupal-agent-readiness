@@ -355,7 +355,8 @@ But as results improve, we need to know whether Drupal improved, the agent
 improved, the prompt improved, the site exposed better context, or the ecosystem
 learned the task.
 
-Public tasks are useful as curriculum. Fresh variants are useful as measurement.
+Public tasks are useful as curriculum. Preregistered, pinned fresh variants can
+be useful as measurement.
 We should use both.
 
 A public task can teach agents and humans the pattern we want. A fresh variant
@@ -389,6 +390,21 @@ A measurement claim should pin:
 If those are not pinned, the result may still be useful, but it should be
 labeled as exploratory or anecdotal. It should not be used as proof that Drupal
 improved.
+
+The executable v1 contract for those pins lives in
+`agent_readiness/schema/benchmark-experiment-v1.schema.json` and
+`agent_readiness/schema/benchmark-run-v1.schema.json`; the audit is
+`agent_readiness/scripts/audit_measurement_v1.py`. The two measurement lanes are
+deliberately separate:
+
+- `fixed_regression` holds the agent stack and measurement system fixed while a
+  registered Drupal treatment changes;
+- `frontier_observation` records what a current agent stack did, without
+  attributing differences to Drupal.
+
+`method/benchmark-coverage-v1.json` says which lifecycle stages have current
+evidence and which remain targets. `method/task-families-v1.json` defines the
+clean and messy end-to-end tasks needed to fill those gaps.
 
 The cleanest Drupal-side progress claim is:
 
@@ -434,6 +450,13 @@ submitting adversarial tasks.
 The first comparison is Drupal against its own past state, but only under pinned
 measurement conditions. That is the cleanest way to answer whether Drupal-side
 changes reduced friction for the same agent setup.
+
+Measurement is useful only if it changes work. The registry therefore requires
+each actionable finding to acquire accountable owners, upstream issue
+relationships, a prospective task-level delta, a frozen rerun, and a decision
+rule before an improvement can be reported. The sole current record remains
+pending registration; no finding has completed that loop. Target designs and
+pending reruns are never counted as current evidence.
 
 We also need absolute thresholds and calibrated comparisons. If first-session
 cost remains too high, or if agents continue to avoid Drupal when Drupal should
@@ -531,7 +554,8 @@ effort on setup, module choice, configuration, authentication, stale assumptions
 unclear APIs, editorial ambiguity, or verification. Or it may never choose Drupal
 in the first place.
 
-This test bench makes that cost visible.
+This test bench is intended to make that cost visible. Selection and cold-start
+cost are not measured by the current evidence and remain target coverage.
 
 The goal is not to make Drupal the fastest way to scaffold a throwaway page. The
 goal is to make Drupal easy enough for agents to consider and start with, then

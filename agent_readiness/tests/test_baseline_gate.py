@@ -39,7 +39,7 @@ class BaselineGateTest(unittest.TestCase):
 
         errors = audit_inventory_baseline([run], required_passes=1)
 
-        self.assertIn("independent inventory passes: 0/1", errors)
+        self.assertIn("no-rescue non-smoke inventory examples: 0/1", errors)
 
     def test_three_independent_inventory_passes_satisfy_pass3_gate(self) -> None:
         from agent_readiness.baseline_gate import audit_inventory_baseline
@@ -62,7 +62,7 @@ class BaselineGateTest(unittest.TestCase):
 
         errors = audit_inventory_baseline([run], required_passes=1)
 
-        self.assertIn("independent inventory passes: 0/1", errors)
+        self.assertIn("no-rescue non-smoke inventory examples: 0/1", errors)
 
 
 if __name__ == "__main__":

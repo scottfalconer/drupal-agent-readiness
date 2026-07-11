@@ -1,18 +1,79 @@
 {
-  "claim_scope": "constrained_v0_mechanical_evidence_loop",
-  "independent_event_passes": [
+  "artifact_kind": "drupal_agent_readiness.source_gate_snapshot.v1",
+  "authoritative_package_audit": false,
+  "claim_scope": "evidence_package_plus_named_measurement_v1_gates",
+  "estimate_eligible_experiments": [],
+  "estimate_errors": [
+    "no source-audited measurement_v1 experiment has a reportable estimate"
+  ],
+  "estimate_ready": null,
+  "estimate_source_gate_met": false,
+  "experiment_eligibility": [
+    {
+      "action_registry_binding_verified": false,
+      "action_registry_errors": [],
+      "adapter": "alias_safety_v0",
+      "audit_errors": [],
+      "estimate_reportable": false,
+      "evidence_complete": false,
+      "experiment_id": "alias-safety-haven-n10-fullyblind-v0",
+      "fixed_estimate_reportable": false,
+      "improvement_ready": false,
+      "lane": "frontier_observation",
+      "registered_effect_rule_met": false
+    },
+    {
+      "action_registry_binding_verified": false,
+      "action_registry_errors": [],
+      "adapter": "intent_behavior_summary_v0",
+      "audit_errors": [],
+      "estimate_reportable": false,
+      "evidence_complete": false,
+      "experiment_id": "intent-behavior-evaluation-v0-clean",
+      "fixed_estimate_reportable": false,
+      "improvement_ready": false,
+      "lane": "frontier_observation",
+      "registered_effect_rule_met": false
+    }
+  ],
+  "fixed_estimate_eligible_experiments": [],
+  "fixed_estimate_errors": [
+    "no source-audited fixed_regression measurement_v1 estimate is reportable"
+  ],
+  "fixed_estimate_ready": null,
+  "fixed_estimate_source_gate_met": false,
+  "improvement_errors": [
+    "no source-audited effect result is bound to a compatible decided canonical action-registry record"
+  ],
+  "improvement_ready": null,
+  "improvement_ready_experiments": [],
+  "improvement_source_gate_met": false,
+  "legacy_example_count_errors": null,
+  "legacy_example_count_gate_passed": null,
+  "legacy_example_source_gate_met": true,
+  "next_actions": [
+    "Publish a measurement-v1 experiment with complete pins, attempt denominator, validity accounting, and retained artifacts before reporting a numeric estimate.",
+    "Run a paired fixed_regression measurement-v1 experiment before reporting a comparable pre/post estimate.",
+    "Meet the registered effect rule, pass guardrails, and bind the result to a compatible decided canonical action-registry record before claiming improvement.",
+    "Factor decision helpers into discovery, facts-only, advice, and actual-write conditions.",
+    "Measure intent authority/conflict handling rather than treating preservation as sufficient.",
+    "Exercise the Drupal lifecycle on clean and messy substrates, including recovery and handoff.",
+    "Capture harness-derived token, timing, tool, rescue, invalid-attempt, and trajectory evidence.",
+    "Keep fixed-agent regression and frontier-observation lanes separate and defer an aggregate readiness score."
+  ],
+  "no_rescue_non_smoke_event_passes": [
     "event-independent-20260620151052"
   ],
-  "independent_inventory_passes": [
+  "no_rescue_non_smoke_inventory_passes": [
     "inventory-deleaked-equipped",
     "inventory-enhanced-independent-20260620145648",
     "inventory-independent-20260620144627",
     "inventory-independent-pass3-20260620150332"
   ],
-  "independent_recovery_passes": [
+  "no_rescue_non_smoke_recovery_passes": [
     "recovery-independent-20260620151052"
   ],
-  "independent_runs": [
+  "no_rescue_non_smoke_runs": [
     "event-independent-20260620151052",
     "inventory-deleaked-equipped",
     "inventory-enhanced-independent-20260620145648",
@@ -20,24 +81,21 @@
     "inventory-independent-pass3-20260620150332",
     "recovery-independent-20260620151052"
   ],
-  "next_actions": [
-    "Repeat the non-Claude alias-safety run at n=10 and add another non-Claude stack before making a claim across model providers.",
-    "Repeat act.event_jsonapi and recover.event_jsonapi runs, not only inventory.read_only.",
-    "Add token cost alongside elapsed time in the public scorecard when token data is available.",
-    "Raise n on the remaining Drupal starting sites (core, Convivial) for the condition where the agent is not told the hidden risk; stock Haven is done at n=10 (haiku 80% / opus 70% hidden-claim flags vs 100% with site self-description).",
-    "Grow the task set before making any aggregate Drupal readiness claim."
-  ],
-  "numeric_claim_errors": [],
-  "numeric_claim_ready": true,
-  "private_circulation_ready": true,
+  "package_audit": {
+    "command": "python3 -B agent_readiness/scripts/audit_readiness.py --base-dir agent_readiness --run-result <each-retained-run>",
+    "status": "not_run"
+  },
+  "private_circulation_ready": null,
   "provenance_caveats": [
-    "Metrics (elapsed_seconds, tool_calls) for the inventory/event/recovery runs are operator-supplied, not harness-instrumented; only the v0.2 de-leaked inventory run and the alias-safety runs are instrumented.",
-    "'Independent' status is asserted via free-text agent metadata (name/model), not cryptographically bound to the answer; the gate trusts that metadata.",
-    "These flags certify the evidence-loop method plus N genuine evaluator passes on a fixed Drupal starting site \u2014 not a blinded or statistically-powered benchmark."
+    "Outcome judgments for the v0.2 inventory and alias-safety examples can be mechanically re-scored from retained answers and ground truth. Tool invocation, token/cost, and complete trajectory evidence are not independently instrumented or retained; legacy timing and tool counts may be operator-supplied or self-reported.",
+    "Legacy non-smoke status is inferred from run metadata; it does not establish independence, complete pinning, or longitudinal comparability.",
+    "Evidence-package flags certify packaging and evaluator examples only. Estimate and fixed-estimate flags require a separately audited measurement-v1 experiment; improvement additionally requires a compatible decided canonical action-registry record."
   ],
-  "public_v0_package_errors": [],
-  "public_v0_package_ready": true,
-  "publication_errors": [],
+  "public_evidence_package_ready": null,
+  "public_v0_package_errors": null,
+  "public_v0_package_ready": null,
+  "publication_errors": null,
+  "registered_effect_rule_met_experiments": [],
   "smoke_runs": [
     "haven-event-v0-tooling-smoke",
     "haven-inventory-v0-tooling-smoke",

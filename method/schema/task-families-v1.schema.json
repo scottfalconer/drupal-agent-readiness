@@ -1,0 +1,371 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drupal.org/agent-readiness/task-families-v1.schema.json",
+  "title": "Drupal Agent Readiness End-to-End Task Families v1",
+  "type": "object",
+  "required": ["schema_version", "registry_id", "lifecycle_target_contracts", "task_families"],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "registry_id": {"const": "drupal-agent-readiness-task-families-v1"},
+    "lifecycle_target_contracts": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"$ref": "#/$defs/lifecycle_target_contract"}
+    },
+    "task_families": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/task_family"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]*$"},
+    "text": {"type": "string", "minLength": 1},
+    "stage": {"type": "string", "enum": ["choose_onboard", "connect", "understand", "plan_clarify", "act", "verify", "recover", "handoff"]},
+    "surface": {
+      "type": "string",
+      "enum": [
+        "content_entities", "configuration", "routes_aliases", "permissions_roles",
+        "schemas", "public_http_contract", "api_contract", "integration_identifiers",
+        "filesystem_worktree", "services_ports", "logs"
+      ]
+    },
+    "attestation": {
+      "type": "object",
+      "required": ["required_before_registration", "versioned", "sha256_required"],
+      "properties": {
+        "required_before_registration": {"const": true},
+        "versioned": {"const": true},
+        "sha256_required": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "authority": {
+      "type": "object",
+      "required": ["class", "certifier_class", "hardness", "precedence", "conflict_policy", "visibility", "attestation"],
+      "properties": {
+        "class": {"type": "string", "enum": ["site_requirement", "upstream_support", "security_policy", "mechanical_truth"]},
+        "certifier_class": {"type": "string", "enum": ["site_owner_or_delegated_product_owner", "upstream_project_or_authoritative_support_policy", "security_owner", "independent_evaluator"]},
+        "hardness": {"type": "string", "enum": ["hard", "soft"]},
+        "precedence": {"type": "integer", "minimum": 0, "maximum": 100},
+        "conflict_policy": {"type": "string", "enum": ["escalate_without_overriding_higher_authority", "mark_unsupported", "deny_or_escalate", "invalidate_conflicting_requirement"]},
+        "visibility": {"type": "string", "enum": ["agent_and_evaluator", "evaluator_only"]},
+        "attestation": {"$ref": "#/$defs/attestation"}
+      },
+      "additionalProperties": false
+    },
+    "constraint": {
+      "type": "object",
+      "required": ["id", "statement", "authority"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "statement": {"$ref": "#/$defs/text"}, "authority": {"$ref": "#/$defs/authority"}},
+      "additionalProperties": false
+    },
+    "mechanical_outcome": {
+      "type": "object",
+      "required": ["id", "oracle", "target_surface", "pass_predicate"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "oracle": {"type": "string", "enum": ["http_probe", "permission_probe", "cli_query", "config_export_diff", "normalized_state_diff", "fault_manifest_match"]},
+        "target_surface": {"$ref": "#/$defs/surface"},
+        "pass_predicate": {"$ref": "#/$defs/id"}
+      },
+      "additionalProperties": false
+    },
+    "receipt": {
+      "type": "object",
+      "required": ["id", "receipt_type", "event_id", "source", "minimum_count", "required_attributes", "success_predicate"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "receipt_type": {"type": "string", "enum": ["tool_call", "probe", "mutation", "verification", "decision", "handoff", "continuation"]},
+        "event_id": {"$ref": "#/$defs/id"},
+        "source": {"const": "harness_event_log"},
+        "minimum_count": {"type": "integer", "minimum": 1},
+        "required_attributes": {
+          "type": "array", "minItems": 3, "uniqueItems": true,
+          "items": {"type": "string", "enum": ["timestamp", "tool_id", "command_digest", "exit_code", "target_surface", "before_digest", "after_digest", "oracle_id", "artifact_id", "decision", "surfaced_assumptions_digest", "authority_gaps_digest", "planned_verification_digest", "handoff_state_summary_digest", "unresolved_risks_digest", "next_action", "next_command_digest", "continuation_agent_id", "predecessor_handoff_artifact_id", "resumed_state_digest"]}
+        },
+        "success_predicate": {"type": "string", "enum": ["exit_code_zero", "oracle_pass", "receipt_present"]}
+      },
+      "additionalProperties": false
+    },
+    "behavior_outcome": {
+      "type": "object",
+      "required": ["id", "lifecycle_stage", "private_reasoning_required", "receipt_requirements"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "lifecycle_stage": {"$ref": "#/$defs/stage"},
+        "private_reasoning_required": {"const": false},
+        "receipt_requirements": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/receipt"}}
+      },
+      "additionalProperties": false
+    },
+    "target_metric_contract": {
+      "type": "object",
+      "required": ["id", "analysis_unit", "numerator_predicate", "denominator_predicate", "evidence_source", "zero_denominator", "required_receipt_ids"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "analysis_unit": {"type": "string", "enum": ["decision_point", "handoff_attempt"]},
+        "numerator_predicate": {"$ref": "#/$defs/id"},
+        "denominator_predicate": {"$ref": "#/$defs/id"},
+        "evidence_source": {"const": "independent_evaluator_over_retained_receipts"},
+        "zero_denominator": {"const": "invalid_run"},
+        "required_receipt_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}
+      },
+      "additionalProperties": false
+    },
+    "artifact_field_contract": {
+      "type": "object",
+      "required": ["name", "type"],
+      "properties": {
+        "name": {"$ref": "#/$defs/id"},
+        "type": {"type": "string", "enum": ["string", "array"]},
+        "allowed_values": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}
+      },
+      "additionalProperties": false
+    },
+    "artifact_contract": {
+      "type": "object",
+      "required": ["schema_version", "canonical_json_required", "sha256_bound_by_receipt", "fields"],
+      "properties": {
+        "schema_version": {"$ref": "#/$defs/id"},
+        "canonical_json_required": {"const": true},
+        "sha256_bound_by_receipt": {"const": true},
+        "fields": {"type": "array", "minItems": 8, "uniqueItems": true, "items": {"$ref": "#/$defs/artifact_field_contract"}}
+      },
+      "additionalProperties": false
+    },
+    "lifecycle_target_contract": {
+      "type": "object",
+      "required": ["id", "lifecycle_stage", "measurement_state", "task_family_ids", "private_reasoning_required", "artifact_contract", "receipt_requirements", "metric_contracts"],
+      "properties": {
+        "id": {"type": "string", "enum": ["plan-clarify-observable-contract", "handoff-observable-contract"]},
+        "lifecycle_stage": {"type": "string", "enum": ["plan_clarify", "handoff"]},
+        "measurement_state": {"const": "target_not_executed"},
+        "task_family_ids": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": {"type": "string", "enum": ["supported_cold_start", "governed_editorial_change", "diagnosis_and_rollback"]}},
+        "private_reasoning_required": {"const": false},
+        "artifact_contract": {"$ref": "#/$defs/artifact_contract"},
+        "decision_options": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"type": "string", "enum": ["proceed", "ask", "refuse", "escalate"]}},
+        "continuation_context_policy": {"const": "registered_task_and_handoff_artifact_only"},
+        "receipt_requirements": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/receipt"}},
+        "metric_contracts": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/target_metric_contract"}}
+      },
+      "additionalProperties": false
+    },
+    "cost": {
+      "type": "object",
+      "required": ["metrics", "phase_breakdown_required", "human_intervention_invalidates_autonomy_claim", "budget_exhaustion_classification"],
+      "properties": {
+        "metrics": {
+          "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true,
+          "items": {"type": "string", "enum": ["elapsed_seconds", "tokens_input", "tokens_output", "tool_calls", "human_interventions"]}
+        },
+        "phase_breakdown_required": {"const": true},
+        "human_intervention_invalidates_autonomy_claim": {"const": true},
+        "budget_exhaustion_classification": {"const": "infrastructure_or_budget_not_task_outcome"}
+      },
+      "additionalProperties": false
+    },
+    "recovery_contract": {
+      "type": "object",
+      "required": ["fault_ids", "restore_outcome_ids", "recovery_cost_recorded"],
+      "properties": {
+        "fault_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "restore_outcome_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "recovery_cost_recorded": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "manifest_contract": {
+      "type": "object",
+      "required": ["required_before_registration", "sha256_required", "required_sections"],
+      "properties": {
+        "required_before_registration": {"const": true},
+        "sha256_required": {"const": true},
+        "required_sections": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}
+      },
+      "additionalProperties": false
+    },
+    "reset_contract": {
+      "type": "object",
+      "required": ["required_before_registration", "before_hash_required", "after_hash_required", "comparison"],
+      "properties": {
+        "required_before_registration": {"const": true},
+        "before_hash_required": {"const": true},
+        "after_hash_required": {"const": true},
+        "comparison": {"const": "normalized_semantic_snapshot"}
+      },
+      "additionalProperties": false
+    },
+    "clean_invariant": {
+      "type": "object",
+      "required": ["id", "surface", "expected_semantic_state"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "surface": {"$ref": "#/$defs/surface"}, "expected_semantic_state": {"$ref": "#/$defs/id"}},
+      "additionalProperties": false
+    },
+    "inject": {
+      "type": "object",
+      "required": ["id", "surface", "semantic_state", "owner_relevance"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "surface": {"$ref": "#/$defs/surface"}, "semantic_state": {"$ref": "#/$defs/id"},
+        "owner_relevance": {"type": "string", "enum": ["irrelevant", "protected"]}
+      },
+      "additionalProperties": false
+    },
+    "substrate": {
+      "type": "object",
+      "required": ["id", "kind", "manifest_contract", "reset_proof_contract", "clean_invariants", "inject_inventory"],
+      "properties": {
+        "id": {"type": "string", "enum": ["clean", "messy_owner_described"]},
+        "kind": {"type": "string", "enum": ["clean", "messy_owner_described"]},
+        "manifest_contract": {"$ref": "#/$defs/manifest_contract"},
+        "reset_proof_contract": {"$ref": "#/$defs/reset_contract"},
+        "clean_invariants": {"type": "array", "items": {"$ref": "#/$defs/clean_invariant"}},
+        "inject_inventory": {"type": "array", "items": {"$ref": "#/$defs/inject"}}
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "clean"}}, "required": ["kind"]},
+          "then": {"properties": {"id": {"const": "clean"}, "clean_invariants": {"minItems": 1}, "inject_inventory": {"maxItems": 0}}},
+          "else": {"properties": {"id": {"const": "messy_owner_described"}, "clean_invariants": {"maxItems": 0}, "inject_inventory": {"minItems": 2}}}
+        }
+      ]
+    },
+    "fault": {
+      "type": "object",
+      "required": ["id", "kind", "target_surface", "injection_manifest_hash_required", "hidden_from_agent", "restore_oracle_id"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"type": "string", "enum": ["injected_runtime_fault", "injected_configuration_fault"]},
+        "target_surface": {"$ref": "#/$defs/surface"},
+        "injection_manifest_hash_required": {"const": true},
+        "hidden_from_agent": {"const": true},
+        "restore_oracle_id": {"$ref": "#/$defs/id"}
+      },
+      "additionalProperties": false
+    },
+    "case": {
+      "type": "object",
+      "required": ["id", "substrate_id", "fault_mode", "fault_id", "mutation_expected"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "substrate_id": {"type": "string", "enum": ["clean", "messy_owner_described"]},
+        "fault_mode": {"type": "string", "enum": ["no_fault", "fault"]},
+        "fault_id": {"$ref": "#/$defs/id"},
+        "mutation_expected": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "substrate_plan": {
+      "type": "object",
+      "required": ["substrates", "fault_catalog", "case_matrix"],
+      "properties": {
+        "substrates": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/substrate"}},
+        "fault_catalog": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/fault"}},
+        "case_matrix": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/case"}}
+      },
+      "additionalProperties": false
+    },
+    "blast_radius": {
+      "type": "object",
+      "required": ["surfaces", "comparison", "volatile_surface_allowlist", "byte_stability_required"],
+      "properties": {
+        "surfaces": {"type": "array", "minItems": 3, "uniqueItems": true, "items": {"$ref": "#/$defs/surface"}},
+        "comparison": {"const": "normalized_semantic_snapshot"},
+        "volatile_surface_allowlist": {
+          "type": "array", "minItems": 4, "uniqueItems": true,
+          "items": {"type": "string", "enum": ["caches", "logs", "sessions", "timestamps", "temporary_files"]}
+        },
+        "byte_stability_required": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "proof_contract": {
+      "type": "object",
+      "required": ["output_level", "task_family_id", "outcome_ids", "target_metric_ids", "cross_task_aggregation", "readiness_output", "generalization"],
+      "properties": {
+        "output_level": {"const": "task_run"}, "task_family_id": {"$ref": "#/$defs/id"},
+        "outcome_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "target_metric_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "cross_task_aggregation": {"const": false}, "readiness_output": {"const": false}, "generalization": {"const": "none"}
+      },
+      "additionalProperties": false
+    },
+    "variant": {
+      "type": "object",
+      "required": ["id", "substrate_id", "intervention_role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "substrate_id": {"type": "string", "enum": ["clean", "messy_owner_described"]},
+        "intervention_role": {"type": "string", "enum": ["control", "candidate"]}
+      },
+      "additionalProperties": false
+    },
+    "frontier_variant": {
+      "type": "object",
+      "required": ["id", "substrate_id"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "substrate_id": {"type": "string", "enum": ["clean", "messy_owner_described"]}},
+      "additionalProperties": false
+    },
+    "comparison_scope": {
+      "type": "object",
+      "required": ["analysis_unit", "task_family_id", "aggregation", "cross_task_pooling", "readiness_output"],
+      "properties": {
+        "analysis_unit": {"const": "run"}, "task_family_id": {"$ref": "#/$defs/id"},
+        "aggregation": {"const": "within_task_arm_substrate_model"}, "cross_task_pooling": {"const": false}, "readiness_output": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "fixed_lane": {
+      "type": "object",
+      "required": ["variants", "pin_requirements", "comparison_scope"],
+      "properties": {
+        "variants": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/variant"}},
+        "pin_requirements": {
+          "type": "array", "minItems": 10, "maxItems": 10, "uniqueItems": true,
+          "items": {"type": "string", "enum": ["model_snapshot", "agent_harness_revision", "system_prompt_hash", "task_prompt_hash", "tool_allowlist", "permission_scope", "budget", "substrate_hash", "evaluator_hash", "scoring_rule_hash"]}
+        },
+        "comparison_scope": {"$ref": "#/$defs/comparison_scope"}
+      },
+      "additionalProperties": false
+    },
+    "frontier_lane": {
+      "type": "object",
+      "required": ["variants", "model_snapshot_required_at_registration", "reporting_scope"],
+      "properties": {
+        "variants": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/frontier_variant"}},
+        "model_snapshot_required_at_registration": {"const": true},
+        "reporting_scope": {"$ref": "#/$defs/comparison_scope"}
+      },
+      "additionalProperties": false
+    },
+    "task_family": {
+      "type": "object",
+      "required": [
+        "id", "title", "measurement_state", "product_neutral_goal", "lifecycle_stages",
+        "constraints", "mechanical_outcomes", "behavior_outcomes", "cost", "recovery_contract",
+        "substrate_plan", "semantic_blast_radius", "proof_contract", "fixed_regression_lane", "frontier_lane"
+      ],
+      "properties": {
+        "id": {"type": "string", "enum": ["supported_cold_start", "governed_editorial_change", "diagnosis_and_rollback"]},
+        "title": {"$ref": "#/$defs/text"},
+        "measurement_state": {"const": "target_not_executed"},
+        "product_neutral_goal": {"$ref": "#/$defs/text"},
+        "lifecycle_stages": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/stage"}},
+        "constraints": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/constraint"}},
+        "mechanical_outcomes": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/mechanical_outcome"}},
+        "behavior_outcomes": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/behavior_outcome"}},
+        "cost": {"$ref": "#/$defs/cost"},
+        "recovery_contract": {"$ref": "#/$defs/recovery_contract"},
+        "substrate_plan": {"$ref": "#/$defs/substrate_plan"},
+        "semantic_blast_radius": {"$ref": "#/$defs/blast_radius"},
+        "proof_contract": {"$ref": "#/$defs/proof_contract"},
+        "fixed_regression_lane": {"$ref": "#/$defs/fixed_lane"},
+        "frontier_lane": {"$ref": "#/$defs/frontier_lane"}
+      },
+      "additionalProperties": false
+    }
+  }
+}
