@@ -3246,9 +3246,9 @@
       "sha256": "bb448f9237856d47faeac940390956b302db24a0e99bb950584b294b6f8351db"
     },
     {
-      "bytes": 172408,
+      "bytes": 172621,
       "path": "tests/test_frontier_canary.py",
-      "sha256": "d395eefd3e0e42f7c73a04c6bc119ed2678ea9eb03dd0af371b46ac38c04abf8"
+      "sha256": "133b67c116dc5cb7ad1c7ee68689e7ac1c6984361b3528fec23c0899ca589bc3"
     },
     {
       "bytes": 34990,

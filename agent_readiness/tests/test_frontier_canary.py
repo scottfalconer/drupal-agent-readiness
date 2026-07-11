@@ -1105,6 +1105,11 @@ class FakeProjectionRunner:
         return subprocess.CompletedProcess(command, 127, "", "unexpected fake command")
 
 
+@unittest.skipUnless(
+    sys.platform == "darwin",
+    "frontier canary process containment requires a pinned macOS sandbox-exec; "
+    "it is a Darwin-only harness-validation lane and cannot run on Linux CI",
+)
 class FrontierCanaryTest(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory()
