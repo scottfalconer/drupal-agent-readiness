@@ -7,8 +7,13 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONPYCACHEPREFIX: /tmp/drupal-agent-readiness-empty-pycache
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -16,13 +21,112 @@ jobs:
         run: python3 -B -m unittest discover -s agent_readiness/tests -v
       - name: Compile Python sources
         run: PYTHONDONTWRITEBYTECODE=1 python3 -m py_compile agent_readiness/*.py agent_readiness/evaluators/*.py agent_readiness/scripts/*.py
+      - name: Audit lifecycle, task, and improvement registries
+        run: python3 -S -B agent_readiness/scripts/audit_benchmark_registries_v1.py --format json
+      - name: Validate registries with external Draft 2020-12 implementation
+        run: |
+          python3 -m pip install --disable-pip-version-check 'jsonschema>=4.18,<5'
+          python3 -B - <<'PY'
+          import json
+          from pathlib import Path
+          from jsonschema import Draft202012Validator
+
+          schema_paths = [
+              Path("method/schema/benchmark-coverage-v1.schema.json"),
+              Path("method/schema/task-families-v1.schema.json"),
+              Path("method/schema/improvement-registry-v1.schema.json"),
+              Path("agent_readiness/schema/benchmark-experiment-v1.schema.json"),
+              Path("agent_readiness/schema/benchmark-run-v1.schema.json"),
+              Path("agent_readiness/schema/inventory-answer-v1.schema.json"),
+              Path("agent_readiness/schema/run-result.schema.json"),
+          ]
+          for schema_path in schema_paths:
+              schema = json.loads(schema_path.read_text())
+              Draft202012Validator.check_schema(schema)
+              print(f"draft-2020-12-schema-valid:{schema_path}")
+          pairs = [
+              (Path("method/benchmark-coverage-v1.json"), schema_paths[0]),
+              (Path("method/task-families-v1.json"), schema_paths[1]),
+              (Path("method/improvement-registry-v1.json"), schema_paths[2]),
+              (
+                  Path("agent_readiness/fixtures/inventory_answer_pass.json"),
+                  schema_paths[5],
+              ),
+          ]
+          for instance_path, schema_path in pairs:
+              instance = json.loads(instance_path.read_text())
+              schema = json.loads(schema_path.read_text())
+              Draft202012Validator(schema).validate(instance)
+              print(f"draft-2020-12-instance-valid:{instance_path}")
+          PY
+      - name: Check frontier canary CLI entrypoint
+        run: python3 -B agent_readiness/scripts/run_frontier_canary.py --help >/dev/null
+      - name: Regenerate public data plane and reject drift
+        run: |
+          RUN_ARGS=()
+          while IFS= read -r path; do
+            RUN_ARGS+=(--run-result "$path")
+          done < <(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort)
+          python3 -B agent_readiness/scripts/build_publish_assets.py "${RUN_ARGS[@]}"
+          git diff --exit-code -- \
+            agent_readiness/public/scorecard.csv \
+            agent_readiness/public/experiments-v1.json \
+            agent_readiness/public/readiness.json \
+            agent_readiness/public/state-of-agents-in-drupal-v0.md \
+            agent_readiness/public/package-manifest.json \
+            docs/scorecard.csv \
+            docs/experiments-v1.json \
+            docs/readiness.json \
+            docs/state-of-agents-in-drupal-v0.md \
+            docs/claims-ledger.md \
+            docs/finding-site-self-description-v0.md \
+            docs/why-this-bench.md
       - name: Audit publication package
         run: |
-          RUN_ARGS="$(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort | sed 's#^#--run-result #')"
-          python3 agent_readiness/scripts/audit_publication_package.py --base-dir agent_readiness $RUN_ARGS
-      - name: Audit readiness flags
+          RUN_ARGS=()
+          while IFS= read -r path; do
+            RUN_ARGS+=(--run-result "$path")
+          done < <(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort)
+          python3 -B agent_readiness/scripts/audit_publication_package.py \
+            --base-dir agent_readiness \
+            --distribution-dir docs \
+            "${RUN_ARGS[@]}"
+      - name: Audit bounded readiness flags
         run: |
-          RUN_ARGS="$(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort | sed 's#^#--run-result #')"
-          python3 agent_readiness/scripts/audit_readiness.py --base-dir agent_readiness $RUN_ARGS
-      - name: Verify package manifest
-        run: shasum -a 256 -c CLEAN-MANIFEST.sha256
+          RUN_ARGS=()
+          while IFS= read -r path; do
+            RUN_ARGS+=(--run-result "$path")
+          done < <(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort)
+          python3 -B agent_readiness/scripts/audit_readiness.py \
+            --base-dir agent_readiness \
+            "${RUN_ARGS[@]}" > /tmp/readiness.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("/tmp/readiness.json").read_text())
+          assert report["public_evidence_package_ready"] is True
+          assert report["estimate_ready"] is False
+          assert report["fixed_estimate_ready"] is False
+          assert report["improvement_ready"] is False
+          assert report["registered_effect_rule_met_experiments"] == []
+          assert "claim_grade_ready" not in report
+          assert "numeric_claim_ready" not in report
+          assert "longitudinal_change_ready" not in report
+          PY
+      - name: Audit clean-checkout import and evidence integrity
+        run: |
+          python3 -B agent_readiness/scripts/audit_clean_checkout_integrity.py \
+            --repo-root . \
+            --checksum-manifest CLEAN-MANIFEST.sha256 \
+            --require-clean-worktree \
+            --entrypoint agent_readiness/intent_behavior_runner.py \
+            --entrypoint agent_readiness/measurement_v1.py \
+            --entrypoint agent_readiness/published_experiments.py \
+            --entrypoint agent_readiness/benchmark_registries_v1.py \
+            --entrypoint agent_readiness/scripts/run_frontier_canary.py \
+            --generated-summary agent_readiness/experiments/intent-behavior-evaluation-v0-clean/summary.json
+      - name: Verify tracked-file checksum manifest
+        run: |
+          python3 -B agent_readiness/scripts/build_clean_manifest.py --repo-root . --check
+          shasum -a 256 -c CLEAN-MANIFEST.sha256

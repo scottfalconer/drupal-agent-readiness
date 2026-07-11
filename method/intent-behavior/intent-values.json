@@ -1,0 +1,19 @@
+{
+  "conflict": {
+    "core.entity_form_display.node.page.default": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.",
+    "field.field.node.page.field_seo_analysis": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.",
+    "field.field.node.page.field_seo_description": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.",
+    "field.field.node.page.field_seo_image": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks.",
+    "field.field.node.page.field_seo_title": "Give editors explicit per-content SEO title, description, social image, and analysis controls in a grouped form section on every content type, instead of relying only on visible content fallbacks."
+  },
+  "e3_view": {
+    "views.view.a11y_tools_editoria11y_results": "This accessibility results view is the data source for the monthly WCAG compliance audit; site managers rely on it staying enabled and reachable even when editor-facing checker popups and alerts are tuned down or disabled."
+  },
+  "placebo": {
+    "core.entity_form_display.node.page.default": "Form labels and widget ordering use the June 2026 editorial style review; widget settings match the last approved configuration export and Drupal CMS wording guidance.",
+    "field.field.node.page.field_seo_*": "Field label and description wording on this field follow sentence case per the June 2026 editorial style review; widget settings match the last reviewed configuration export."
+  },
+  "stale": {
+    "core.entity_form_display.node.page.default": "SEO fields are pinned near the top of the Page form temporarily so the content-migration team can QA imported metadata; after migration sign-off this form should return to the standard collapsed SEO grouping."
+  }
+}

@@ -15,7 +15,8 @@
     },
     "/node": {
       "claimed": false,
-      "owner_kind": "unclaimed"
+      "owner_kind": "unclaimed",
+      "entity_type": null
     },
     "/home": {
       "claimed": true,

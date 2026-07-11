@@ -1,0 +1,327 @@
+{
+  "schema_version": "1.4.0",
+  "registry_id": "drupal-agent-readiness-improvement-registry-v1",
+  "workflow_contract": {
+    "states": ["pending_registration", "frozen", "executed", "analyzed", "decided"],
+    "promotion_requires_hashed_artifacts": true,
+    "decision_requires_derived_metrics": true,
+    "state_skips_allowed": false,
+    "lifecycle_chain_schema_version": "drupal_agent_readiness.improvement_transition.v1",
+    "design_snapshot_schema_version": "drupal_agent_readiness.improvement_design_snapshot.v1",
+    "calibration_decision_schema_version": "drupal_agent_readiness.calibration_design_decision.v1",
+    "calibration_decision_required_before_freeze": true,
+    "package_evidence_root": "agent_readiness/evidence",
+    "manifest_design_pin_required": true,
+    "promotion_policy": "append_only_hashed_chain_fail_closed",
+    "prioritization_contract": {
+      "schema_version": "drupal_agent_readiness.improvement_prioritization.v1",
+      "states": ["unranked_insufficient_evidence", "unranked_owner_decision_pending", "ranked"],
+      "dimensions": ["occurrence", "consequence", "lifecycle_reach", "owner_site_reach", "delivery_effort", "strategic_fit"],
+      "score_minimum": 1,
+      "score_maximum": 5,
+      "score_direction": "higher_is_more_priority",
+      "delivery_effort_score_direction": "higher_means_lower_delivery_effort",
+      "ranking_method": "owner_decision_without_automatic_composite",
+      "rank_requires_complete_dimensions": true,
+      "rank_requires_owner_decision_artifact": true,
+      "owner_decision_schema_version": "drupal_agent_readiness.improvement_prioritization_owner_decision.v1"
+    }
+  },
+  "records": [
+    {
+      "id": "alias-safety-path-ownership-improvement-v1",
+      "task_family_id": "governed_editorial_change",
+      "workflow_state": "pending_registration",
+      "failure": {
+        "id": "alias-safety-hidden-disabled-view-false-safe-v0",
+        "claim_id": "alias-safety-site-self-description-v0",
+        "failure_code": "wrong_layer_path_ownership_visibility",
+        "evidence_ids": ["alias-safety-raw-runs", "alias-safety-ground-truth", "alias-safety-derived-metrics"]
+      },
+      "diagnosis": {
+        "cause_codes": ["operation_specific_state_missing", "facts_advice_confound", "tool_naming_confound"],
+        "confidence": "supported_not_isolated",
+        "evidence_ids": ["alias-safety-raw-runs", "alias-safety-ground-truth", "alias-safety-derived-metrics"]
+      },
+      "upstream": {
+        "owners": [
+          {
+            "id": "ai-context-maintainers",
+            "owner_type": "proposed_implementation_owner",
+            "project": "ai_context",
+            "accountability": "Evaluate and shepherd an agent-facing path-ownership interface."
+          },
+          {
+            "id": "drupal-core-cli-maintainers",
+            "owner_type": "dependency_owner",
+            "project": "drupal core CLI",
+            "accountability": "Maintain the core CLI foundation on which a supported interface may depend."
+          },
+          {
+            "id": "agent-readiness-benchmark-maintainer",
+            "owner_type": "measurement_owner",
+            "project": "drupal-agent-readiness",
+            "accountability": "Freeze, execute, analyze, and decide using the registered evidence chain."
+          }
+        ],
+        "issues": [
+          {
+            "key": "ai_context:3586150",
+            "project": "ai_context",
+            "issue_number": "3586150",
+            "url": "https://git.drupalcode.org/project/ai_context/-/work_items/3586150",
+            "relationship": "proposed",
+            "owner_id": "ai-context-maintainers"
+          },
+          {
+            "key": "drupal:3453474",
+            "project": "drupal",
+            "issue_number": "3453474",
+            "url": "https://www.drupal.org/project/drupal/issues/3453474",
+            "relationship": "dependency",
+            "owner_id": "drupal-core-cli-maintainers"
+          }
+        ]
+      },
+      "proposed_change": {
+        "change_id": "typed-discoverable-path-ownership",
+        "capability": "path_ownership_query",
+        "facts_and_advice_separated": true,
+        "unknown_is_fail_closed": true,
+        "acceptance_oracle_ids": ["facts_schema_valid", "advice_rule_versioned", "help_discovery_receipt", "actual_write_postcondition"]
+      },
+      "expected_delta": {
+        "metric_id": "hidden_claim_false_safe_rate",
+        "analysis_unit": "run",
+        "direction": "decrease",
+        "effect_kind": "absolute_difference",
+        "effect_unit": "proportion",
+        "minimum_effect": 0.2,
+        "cross_task_inference": false,
+        "readiness_output": false
+      },
+      "experiment_design": {
+        "base_tool_allowlist": ["shell", "drush"],
+        "arms": [
+          {
+            "id": "raw-control",
+            "capability_installed": false,
+            "capability_mode": "absent",
+            "help_discoverable": false,
+            "prompt_named": false,
+            "facts_available": false,
+            "advice_available": false,
+            "tool_allowlist": ["shell", "drush"],
+            "implementation_pin_state": "required_before_freeze",
+            "drupal_code_tree_sha256": null,
+            "capability_component_tree_sha256": null,
+            "treatment_artifact_sha256": null,
+            "actual_write_outcome": {"required": true, "oracle": "post_write_path_ownership_probe", "success_metric_id": "requested_write_safe", "failure_metric_id": "write_collision_or_unjustified_refusal"}
+          },
+          {
+            "id": "installed-stub-hidden",
+            "capability_installed": true,
+            "capability_mode": "stub",
+            "help_discoverable": false,
+            "prompt_named": false,
+            "facts_available": false,
+            "advice_available": false,
+            "tool_allowlist": ["shell", "drush"],
+            "implementation_pin_state": "required_before_freeze",
+            "drupal_code_tree_sha256": null,
+            "capability_component_tree_sha256": null,
+            "treatment_artifact_sha256": null,
+            "actual_write_outcome": {"required": true, "oracle": "post_write_path_ownership_probe", "success_metric_id": "requested_write_safe", "failure_metric_id": "write_collision_or_unjustified_refusal"}
+          },
+          {
+            "id": "installed-stub-discoverable",
+            "capability_installed": true,
+            "capability_mode": "stub",
+            "help_discoverable": true,
+            "prompt_named": false,
+            "facts_available": false,
+            "advice_available": false,
+            "tool_allowlist": ["shell", "drush"],
+            "implementation_pin_state": "required_before_freeze",
+            "drupal_code_tree_sha256": null,
+            "capability_component_tree_sha256": null,
+            "treatment_artifact_sha256": null,
+            "actual_write_outcome": {"required": true, "oracle": "post_write_path_ownership_probe", "success_metric_id": "requested_write_safe", "failure_metric_id": "write_collision_or_unjustified_refusal"}
+          },
+          {
+            "id": "facts-discoverable-unnamed",
+            "capability_installed": true,
+            "capability_mode": "functional",
+            "help_discoverable": true,
+            "prompt_named": false,
+            "facts_available": true,
+            "advice_available": false,
+            "tool_allowlist": ["shell", "drush"],
+            "implementation_pin_state": "required_before_freeze",
+            "drupal_code_tree_sha256": null,
+            "capability_component_tree_sha256": null,
+            "treatment_artifact_sha256": null,
+            "actual_write_outcome": {"required": true, "oracle": "post_write_path_ownership_probe", "success_metric_id": "requested_write_safe", "failure_metric_id": "write_collision_or_unjustified_refusal"}
+          },
+          {
+            "id": "facts-advice-discoverable-unnamed",
+            "capability_installed": true,
+            "capability_mode": "functional",
+            "help_discoverable": true,
+            "prompt_named": false,
+            "facts_available": true,
+            "advice_available": true,
+            "tool_allowlist": ["shell", "drush"],
+            "implementation_pin_state": "required_before_freeze",
+            "drupal_code_tree_sha256": null,
+            "capability_component_tree_sha256": null,
+            "treatment_artifact_sha256": null,
+            "actual_write_outcome": {"required": true, "oracle": "post_write_path_ownership_probe", "success_metric_id": "requested_write_safe", "failure_metric_id": "write_collision_or_unjustified_refusal"}
+          }
+        ],
+        "model_cells": [
+          {"id": "fixed-model-primary", "snapshot_required_before_registration": true, "independent_provider_cell": false, "pin_state": "required_before_freeze", "provider": null, "model_id": null, "snapshot": null, "inference_parameters_sha256": null, "held_fixed_stack_sha256": null},
+          {"id": "fixed-model-replication", "snapshot_required_before_registration": true, "independent_provider_cell": true, "pin_state": "required_before_freeze", "provider": null, "model_id": null, "snapshot": null, "inference_parameters_sha256": null, "held_fixed_stack_sha256": null}
+        ],
+        "substrate_cells": [
+          {"id": "clean", "pin_state": "required_before_freeze", "fixture_id": null, "starting_site_manifest_sha256": null, "owner_attestation_sha256": null},
+          {"id": "messy_owner_described", "pin_state": "required_before_freeze", "fixture_id": null, "starting_site_manifest_sha256": null, "owner_attestation_sha256": null}
+        ],
+        "cells": [
+          {"id": "raw-clean-primary", "arm_id": "raw-control", "substrate_id": "clean", "model_cell_id": "fixed-model-primary"},
+          {"id": "raw-clean-replication", "arm_id": "raw-control", "substrate_id": "clean", "model_cell_id": "fixed-model-replication"},
+          {"id": "raw-messy-primary", "arm_id": "raw-control", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-primary"},
+          {"id": "raw-messy-replication", "arm_id": "raw-control", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-replication"},
+          {"id": "stub-hidden-clean-primary", "arm_id": "installed-stub-hidden", "substrate_id": "clean", "model_cell_id": "fixed-model-primary"},
+          {"id": "stub-hidden-clean-replication", "arm_id": "installed-stub-hidden", "substrate_id": "clean", "model_cell_id": "fixed-model-replication"},
+          {"id": "stub-hidden-messy-primary", "arm_id": "installed-stub-hidden", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-primary"},
+          {"id": "stub-hidden-messy-replication", "arm_id": "installed-stub-hidden", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-replication"},
+          {"id": "stub-help-clean-primary", "arm_id": "installed-stub-discoverable", "substrate_id": "clean", "model_cell_id": "fixed-model-primary"},
+          {"id": "stub-help-clean-replication", "arm_id": "installed-stub-discoverable", "substrate_id": "clean", "model_cell_id": "fixed-model-replication"},
+          {"id": "stub-help-messy-primary", "arm_id": "installed-stub-discoverable", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-primary"},
+          {"id": "stub-help-messy-replication", "arm_id": "installed-stub-discoverable", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-replication"},
+          {"id": "facts-unnamed-clean-primary", "arm_id": "facts-discoverable-unnamed", "substrate_id": "clean", "model_cell_id": "fixed-model-primary"},
+          {"id": "facts-unnamed-clean-replication", "arm_id": "facts-discoverable-unnamed", "substrate_id": "clean", "model_cell_id": "fixed-model-replication"},
+          {"id": "facts-unnamed-messy-primary", "arm_id": "facts-discoverable-unnamed", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-primary"},
+          {"id": "facts-unnamed-messy-replication", "arm_id": "facts-discoverable-unnamed", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-replication"},
+          {"id": "advice-clean-primary", "arm_id": "facts-advice-discoverable-unnamed", "substrate_id": "clean", "model_cell_id": "fixed-model-primary"},
+          {"id": "advice-clean-replication", "arm_id": "facts-advice-discoverable-unnamed", "substrate_id": "clean", "model_cell_id": "fixed-model-replication"},
+          {"id": "advice-messy-primary", "arm_id": "facts-advice-discoverable-unnamed", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-primary"},
+          {"id": "advice-messy-replication", "arm_id": "facts-advice-discoverable-unnamed", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-replication"}
+        ],
+        "contrasts": [
+          {"id": "installation-placebo", "left_arm_id": "raw-control", "right_arm_id": "installed-stub-hidden", "primary_factor": "capability_installation", "binding_lane": "drupal_action", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification", "decision_threshold": 0.2, "confidence_level": 0.95},
+          {"id": "help-discoverability-placebo", "left_arm_id": "installed-stub-hidden", "right_arm_id": "installed-stub-discoverable", "primary_factor": "help_discoverability", "binding_lane": "drupal_action", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification", "decision_threshold": 0.2, "confidence_level": 0.95},
+          {"id": "structured-facts", "left_arm_id": "installed-stub-discoverable", "right_arm_id": "facts-discoverable-unnamed", "primary_factor": "functional_facts_capability", "binding_lane": "drupal_action", "decision_role": "primary_efficacy", "decision_rule": "registered_effect_rule_met", "decision_threshold": 0.2, "confidence_level": 0.95},
+          {"id": "policy-advice", "left_arm_id": "facts-discoverable-unnamed", "right_arm_id": "facts-advice-discoverable-unnamed", "primary_factor": "advice_payload", "binding_lane": "drupal_action", "decision_role": "diagnostic_sensitivity", "decision_rule": "complete_valid_audit_and_guardrails", "decision_threshold": null, "confidence_level": 0.95}
+        ],
+        "non_action_diagnostics": [
+          {"id": "prompt-naming", "status": "not_executed", "registration_requirement": "separate_registration_required", "domain": "non_drupal_prompt_sensitivity", "held_fixed_drupal_arm_id": "facts-discoverable-unnamed", "adoption_effect": "cannot_support_or_block_drupal_action_adoption"}
+        ],
+        "measurement_v1_binding_plan": {
+          "schema_version": "drupal_agent_readiness.benchmark_action_binding_plan.v1",
+          "manifest_schema_version": "drupal_agent_readiness.benchmark_experiment.v1",
+          "manifest_lane": "fixed_regression",
+          "manifest_required_before_execution": true,
+          "binding_axes": ["contrast", "substrate", "model_cell"],
+          "roster_contract": {
+            "id": "paired-fixed-20-v1",
+            "kind": "fixed_census",
+            "planned_attempts": 20,
+            "executions_per_attempt": 2,
+            "required_resolved_slots": 40,
+            "pairing_mode": "paired_pre_post",
+            "order_policy": "counterbalanced",
+            "counterbalance_rule": "pre_first_on_odd_indexes_post_first_on_even_indexes",
+            "index_start": 1,
+            "index_end": 20,
+            "pair_id_template": "{binding_id}-pair-{index:02d}",
+            "unit_id_template": "{binding_id}-unit-{index:02d}",
+            "pre_slot_id_template": "{binding_id}-pre-{index:02d}",
+            "post_slot_id_template": "{binding_id}-post-{index:02d}",
+            "materialize_attempt_roster_in_manifest": true,
+            "allow_replacements": false,
+            "allow_exclusions": false,
+            "invalid_attempt_policy": "no_claim"
+          },
+          "bindings": [
+            {"id": "installation-placebo-clean-primary", "contrast_id": "installation-placebo", "substrate_id": "clean", "model_cell_id": "fixed-model-primary", "experiment_id": "alias-installation-placebo-clean-primary@v1", "pre_arm_id": "raw-control", "post_arm_id": "installed-stub-hidden", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification"},
+            {"id": "installation-placebo-clean-replication", "contrast_id": "installation-placebo", "substrate_id": "clean", "model_cell_id": "fixed-model-replication", "experiment_id": "alias-installation-placebo-clean-replication@v1", "pre_arm_id": "raw-control", "post_arm_id": "installed-stub-hidden", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification"},
+            {"id": "installation-placebo-messy-primary", "contrast_id": "installation-placebo", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-primary", "experiment_id": "alias-installation-placebo-messy-primary@v1", "pre_arm_id": "raw-control", "post_arm_id": "installed-stub-hidden", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification"},
+            {"id": "installation-placebo-messy-replication", "contrast_id": "installation-placebo", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-replication", "experiment_id": "alias-installation-placebo-messy-replication@v1", "pre_arm_id": "raw-control", "post_arm_id": "installed-stub-hidden", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification"},
+            {"id": "help-discoverability-placebo-clean-primary", "contrast_id": "help-discoverability-placebo", "substrate_id": "clean", "model_cell_id": "fixed-model-primary", "experiment_id": "alias-help-discoverability-placebo-clean-primary@v1", "pre_arm_id": "installed-stub-hidden", "post_arm_id": "installed-stub-discoverable", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification"},
+            {"id": "help-discoverability-placebo-clean-replication", "contrast_id": "help-discoverability-placebo", "substrate_id": "clean", "model_cell_id": "fixed-model-replication", "experiment_id": "alias-help-discoverability-placebo-clean-replication@v1", "pre_arm_id": "installed-stub-hidden", "post_arm_id": "installed-stub-discoverable", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification"},
+            {"id": "help-discoverability-placebo-messy-primary", "contrast_id": "help-discoverability-placebo", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-primary", "experiment_id": "alias-help-discoverability-placebo-messy-primary@v1", "pre_arm_id": "installed-stub-hidden", "post_arm_id": "installed-stub-discoverable", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification"},
+            {"id": "help-discoverability-placebo-messy-replication", "contrast_id": "help-discoverability-placebo", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-replication", "experiment_id": "alias-help-discoverability-placebo-messy-replication@v1", "pre_arm_id": "installed-stub-hidden", "post_arm_id": "installed-stub-discoverable", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "placebo_control", "decision_rule": "no_registered_favorable_effect_falsification"},
+            {"id": "structured-facts-clean-primary", "contrast_id": "structured-facts", "substrate_id": "clean", "model_cell_id": "fixed-model-primary", "experiment_id": "alias-structured-facts-clean-primary@v1", "pre_arm_id": "installed-stub-discoverable", "post_arm_id": "facts-discoverable-unnamed", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "primary_efficacy", "decision_rule": "registered_effect_rule_met"},
+            {"id": "structured-facts-clean-replication", "contrast_id": "structured-facts", "substrate_id": "clean", "model_cell_id": "fixed-model-replication", "experiment_id": "alias-structured-facts-clean-replication@v1", "pre_arm_id": "installed-stub-discoverable", "post_arm_id": "facts-discoverable-unnamed", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "primary_efficacy", "decision_rule": "registered_effect_rule_met"},
+            {"id": "structured-facts-messy-primary", "contrast_id": "structured-facts", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-primary", "experiment_id": "alias-structured-facts-messy-primary@v1", "pre_arm_id": "installed-stub-discoverable", "post_arm_id": "facts-discoverable-unnamed", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "primary_efficacy", "decision_rule": "registered_effect_rule_met"},
+            {"id": "structured-facts-messy-replication", "contrast_id": "structured-facts", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-replication", "experiment_id": "alias-structured-facts-messy-replication@v1", "pre_arm_id": "installed-stub-discoverable", "post_arm_id": "facts-discoverable-unnamed", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "primary_efficacy", "decision_rule": "registered_effect_rule_met"},
+            {"id": "policy-advice-clean-primary", "contrast_id": "policy-advice", "substrate_id": "clean", "model_cell_id": "fixed-model-primary", "experiment_id": "alias-policy-advice-clean-primary@v1", "pre_arm_id": "facts-discoverable-unnamed", "post_arm_id": "facts-advice-discoverable-unnamed", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "diagnostic_sensitivity", "decision_rule": "complete_valid_audit_and_guardrails"},
+            {"id": "policy-advice-clean-replication", "contrast_id": "policy-advice", "substrate_id": "clean", "model_cell_id": "fixed-model-replication", "experiment_id": "alias-policy-advice-clean-replication@v1", "pre_arm_id": "facts-discoverable-unnamed", "post_arm_id": "facts-advice-discoverable-unnamed", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "diagnostic_sensitivity", "decision_rule": "complete_valid_audit_and_guardrails"},
+            {"id": "policy-advice-messy-primary", "contrast_id": "policy-advice", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-primary", "experiment_id": "alias-policy-advice-messy-primary@v1", "pre_arm_id": "facts-discoverable-unnamed", "post_arm_id": "facts-advice-discoverable-unnamed", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "diagnostic_sensitivity", "decision_rule": "complete_valid_audit_and_guardrails"},
+            {"id": "policy-advice-messy-replication", "contrast_id": "policy-advice", "substrate_id": "messy_owner_described", "model_cell_id": "fixed-model-replication", "experiment_id": "alias-policy-advice-messy-replication@v1", "pre_arm_id": "facts-discoverable-unnamed", "post_arm_id": "facts-advice-discoverable-unnamed", "roster_contract_id": "paired-fixed-20-v1", "decision_role": "diagnostic_sensitivity", "decision_rule": "complete_valid_audit_and_guardrails"}
+          ],
+          "promotion_gate": {
+            "required_binding_count": 16,
+            "all_manifests_git_anchored": true,
+            "all_materialized_rosters_exact": true,
+            "all_planned_slots_resolved": true,
+            "all_guardrail_artifacts_required": true,
+            "all_binding_decision_artifacts_required": true,
+            "final_synthesis_decision_artifact_required": true,
+            "partial_promotion_allowed": false,
+            "invalid_or_missing_binding_policy": "no_final_promotion"
+          }
+        }
+      },
+      "analysis_plan": {
+        "analysis_unit": "run",
+        "primary_metric": {
+          "id": "hidden_claim_false_safe_rate",
+          "value_type": "proportion",
+          "analysis_unit": "run",
+          "nested_observation": "candidate_path_judgment",
+          "run_summary": "false_safe_judgments_divided_by_eligible_hidden_claim_judgments",
+          "numerator": "hidden_claim_false_safe_judgments_within_run",
+          "denominator": {"unit": "eligible_hidden_claim_judgments_within_run", "zero_policy": "invalidate_run"},
+          "bounds": {"minimum": 0.0, "maximum": 1.0},
+          "effect": {"kind": "absolute_difference", "unit": "proportion", "direction": "decrease", "minimum_effect": 0.2}
+        },
+        "guardrails": [
+          {"id": "free-path-false-unsafe-rate", "value_type": "proportion", "bounds": {"minimum": 0.0, "maximum": 1.0}, "maximum_absolute_increase": 0.05, "maximum_rate": 0.05},
+          {"id": "valid-run-tool-failure-rate", "value_type": "proportion", "bounds": {"minimum": 0.0, "maximum": 1.0}, "maximum_absolute_increase": 0.05, "maximum_rate": 0.05},
+          {"id": "actual-write-collision-rate", "value_type": "proportion", "bounds": {"minimum": 0.0, "maximum": 1.0}, "maximum_absolute_increase": 0.0, "maximum_rate": 0.0, "post_rate_policy_by_role": {"placebo_control": 1.0, "primary_efficacy": 0.0, "diagnostic_sensitivity": 0.0}},
+          {"id": "actual-write-refusal-rate", "value_type": "proportion", "bounds": {"minimum": 0.0, "maximum": 1.0}, "maximum_absolute_increase": 0.0, "maximum_rate": 0.0, "post_rate_policy_by_role": {"placebo_control": 1.0, "primary_efficacy": 0.0, "diagnostic_sensitivity": 0.0}}
+        ],
+        "task_completion_guardrail": {"id": "task-success-retention", "metric_id": "task_success", "minimum_post_rate_by_role": {"placebo_control": 0.0, "primary_efficacy": 0.95, "diagnostic_sensitivity": 0.95}, "minimum_post_minus_pre": 0.0},
+        "measurement_integrity_guardrails": [
+          {"id": "zero-human-interventions", "source_kind": "cost", "metric_id": "human_interventions", "statistic": "maximum_all", "operator": "at_most", "threshold": 0},
+          {"id": "bounded-latency-regression", "source_kind": "cost", "metric_id": "wall_time_ms", "statistic": "mean_post_minus_pre", "operator": "at_most", "threshold": 1000}
+        ],
+        "stratification": ["arm", "substrate", "model_cell"],
+        "power": {"analysis_unit": "run", "cluster_unit": "run", "candidate_judgments_nested": true, "design_basis": "precision_feasibility_not_powered", "minimum_effect_power_claim": "none", "planned_pairs_per_binding": 20, "confidence_level": 0.95, "placebo_gate_kind": "falsification_not_equivalence", "placebo_effect_threshold": 0.2, "artifact_required_before_freeze": true, "calibration_decision_artifact_type": "calibration_design_decision"},
+        "stopping": {"rule": "fixed_census", "planned_attempts_per_binding": 20, "required_resolved_slots_per_binding": 40, "outcome_based_stopping": false, "allow_replacements": false, "allow_exclusions": false, "invalid_attempt_policy": "no_claim"}
+      },
+      "prioritization": {
+        "state": "unranked_insufficient_evidence",
+        "occurrence": {"status": "insufficient_evidence", "score": null, "evidence_ids": []},
+        "consequence": {"status": "insufficient_evidence", "score": null, "evidence_ids": []},
+        "lifecycle_reach": {"status": "insufficient_evidence", "score": null, "evidence_ids": []},
+        "owner_site_reach": {"status": "insufficient_evidence", "score": null, "evidence_ids": []},
+        "delivery_effort": {"status": "insufficient_evidence", "score": null, "evidence_ids": []},
+        "strategic_fit": {"status": "insufficient_evidence", "score": null, "evidence_ids": []},
+        "evidence_ids": [],
+        "owner_decision_artifact": null,
+        "rank": null
+      },
+      "workflow": {
+        "registration": {"state": "required"},
+        "execution": {"state": "not_started", "run_artifact_refs": []},
+        "analysis": {"state": "not_computed", "derived_metric_refs": []},
+        "decision": {"state": "pending", "outcome": "none", "artifact_refs": [], "derived_metric_ids": []},
+        "transitions": []
+      }
+    }
+  ]
+}

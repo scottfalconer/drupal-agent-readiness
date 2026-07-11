@@ -4,3 +4,9 @@ __pycache__/
 .mypy_cache/
 .DS_Store
 tmp/
+method/intent-behavior/sites/
+method/intent-behavior/codex-home-template/
+evidence/experiments/intent-behavior-evaluation-v0/runs/
+evidence/experiments/intent-behavior-evaluation-v0/invalid-runs/
+evidence/experiments/intent-behavior-evaluation-v0-clean/runs/
+evidence/experiments/intent-behavior-evaluation-v0-clean/invalid-runs/

@@ -1,0 +1,176 @@
+{
+  "experiments": [
+    {
+      "adapter": "alias_safety_v0",
+      "artifacts_complete": false,
+      "claim_boundary": "Retained judgments differed between the Drush-only condition and the condition whose prompt named a verdict-bearing path helper; equipped answers cited disabled declarations. Tool discovery, the helper as an isolated cause, facts-only output, actual writes, provider generality, and longitudinal Drupal improvement are not established.",
+      "claim_grade": false,
+      "evidence_class": "exploratory_legacy_unpinned",
+      "experiment_id": "alias-safety-haven-n10-fullyblind-v0",
+      "lane": "frontier_observation",
+      "metrics": [
+        {
+          "arm": "raw_drush",
+          "avg_commands_self_reported": 9.7,
+          "cell_id": "ab-haiku-blind",
+          "condition": "blind",
+          "latent_correct": 16,
+          "latent_reasoned": 0,
+          "latent_total": 20,
+          "model_id": "claude-haiku-4-5",
+          "passes": 7,
+          "runs": 10,
+          "runs_all_hidden_correct": 8,
+          "source_class": "headline"
+        },
+        {
+          "arm": "site_architecture",
+          "avg_commands_self_reported": 6.1,
+          "cell_id": "ab-haiku-blind",
+          "condition": "blind",
+          "latent_correct": 20,
+          "latent_reasoned": 20,
+          "latent_total": 20,
+          "model_id": "claude-haiku-4-5",
+          "passes": 10,
+          "runs": 10,
+          "runs_all_hidden_correct": 10,
+          "source_class": "headline"
+        },
+        {
+          "arm": "raw_drush",
+          "avg_commands_self_reported": 5.9,
+          "cell_id": "ab-opus-blind",
+          "condition": "blind",
+          "latent_correct": 14,
+          "latent_reasoned": 14,
+          "latent_total": 20,
+          "model_id": "claude-opus-4-8",
+          "passes": 7,
+          "runs": 10,
+          "runs_all_hidden_correct": 7,
+          "source_class": "headline"
+        },
+        {
+          "arm": "site_architecture",
+          "avg_commands_self_reported": 8.6,
+          "cell_id": "ab-opus-blind",
+          "condition": "blind",
+          "latent_correct": 20,
+          "latent_reasoned": 20,
+          "latent_total": 20,
+          "model_id": "claude-opus-4-8",
+          "passes": 10,
+          "runs": 10,
+          "runs_all_hidden_correct": 10,
+          "source_class": "headline"
+        },
+        {
+          "arm": "raw_drush",
+          "avg_commands_self_reported": 1.3,
+          "cell_id": "ab-gpt-5.5-codex-blind",
+          "condition": "blind",
+          "latent_correct": 0,
+          "latent_reasoned": 0,
+          "latent_total": 6,
+          "model_id": "gpt-5.5-codex",
+          "passes": 0,
+          "runs": 3,
+          "runs_all_hidden_correct": 0,
+          "source_class": "breadth"
+        },
+        {
+          "arm": "site_architecture",
+          "avg_commands_self_reported": 6.0,
+          "cell_id": "ab-gpt-5.5-codex-blind",
+          "condition": "blind",
+          "latent_correct": 6,
+          "latent_reasoned": 6,
+          "latent_total": 6,
+          "model_id": "gpt-5.5-codex",
+          "passes": 3,
+          "runs": 3,
+          "runs_all_hidden_correct": 3,
+          "source_class": "breadth"
+        }
+      ],
+      "pins_complete": false,
+      "sources": {
+        "breadth": {
+          "derived": {
+            "path": "experiments/alias-safety-codex-fullyblind-v0/model-ab-results.json",
+            "sha256": "c174d8f4e15eef2a1116aac0874cde943ee86942af7928f10ddc6c4c67c55154"
+          },
+          "ground_truth": {
+            "path": "experiments/alias-safety-codex-fullyblind-v0/ground-truth.json",
+            "sha256": "d4f38cd51df3a8f0b881583fac6a8ceda6c8731fbce209a1adb8c83b32ea0260"
+          },
+          "raw": {
+            "path": "experiments/alias-safety-codex-fullyblind-v0/raw-workflow-output.json",
+            "sha256": "aa2d48f1fecaf59693f8775062971d5f91650f0bc8adc5a23480c6e2822d9f50"
+          }
+        },
+        "headline": {
+          "derived": {
+            "path": "experiments/alias-safety-haven-n10-fullyblind-v0/model-ab-results.json",
+            "sha256": "5fd6d32cee6a7bfa8858d946f6e21bc806f16f43622fa186aae0f662fa2fa6f0"
+          },
+          "ground_truth": {
+            "path": "experiments/alias-safety-haven-n10-fullyblind-v0/ground-truth.json",
+            "sha256": "d4f38cd51df3a8f0b881583fac6a8ceda6c8731fbce209a1adb8c83b32ea0260"
+          },
+          "raw": {
+            "path": "experiments/alias-safety-haven-n10-fullyblind-v0/raw-workflow-output.json",
+            "sha256": "dcd6f09d55eb5d96271955a0cf3897d1fae4adc853c6e4d142b39918cd3f83f7"
+          }
+        }
+      },
+      "task_id": "assess.alias_safety"
+    },
+    {
+      "adapter": "intent_behavior_summary_v0",
+      "artifacts_complete": false,
+      "claim_boundary": "The three arms were equal on SEO-widget preservation in this task. The summary does not establish appropriate conflict handling, general durable-intent value, or a Drupal-side longitudinal change.",
+      "claim_grade": false,
+      "completed_run_count": 30,
+      "evidence_class": "exploratory_summary_only",
+      "experiment_id": "intent-behavior-evaluation-v0-clean",
+      "lane": "frontier_observation",
+      "metrics": [
+        {
+          "arm": "conflict-intent",
+          "completion": 0,
+          "preserved_all_4": 0,
+          "runs": 10,
+          "target_considered_before_write": 10
+        },
+        {
+          "arm": "no-intent",
+          "completion": 0,
+          "preserved_all_4": 0,
+          "runs": 10,
+          "target_considered_before_write": 10
+        },
+        {
+          "arm": "placebo-intent",
+          "completion": 0,
+          "preserved_all_4": 0,
+          "runs": 10,
+          "target_considered_before_write": 10
+        }
+      ],
+      "pins_complete": false,
+      "selected_run_count": 30,
+      "source_status": "complete",
+      "sources": {
+        "summary": {
+          "path": "experiments/intent-behavior-evaluation-v0-clean/summary.json",
+          "sha256": "2de27ed3083ad68f4392e263e20ab2c948395c93ef14bec2350ce87d863f1624"
+        }
+      },
+      "task_id": "act.resolve_editor_intent_conflict"
+    }
+  ],
+  "registry": "experiments/published-experiments-v1.json",
+  "schema_version": "drupal_agent_readiness.published_experiments.v1"
+}

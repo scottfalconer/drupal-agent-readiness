@@ -1,4 +1,4 @@
-# alias-safety harness — reproducible, bring-your-own-agent
+# Alias-safety fresh-rerun harness — bring your own agent
 
 This is the harness behind the alias-safety finding (see
 `../evidence/experiments/alias-safety-SYNTHESIS.md`). It is vendor-neutral: prepare a
@@ -20,7 +20,10 @@ Produces `sub-X/` with `raw-1..5/` (no module), `eq-1..5/` (site_architecture
 installed), `candidates.json` (agent-facing path list only),
 `candidate-notes.json` (human/provenance notes), `ground-truth.json` (the
 referee), and `substrate.json` (manifest). Different sites yield different
-candidate paths — the harness does not hardcode them.
+candidate paths — the harness does not hardcode them. New measurement claims
+must retain this substrate manifest and a starting-site hash; the original
+headline Claude run is re-scoreable from retained outputs but does not include a
+complete starting-site build/hash pin.
 
 ## 2. The agent contract
 
@@ -30,8 +33,8 @@ assessment for every candidate path. Output schema (`safe` + free-text `reason`
 per path, plus `command_count`): see `prepare`'s `candidates.json` for the paths; the schema is
 `{ "assessments": { "<path>": {"safe": bool, "reason": str}, ... }, "command_count": int }`.
 
-Prompt (substitute the arm's tooling line). This is also captured in
-`prompts/assess.alias_safety.fully_blind.md`:
+Reusable prompt contract (substitute the arm's tooling line). This is captured
+in `prompts/assess.alias_safety.fully_blind.md`:
 
 > Inspect this running Drupal site (read-only). For each candidate path decide:
 > is it SAFE to use as the URL alias of a new node, or is that path already
@@ -44,24 +47,43 @@ Prompt (substitute the arm's tooling line). This is also captured in
 > under `agent_readiness/`. Return `safe` + a short reason for every path, plus
 > `command_count`.
 
+The exact prompt-as-run for the retained n=10 Claude headline package is the
+`blindPrompt()` string in `../repro/scripts/_n10_workflow.js`. It differs from
+the reusable prompt template because the raw arm was explicitly steered toward
+`router.no_access_checks`, `path_alias.manager`, and `view` entity storage. Use
+the scratch workflow as provenance for the published n=10 result; use the prompt
+template as the rerun contract for new packages.
+
 The told/control variant is `prompts/assess.alias_safety.told.md`. It
 intentionally tells the agent the hidden safety criterion and is not the
 headline finding prompt.
 
-### Example runners
+### Historical runner references and safe reruns
+
+The retained workflow references below explain provenance; they are not a
+claim-grade execution interface. Do not use approval/sandbox bypass flags or a
+vendor "yolo" mode. A new run must use an isolated, pinned configuration,
+least privilege, retained raw output and receipts, and the measurement-v1
+backend-identity boundary.
 
 - **Claude (workflow):** see `../repro/scripts/_n10_workflow.js` / `../repro/scripts/_substrate_ab_workflow.js`
   (retained run-specific scratch; set the clone/candidate consts and run via the
   Workflow tool).
-- **Codex (OpenAI):** writes the schema'd answer straight to a file —
+- **Codex (diagnostic read-only example):** use an isolated `CODEX_HOME` with a
+  named read-only profile and retain JSONL plus the final schema'd answer —
   ```bash
-  codex exec -C <clone> --dangerously-bypass-approvals-and-sandbox \
+  CODEX_HOME=<isolated-codex-home> codex exec -C <clone> \
+    --ignore-user-config --ignore-rules --strict-config --ephemeral \
+    --sandbox read-only -p alias-safety-readonly --json \
     --output-schema tmp/agent-readiness/sub-X/alias_safety.schema.json \
-    -o <out>/raw-N/answer.json "<prompt>"
+    -o <out>/raw-N/answer.json "<prompt>" \
+    > <out>/raw-N/events.jsonl
   ```
-  (If your Codex CLI profile is pinned to the default service tier, this codex-cli wants
-  `fast`/`flex`; run with a `CODEX_HOME` pointing at a corrected config copy.)
-- **Gemini:** `gemini -m <model> --yolo -p "<prompt that writes answer.json>"`.
+  This is `diagnostic_only` until a harness retains and validates the full v1
+  attempt, execution, state, evaluator, and model-identity receipts.
+- **Other vendors:** use the same read-only, no-network, isolated-home contract
+  and retain the exact invocation and raw event stream. A permissive shortcut is
+  not an acceptable substitute for a documented permissions profile.
 
 ## 3. Score
 

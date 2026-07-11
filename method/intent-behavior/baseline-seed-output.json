@@ -1,0 +1,12 @@
+{
+    "alias": "\/seo-intent-live-proof",
+    "path": "\/node\/2",
+    "nid": 2,
+    "title": "Visible editor headline for intent test",
+    "has_fields": {
+        "field_seo_title": true,
+        "field_seo_description": true,
+        "field_seo_image": true,
+        "field_seo_analysis": true
+    }
+}

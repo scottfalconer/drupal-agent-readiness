@@ -1,0 +1,61 @@
+{
+  "schema_version": "drupal_agent_readiness.experiment_registry.v1",
+  "experiments": [
+    {
+      "experiment_id": "alias-safety-haven-n10-fullyblind-v0",
+      "task_id": "assess.alias_safety",
+      "adapter": "alias_safety_v0",
+      "lane": "frontier_observation",
+      "evidence_class": "exploratory_legacy_unpinned",
+      "claim_boundary": "Retained judgments differed between the Drush-only condition and the condition whose prompt named a verdict-bearing path helper; equipped answers cited disabled declarations. Tool discovery, the helper as an isolated cause, facts-only output, actual writes, provider generality, and longitudinal Drupal improvement are not established.",
+      "artifacts_complete": false,
+      "pins_complete": false,
+      "sources": {
+        "headline": {
+          "raw": {
+            "path": "experiments/alias-safety-haven-n10-fullyblind-v0/raw-workflow-output.json",
+            "sha256": "dcd6f09d55eb5d96271955a0cf3897d1fae4adc853c6e4d142b39918cd3f83f7"
+          },
+          "ground_truth": {
+            "path": "experiments/alias-safety-haven-n10-fullyblind-v0/ground-truth.json",
+            "sha256": "d4f38cd51df3a8f0b881583fac6a8ceda6c8731fbce209a1adb8c83b32ea0260"
+          },
+          "derived": {
+            "path": "experiments/alias-safety-haven-n10-fullyblind-v0/model-ab-results.json",
+            "sha256": "5fd6d32cee6a7bfa8858d946f6e21bc806f16f43622fa186aae0f662fa2fa6f0"
+          }
+        },
+        "breadth": {
+          "raw": {
+            "path": "experiments/alias-safety-codex-fullyblind-v0/raw-workflow-output.json",
+            "sha256": "aa2d48f1fecaf59693f8775062971d5f91650f0bc8adc5a23480c6e2822d9f50"
+          },
+          "ground_truth": {
+            "path": "experiments/alias-safety-codex-fullyblind-v0/ground-truth.json",
+            "sha256": "d4f38cd51df3a8f0b881583fac6a8ceda6c8731fbce209a1adb8c83b32ea0260"
+          },
+          "derived": {
+            "path": "experiments/alias-safety-codex-fullyblind-v0/model-ab-results.json",
+            "sha256": "c174d8f4e15eef2a1116aac0874cde943ee86942af7928f10ddc6c4c67c55154"
+          }
+        }
+      }
+    },
+    {
+      "experiment_id": "intent-behavior-evaluation-v0-clean",
+      "task_id": "act.resolve_editor_intent_conflict",
+      "adapter": "intent_behavior_summary_v0",
+      "lane": "frontier_observation",
+      "evidence_class": "exploratory_summary_only",
+      "claim_boundary": "The three arms were equal on SEO-widget preservation in this task. The summary does not establish appropriate conflict handling, general durable-intent value, or a Drupal-side longitudinal change.",
+      "artifacts_complete": false,
+      "pins_complete": false,
+      "sources": {
+        "summary": {
+          "path": "experiments/intent-behavior-evaluation-v0-clean/summary.json",
+          "sha256": "2de27ed3083ad68f4392e263e20ab2c948395c93ef14bec2350ce87d863f1624"
+        }
+      }
+    }
+  ]
+}

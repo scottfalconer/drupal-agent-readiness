@@ -39,3 +39,8 @@ future_tasks:
     prompt: prompts/act.events_section_editorial.md
     status: future
     success: "Future richer Events-section task: editorial workflow, View/listing ownership, content-editor access, public output, JSON:API, and operation-specific path safety."
+  - id: adapt.template_site
+    prompt: prompts/adapt.template_site_v0.md
+    design: template-adaptation-variants-v0.json
+    status: proposed
+    success: "Proposed template-vs-scratch evaluation track: same brief, same agent stack, same budget, same evaluator, paired scratch/template starting sites, and scored effort, architecture drift, launch blockers, maintainer findings, blast radius, and verification quality across two high-fit template domains plus a low-fit negative control."

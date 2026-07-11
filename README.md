@@ -1,14 +1,19 @@
 # Drupal Agent Readiness
 
-A public test bench that measures how safely AI agents can operate Drupal sites
-and publishes what they get wrong.
+A public test bench intended to measure how safely AI agents can operate Drupal
+sites and publish what they get wrong. The current release is a narrow
+historical observation plus an evidence-loop package, not broad operational
+coverage.
 
-This project gives an AI agent a real Drupal site and a real job: figure out
-the site, decide what is safe to change, make a governed change when the task
-calls for it, check the result, and recover from a mistake. Each test ships with
-the task, exact prompts, retained answers and transcripts/logs where available,
-scoring code, and captured site state so someone else can rerun or challenge the
-result.
+The bench is designed to give an AI agent a real Drupal site and a real job:
+figure out the site, decide what is safe to change, make a governed change when
+the task calls for it, check the result, and recover from a mistake. Under the
+measurement-v1 target contract, a claim-bearing test must ship the task, exact
+prompt-as-run, retained answers and execution logs, scoring code, and captured
+starting and final state. The current historical packages do not satisfy that
+full contract: some retain normalized output without complete prompt, harness,
+substrate, budget, model, or trajectory pins. Retained output alone supports
+review and re-scoring, not exact historical replication.
 
 It is built for Drupal core and module developers, agent and tool builders, and
 anyone deciding whether Drupal is a safe choice for AI-driven work. The reason
@@ -18,11 +23,15 @@ or never picks Drupal at all. The point is to watch Drupal the way an agent
 experiences it from the outside and turn rough edges into things someone can
 fix.
 
-This is early: one finding so far, plus the harness to produce more. For the
+This is early: one historical frontier observation so far, plus the harness to
+produce stronger evidence and one preservation-only null from the next
+intent-behavior study. Neither registered experiment is claim-grade. For the
 first test, we asked agents whether a Drupal URL path was free to use as a new
 node alias. An agent can incorrectly say "yes" because a disabled View owns the
-path but currently returns nothing. Giving the agent access to Drupal's own
-record of path ownership changed that behavior.
+path but currently returns nothing. Retained judgments differed between the
+Drush-only condition and the condition whose prompt named a verdict-bearing
+path helper; the bundled treatment did not isolate discovery, tool availability,
+facts-only output, advice, or an actual write.
 
 This repo is the public package for `State of Agents in Drupal` v0.
 
@@ -35,6 +44,15 @@ This repo is the public package for `State of Agents in Drupal` v0.
   steps in [`docs/state-of-agents-in-drupal-v0.md`](docs/state-of-agents-in-drupal-v0.md).
 - Reproducers: start with [`method/HARNESS.md`](method/HARNESS.md) and
   [`method/PUBLISHING.md`](method/PUBLISHING.md).
+- Measurement reviewers: inspect the v1 experiment/run schemas, the
+  [`method/MEASUREMENT-V1.md`](method/MEASUREMENT-V1.md) execution and claim
+  guide, the
+  [`method/benchmark-coverage-v1.json`](method/benchmark-coverage-v1.json)
+  coverage map, the
+  [`method/task-families-v1.json`](method/task-families-v1.json) clean/messy
+  task contracts, and the
+  [`method/improvement-registry-v1.json`](method/improvement-registry-v1.json)
+  evidence-to-change loop.
 - Skeptics: inspect the prompts, evaluator code, retained answers/transcripts
   where present, ground truth, retained failures, package manifest, and
   `CLEAN-MANIFEST.sha256`.
@@ -43,10 +61,21 @@ This repo is the public package for `State of Agents in Drupal` v0.
 - Contributors: propose a task, a starting site, a rubric, an evaluator, or an
   adversarial case.
 
+The benchmark and audit tooling requires Python 3.12, matching CI. The older
+Python bundled with some macOS releases is not a supported runtime.
+
 Quick local checks:
 
 ```bash
 python3 -B -m unittest discover -s agent_readiness/tests -v
+python3 -S -B agent_readiness/scripts/audit_benchmark_registries_v1.py --format json
+python3 -B agent_readiness/scripts/build_clean_manifest.py --repo-root . --check
+python3 -B agent_readiness/scripts/audit_clean_checkout_integrity.py \
+  --repo-root . --checksum-manifest CLEAN-MANIFEST.sha256 \
+  --require-clean-worktree \
+  --entrypoint agent_readiness/measurement_v1.py \
+  --entrypoint agent_readiness/published_experiments.py \
+  --entrypoint agent_readiness/benchmark_registries_v1.py
 shasum -a 256 -c CLEAN-MANIFEST.sha256
 ```
 
@@ -68,38 +97,36 @@ reclaim that path when someone re-enables the View. An agent that only asks
 
 This package tests that failure mode. In a constrained path-safety task on stock
 Drupal CMS (the Haven testbed profile), agents inspected path-only candidates
-and had to decide whether each path was safe for a new node alias. The table
-reports hidden-claim judgments, not a model leaderboard or a broad Drupal
-readiness score.
+and had to decide whether each path was safe for a new node alias. Exact counts,
+denominators, evidence classes, source paths, and source hashes are generated in
+[`docs/experiments-v1.json`](docs/experiments-v1.json). They report
+hidden-claim judgments, not a model leaderboard or a broad Drupal readiness
+score.
 
-| Agent setup | Runs (hidden judgments) | Correctly flagged unsafe | Reason named disabled View |
-| --- | ---: | ---: | ---: |
-| Claude Haiku, Drush-only inspection | 10 runs (20 judgments) | 16/20 | 0/20 |
-| Claude Haiku, with the `site-architecture:path-owner` tool | 10 runs (20 judgments) | 20/20 | 20/20 |
-| Claude Opus, Drush-only inspection | 10 runs (20 judgments) | 14/20 | 14/20 |
-| Claude Opus, with the `site-architecture:path-owner` tool | 10 runs (20 judgments) | 20/20 | 20/20 |
-| OpenAI Codex[^codex], Drush-only inspection | 3 runs (6 judgments) | 0/6 | 0/6 |
-| OpenAI Codex[^codex], with the `site-architecture:path-owner` tool | 3 runs (6 judgments) | 6/6 | 6/6 |
-
-[^codex]: In this repo, "OpenAI Codex" names the Codex agent/model id used in
-    the retained run artifacts (`gpt-5.5-codex`), not the legacy OpenAI Codex API
-    models that were retired in 2023.
-
-The Claude rows are the headline n=10 run; the Codex rows are initial breadth
-evidence at n=3 and should not be read as provider-general.
+The historical Claude cells are the headline observation; the Codex cells are
+initial breadth evidence and should not be read as provider-general. The unit of
+analysis is the run, not the individual hidden-path judgment: multiple judgments
+from the same transcript are correlated.
 
 The stock Haven hidden paths are under `/admin`, so the verdict and the reason
 are separated. A verdict can be correct because an agent treats `/admin` paths
 as conventionally unsafe; the reasoned column shows whether the agent actually
 identified the disabled-View declaration.
 
-Safe public claim:
+Bounded historical observation, with the v0 provenance caveat:
 
-> In one constrained Drupal path-safety task, exposing live site
-> self-description changed agent behavior: Drush-only inspection judged some
-> hidden disabled-View path claims safe, while `site-architecture:path-owner`
-> made those claims visible, reducing false "safe" judgments to zero in the
-> headline run.
+> In one constrained Drupal path-safety task, retained judgments differed
+> between the Drush-only condition and the condition whose prompt named the
+> verdict-bearing `site-architecture:path-owner` helper. This historical
+> observation does not isolate tool discovery, installation, prompt guidance,
+> facts-only output, an end-to-end write, or Drupal-side progress.
+
+That is reviewable and re-scoreable from retained artifacts, but it is still an
+exploratory v0 finding rather than a pinned replication package: the original
+Claude workflow harness, starting-site hash, resolved model snapshot, budget,
+and prompt-as-run provenance are not all independently captured. The registry
+therefore labels it `frontier_observation`, `exploratory_legacy_unpinned`, and
+`claim_grade: false`.
 
 ## What This Is
 
@@ -109,7 +136,7 @@ transcripts, live-state captures, a package manifest, and a bundled Drupal
 fixture used to reproduce the self-description condition.
 
 The goal is not to rank AI models. The goal is to make Drupal's agent-facing
-gaps visible, reproducible, and fixable.
+gaps visible, inspectable, testable, and fixable.
 
 ## What This Is Not
 
@@ -123,11 +150,22 @@ gaps visible, reproducible, and fixable.
 
 | Area | Status |
 | --- | --- |
-| v0 finding | Ready for review/public preview |
-| Claim scope | `constrained_v0_mechanical_evidence_loop` |
+| v0 finding | Historical frontier observation, re-scoreable for review but `claim_grade: false` |
+| Claim scope | Evidence-package readiness plus named estimate, fixed-estimate, registered-effect, and action-registry improvement gates; no aggregate score |
 | Current headline task | Alias safety / hidden path claims |
-| Reproducibility | Harness, prompts, evaluators, retained answers/evaluator outputs, raw workflow outputs, and manifest included |
+| Reproducibility | Retained evidence is re-scoreable; exact original-run replication has documented prompt, harness, substrate, and model-pin caveats |
 | Site self-description fixture | Bundled only for reproduction, not as a public module artifact |
+
+## What Is Measured Today
+
+| Surface | Current evidence | Supported use |
+| --- | --- | --- |
+| Alias-safety judgments | Historical, exploratory, and incompletely pinned; judgments differ between two bundled conditions. | Diagnose a wrong-layer path lookup and design a fresh factorial rerun. |
+| Intent preservation | Summary-only preservation null. | Inspect the retained summary, not infer general intent value or conflict handling. |
+| Inventory/Event/recovery examples | Legacy, re-scoreable evaluator examples. | Exercise package mechanics; not longitudinal or independent performance evidence. |
+| Frontier canary | Adversarially tested harness implementation; no canary run is shipped in the public package. The task is no-tool, schema-constrained interpretation of an inline trusted-host snapshot under pinned macOS no-child-process containment. | Validate runner, containment, evidence custody, and scoring mechanics; not direct Drupal discovery or operation, hosted-model attestation, or VM-grade isolation. |
+| Measurement-v1 fixed regression | None reportable. | Target contract only. |
+| Canonical improvement decision | None; the sole record is `pending_registration`. | Track proposed work without claiming adoption or improvement. |
 
 ## Current Tasks
 
@@ -144,21 +182,22 @@ gaps visible, reproducible, and fixable.
 - `docs/`: public-facing release docs and generated scorecard assets.
 - `method/`: harness, prompts, task definitions, publishing checklist, and
   schema.
-- `evidence/experiments/`: alias-safety experiment packages, including n=10
-  Haven and Codex runs.
+- `evidence/experiments/`: source-hashed alias-safety and intent-behavior
+  experiment packages, with exact published metrics normalized in
+  `docs/experiments-v1.json`.
 - `evidence/runs/`: Inventory, Event, and recovery run packages used by the
   scorecard.
-- `repro/`: evaluator, script, and test copy retained for package review.
+- `repro/`: frozen historical v0 workflow/evaluator snapshot retained to audit
+  the original evidence; it is not the current implementation.
 - `agent_readiness/`: runnable Python/source-package layout used by the
   commands in `method/PUBLISHING.md`. It also contains the internal
   `site_architecture` Drupal fixture used to reproduce the equipped arm.
 
 - **`agent_readiness/`**: the active runnable source package. Make source
   behavior changes here.
-- **`repro/`**: a retained review copy of the same evaluator/script code so the
-  public evidence package can be audited without relying on generated docs
-  alone. Do not edit it for source behavior; update it only when intentionally
-  mirroring release-package material.
+- **`repro/`**: a frozen historical snapshot used to inspect how the original
+  v0 evidence was produced. It intentionally does not track current source
+  changes; run current checks from `agent_readiness/`.
 - **`agent_readiness/fixtures/site_architecture_module/`**: the internal Drupal
   fixture copied into disposable sites for reproduction. Treat it as test-bench
   evidence infrastructure, not a public module surface.
@@ -169,21 +208,43 @@ Public tasks are curriculum. They teach agents and humans the Drupal patterns we
 want to make easier: inspect live site state, act through governed surfaces,
 verify mechanically, and record blast radius.
 
-Fresh variants are measurement. A stronger Drupal-side progress claim should pin
-the model, harness, prompt, allowed tools, task version, starting-site hash,
-evaluator version, rubric version, budget, and scoring rules.
+Preregistered, source-audited fresh variants can be measurement. A stronger
+Drupal-side progress claim should pin the model, harness, prompt-as-run, allowed
+tools, task version, starting-site hash, evaluator version, rubric version,
+budget, and scoring rules. If those pins are missing, use exploratory or
+anecdotal language even when the retained answers re-score cleanly.
 
-This release supports a narrow first finding and a reusable evidence loop. It
+The machine-enforced contract is
+`agent_readiness/schema/benchmark-experiment-v1.schema.json` plus
+`agent_readiness/schema/benchmark-run-v1.schema.json`, audited by
+`agent_readiness/scripts/audit_measurement_v1.py` and explained in
+`method/MEASUREMENT-V1.md`. Fixed-agent regression and
+frontier observation are separate lanes. The eight-stage lifecycle coverage
+registry includes explicit planning/clarification and cold-handoff target
+contracts. Both remain `not_covered`; their structured decision,
+verification-plan, handoff, and second-agent continuation metrics are target
+design, not current evidence. The registry marks current evidence separately
+from target designs, and the improvement registry
+requires an owner, upstream issue, expected delta, immutable design snapshot,
+complete frozen reruns, append-only transitions, and a decision. A statistical
+`registered_effect_rule_met` result is not `improvement_ready` until that
+canonical action record also verifies.
+
+This release supports a narrow historical observation and a reusable evidence loop. It
 does not prove aggregate Drupal agent readiness.
 
 ## Next Work
 
-- Repeat the non-Claude alias-safety run at n=10 and add another non-Claude
-  stack before making any provider-general claim.
+- Establish a source-audited measurement-v1 fixed-regression lane before
+  reporting an effect, then complete the canonical action-registry decision
+  before claiming that a Drupal change improved agent outcomes.
+- Keep frontier-observation reruns separate when measuring current agent/tool
+  capability or provider breadth.
 - Repeat `act.event_jsonapi` and `recover.event_jsonapi`, not only
   `inventory.read_only`.
-- Add token cost to the scorecard where available.
-- Raise n on remaining fully blind Drupal starting sites.
+- Capture harness-derived token cost for claim-bearing runs; keep legacy blanks
+  visibly distinct from instrumented values.
+- Expand repeated fully blind coverage across Drupal starting sites.
 - Add messy, adversarial, and owner-described starting sites.
 - Add richer editorial-experience tasks.
 - Grow the task set before any aggregate Drupal readiness claim.

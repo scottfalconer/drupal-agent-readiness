@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drupal.local/agent-readiness/inventory-answer-frontier-v1.schema.json",
+  "title": "Drupal frontier inventory answer",
+  "type": "object",
+  "required": [
+    "command_runner",
+    "provenance",
+    "paths",
+    "canvas",
+    "content_model",
+    "pathauto"
+  ],
+  "properties": {
+    "command_runner": {
+      "type": "string",
+      "enum": ["vendor/bin/drush", "ddev drush", "vendor/bin/dr"]
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "project_name",
+        "project_version",
+        "site_template",
+        "active_config_source",
+        "config_sync_status"
+      ],
+      "properties": {
+        "project_name": {"type": ["string", "null"]},
+        "project_version": {"type": ["string", "null"]},
+        "site_template": {"type": ["string", "null"]},
+        "active_config_source": {"enum": ["database", "sync"]},
+        "config_sync_status": {"enum": ["empty", "populated"]}
+      },
+      "additionalProperties": false
+    },
+    "paths": {
+      "type": "object",
+      "required": ["/blog", "/node", "/home"],
+      "properties": {
+        "/blog": {"$ref": "#/$defs/path_owner"},
+        "/node": {"$ref": "#/$defs/path_owner"},
+        "/home": {"$ref": "#/$defs/path_owner"}
+      },
+      "additionalProperties": false
+    },
+    "canvas": {
+      "type": "object",
+      "required": ["page_count", "embedded_listings"],
+      "properties": {
+        "page_count": {"type": "integer"},
+        "embedded_listings": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "content_model": {
+      "type": "object",
+      "required": ["bundles", "moderation_enabled"],
+      "properties": {
+        "bundles": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "moderation_enabled": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "pathauto": {
+      "type": "object",
+      "required": ["enabled", "patterns"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "patterns": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "path_owner": {
+      "type": "object",
+      "required": ["claimed", "owner_kind", "entity_type"],
+      "properties": {
+        "claimed": {"type": "boolean"},
+        "owner_kind": {
+          "type": "string",
+          "enum": ["entity", "view", "route", "unclaimed"]
+        },
+        "entity_type": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

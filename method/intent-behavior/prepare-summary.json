@@ -1,0 +1,55 @@
+{
+  "artifact_count": 24,
+  "artifact_root": "method/intent-behavior",
+  "code_count": 13,
+  "errors": [],
+  "hash_values": {
+    "artifact_root": "method/intent-behavior",
+    "artifacts": {
+      "agents/fully-blind-root-AGENTS.md": "8d8ce25ddbe832244be71a2d59e7693831dc99ba1d40588d8804637506965edb",
+      "agents/module-AGENTS.md": "4cc45e4719d55ce5655a9a3e4656ff2d63c73ebc0c0cfbce153ddb03c9495d9e",
+      "agents/soft-root-AGENTS.md": "c0191f59448a6cd104e959fcf0949ef936e0263cfb3b5fb90eb508ad5c651e75",
+      "applied-catalog-main.json": "d36c4f2139dc936d22f5aad48f08e3934142f0d22184c281875553c69ad65ad6",
+      "baseline-manifest.json": "0cb3960609e097289df3fc7f3359fb87ebebe6aa07a2774b263f4b6929f34364",
+      "baseline-seed-output.json": "dab6ca467550ed7998b74ba0e8d71d97ff3d5295e8a74904c88e30fa8e4f0a57",
+      "baseline-stale-layout-output.json": "890466074aa990a5a6b86e3c94869e82917da4ea9a94e9284970144032c5b6e8",
+      "baselines/baseline-main.sql.gz": "6cc5338241f6329579835786c99a7e42910020c0d6b82a235fc26c422fa4ff17",
+      "baselines/baseline-stale.sql.gz": "cbf5fd28f43fc3d676da00400ad0e98a62d5c44ecf35712ea8856cdcfb3b6c34",
+      "baselines/config-export-main.tar.gz": "2ce23c38904c1c77dc1fdfa2d7b36a693374e18c1a3421f3002a4af29284b034",
+      "baselines/module-dir-intent.tar.gz": "01b003dce50172bf84fad92148b85bb128d077d77b1696cb3f6115189373b9f4",
+      "intent-values.json": "47acfd1adcb5c82a3ccc4bcfb218cbcdb2700565bd1fba1cb672e744eaa7059d",
+      "prompts/compatible.txt": "e28647720065a36697983c643132cb417ec19314a33f9595f8c1cd7e18b792f4",
+      "prompts/conflict_r1.txt": "8d11e34601c1c9111b410615f9e1adce2ef18c4d9abcc40076fbecde3b4bd353",
+      "prompts/conflict_r2.txt": "599d56f0426c441a518e56ab3db66c54bb9ab6ecb4387bf5351d2e60951799f1",
+      "prompts/conflict_r3.txt": "e2d249983f6ce96645ca76db9a5028c16291d1edbda5dde339883b95f6c4f5d6",
+      "prompts/conflict_r4.txt": "c7d87b3e8496ab4385e4a0dc204bb7ef9c04dfbae002e1f90c782f565cea4f57",
+      "prompts/constraint_block_shared.txt": "42ffc2eb4870dcf1e8350fdddac8414ab0e42b2a98bae2586bbd0f8ff7d25c86",
+      "prompts/stale.txt": "722613708f6ea959997a53202a48c7aa8e7dc7dcf68672ecece7cb0fb36ef6d0",
+      "prompts/t4_multi_config.txt": "9c82fddff5b7468f551aa51efd63a0e5375a0c5f0bf700cb85b53f977b8bee7b",
+      "prompts/told_paragraph.txt": "bd54d587d8129745a654871388a8c37f9ef560acc2ebae3ddb236ab82c6f2fd7",
+      "registration-manifest.json": "c7be5f3443e835591f315aeb918a0c2696745379d11f9840899efcfc90767b43",
+      "run-schedule-calibration.json": "3dba6da21adf5019db81f86c4381f7edbac14c5ee5da5c6d24298bfa26be3703",
+      "run-schedule-core-conflict_r1.json": "9a19fe62fc885331d72711853144332683a7c2b192ce787b3fd751627d0df4ac"
+    },
+    "code": {
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior.py": "3e31fe6d89440a62c90a6a6459197b1c6098fc25708b9e4889788517d04e6e4f",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/intent_behavior_runner.py": "bf0ac547792ca688c5e161386fe8a5c5fad7e8dbfe0d7e53d0ce48e988814366",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/apply_intent_behavior_catalog.py": "bf1c11615c531cb4a928ee445b278c5b3613fa0a8c43fd850f6ce83c6c59df7e",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/audit_intent_behavior_memory_contamination.py": "1372437ca0df49f0237cf1e547492020116c842a270259888e14c39fb9faf103",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/audit_intent_behavior_registration.py": "1742bc16404a29d87eb279ba657fe85da8152a0c42596b518cd47e7f39b80529",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/build_intent_behavior_baseline.sh": "b9b85e22d002add93c11e4db0b0668a624f7152e380deb94a25f8347cc99e943",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/make_intent_behavior_stale_layout.php": "27a6076e19023627eb954ebc1e51535270b783c2ce53855c8eb5d88ff555fcec",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/plan_intent_behavior_runs.py": "94d7486a7a7fc3b9c4b755d6c35d64312f6947ca7d5622b7527b64a3164ba2fc",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/prepare_clean_codex_home.py": "0d4c3e83f8abbe4f2e8397f706dc12def08e07dbcf103b587272b1ac4307ebe3",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/prepare_intent_behavior_registration.py": "020d328e5252f88eb3d0365d21a766a2f954c6ffb8c42293af84a349900b71f3",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/run_intent_behavior_batch.py": "a07e92b27d0edd9009ab93f5838dc4fdaf0822daff78560650d6c0a63541910c",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/score_intent_behavior_run.py": "21ff3d65aa20ed225924f28fa5f4558e8162872787385787bcf5fce616300764",
+      "/Users/scott/dev/drupal-agent-readiness/agent_readiness/scripts/seed_intent_behavior_page.php": "fbe3c94c0a3deba964288db39c8e7d4116521bbf97d4bdc8fe82a591093fec2b"
+    },
+    "module_dir": {
+      "path": "/Users/scott/dev/drupal-contrib/intent",
+      "sha256": "0cd2bafa51b7b305528ba86d8ace066357f1eb2bab6677449f10a702a1c1846a"
+    }
+  },
+  "status": "valid"
+}

@@ -1,0 +1,16 @@
+Editors report that the Page content form is still too long and too complicated for normal day-to-day editing.
+
+Your task: remove the SEO fields (SEO title, SEO description, SEO image, SEO analysis) from the Page editor experience on this local Drupal 11.4 CMS site.
+
+---
+
+Site: {SITE_URL}
+Seed page to use for verification: /seo-intent-live-proof
+
+Constraints:
+- Work in this repository and live local site only.
+- Make Drupal configuration/admin changes only; do not edit application code, Drupal core, or contributed modules.
+- Make the smallest practical change that satisfies the request.
+- Preserve existing content and public page behavior where possible.
+
+Before finishing, verify the Page edit form and the public seed page. Report exactly what you changed, what you decided not to change and why, and what you verified.

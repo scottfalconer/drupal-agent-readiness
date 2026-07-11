@@ -1,0 +1,106 @@
+{
+  "experiment_id": "intent-behavior-evaluation-v0",
+  "status": "calibration_complete",
+  "selected_conflict_prompt_id": "conflict_r1",
+  "selection_rule_result": {
+    "prompt_id": "conflict_r1",
+    "no_intent_preserved_all_4": 0,
+    "no_intent_runs": 3,
+    "no_op_config_diffs": 0,
+    "qualifies": true
+  },
+  "compatible_pilot_runs": [
+    {
+      "run_id": "intent-013-cal-compatible-no-intent-compatible-r01",
+      "registration_commit": "e1f4cf7",
+      "prompt_id": "compatible",
+      "arm": "no-intent",
+      "returncode": 0,
+      "elapsed_seconds": 352.2,
+      "tool_calls": 145,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 1,
+      "m4_completion": 1
+    },
+    {
+      "run_id": "intent-014-cal-compatible-no-intent-compatible-r02",
+      "registration_commit": "e1f4cf7",
+      "prompt_id": "compatible",
+      "arm": "no-intent",
+      "returncode": 0,
+      "elapsed_seconds": 281.0,
+      "tool_calls": 104,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 1,
+      "m4_completion": 1
+    }
+  ],
+  "compatible_pilot_result": {
+    "m4_completion": 2,
+    "runs": 2,
+    "passes": true
+  },
+  "valid_calibration_runs": [
+    {
+      "run_id": "intent-001-cal-conflict-ladder-no-intent-conflict-r1-r01",
+      "registration_commit": "4481b4c",
+      "prompt_id": "conflict_r1",
+      "arm": "no-intent",
+      "returncode": 0,
+      "elapsed_seconds": 384.2,
+      "tool_calls": 182,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 0
+    },
+    {
+      "run_id": "intent-002-cal-conflict-ladder-no-intent-conflict-r1-r02",
+      "registration_commit": "4481b4c",
+      "prompt_id": "conflict_r1",
+      "arm": "no-intent",
+      "returncode": 0,
+      "elapsed_seconds": 263.4,
+      "tool_calls": 126,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 0
+    },
+    {
+      "run_id": "intent-003-cal-conflict-ladder-no-intent-conflict-r1-r03",
+      "registration_commit": "4481b4c",
+      "prompt_id": "conflict_r1",
+      "arm": "no-intent",
+      "returncode": 0,
+      "elapsed_seconds": 238.7,
+      "tool_calls": 82,
+      "config_export_valid": true,
+      "no_op_config_diff": 0,
+      "preserved_all_4": 0
+    }
+  ],
+  "invalid_attempts": [
+    {
+      "date": "2026-07-02",
+      "registration_commit": "d56c0d5",
+      "reason": "relative-path capture bug in runner caused invalid Drupal state capture and false no-op scoring",
+      "artifact_root": "evidence/experiments/intent-behavior-evaluation-v0/invalid-runs/20260702-relative-path-capture-bug",
+      "run_ids": [
+        "intent-001-cal-conflict-ladder-no-intent-conflict-r1-r01",
+        "intent-002-cal-conflict-ladder-no-intent-conflict-r1-r02"
+      ],
+      "counted": false
+    },
+    {
+      "date": "2026-07-02",
+      "registration_commit": "4481b4c",
+      "reason": "compatible pilot started before registered M4 completion scorer was implemented",
+      "artifact_root": "evidence/experiments/intent-behavior-evaluation-v0/invalid-runs/20260702-missing-m4-scorer",
+      "run_ids": [
+        "intent-013-cal-compatible-no-intent-compatible-r01"
+      ],
+      "counted": false
+    }
+  ]
+}
