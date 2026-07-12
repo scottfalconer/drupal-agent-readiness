@@ -451,12 +451,13 @@ The first comparison is Drupal against its own past state, but only under pinned
 measurement conditions. That is the cleanest way to answer whether Drupal-side
 changes reduced friction for the same agent setup.
 
-Measurement is useful only if it changes work. The registry therefore requires
-each actionable finding to acquire accountable owners, upstream issue
-relationships, a prospective task-level delta, a frozen rerun, and a decision
-rule before an improvement can be reported. The sole current record remains
-pending registration; no finding has completed that loop. Target designs and
-pending reruns are never counted as current evidence.
+Measurement is useful only if it changes work. The canonical improvement
+registry therefore requires each actionable finding to acquire accountable
+owners, upstream issue relationships, a prospective task-level delta, a frozen
+rerun, and a decision rule before an improvement can be reported. The sole
+current improvement record remains pending registration; no finding has
+completed that loop. Target designs and pending reruns are never counted as
+current evidence.
 
 We also need absolute thresholds and calibrated comparisons. If first-session
 cost remains too high, or if agents continue to avoid Drupal when Drupal should

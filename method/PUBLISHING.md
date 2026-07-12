@@ -249,11 +249,26 @@ synthesis must adopt the explicitly named treatment scope. Prompt naming stays
 in a separate non-Drupal diagnostic lane. Placebo and diagnostic experiments
 can satisfy their synthesis roles but never become `improvement_ready`.
 
-The current registry remains `pending_registration`, so this gate is
-intentionally false. Even a future passing decision is a bounded comparative
-result, not a causal claim: measurement v1 rejects causal claim classes because
-it cannot independently prove assignment, reset integrity, or complete external
-attempt custody.
+The current public improvement registry remains `pending_registration`, so this
+gate is intentionally false. Even a future passing decision is a bounded
+comparative result, not a causal claim: measurement v1 rejects causal claim
+classes because it cannot independently prove assignment, reset integrity, or
+complete external attempt custody.
+
+### Non-promoting external-eval output check
+
+External-eval discovery and maintainer-local diagnostic records are published
+through a separate, scorecard-ineligible lane. Before publishing changes to that
+lane, verify both generated outputs are current:
+
+```bash
+python3 -S -B -m agent_readiness.scripts.build_eval_landscape --check
+python3 -S -B -m agent_readiness.scripts.build_external_eval_results --check
+```
+
+These checks validate bounded source/evidence closure and generated-output
+freshness only. They do not satisfy any measurement gate or change lifecycle
+coverage, public claims, or scorecard state.
 
 ## Public Claim And Prompt-Leak Scan
 
