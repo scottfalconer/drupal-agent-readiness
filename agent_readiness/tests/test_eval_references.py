@@ -309,6 +309,26 @@ class EvalReferencesTest(unittest.TestCase):
         ):
             self.assertIn(f"- {label}:", expected_markdown)
 
+    def test_readme_ecosystem_orientation_covers_registry_sources(self) -> None:
+        readme_path = Path(__file__).resolve().parents[2] / "README.md"
+        readme = readme_path.read_text(encoding="utf-8")
+        section = readme.split("## Where This Fits In The Ecosystem", 1)[1].split(
+            "## Current Status", 1
+        )[0]
+        rows = [line for line in section.splitlines() if line.startswith("| [")]
+
+        self.assertIn("maintainer-curated orientation", section)
+        self.assertEqual(len(self.references), len(rows))
+        for reference in self.references:
+            expected_prefix = (
+                f"| [{reference['name']}]({reference['canonical_url']}) | "
+                f"{reference['summary']} |"
+            )
+            self.assertTrue(
+                any(row.startswith(expected_prefix) for row in rows),
+                f"README ecosystem row is missing or stale for {reference['id']}",
+            )
+
     def test_markdown_generation_escapes_contributor_text_and_link_delimiters(
         self,
     ) -> None:

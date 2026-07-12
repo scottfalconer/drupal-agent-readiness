@@ -3261,9 +3261,9 @@
       "sha256": "52de59ef1489ffdd577d9c60ed78edfd8999ccef6046493234c8c5cf597a649b"
     },
     {
-      "bytes": 15413,
+      "bytes": 16364,
       "path": "tests/test_eval_references.py",
-      "sha256": "4a1b5813934abbc484c9c5ce8293005b2b7a402a286fcb728f47567e8c73ad93"
+      "sha256": "38d9b9f08374157cf96ab11ede6cc6e9c0af1421c45ff72955570f075265d52e"
     },
     {
       "bytes": 10604,
@@ -3339,9 +3339,9 @@
   "package": "State of Agents in Drupal v0 evidence package",
   "repository_dependencies": [
     {
-      "bytes": 18299,
+      "bytes": 18962,
       "path": "README.md",
-      "sha256": "986a4924e0b6d99f1c6cc6fc970ee6e3ac8026f8bb3f3ce36ba186ddd1f22de2"
+      "sha256": "9f9396e69b7957a5829d238940a3ccdf8e46d6f72181b19d5d8ab9b135276985"
     },
     {
       "bytes": 6495,
