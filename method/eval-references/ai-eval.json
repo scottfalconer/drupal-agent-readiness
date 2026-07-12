@@ -1,0 +1,66 @@
+{
+  "schema_version": "drupal_agent_readiness.eval_reference.v1",
+  "id": "ai-eval",
+  "name": "AI Eval",
+  "summary": "A Drupal evaluation framework with versioned dataset, rubric, judge, deterministic-grader, and result-contract implementations.",
+  "canonical_url": "https://www.drupal.org/project/ai_eval",
+  "repository_url": "https://git.drupalcode.org/project/ai_eval",
+  "roles": ["grader_source", "dataset_source"],
+  "registry_effect": "reference_only_no_claim_or_coverage_effect",
+  "last_reviewed_at": "2026-07-11",
+  "provenance": {
+    "review_basis": "primary_sources_and_supplied_discussion",
+    "source_urls": [
+      "https://www.drupal.org/project/ai_eval",
+      "https://git.drupalcode.org/project/ai_eval/-/tree/97d8660b3cb3815572e7ddd9e3898b53f4c81e84/schema",
+      "https://git.drupalcode.org/project/ai_eval/-/tree/97d8660b3cb3815572e7ddd9e3898b53f4c81e84/src/Plugin/AiEvalGrader"
+    ],
+    "note": "The supplied discussion described AI Eval as the reusable scoring layer; implementation pointers were verified at commit 97d8660b3cb3815572e7ddd9e3898b53f4c81e84."
+  },
+  "artifacts": [
+    {
+      "id": "dataset-rubric-judge-contracts",
+      "name": "Shipped dataset, rubric, and judge schemas",
+      "kind": "grader_contract",
+      "pointer_type": "repository_tree",
+      "url": "https://git.drupalcode.org/project/ai_eval/-/tree/97d8660b3cb3815572e7ddd9e3898b53f4c81e84/schema",
+      "upstream_revision": {
+        "kind": "commit",
+        "value": "97d8660b3cb3815572e7ddd9e3898b53f4c81e84",
+        "immutable": true
+      },
+      "agent_classes": ["not_agent_specific"],
+      "question_answered": "Which portable case, rubric, and calibrated-judge contracts can describe and score agent evaluations consistently?",
+      "mapping_scope": "supporting_infrastructure",
+      "lifecycle_stages": [],
+      "candidate_task_family_ids": [],
+      "substrate_fidelity": "none",
+      "evaluator_types": ["deterministic", "human_label", "llm_judge"],
+      "disposition": "candidate_for_evaluator_reuse",
+      "mapping_note": "These are cross-cutting contracts and therefore do not map to lifecycle stages or task families on their own.",
+      "claim_boundary": "A schema or calibrated judge is evaluation infrastructure, not evidence that any agent completed a Drupal task successfully."
+    },
+    {
+      "id": "shipped-deterministic-graders",
+      "name": "Shipped deterministic grader implementations",
+      "kind": "grader_contract",
+      "pointer_type": "repository_tree",
+      "url": "https://git.drupalcode.org/project/ai_eval/-/tree/97d8660b3cb3815572e7ddd9e3898b53f4c81e84/src/Plugin/AiEvalGrader",
+      "upstream_revision": {
+        "kind": "commit",
+        "value": "97d8660b3cb3815572e7ddd9e3898b53f4c81e84",
+        "immutable": true
+      },
+      "agent_classes": ["not_agent_specific"],
+      "question_answered": "Which shipped graders can deterministically validate response format and expected-versus-forbidden tool usage without another LLM call?",
+      "mapping_scope": "supporting_infrastructure",
+      "lifecycle_stages": [],
+      "candidate_task_family_ids": [],
+      "substrate_fidelity": "not_reported",
+      "evaluator_types": ["deterministic"],
+      "disposition": "candidate_for_evaluator_reuse",
+      "mapping_note": "The pinned implementation includes deterministic format and tool-usage graders; a concrete local task must still define the relevant lifecycle, oracle, and anti-gaming guards.",
+      "claim_boundary": "Shipped grader code is reusable infrastructure, not evidence that a Drupal task was executed, correctly scoped, or validly scored."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": "drupal_agent_readiness.eval_reference.v1",
+  "id": "ai-best-practices",
+  "name": "AI Best Practices for Drupal",
+  "summary": "Drupal-specific guidance and behavioral evaluation cases for external coding agents.",
+  "canonical_url": "https://www.drupal.org/project/ai_best_practices",
+  "repository_url": "https://git.drupalcode.org/project/ai_best_practices",
+  "roles": ["task_source", "grader_source"],
+  "registry_effect": "reference_only_no_claim_or_coverage_effect",
+  "last_reviewed_at": "2026-07-11",
+  "provenance": {
+    "review_basis": "primary_sources_and_supplied_discussion",
+    "source_urls": [
+      "https://www.drupal.org/project/ai_best_practices",
+      "https://git.drupalcode.org/project/ai_best_practices/-/work_items/3581832"
+    ],
+    "note": "The supplied Drupal AI discussion identified the suite as a source of Drupal skill evaluation cases."
+  },
+  "artifacts": [
+    {
+      "id": "skill-eval-cases",
+      "name": "Drupal skill evaluation cases",
+      "kind": "task_suite",
+      "pointer_type": "repository_tree",
+      "url": "https://git.drupalcode.org/project/ai_best_practices/-/tree/1.0.x/evals",
+      "upstream_revision": {
+        "kind": "branch",
+        "value": "1.0.x",
+        "immutable": false
+      },
+      "agent_classes": ["external_coding_agent"],
+      "question_answered": "Does Drupal-specific guidance improve an external coding agent's behavior on bounded Drupal development tasks?",
+      "mapping_scope": "task_candidate",
+      "lifecycle_stages": ["understand", "plan_clarify", "act", "verify"],
+      "candidate_task_family_ids": ["governed_editorial_change", "diagnosis_and_rollback"],
+      "substrate_fidelity": "prompt_only",
+      "evaluator_types": ["deterministic"],
+      "disposition": "candidate_for_local_adaptation",
+      "mapping_note": "The cases are candidates for skill versus no-skill treatments on a locally controlled Drupal substrate.",
+      "claim_boundary": "The upstream cases do not by themselves show successful work against a real Drupal runtime or establish that Drupal improved."
+    },
+    {
+      "id": "inspect-runner-migration",
+      "name": "Inspect AI runner migration",
+      "kind": "evaluation_framework",
+      "pointer_type": "merge_request",
+      "url": "https://git.drupalcode.org/project/ai_best_practices/-/merge_requests/69",
+      "upstream_revision": {
+        "kind": "unversioned",
+        "value": "merge-request-69",
+        "immutable": false
+      },
+      "agent_classes": ["not_agent_specific"],
+      "question_answered": "How can the Drupal skill cases be expressed in a reusable runner rather than a project-specific evaluation loop?",
+      "mapping_scope": "supporting_infrastructure",
+      "lifecycle_stages": [],
+      "candidate_task_family_ids": [],
+      "substrate_fidelity": "none",
+      "evaluator_types": ["not_reported"],
+      "disposition": "reference_only",
+      "mapping_note": "Runner convergence can lower adaptation cost but does not map to a lifecycle stage or task family until a concrete task uses it.",
+      "claim_boundary": "Adopting the same runner improves interoperability only; it supplies no agent-performance result and has no scorecard effect."
+    }
+  ]
+}

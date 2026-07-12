@@ -1,0 +1,43 @@
+{
+  "schema_version": "drupal_agent_readiness.eval_reference.v1",
+  "id": "ai-maintenance-skills",
+  "name": "AI Maintenance Skills",
+  "summary": "Drupal.org issue-triage and maintenance workflows for coding agents within a constrained DDEV design.",
+  "canonical_url": "https://www.drupal.org/project/ai_maintenance_skills",
+  "repository_url": "https://git.drupalcode.org/project/ai_maintenance_skills",
+  "roles": ["workflow_source", "substrate_source"],
+  "registry_effect": "reference_only_no_claim_or_coverage_effect",
+  "last_reviewed_at": "2026-07-11",
+  "provenance": {
+    "review_basis": "primary_sources_and_supplied_discussion",
+    "source_urls": [
+      "https://www.drupal.org/project/ai_maintenance_skills",
+      "https://git.drupalcode.org/project/ai_maintenance_skills/-/blob/1.0.x/README.md"
+    ],
+    "note": "The supplied discussion identified the project's maintenance tasks and two-container trust boundary as reusable prior art."
+  },
+  "artifacts": [
+    {
+      "id": "maintenance-workflow",
+      "name": "Drupal issue maintenance workflow and trust boundary",
+      "kind": "workflow",
+      "pointer_type": "repository_file",
+      "url": "https://git.drupalcode.org/project/ai_maintenance_skills/-/blob/1.0.x/README.md",
+      "upstream_revision": {
+        "kind": "branch",
+        "value": "1.0.x",
+        "immutable": false
+      },
+      "agent_classes": ["external_coding_agent"],
+      "question_answered": "Can an external coding agent safely triage and prepare Drupal.org maintenance work that reduces total maintainer burden?",
+      "mapping_scope": "supporting_infrastructure",
+      "lifecycle_stages": [],
+      "candidate_task_family_ids": [],
+      "substrate_fidelity": "drupal_runtime",
+      "evaluator_types": ["not_reported"],
+      "disposition": "candidate_for_local_reproduction",
+      "mapping_note": "This is workflow prior art. Promote a separately defined local task only after fixing its inputs, observable completion criteria, evaluator, decision target, and stop condition.",
+      "claim_boundary": "The workflow description does not provide a locally reproduced Agent Readiness result or a formal evaluator, so it cannot enter the scorecard directly."
+    }
+  ]
+}
