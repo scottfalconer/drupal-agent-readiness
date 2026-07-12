@@ -1,0 +1,177 @@
+{
+  "schema_version": "drupal_agent_readiness.external_eval_source_validation.v1",
+  "record_type": "source_validation_not_agent_performance",
+  "validation_id": "2026-07-12-static-checks-c4511713",
+  "adapter_id": "ai_best_practices_static_v1",
+  "recorded_at": "2026-07-12T04:19:47Z",
+  "source": {
+    "source_id": "ai-best-practices",
+    "artifact_id": "skill-eval-cases",
+    "registry_revision": {
+      "kind": "branch",
+      "value": "1.0.x"
+    },
+    "upstream_commit": "c45117130a4de1fe7d03d3fe225e3f09b8e4e803"
+  },
+  "validation": {
+    "kind": "static_source_checks",
+    "outcome_model": "aggregate_checks",
+    "checks_total": 219,
+    "checks_passed": 219,
+    "checks_failed": 0,
+    "adapter_data": {
+      "commands": [
+        {
+          "id": "default-discovery",
+          "environment": {
+            "PYTHONPYCACHEPREFIX": "/private/tmp/abp-static-pyc"
+          },
+          "argv": ["python3", "-B", "evals/run-evals.py", "--static"],
+          "artifact_id": "default-discovery",
+          "default_discovery": true,
+          "exit_code": 0,
+          "checks_total": 144,
+          "checks_passed": 144,
+          "checks_failed": 0
+        },
+        {
+          "id": "nested-a11y-fapi",
+          "environment": {
+            "PYTHONPYCACHEPREFIX": "/private/tmp/abp-a11y-fapi-pyc"
+          },
+          "argv": [
+            "python3",
+            "-B",
+            "evals/run-evals.py",
+            "--static",
+            "--skill",
+            "drupal-accessibility/drupal-a11y-fapi"
+          ],
+          "artifact_id": "nested-a11y-fapi",
+          "default_discovery": false,
+          "exit_code": 0,
+          "checks_total": 14,
+          "checks_passed": 14,
+          "checks_failed": 0
+        },
+        {
+          "id": "nested-a11y-dom",
+          "environment": {
+            "PYTHONPYCACHEPREFIX": "/private/tmp/abp-a11y-dom-pyc"
+          },
+          "argv": [
+            "python3",
+            "-B",
+            "evals/run-evals.py",
+            "--static",
+            "--skill",
+            "drupal-accessibility/drupal-a11y-dom"
+          ],
+          "artifact_id": "nested-a11y-dom",
+          "default_discovery": false,
+          "exit_code": 0,
+          "checks_total": 17,
+          "checks_passed": 17,
+          "checks_failed": 0
+        },
+        {
+          "id": "nested-a11y-dynamic",
+          "environment": {
+            "PYTHONPYCACHEPREFIX": "/private/tmp/abp-a11y-dynamic-pyc"
+          },
+          "argv": [
+            "python3",
+            "-B",
+            "evals/run-evals.py",
+            "--static",
+            "--skill",
+            "drupal-accessibility/drupal-a11y-dynamic"
+          ],
+          "artifact_id": "nested-a11y-dynamic",
+          "default_discovery": false,
+          "exit_code": 0,
+          "checks_total": 21,
+          "checks_passed": 21,
+          "checks_failed": 0
+        },
+        {
+          "id": "nested-a11y-qa",
+          "environment": {
+            "PYTHONPYCACHEPREFIX": "/private/tmp/abp-a11y-qa-pyc"
+          },
+          "argv": [
+            "python3",
+            "-B",
+            "evals/run-evals.py",
+            "--static",
+            "--skill",
+            "drupal-accessibility/drupal-a11y-qa"
+          ],
+          "artifact_id": "nested-a11y-qa",
+          "default_discovery": false,
+          "exit_code": 0,
+          "checks_total": 23,
+          "checks_passed": 23,
+          "checks_failed": 0
+        }
+      ],
+      "commands_total": 5,
+      "default_discovery_checks": 144,
+      "nested_explicit_checks": 75,
+      "discovery_note": "The default command discovers 144 checks in eight top-level suites; four nested accessibility suites require explicit --skill commands and add 75 checks."
+    }
+  },
+  "artifacts": [
+    {
+      "id": "default-discovery",
+      "kind": "static_check_stdout",
+      "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/default-discovery.stdout.txt",
+      "sha256": "938bafa58e6d6d4cff8c0679da4122ddc47cc18fc6a02c158eebc61c7a84b189",
+      "media_type": "text/plain"
+    },
+    {
+      "id": "nested-a11y-fapi",
+      "kind": "static_check_stdout",
+      "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-fapi.stdout.txt",
+      "sha256": "4b4e187577face1fd9976f5976e54948a3a0d9a9b62e514b1f5b10d42d5369c2",
+      "media_type": "text/plain"
+    },
+    {
+      "id": "nested-a11y-dom",
+      "kind": "static_check_stdout",
+      "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-dom.stdout.txt",
+      "sha256": "fbbb66ba439bfef9526af5f234ac9a4d45098b6b4c36f4e6bce5abb16a12e43f",
+      "media_type": "text/plain"
+    },
+    {
+      "id": "nested-a11y-dynamic",
+      "kind": "static_check_stdout",
+      "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-dynamic.stdout.txt",
+      "sha256": "1390ebc257f82e14687910e9283e78471a5f172bffe8f82eb5d2379d3db3df95",
+      "media_type": "text/plain"
+    },
+    {
+      "id": "nested-a11y-qa",
+      "kind": "static_check_stdout",
+      "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-qa.stdout.txt",
+      "sha256": "a521fb5048ff0e414f026a7118e3aa724f3c2ce320562fb6aedc9b5ebb37be07",
+      "media_type": "text/plain"
+    }
+  ],
+  "evidence": {
+    "agent_performance_result": false,
+    "scorecard_eligible": false,
+    "coverage_effect": "none",
+    "support_grade": "retained_artifacts"
+  },
+  "claim_boundary": {
+    "agent_performance_claim": false,
+    "project_verdict_claim": false,
+    "limitations": [
+      "These 219 passing checks validate static source content and harness expectations; they do not evaluate an agent response.",
+      "The 219/219 aggregate combines five separately executed commands and must not be described as one default-discovery run.",
+      "Static source validation establishes neither Drupal runtime behavior nor the effectiveness of the skills for an agent.",
+      "The five retained stdout artifacts support auditing the reported command-level counts; they do not retain a complete execution environment."
+    ]
+  }
+}

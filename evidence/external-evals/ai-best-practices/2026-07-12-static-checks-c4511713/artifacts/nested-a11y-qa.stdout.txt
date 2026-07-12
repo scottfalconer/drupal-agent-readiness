@@ -1,0 +1,54 @@
+
+=== drupal-accessibility/drupal-a11y-qa ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-accessibility/drupal-a11y-qa/SKILL.md
+  [PASS] S02: Agent Skills frontmatter is valid
+         name 'drupal-a11y-qa' matches parent directory; description is 348 characters
+  [PASS] S03: Covers instance_id / pattern_id two-level Bug ID
+         Found 'instance_id'
+  [PASS] S04: Specifies SHA-256 hex hash format
+         Found 'SHA-256'
+  [PASS] S05: Covers WCAG SC mapping requirement
+         Found 'WCAG SC'
+  [PASS] S06: Enforces one-issue-one-criterion rule
+         Found 'one criterion'
+  [PASS] S07: Covers severity taxonomy (Critical / High / Medium / Low)
+         Found 'Critical'
+  [PASS] S08: Requires AT/browser pair in testing environment
+         Found 'AT/browser'
+  [PASS] S09: Covers AI disclosure requirement
+         Found 'AI disclosure'
+  [PASS] S10: Requires manual checks before RTBC
+         Found 'RTBC'
+  [PASS] S11: References REFERENCE_BUG_REPORT.md companion template
+         Found 'REFERENCE_BUG_REPORT.md'
+  [PASS] S13: Covers suggested-fix sub-skill citation rule
+         Found 'sub-skill'
+  [PASS] S14: Covers ATAG 2.0 for authoring tool accessibility
+         Found 'ATAG'
+  [PASS] S15: Covers AT/browser pairing table with specific AT names
+         Found 'NVDA'
+  [PASS] S20: Establishes tool hierarchy (automated first, manual second, AI last)
+         Found 'automated first'
+  [PASS] S21: Requires reproducible scan command in every issue
+         Found 'verification scan command'
+  [PASS] S22: Requires Definition of Done checklist in every issue
+         Found 'Definition of Done'
+  [PASS] S23: Prohibits filing issues based on AI code inspection alone
+         Found 'AI code inspection alone'
+  [PASS] S16: Links to CI/CD Accessibility Best Practices upstream guide
+         Found 'CI_CD_ACCESSIBILITY_BEST_PRACTICES'
+  [PASS] S17: Mandates automated scan before code review
+         Found 'Automated scan first'
+  [PASS] S18: Covers confidence scores for needs-review axe findings
+         Found 'incomplete'
+  [PASS] S19: Covers alert-fatigue guard for scheduled scans
+         Found 'alert-fatigue'
+  [PASS] S12: Skill kept under 460 lines
+         403 lines (limit: 460)
+
+  Score: 23/23
+
+

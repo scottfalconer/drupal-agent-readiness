@@ -1,0 +1,154 @@
+{
+  "schema_version": "drupal_agent_readiness.external_eval_source_validation.v1",
+  "record_type": "source_validation_not_agent_performance",
+  "validation_id": "2026-07-12-drupal-cms-codebase-standard-profile-preflight-e06f11c3",
+  "adapter_id": "ai_agents_test_drupal_cms_codebase_preflight_v1",
+  "recorded_at": "2026-07-12T04:12:30Z",
+  "source": {
+    "source_id": "ai-agents-test",
+    "artifact_id": "drupal-cms-agent-test-suites",
+    "registry_revision": {
+      "kind": "commit",
+      "value": "e06f11c33c2fda6beb09008e60bf8a65804a132c"
+    },
+    "upstream_commit": "e06f11c33c2fda6beb09008e60bf8a65804a132c"
+  },
+  "validation": {
+    "kind": "drupal_cms_codebase_standard_profile_preflight",
+    "outcome_model": "structured_observations",
+    "adapter_data": {
+      "substrate": {
+        "lifecycle": "temporary_local_copy",
+        "substrate_label": "Drupal CMS 2.1.1 codebase with the Standard install profile",
+        "codebase_project": "Drupal CMS",
+        "codebase_version": "2.1.1",
+        "drupal_version": "11.3.8",
+        "install_profile": "standard",
+        "drupal_cms_install_profile_used": false,
+        "runtime": "DDEV",
+        "containers_stopped_after": true
+      },
+      "observations": [
+        {
+          "id": "php-lint",
+          "outcome": "validated_clean",
+          "evidence_support": "manifest_only_unverified",
+          "command_exit_code": 0,
+          "facts": {
+            "scope": "all_upstream_php_files",
+            "lint_failures": 0
+          }
+        },
+        {
+          "id": "yaml-catalog-parse",
+          "outcome": "parsed",
+          "evidence_support": "manifest_only_unverified",
+          "command_exit_code": 0,
+          "facts": {
+            "yaml_groups": 11,
+            "cases_counted": 81
+          }
+        },
+        {
+          "id": "standard-profile-site-install",
+          "outcome": "installed",
+          "evidence_support": "manifest_only_unverified",
+          "command_exit_code": 0,
+          "facts": {
+            "install_profile": "standard"
+          }
+        },
+        {
+          "id": "drupal-cms-ai-recipe",
+          "outcome": "externally_blocked_partial",
+          "evidence_support": "manifest_only_unverified",
+          "command_exit_code": 173,
+          "facts": {
+            "recipe": "drupal_cms_ai",
+            "external_service": "amazee_trial_provisioning",
+            "http_status": 429,
+            "default_chat_with_tools_provider_after": false
+          }
+        },
+        {
+          "id": "module-enable",
+          "outcome": "enabled",
+          "evidence_support": "manifest_only_unverified",
+          "command_exit_code": 0,
+          "facts": {
+            "module": "ai_agents_test"
+          }
+        },
+        {
+          "id": "content-type-group-import",
+          "outcome": "imported",
+          "evidence_support": "manifest_only_unverified",
+          "command_exit_code": 0,
+          "facts": {
+            "group": "content-type",
+            "cases_imported": 9
+          }
+        },
+        {
+          "id": "real-test-1-no-provider",
+          "outcome": "blocked_missing_precondition",
+          "evidence_support": "manifest_only_unverified",
+          "command_exit_code": 1,
+          "facts": {
+            "test_id": 1,
+            "error": "No default AI provider set for chat with tools",
+            "real_model_invoked": false
+          }
+        },
+        {
+          "id": "unsupported-echo-mock-smoke",
+          "outcome": "presentation_result_disagreement",
+          "evidence_support": "manifest_only_unverified",
+          "command_exit_code": 0,
+          "facts": {
+            "provider": "internal_unsupported_echo_mock",
+            "drush_summary": "Success",
+            "attempts": [
+              {
+                "uid": 0,
+                "observed_result_entity_status": "failure",
+                "error_category": "permission_error"
+              },
+              {
+                "uid": 1,
+                "observed_result_entity_status": "failure",
+                "error_category": "tool_output_type_error"
+              }
+            ]
+          }
+        }
+      ],
+      "retention": {
+        "raw_stdout_retained": false,
+        "database_dump_retained": false,
+        "result_entity_export_retained": false,
+        "manifest_only": true,
+        "note": "These maintainer-recorded observations are manifest-only and unverified because raw stdout, database state, and result entities were not retained."
+      }
+    }
+  },
+  "artifacts": [],
+  "evidence": {
+    "agent_performance_result": false,
+    "scorecard_eligible": false,
+    "coverage_effect": "none",
+    "support_grade": "manifest_only_unverified"
+  },
+  "claim_boundary": {
+    "agent_performance_claim": false,
+    "project_verdict_claim": false,
+    "limitations": [
+      "No real model or configured AI provider evaluation completed, and no provider credential was used.",
+      "The internal EchoAI mock provider was an unsupported harness smoke only and is not a substitute for a supported model provider.",
+      "The Drush Success summary disagreed with failure statuses observed in result entities, so command presentation cannot be treated as a passed test result.",
+      "No raw stdout, database dump, or result entity export was retained beyond this manifest, so none of its observations are independently auditable evidence.",
+      "The substrate was a Drupal CMS 2.1.1 codebase installed with the Standard profile, not a Drupal CMS install-profile installation.",
+      "This preflight establishes no project verdict, model score, Agent Readiness scorecard eligibility, or benchmark coverage effect."
+    ]
+  }
+}

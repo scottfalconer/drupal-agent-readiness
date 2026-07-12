@@ -1,0 +1,23 @@
+version = 1
+
+[[annotations]]
+path = [
+  "evidence/external-evals/ai-best-practices/2026-07-12-render-pipeline-b01-codex-gpt-5.4/prompts/B01-full-injected.txt",
+  "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/default-discovery.stdout.txt",
+  "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-dom.stdout.txt",
+  "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-dynamic.stdout.txt",
+  "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-fapi.stdout.txt",
+  "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-qa.stdout.txt",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Drupal AI Best Practices contributors"
+SPDX-License-Identifier = "GPL-2.0-or-later"
+
+[[annotations]]
+path = "evidence/external-evals/ai-best-practices/2026-07-12-render-pipeline-b01-codex-gpt-5.4/traces/B01.json"
+precedence = "override"
+SPDX-FileCopyrightText = [
+  "2026 Drupal AI Best Practices contributors",
+  "2026 Scott Falconer",
+]
+SPDX-License-Identifier = "GPL-2.0-or-later"

@@ -1,0 +1,305 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drupal.org/agent-readiness/external-eval-run-v1.schema.json",
+  "title": "Trusted local external evaluation run v1",
+  "description": "A generic, closed evidence envelope. Adapter-specific fields are accepted only when a trusted local adapter validates adapter_data.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "record_type",
+    "run_id",
+    "adapter_id",
+    "recorded_at",
+    "source",
+    "suite",
+    "treatment",
+    "agent",
+    "substrate",
+    "result",
+    "artifacts",
+    "evidence",
+    "claim_boundary",
+    "adapter_data"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "drupal_agent_readiness.external_eval_run.v1"
+    },
+    "record_type": {
+      "const": "agent_performance_diagnostic"
+    },
+    "run_id": {
+      "$ref": "#/$defs/id"
+    },
+    "adapter_id": {
+      "$ref": "#/$defs/id"
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "suite": {
+      "type": "object",
+      "required": ["id", "name", "case_ids", "cases_selected"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "case_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "cases_selected": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "treatment": {
+      "type": "object",
+      "required": ["condition_id", "comparison_design"],
+      "properties": {
+        "condition_id": {
+          "$ref": "#/$defs/id"
+        },
+        "comparison_design": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "additionalProperties": false
+    },
+    "agent": {
+      "type": "object",
+      "required": ["provider", "agent_id", "agent_version", "model_id"],
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/text"
+        },
+        "agent_id": {
+          "$ref": "#/$defs/id"
+        },
+        "agent_version": {
+          "$ref": "#/$defs/text"
+        },
+        "model_id": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "substrate": {
+      "type": "object",
+      "required": ["kind", "description", "real_target_runtime"],
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/id"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 20
+        },
+        "real_target_runtime": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "required": [
+        "cases_total",
+        "cases_passed",
+        "cases_failed",
+        "automated_outcome",
+        "published_outcome",
+        "manual_adjudication_status",
+        "manual_adjudication_reason",
+        "manual_observations",
+        "detail"
+      ],
+      "properties": {
+        "cases_total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "cases_passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cases_failed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "automated_outcome": {
+          "type": "string",
+          "enum": ["passed", "failed", "mixed"]
+        },
+        "published_outcome": {
+          "$ref": "#/$defs/id"
+        },
+        "manual_adjudication_status": {
+          "type": "string",
+          "enum": ["not_required", "required_unresolved", "completed"]
+        },
+        "manual_adjudication_reason": {
+          "type": "string",
+          "minLength": 40
+        },
+        "manual_observations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 20
+          }
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 20
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    },
+    "evidence": {
+      "$ref": "#/$defs/evidence"
+    },
+    "claim_boundary": {
+      "$ref": "#/$defs/claim_boundary"
+    },
+    "adapter_data": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "artifact_id",
+        "registry_revision",
+        "upstream_commit"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "artifact_id": {
+          "$ref": "#/$defs/id"
+        },
+        "registry_revision": {
+          "type": "object",
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {
+              "$ref": "#/$defs/id"
+            },
+            "value": {
+              "$ref": "#/$defs/text"
+            }
+          },
+          "additionalProperties": false
+        },
+        "upstream_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["kind", "path", "sha256", "media_type"],
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/id"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^evidence/external-evals/"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "media_type": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["classification", "scorecard_eligible", "coverage_effect"],
+      "properties": {
+        "classification": {
+          "const": "locally_run_diagnostic"
+        },
+        "scorecard_eligible": {
+          "const": false
+        },
+        "coverage_effect": {
+          "const": "none"
+        }
+      },
+      "additionalProperties": false
+    },
+    "claim_boundary": {
+      "type": "object",
+      "required": [
+        "general_score_claim",
+        "project_verdict_claim",
+        "scorecard_claim",
+        "limitations"
+      ],
+      "properties": {
+        "general_score_claim": {
+          "const": false
+        },
+        "project_verdict_claim": {
+          "const": false
+        },
+        "scorecard_claim": {
+          "const": false
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 20
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

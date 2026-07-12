@@ -53,13 +53,17 @@ This repo is the public package for `State of Agents in Drupal` v0.
   task contracts, and the
   [`method/improvement-registry-v1.json`](method/improvement-registry-v1.json)
   evidence-to-change loop.
+- Eval ecosystem reviewers: use the generated
+  [`docs/eval-landscape.md`](docs/eval-landscape.md) to discover external task,
+  evaluator, workflow, and substrate candidates, then inspect the separately
+  retained [`docs/external-eval-results.md`](docs/external-eval-results.md).
 - Skeptics: inspect the prompts, evaluator code, retained answers/transcripts
   where present, ground truth, retained failures, package manifest, and
   `CLEAN-MANIFEST.sha256`.
 - Claim reviewers: read [`docs/claims-ledger.md`](docs/claims-ledger.md) and
   [`REVIEW-READINESS.md`](REVIEW-READINESS.md).
-- Contributors: propose a task, a starting site, a rubric, an evaluator, or an
-  adversarial case.
+- Contributors: propose a task, a starting site, a rubric, an evaluator, an
+  adversarial case, or an inert external-eval reference.
 
 The benchmark and audit tooling requires Python 3.12, matching CI. The older
 Python bundled with some macOS releases is not a supported runtime.
@@ -69,6 +73,8 @@ Quick local checks:
 ```bash
 python3 -B -m unittest discover -s agent_readiness/tests -v
 python3 -S -B agent_readiness/scripts/audit_benchmark_registries_v1.py --format json
+python3 -S -B -m agent_readiness.scripts.build_eval_landscape --check
+python3 -S -B -m agent_readiness.scripts.build_external_eval_results --check
 python3 -B agent_readiness/scripts/build_clean_manifest.py --repo-root . --check
 python3 -B agent_readiness/scripts/audit_clean_checkout_integrity.py \
   --repo-root . --checksum-manifest CLEAN-MANIFEST.sha256 \
@@ -264,3 +270,10 @@ Good challenges are welcome. The most useful ones are concrete:
 The evaluator is not universal Drupal truth. It is the contract for a specific
 task on a specific starting site. If the rubric is wrong, that is a task failure,
 not an agent failure.
+
+## Licensing
+
+Original Drupal Agent Readiness work is MIT-licensed. Retained third-party
+evaluation artifacts keep their upstream terms; see
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) and `REUSE.toml` for the
+path-level assignments and bundled license texts.

@@ -1,0 +1,137 @@
+{
+  "schema_version": "drupal_agent_readiness.external_eval_run.v1",
+  "record_type": "agent_performance_diagnostic",
+  "run_id": "2026-07-12-render-pipeline-b01-codex-gpt-5.4",
+  "adapter_id": "ai_best_practices_run_evals_v1",
+  "recorded_at": "2026-07-12T02:27:44Z",
+  "source": {
+    "source_id": "ai-best-practices",
+    "artifact_id": "skill-eval-cases",
+    "registry_revision": {
+      "kind": "branch",
+      "value": "1.0.x"
+    },
+    "upstream_commit": "c45117130a4de1fe7d03d3fe225e3f09b8e4e803"
+  },
+  "suite": {
+    "id": "drupal-render-pipeline",
+    "name": "Drupal render pipeline behavioral evaluation",
+    "case_ids": ["B01"],
+    "cases_selected": 1
+  },
+  "treatment": {
+    "condition_id": "skill_injected",
+    "comparison_design": "single_condition_no_ab"
+  },
+  "agent": {
+    "provider": "openai",
+    "agent_id": "codex",
+    "agent_version": "0.142.5",
+    "model_id": "gpt-5.4"
+  },
+  "substrate": {
+    "kind": "isolated_empty_git_worktree",
+    "description": "Prompt-only execution in an isolated empty temporary Git worktree.",
+    "real_target_runtime": false
+  },
+  "result": {
+    "cases_total": 1,
+    "cases_passed": 0,
+    "cases_failed": 1,
+    "automated_outcome": "failed",
+    "published_outcome": "upstream_oracle_fail_manual_adjudication_required",
+    "manual_adjudication_status": "required_unresolved",
+    "manual_adjudication_reason": "The response uses semantically relevant CacheableMetadata APIs that the upstream literal-token oracle does not recognize, creating a likely oracle disagreement; Drupal correctness remains unresolved.",
+    "manual_observations": [
+      "The response returns a render array and uses CacheableMetadata::addCacheTags(['node_list']) followed by applyTo($build).",
+      "The upstream oracle searches only for literal #cache, 'tags', or 'contexts' tokens and recorded none of them.",
+      "The response says user.permissions is covered through an AccessResult, but no Drupal runtime check adjudicated that claim.",
+      "The one extracted PHP block passed the upstream syntax-lint check.",
+      "The --ignore-user-config flag removed an incompatible reasoning setting, but a separate direct diagnostic still emitted plugin and skill loading warnings; the retained trace captures neither provider stderr nor a loaded-context inventory."
+    ],
+    "detail": "The upstream literal oracle marked B01 failed because it found none of #cache, 'tags', or 'contexts'. The response instead used CacheableMetadata APIs, and the extracted PHP block passed syntax lint. This automated outcome requires manual or runtime adjudication."
+  },
+  "artifacts": [
+    {
+      "kind": "upstream_trace",
+      "path": "evidence/external-evals/ai-best-practices/2026-07-12-render-pipeline-b01-codex-gpt-5.4/traces/B01.json",
+      "sha256": "f6efef30de423403ac9b9ebb1627c876d26d77a65c21544ff5294aa3b0bb9531",
+      "media_type": "application/json"
+    },
+    {
+      "kind": "reconstructed_full_prompt",
+      "path": "evidence/external-evals/ai-best-practices/2026-07-12-render-pipeline-b01-codex-gpt-5.4/prompts/B01-full-injected.txt",
+      "sha256": "0eefd8a06f3376ae1357d316a239dfc0f956ed4489bafd60b02059bb7ab036a0",
+      "media_type": "text/plain"
+    }
+  ],
+  "evidence": {
+    "classification": "locally_run_diagnostic",
+    "scorecard_eligible": false,
+    "coverage_effect": "none"
+  },
+  "claim_boundary": {
+    "general_score_claim": false,
+    "project_verdict_claim": false,
+    "scorecard_claim": false,
+    "limitations": [
+      "The prompt ran in an isolated empty Git worktree with no Drupal runtime or real Drupal site.",
+      "Only the skill-injected condition ran, so this result cannot estimate the effect of the skill against a no-skill baseline.",
+      "One selected case cannot be generalized to Codex, GPT-5.4, Drupal agents, or the full upstream suite.",
+      "The upstream substring-oracle failure is not adjudicated as a model or task failure and does not establish an AI Best Practices project failure.",
+      "The trace omits the full injected skill prompt and final Codex CLI argv; the package retains a deterministic prompt reconstruction from pinned sources, while the final argv remains unretained.",
+      "Filesystem isolation is verified only for the empty temporary Git worktree; ambient Codex plugin or skill context isolation is incomplete and unverified because provider stderr and loaded-context inventory were not retained.",
+      "PHP syntax lint does not establish Drupal runtime correctness, cache behavior, access behavior, or functional success.",
+      "This locally run diagnostic has no Agent Readiness scorecard eligibility and changes no benchmark coverage status."
+    ]
+  },
+  "adapter_data": {
+    "runner": {
+      "upstream_runner": "evals/run-evals.py run_behavioral()",
+      "added_cli_arguments": ["--ignore-user-config", "--ephemeral"],
+      "trace_capture": {
+        "omitted_from_trace": ["full_injected_skill_prompt", "final_codex_cli_argv"],
+        "retained_elsewhere_in_package": ["full_injected_skill_prompt"],
+        "unretained": ["final_codex_cli_argv"],
+        "reconstructed_prompt_artifact_path": "evidence/external-evals/ai-best-practices/2026-07-12-render-pipeline-b01-codex-gpt-5.4/prompts/B01-full-injected.txt",
+        "prompt_reconstruction_method": "Upstream run_behavioral prompt concatenation from the pinned SKILL.md and B01 eval prompt; no references directory exists for this skill."
+      },
+      "other_changes": [],
+      "non_upstream_behavior_changes": false
+    },
+    "substrate": {
+      "working_directory": "/private/tmp/abp-render-single-20260711/workdir",
+      "git_repository": true,
+      "drupal_runtime": false,
+      "real_drupal_site": false
+    },
+    "evaluator": {
+      "kind": "upstream_deterministic_assertions",
+      "upstream_assertions": true,
+      "php_lint": true,
+      "oracle_required_tokens": ["#cache", "'tags'", "'contexts'"]
+    },
+    "result": {
+      "php_blocks_linted": 1,
+      "php_blocks_failed_lint": 0
+    },
+    "upstream_artifact_pins": [
+      {
+        "path": "skills/drupal-render-pipeline/SKILL.md",
+        "sha256": "841e49e40c4010919fe5e0df724f0e4be6c960d45838a89d7355f1b47d0cc7d1"
+      },
+      {
+        "path": "evals/drupal-render-pipeline/evals.json",
+        "sha256": "f53855f341f09912decfe85603718927902a70e1ee0a8f0fe119b87436afa891"
+      },
+      {
+        "path": "evals/run-evals.py",
+        "sha256": "edf8cf73d0d5734539834c26ea74068d929b201d000c11750fab2ce9e5a5a217"
+      },
+      {
+        "path": "evals/providers.py",
+        "sha256": "62b430e8492424b84cf11f36c11d803ddf4e547ffd71b01241307827519f7597"
+      }
+    ]
+  }
+}

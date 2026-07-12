@@ -1,0 +1,50 @@
+
+=== drupal-accessibility/drupal-a11y-dynamic ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-accessibility/drupal-a11y-dynamic/SKILL.md
+  [PASS] S02: Agent Skills frontmatter is valid
+         name 'drupal-a11y-dynamic' matches parent directory; description is 318 characters
+  [PASS] S03: Mandates Drupal.announce() over hand-rolled aria-live
+         Found 'Drupal.announce'
+  [PASS] S04: Prohibits hand-rolled aria-live regions
+         Found 'aria-live'
+  [PASS] S05: Covers modal focus trapping via Drupal.dialog
+         Found 'Drupal.dialog'
+  [PASS] S06: Covers AJAX focus return using FocusCommand
+         Found 'FocusCommand'
+  [PASS] S07: Mandates Playwright over Nightwatch
+         Found 'Playwright'
+  [PASS] S08: References @axe-core/playwright
+         Found '@axe-core/playwright'
+  [PASS] S09: References issue #3553673 (Playwright adoption)
+         Found '3553673'
+  [PASS] S10: References issue #3338664 (Axe in PHPUnit)
+         Found '3338664'
+  [PASS] S11: Covers colour-mode testing (light and dark Axe scans)
+         Found 'colorScheme'
+  [PASS] S12: Notes AxeRenderArrayTrait is not yet committed to core
+         Found 'yet committed to core'
+  [PASS] S14: Covers shift-left pre-commit CI layer guidance
+         Found 'pre-commit'
+  [PASS] S15: Covers forced-colours Playwright test pattern
+         Found 'forcedColors'
+  [PASS] S16: Covers drupalAjaxSuccess client-side event for focus return
+         Found 'drupalAjaxSuccess'
+  [PASS] S17: Covers Drupal.tabbingManager for non-modal focus trapping
+         Found 'tabbingManager'
+  [PASS] S18: Links to CI/CD Accessibility Best Practices upstream guide
+         Found 'CI_CD_ACCESSIBILITY_BEST_PRACTICES'
+  [PASS] S19: Covers tool comparison table (axe vs Playwright ARIA snapshots vs Guidepup)
+         Found 'toMatchAriaSnapshot'
+  [PASS] S20: Covers Guidepup virtual screen reader for CI
+         Found 'Guidepup'
+  [PASS] S21: Mandates getByRole semantic queries over CSS selectors
+         Found 'getByRole'
+  [PASS] S13: Skill kept under 470 lines
+         414 lines (limit: 470)
+
+  Score: 21/21
+
+

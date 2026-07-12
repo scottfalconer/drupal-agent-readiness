@@ -1,0 +1,42 @@
+
+=== drupal-accessibility/drupal-a11y-dom ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-accessibility/drupal-a11y-dom/SKILL.md
+  [PASS] S02: Agent Skills frontmatter is valid
+         name 'drupal-a11y-dom' matches parent directory; description is 325 characters
+  [PASS] S03: Covers .visually-hidden utility
+         Found '.visually-hidden'
+  [PASS] S04: Covers aria-hidden misuse on focusable elements
+         Found 'aria-hidden'
+  [PASS] S05: Covers WCAG 2.2 SC 2.5.8 target size (24×24)
+         Found '24×24'
+  [PASS] S06: Covers :focus-visible
+         Found ':focus-visible'
+  [PASS] S07: Covers prefers-color-scheme dark mode
+         Found 'prefers-color-scheme'
+  [PASS] S08: Covers forced-colors mode
+         Found 'forced-colors'
+  [PASS] S09: Covers prefers-reduced-motion
+         Found 'prefers-reduced-motion'
+  [PASS] S10: Covers @media (scripting) js-show/js-hide pattern
+         Found 'js-show'
+  [PASS] S11: Prohibits redundant ARIA roles on native elements
+         Found 'role="navigation"'
+  [PASS] S12: Covers focus-visible rule for dark and forced-colours modes
+         Found '--color-focus'
+  [PASS] S13: Covers aria-hidden on decorative SVG icons adjacent to text
+         Found 'focusable="false"'
+  [PASS] S14: Skill kept under 460 lines
+         397 lines (limit: 460)
+  [PASS] S15: Covers .visually-hidden.focusable skip-link pattern
+         Found '.visually-hidden.focusable'
+  [PASS] S16: Covers aria-current for navigation active state
+         Found 'aria-current'
+  [PASS] S17: Covers aria-expanded for disclosure widgets
+         Found 'aria-expanded'
+
+  Score: 17/17
+
+
