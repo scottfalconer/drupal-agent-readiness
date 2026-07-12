@@ -164,14 +164,18 @@ what actually happened to site state, explain the Drupal-facing cause of a
 failure, and test whether a Drupal-side change improves the outcome with the
 agent stack held fixed.
 
+Source names, links, and descriptions below are checked against the registry.
+The relationship column is maintainer-curated orientation, not a second
+artifact index; the generated landscape remains the maintained inventory.
+
 | Project | What it is | Relationship to this bench |
 | --- | --- | --- |
-| [AI Best Practices](https://www.drupal.org/project/ai_best_practices) | Drupal skills for coding agents plus skill evaluation cases | Task and treatment candidates (skill versus no-skill); one case is retained as a bounded local diagnostic in [`docs/external-eval-results.md`](docs/external-eval-results.md) |
-| [AI Eval](https://www.drupal.org/project/ai_eval) | Portable case, rubric, deterministic-grader, and calibrated-judge contracts | Grader and interchange infrastructure this bench can adopt; adopting a framework is not readiness evidence |
-| [AI Agents Test](https://www.drupal.org/project/ai_agents_test) | Drupal-native agent tool-behavior suites plus a hosted DrupalForge template | Prior art and substrate candidates; Drupal-native agents are a separate agent class from the external coding agents measured here |
-| [AI Ongoing Evaluations](https://www.drupal.org/project/ai_evaluations) | Human vote and comparison capture for AI outputs | Judge-calibration prior art; human labels are evaluator inputs, not readiness evidence |
-| [AI Bench](https://www.drupal.org/project/ai_bench) | Proposed public program for Drupal-specific model and agent benchmarks | Monitored for concrete task and evaluator artifacts; model and hardware leaderboards stay out of scope here |
-| [AI Maintenance Skills](https://www.drupal.org/project/ai_maintenance_skills) | Issue triage and maintenance workflow behind a sandboxed trust boundary | Closest production consumer of readiness evidence; a candidate for measuring net maintainer burden before any automation claim |
+| [AI Best Practices for Drupal](https://www.drupal.org/project/ai_best_practices) | Drupal-specific guidance and behavioral evaluation cases for external coding agents. | Task and treatment candidates (skill versus no-skill); one case is retained as a bounded local diagnostic in [`docs/external-eval-results.md`](docs/external-eval-results.md) |
+| [AI Eval](https://www.drupal.org/project/ai_eval) | A Drupal evaluation framework with versioned dataset, rubric, judge, deterministic-grader, and result-contract implementations. | Grader and interchange infrastructure this bench can adopt; adopting a framework is not readiness evidence |
+| [AI Agents Test and DrupalForge testing template](https://www.drupal.org/project/ai_agents_test) | Drupal-native agent tool-behavior test suites plus a hosted Drupal CMS template that runs them on a site. | Prior art and substrate candidates; Drupal-native agents are a separate agent class from the external coding agents measured here |
+| [AI Ongoing Evaluations](https://www.drupal.org/project/ai_evaluations) | A Drupal-native framework for capturing human feedback, comparing AI outputs, and importing or exporting evaluation records. | Human-label dataset and comparison-workflow prior art; a separate evaluation design is required before those records become a validated grader or readiness evidence |
+| [AI Bench](https://www.drupal.org/project/ai_bench) | A proposed public program for Drupal-specific model and agent benchmark tasks and community-submitted runs. | Monitored for concrete task and evaluator artifacts; model and hardware leaderboards stay out of scope here |
+| [AI Maintenance Skills](https://www.drupal.org/project/ai_maintenance_skills) | Drupal.org issue-triage and maintenance workflows for coding agents within a constrained DDEV design. | Workflow and substrate prior art; a candidate for a separately defined local task that measures net maintainer burden after its inputs, evaluator, decision target, and stop condition are fixed |
 
 Generic runners and result formats (for example Inspect AI and
 every-eval-ever-style envelopes) are consumed where useful rather than
