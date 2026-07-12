@@ -53,9 +53,11 @@ This repo is the public package for `State of Agents in Drupal` v0.
   task contracts, and the
   [`method/improvement-registry-v1.json`](method/improvement-registry-v1.json)
   evidence-to-change loop.
-- Eval ecosystem reviewers: use the generated
+- Eval ecosystem reviewers: start with
+  [Where This Fits In The Ecosystem](#where-this-fits-in-the-ecosystem), then
+  use the generated
   [`docs/eval-landscape.md`](docs/eval-landscape.md) to discover external task,
-  evaluator, workflow, and substrate candidates, then inspect the separately
+  evaluator, workflow, and substrate candidates, and inspect the separately
   retained [`docs/external-eval-results.md`](docs/external-eval-results.md).
 - Skeptics: inspect the prompts, evaluator code, retained answers/transcripts
   where present, ground truth, retained failures, package manifest, and
@@ -151,6 +153,38 @@ gaps visible, inspectable, testable, and fixable.
 - Not a cross-CMS comparison.
 - Not a private held-out model exam.
 - Not a production-ready Drupal.org contrib module.
+
+## Where This Fits In The Ecosystem
+
+Several Drupal community projects now build or evaluate agent capability. They
+are mostly complementary layers rather than competing versions of one project.
+This bench occupies the consequence-and-improvement layer: give a
+general-purpose external agent a real Drupal site and a bounded job, retain
+what actually happened to site state, explain the Drupal-facing cause of a
+failure, and test whether a Drupal-side change improves the outcome with the
+agent stack held fixed.
+
+| Project | What it is | Relationship to this bench |
+| --- | --- | --- |
+| [AI Best Practices](https://www.drupal.org/project/ai_best_practices) | Drupal skills for coding agents plus skill evaluation cases | Task and treatment candidates (skill versus no-skill); one case is retained as a bounded local diagnostic in [`docs/external-eval-results.md`](docs/external-eval-results.md) |
+| [AI Eval](https://www.drupal.org/project/ai_eval) | Portable case, rubric, deterministic-grader, and calibrated-judge contracts | Grader and interchange infrastructure this bench can adopt; adopting a framework is not readiness evidence |
+| [AI Agents Test](https://www.drupal.org/project/ai_agents_test) | Drupal-native agent tool-behavior suites plus a hosted DrupalForge template | Prior art and substrate candidates; Drupal-native agents are a separate agent class from the external coding agents measured here |
+| [AI Ongoing Evaluations](https://www.drupal.org/project/ai_evaluations) | Human vote and comparison capture for AI outputs | Judge-calibration prior art; human labels are evaluator inputs, not readiness evidence |
+| [AI Bench](https://www.drupal.org/project/ai_bench) | Proposed public program for Drupal-specific model and agent benchmarks | Monitored for concrete task and evaluator artifacts; model and hardware leaderboards stay out of scope here |
+| [AI Maintenance Skills](https://www.drupal.org/project/ai_maintenance_skills) | Issue triage and maintenance workflow behind a sandboxed trust boundary | Closest production consumer of readiness evidence; a candidate for measuring net maintainer burden before any automation claim |
+
+Generic runners and result formats (for example Inspect AI and
+every-eval-ever-style envelopes) are consumed where useful rather than
+rebuilt, and where a shared community evaluation umbrella emerges this bench
+participates as a consumer and producer, not as a second standard.
+
+The maintained index of these and future references is the generated
+[`docs/eval-landscape.md`](docs/eval-landscape.md), built from inert pointers
+under [`method/eval-references/`](method/eval-references/README.md).
+Maintainer-run external diagnostics are retained separately in
+[`docs/external-eval-results.md`](docs/external-eval-results.md). Listing a
+project is discovery, not endorsement; no external listing or result changes
+lifecycle coverage or enters the scorecard.
 
 ## Current Status
 
