@@ -3339,9 +3339,9 @@
   "package": "State of Agents in Drupal v0 evidence package",
   "repository_dependencies": [
     {
-      "bytes": 15293,
+      "bytes": 18299,
       "path": "README.md",
-      "sha256": "dc8e4316466c5a3c32f689bde7ea2df99a7a864b7a6d1fda96461c411403fe8b"
+      "sha256": "986a4924e0b6d99f1c6cc6fc970ee6e3ac8026f8bb3f3ce36ba186ddd1f22de2"
     },
     {
       "bytes": 6495,
