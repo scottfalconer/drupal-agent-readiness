@@ -1,0 +1,42 @@
+{
+  "schema_version": "drupal_agent_readiness.eval_reference.v1",
+  "id": "ai-evaluations",
+  "name": "AI Ongoing Evaluations",
+  "summary": "A Drupal-native framework for capturing human feedback, comparing AI outputs, and importing or exporting evaluation records.",
+  "canonical_url": "https://www.drupal.org/project/ai_evaluations",
+  "repository_url": "https://git.drupalcode.org/project/ai_evaluations",
+  "roles": ["dataset_source"],
+  "registry_effect": "reference_only_no_claim_or_coverage_effect",
+  "last_reviewed_at": "2026-07-11",
+  "provenance": {
+    "review_basis": "primary_sources_and_supplied_discussion",
+    "source_urls": [
+      "https://www.drupal.org/project/ai_evaluations"
+    ],
+    "note": "The supplied discussion identified this project as prior art for capturing and comparing human feedback on AI outputs."
+  },
+  "artifacts": [
+    {
+      "id": "human-feedback-capture-framework",
+      "name": "Human feedback capture and comparison framework",
+      "kind": "evaluation_framework",
+      "pointer_type": "release_page",
+      "url": "https://www.drupal.org/project/ai_evaluations/releases/0.1.0",
+      "upstream_revision": {
+        "kind": "release",
+        "value": "0.1.0",
+        "immutable": true
+      },
+      "agent_classes": ["not_agent_specific"],
+      "question_answered": "How can a Drupal site capture human votes or comparisons with prompt and model context, then import or export those evaluation records?",
+      "mapping_scope": "supporting_infrastructure",
+      "lifecycle_stages": [],
+      "candidate_task_family_ids": [],
+      "substrate_fidelity": "drupal_runtime",
+      "evaluator_types": ["human_label"],
+      "disposition": "candidate_for_dataset_reuse",
+      "mapping_note": "Release 0.1.0 captures and compares human feedback and supports record transfer; a separate evaluation design would be needed to turn those records into an agent task or validated grader.",
+      "claim_boundary": "Release 0.1.0 does not ship an LLM judge or judge-calibration workflow and does not show that an external agent acted correctly on Drupal state."
+    }
+  ]
+}

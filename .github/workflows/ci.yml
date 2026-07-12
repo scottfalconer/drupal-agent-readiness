@@ -39,6 +39,9 @@ jobs:
               Path("agent_readiness/schema/benchmark-run-v1.schema.json"),
               Path("agent_readiness/schema/inventory-answer-v1.schema.json"),
               Path("agent_readiness/schema/run-result.schema.json"),
+              Path("method/schema/eval-reference-v1.schema.json"),
+              Path("method/schema/external-eval-run-v1.schema.json"),
+              Path("method/schema/external-eval-source-validation-v1.schema.json"),
           ]
           for schema_path in schema_paths:
               schema = json.loads(schema_path.read_text())
@@ -53,6 +56,20 @@ jobs:
                   schema_paths[5],
               ),
           ]
+          external_instance_groups = [
+              (Path("method/eval-references"), schema_paths[7], "*.json"),
+              (Path("evidence/external-evals"), schema_paths[8], "run.json"),
+              (
+                  Path("evidence/external-evals"),
+                  schema_paths[9],
+                  "source-validation.json",
+              ),
+          ]
+          for root, schema_path, pattern in external_instance_groups:
+              instance_paths = sorted(root.rglob(pattern))
+              if not instance_paths:
+                  raise SystemExit(f"no external instances found: {root}/{pattern}")
+              pairs.extend((instance_path, schema_path) for instance_path in instance_paths)
           for instance_path, schema_path in pairs:
               instance = json.loads(instance_path.read_text())
               schema = json.loads(schema_path.read_text())

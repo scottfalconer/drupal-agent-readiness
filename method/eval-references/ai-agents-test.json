@@ -1,0 +1,66 @@
+{
+  "schema_version": "drupal_agent_readiness.eval_reference.v1",
+  "id": "ai-agents-test",
+  "name": "AI Agents Test and DrupalForge testing template",
+  "summary": "Drupal-native agent tool-behavior test suites plus a hosted Drupal CMS template that runs them on a site.",
+  "canonical_url": "https://www.drupal.org/project/ai_agents_test",
+  "repository_url": "https://git.drupalcode.org/project/ai_agents_test",
+  "roles": ["task_source", "workflow_source", "substrate_source"],
+  "registry_effect": "reference_only_no_claim_or_coverage_effect",
+  "last_reviewed_at": "2026-07-11",
+  "provenance": {
+    "review_basis": "primary_sources_and_supplied_discussion",
+    "source_urls": [
+      "https://www.drupal.org/project/ai_agents_test",
+      "https://www.drupalforge.org/template/drupal-cms-ai-agents-testing-framework",
+      "https://git.drupalcode.org/project/ai_agents_test/-/tree/e06f11c33c2fda6beb09008e60bf8a65804a132c/examples/drupal_cms"
+    ],
+    "note": "AI Agents Test and its DrupalForge template are grouped because the hosted page points to the module; the suite pointer is pinned to the module's shipped Drupal CMS YAML examples."
+  },
+  "artifacts": [
+    {
+      "id": "drupal-cms-agent-test-suites",
+      "name": "Drupal CMS agent tool-behavior YAML suites",
+      "kind": "task_suite",
+      "pointer_type": "repository_tree",
+      "url": "https://git.drupalcode.org/project/ai_agents_test/-/tree/e06f11c33c2fda6beb09008e60bf8a65804a132c/examples/drupal_cms",
+      "upstream_revision": {
+        "kind": "commit",
+        "value": "e06f11c33c2fda6beb09008e60bf8a65804a132c",
+        "immutable": true
+      },
+      "agent_classes": ["drupal_native_agent"],
+      "question_answered": "Does a Drupal-native agent select the expected tools, avoid forbidden tools, respect tool order, and pass parameter checks for the supplied prompts?",
+      "mapping_scope": "task_candidate",
+      "lifecycle_stages": ["understand", "plan_clarify", "act"],
+      "candidate_task_family_ids": ["governed_editorial_change"],
+      "substrate_fidelity": "drupal_runtime",
+      "evaluator_types": ["deterministic", "llm_judge"],
+      "disposition": "candidate_for_local_adaptation",
+      "mapping_note": "Most rules deterministically inspect tool presence, absence, order, and parameters; optional rules can ask an LLM to score a tool parameter or text response. Drupal-native agents must remain a separate class from external coding agents.",
+      "claim_boundary": "The shipped rules do not independently inspect final Drupal state, so a passing suite does not prove that the requested content or configuration outcome actually exists."
+    },
+    {
+      "id": "drupalforge-test-template",
+      "name": "Hosted Drupal CMS AI Agents Testing Framework",
+      "kind": "runtime_substrate",
+      "pointer_type": "hosted_demo",
+      "url": "https://www.drupalforge.org/template/drupal-cms-ai-agents-testing-framework",
+      "upstream_revision": {
+        "kind": "unversioned",
+        "value": "hosted-template-reviewed-2026-07-11",
+        "immutable": false
+      },
+      "agent_classes": ["drupal_native_agent"],
+      "question_answered": "Can the Drupal-native agent tool-behavior suites be exercised on a real hosted Drupal CMS runtime with inspectable run results?",
+      "mapping_scope": "supporting_infrastructure",
+      "lifecycle_stages": [],
+      "candidate_task_family_ids": [],
+      "substrate_fidelity": "hosted_drupal_runtime",
+      "evaluator_types": ["deterministic", "llm_judge"],
+      "disposition": "candidate_for_substrate_reuse",
+      "mapping_note": "The hosted page is substrate prior art, not a task mapping; it states that tests mutate actual content and are not easily rerun without reset or cleanup.",
+      "claim_boundary": "A convenient hosted template is not a pinned, reset-proven evaluation substrate and does not make its displayed results comparable to local Agent Readiness runs."
+    }
+  ]
+}

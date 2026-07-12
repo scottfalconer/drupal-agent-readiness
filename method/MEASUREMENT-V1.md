@@ -50,8 +50,9 @@ producing a favorable rate.
 Execution frequency does not change evidence grade:
 
 1. A cheap per-change smoke or diagnostic run is labeled `diagnostic_only`.
-   It can catch harness or product breakage, but it cannot enter the evidence
-   registry, produce an estimate, or support promotion.
+   It can catch harness or product breakage, but it cannot enter the
+   claim-bearing published experiment registry, produce an estimate, or support
+   promotion.
 2. A small fixed regression panel is labeled `directional_only`. It holds a
    useful engineering baseline and can show where to investigate, but its
    output cannot be relabeled as claim-grade evidence or attached to an
@@ -323,9 +324,9 @@ therefore separates:
    and the complete 16-binding synthesis adopts the explicit treatment scope.
    Placebo and diagnostic bindings never satisfy this per-experiment gate.
 
-The current public registry remains `pending_registration`, so the third gate
-is intentionally false even if a standalone measurement fixture meets its
-effect rule.
+The current public improvement registry remains `pending_registration`, so the
+third gate is intentionally false even if a standalone measurement fixture
+meets its effect rule.
 
 ## Remaining validity boundary
 

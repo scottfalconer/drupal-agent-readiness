@@ -36,6 +36,11 @@
       "sha256": "21293e6f289022dff86edf0b44410eaffca84ca40dbeafe6c4dd9c2d21093c58"
     },
     {
+      "bytes": 30500,
+      "path": "eval_references.py",
+      "sha256": "401722e2183c97cd0a072418159b837d23100ddf0b8a556b0e76d18bf3a3f768"
+    },
+    {
       "bytes": 54,
       "path": "evaluators/__init__.py",
       "sha256": "07b0ca8b0a3dc1b313f1eba34bfdbc4337b4a5e361afa30dd796e28418d68340"
@@ -2506,6 +2511,11 @@
       "sha256": "3ca505ad5b68bd50f2950103b3ee57208d53003ae1fabc103412d56cad7c8cc0"
     },
     {
+      "bytes": 73985,
+      "path": "external_eval_results.py",
+      "sha256": "c681983d5f73cad201d8141e546c28859391965602dd90f11ad0c269fd069553"
+    },
+    {
       "bytes": 407,
       "path": "fixtures/alias_safety_answer_fail.json",
       "sha256": "93b34e85ca4dc792ac3648da61ba86575158efc9147ae2167752d91c511508c5"
@@ -2731,9 +2741,9 @@
       "sha256": "39b52baaefe6faa6a3704929209e16dc98a7d6f25c4f96c3e58dabc8a23822a7"
     },
     {
-      "bytes": 24849,
+      "bytes": 24883,
       "path": "public/why-this-bench.md",
-      "sha256": "5d79c982635a65e1635e8e1111daadd4c18cdc8e04d3b67da19e8030d773941b"
+      "sha256": "3fbf059a095464df9c166425a198db8d7d164388467c4c1dd172685bf769c6ab"
     },
     {
       "bytes": 39028,
@@ -3106,6 +3116,16 @@
       "sha256": "3633c08e4a79501b8952ea62c7e9faf9ca0f69805e538d6b6c71669ceccec1bb"
     },
     {
+      "bytes": 1976,
+      "path": "scripts/build_eval_landscape.py",
+      "sha256": "7872278e6c203238269e61615f54b7b314ea34e73376c84a4606438f225bb456"
+    },
+    {
+      "bytes": 2358,
+      "path": "scripts/build_external_eval_results.py",
+      "sha256": "4954f2d8d6a4fc6eb18ee1a6b20eb6db2b855878510af6a4db7a3224dcb6317a"
+    },
+    {
       "bytes": 7769,
       "path": "scripts/build_intent_behavior_baseline.sh",
       "sha256": "b9b85e22d002add93c11e4db0b0668a624f7152e380deb94a25f8347cc99e943"
@@ -3241,9 +3261,19 @@
       "sha256": "52de59ef1489ffdd577d9c60ed78edfd8999ccef6046493234c8c5cf597a649b"
     },
     {
+      "bytes": 15413,
+      "path": "tests/test_eval_references.py",
+      "sha256": "4a1b5813934abbc484c9c5ce8293005b2b7a402a286fcb728f47567e8c73ad93"
+    },
+    {
       "bytes": 10604,
       "path": "tests/test_evaluators.py",
       "sha256": "bb448f9237856d47faeac940390956b302db24a0e99bb950584b294b6f8351db"
+    },
+    {
+      "bytes": 32260,
+      "path": "tests/test_external_eval_results.py",
+      "sha256": "a5e7f253b45663f0c31d882f76063879a7f22091286ca83225a65e441d1122d6"
     },
     {
       "bytes": 172621,
@@ -3309,9 +3339,9 @@
   "package": "State of Agents in Drupal v0 evidence package",
   "repository_dependencies": [
     {
-      "bytes": 14564,
+      "bytes": 15293,
       "path": "README.md",
-      "sha256": "24655a437df51030fe5536be93a8064bef8f15faf0d90497fa455087919b9ccf"
+      "sha256": "dc8e4316466c5a3c32f689bde7ea2df99a7a864b7a6d1fda96461c411403fe8b"
     },
     {
       "bytes": 6495,
@@ -3334,9 +3364,9 @@
       "sha256": "39b52baaefe6faa6a3704929209e16dc98a7d6f25c4f96c3e58dabc8a23822a7"
     },
     {
-      "bytes": 24849,
+      "bytes": 24883,
       "path": "docs/why-this-bench.md",
-      "sha256": "5d79c982635a65e1635e8e1111daadd4c18cdc8e04d3b67da19e8030d773941b"
+      "sha256": "3fbf059a095464df9c166425a198db8d7d164388467c4c1dd172685bf769c6ab"
     },
     {
       "bytes": 5568,
@@ -3344,14 +3374,14 @@
       "sha256": "9b939f179ac389bcc62771fe82d7ebc8d197162e8b98e2457e2586e2608eced3"
     },
     {
-      "bytes": 13991,
+      "bytes": 14623,
       "path": "method/PUBLISHING.md",
-      "sha256": "f16881296e46c388d63cae2c0dd96233a5ec8f160fac4d654be72016ee18900f"
+      "sha256": "be863604ee58dd0f63fe93031747d12a4d5f493785ff5173013465a24c544e2d"
     },
     {
-      "bytes": 18391,
+      "bytes": 18432,
       "path": "method/MEASUREMENT-V1.md",
-      "sha256": "f1c73b67d9b7ab15fbbb372beee360923a05fb24eaebbb5efe7d4e11652b0500"
+      "sha256": "f24a0bea12e3f8c029001f58fbe504df8fcd790549f88be15157242f4bbcd9bf"
     },
     {
       "bytes": 3452,

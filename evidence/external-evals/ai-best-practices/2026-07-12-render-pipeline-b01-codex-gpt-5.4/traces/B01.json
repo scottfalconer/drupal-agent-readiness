@@ -1,0 +1,31 @@
+{
+  "id": "B01",
+  "teaching": "A controller method that returns a render array (NOT a Response object or raw HTML string) with cache metadata including cache tags (node_list) and cache contexts (user.permissions).",
+  "provider": "codex",
+  "model": "gpt-5.4",
+  "prompt": "Write a Drupal page controller method that displays a list of the 10 most recent published articles. The page is visible to any user with the 'access content' permission.",
+  "response": "```php\nuse Drupal\\Core\\Cache\\CacheableMetadata;\nuse Drupal\\Core\\Controller\\ControllerBase;\nuse Drupal\\Core\\Link;\nuse Drupal\\Core\\Access\\AccessResult;\nuse Drupal\\Core\\Session\\AccountInterface;\nuse Drupal\\node\\NodeInterface;\n\nfinal class RecentArticlesController extends ControllerBase {\n\n  public function recentArticles(): array {\n    $nids = $this->entityTypeManager()\n      ->getStorage('node')\n      ->getQuery()\n      ->accessCheck(TRUE)\n      ->condition('type', 'article')\n      ->condition('status', NodeInterface::PUBLISHED)\n      ->sort('created', 'DESC')\n      ->range(0, 10)\n      ->execute();\n\n    $nodes = $this->entityTypeManager()\n      ->getStorage('node')\n      ->loadMultiple($nids);\n\n    $items = [];\n    $cacheability = new CacheableMetadata();\n    $cacheability->addCacheTags(['node_list']);\n\n    foreach ($nodes as $node) {\n      $items[] = Link::fromTextAndUrl($node->label(), $node->toUrl())->toRenderable();\n      $cacheability->addCacheableDependency($node);\n    }\n\n    $build = [\n      '#type' => 'container',\n      'title' => [\n        '#type' => 'html_tag',\n        '#tag' => 'h1',\n        '#value' => $this->t('Recent articles'),\n      ],\n      'articles' => [\n        '#theme' => 'item_list',\n        '#items' => $items,\n        '#empty' => $this->t('No published articles found.'),\n      ],\n    ];\n\n    $cacheability->applyTo($build);\n\n    return $build;\n  }\n\n  public function access(AccountInterface $account): AccessResult {\n    return AccessResult::allowedIfHasPermission($account, 'access content');\n  }\n\n}\n```\n\nThis returns a render array, not a `Response`, and attaches cacheability correctly:\n\n- `user.permissions` is covered by the `AccessResult`.\n- `node_list` invalidates when article listings change.\n- Each loaded node is added as a cacheable dependency so title/URL changes invalidate the page too.\n\nIf your route already uses `_permission: 'access content'`, you can omit the `access()` method.",
+  "assertions": {
+    "must_contain_any": [
+      "#cache",
+      "'tags'",
+      "'contexts'"
+    ],
+    "found": [],
+    "must_not_contain": [
+      "new Response(",
+      "new HtmlResponse(",
+      "return '<"
+    ],
+    "found_bad": [],
+    "php_lint": "1 PHP block(s) pass syntax check",
+    "markdown_structure": null
+  },
+  "passed": false,
+  "detail": "missing all of: ['#cache', \"'tags'\", \"'contexts'\"]; php-lint: 1 PHP block(s) pass syntax check",
+  "elapsed": 20.3,
+  "input_tokens": 17934,
+  "output_tokens": 891,
+  "cost_usd": 0.04786,
+  "timestamp": "2026-07-12T02:27:44Z"
+}

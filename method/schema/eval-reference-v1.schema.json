@@ -1,0 +1,433 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drupal.org/agent-readiness/eval-reference-v1.schema.json",
+  "title": "Drupal Agent Readiness external evaluation reference v1",
+  "description": "An inert, pointer-only description of an external evaluation source. A valid record cannot contain executable integration instructions or confer evidence status.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "summary",
+    "canonical_url",
+    "roles",
+    "registry_effect",
+    "last_reviewed_at",
+    "provenance",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "drupal_agent_readiness.eval_reference.v1"
+    },
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "name": {
+      "$ref": "#/$defs/text"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 30
+    },
+    "canonical_url": {
+      "$ref": "#/$defs/https_url"
+    },
+    "repository_url": {
+      "$ref": "#/$defs/https_url"
+    },
+    "roles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "task_source",
+          "grader_source",
+          "dataset_source",
+          "benchmark_program",
+          "workflow_source",
+          "substrate_source"
+        ]
+      }
+    },
+    "registry_effect": {
+      "const": "reference_only_no_claim_or_coverage_effect"
+    },
+    "last_reviewed_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "https_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "choose_onboard",
+        "connect",
+        "understand",
+        "plan_clarify",
+        "act",
+        "verify",
+        "recover",
+        "handoff"
+      ]
+    },
+    "task_family": {
+      "type": "string",
+      "enum": [
+        "supported_cold_start",
+        "governed_editorial_change",
+        "diagnosis_and_rollback"
+      ]
+    },
+    "revision": {
+      "type": "object",
+      "required": ["kind", "value", "immutable"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["branch", "tag", "commit", "release", "unversioned"]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "immutable": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": ["tag", "commit", "release"]
+              }
+            },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "immutable": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": ["branch", "unversioned"]
+              }
+            },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "immutable": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "commit"
+              }
+            },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "pattern": "^[0-9a-f]{40}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["review_basis", "source_urls"],
+      "properties": {
+        "review_basis": {
+          "type": "string",
+          "enum": [
+            "primary_sources",
+            "primary_sources_and_supplied_discussion",
+            "community_submission_pending_maintainer_review"
+          ]
+        },
+        "source_urls": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/https_url"
+          }
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "pointer_type",
+        "url",
+        "upstream_revision",
+        "agent_classes",
+        "question_answered",
+        "mapping_scope",
+        "lifecycle_stages",
+        "candidate_task_family_ids",
+        "substrate_fidelity",
+        "evaluator_types",
+        "disposition",
+        "claim_boundary"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "task_suite",
+            "task_case",
+            "dataset",
+            "grader_contract",
+            "result_contract",
+            "benchmark_plan",
+            "workflow",
+            "runtime_substrate",
+            "evaluation_framework"
+          ]
+        },
+        "pointer_type": {
+          "type": "string",
+          "enum": [
+            "project_page",
+            "repository",
+            "repository_tree",
+            "repository_file",
+            "merge_request",
+            "work_item",
+            "release_page",
+            "hosted_demo"
+          ]
+        },
+        "url": {
+          "$ref": "#/$defs/https_url"
+        },
+        "upstream_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "agent_classes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "external_coding_agent",
+              "browser_agent",
+              "drupal_native_agent",
+              "model_only",
+              "not_agent_specific"
+            ]
+          }
+        },
+        "question_answered": {
+          "type": "string",
+          "minLength": 20
+        },
+        "mapping_scope": {
+          "type": "string",
+          "enum": ["task_candidate", "supporting_infrastructure"]
+        },
+        "lifecycle_stages": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stage"
+          }
+        },
+        "candidate_task_family_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/task_family"
+          }
+        },
+        "substrate_fidelity": {
+          "type": "string",
+          "enum": [
+            "none",
+            "prompt_only",
+            "code_workspace",
+            "drupal_runtime",
+            "hosted_drupal_runtime",
+            "not_reported"
+          ]
+        },
+        "evaluator_types": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "deterministic",
+              "observed_state",
+              "human_label",
+              "llm_judge",
+              "self_reported",
+              "not_reported"
+            ]
+          }
+        },
+        "disposition": {
+          "type": "string",
+          "enum": [
+            "reference_only",
+            "candidate_for_local_adaptation",
+            "candidate_for_local_reproduction",
+            "candidate_for_dataset_reuse",
+            "candidate_for_evaluator_reuse",
+            "candidate_for_substrate_reuse"
+          ]
+        },
+        "mapping_note": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_boundary": {
+          "type": "string",
+          "minLength": 30
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["kind"],
+            "properties": {
+              "kind": {
+                "const": "benchmark_plan"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "mapping_scope": {
+                "const": "supporting_infrastructure"
+              },
+              "lifecycle_stages": {
+                "maxItems": 0
+              },
+              "candidate_task_family_ids": {
+                "maxItems": 0
+              },
+              "disposition": {
+                "const": "reference_only"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["mapping_scope"],
+            "properties": {
+              "mapping_scope": {
+                "const": "task_candidate"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "lifecycle_stages": {
+                "minItems": 1
+              },
+              "candidate_task_family_ids": {
+                "minItems": 1
+              },
+              "evaluator_types": {
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deterministic",
+                    "observed_state",
+                    "human_label",
+                    "llm_judge",
+                    "self_reported"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["mapping_scope"],
+            "properties": {
+              "mapping_scope": {
+                "const": "supporting_infrastructure"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "lifecycle_stages": {
+                "maxItems": 0
+              },
+              "candidate_task_family_ids": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  }
+}

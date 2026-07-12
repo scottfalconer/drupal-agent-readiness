@@ -1,0 +1,509 @@
+{
+  "agent_performance_diagnostics": [
+    {
+      "adapter_data": {
+        "evaluator": {
+          "kind": "upstream_deterministic_assertions",
+          "oracle_required_tokens": [
+            "#cache",
+            "'tags'",
+            "'contexts'"
+          ],
+          "php_lint": true,
+          "upstream_assertions": true
+        },
+        "result": {
+          "php_blocks_failed_lint": 0,
+          "php_blocks_linted": 1
+        },
+        "runner": {
+          "added_cli_arguments": [
+            "--ignore-user-config",
+            "--ephemeral"
+          ],
+          "non_upstream_behavior_changes": false,
+          "other_changes": [],
+          "trace_capture": {
+            "omitted_from_trace": [
+              "full_injected_skill_prompt",
+              "final_codex_cli_argv"
+            ],
+            "prompt_reconstruction_method": "Upstream run_behavioral prompt concatenation from the pinned SKILL.md and B01 eval prompt; no references directory exists for this skill.",
+            "reconstructed_prompt_artifact_path": "evidence/external-evals/ai-best-practices/2026-07-12-render-pipeline-b01-codex-gpt-5.4/prompts/B01-full-injected.txt",
+            "retained_elsewhere_in_package": [
+              "full_injected_skill_prompt"
+            ],
+            "unretained": [
+              "final_codex_cli_argv"
+            ]
+          },
+          "upstream_runner": "evals/run-evals.py run_behavioral()"
+        },
+        "substrate": {
+          "drupal_runtime": false,
+          "git_repository": true,
+          "real_drupal_site": false,
+          "working_directory": "/private/tmp/abp-render-single-20260711/workdir"
+        },
+        "upstream_artifact_pins": [
+          {
+            "path": "skills/drupal-render-pipeline/SKILL.md",
+            "sha256": "841e49e40c4010919fe5e0df724f0e4be6c960d45838a89d7355f1b47d0cc7d1"
+          },
+          {
+            "path": "evals/drupal-render-pipeline/evals.json",
+            "sha256": "f53855f341f09912decfe85603718927902a70e1ee0a8f0fe119b87436afa891"
+          },
+          {
+            "path": "evals/run-evals.py",
+            "sha256": "edf8cf73d0d5734539834c26ea74068d929b201d000c11750fab2ce9e5a5a217"
+          },
+          {
+            "path": "evals/providers.py",
+            "sha256": "62b430e8492424b84cf11f36c11d803ddf4e547ffd71b01241307827519f7597"
+          }
+        ]
+      },
+      "adapter_id": "ai_best_practices_run_evals_v1",
+      "agent": {
+        "agent_id": "codex",
+        "agent_version": "0.142.5",
+        "model_id": "gpt-5.4",
+        "provider": "openai"
+      },
+      "artifacts": [
+        {
+          "kind": "upstream_trace",
+          "media_type": "application/json",
+          "path": "evidence/external-evals/ai-best-practices/2026-07-12-render-pipeline-b01-codex-gpt-5.4/traces/B01.json",
+          "sha256": "f6efef30de423403ac9b9ebb1627c876d26d77a65c21544ff5294aa3b0bb9531"
+        },
+        {
+          "kind": "reconstructed_full_prompt",
+          "media_type": "text/plain",
+          "path": "evidence/external-evals/ai-best-practices/2026-07-12-render-pipeline-b01-codex-gpt-5.4/prompts/B01-full-injected.txt",
+          "sha256": "0eefd8a06f3376ae1357d316a239dfc0f956ed4489bafd60b02059bb7ab036a0"
+        }
+      ],
+      "claim_boundary": {
+        "general_score_claim": false,
+        "limitations": [
+          "The prompt ran in an isolated empty Git worktree with no Drupal runtime or real Drupal site.",
+          "Only the skill-injected condition ran, so this result cannot estimate the effect of the skill against a no-skill baseline.",
+          "One selected case cannot be generalized to Codex, GPT-5.4, Drupal agents, or the full upstream suite.",
+          "The upstream substring-oracle failure is not adjudicated as a model or task failure and does not establish an AI Best Practices project failure.",
+          "The trace omits the full injected skill prompt and final Codex CLI argv; the package retains a deterministic prompt reconstruction from pinned sources, while the final argv remains unretained.",
+          "Filesystem isolation is verified only for the empty temporary Git worktree; ambient Codex plugin or skill context isolation is incomplete and unverified because provider stderr and loaded-context inventory were not retained.",
+          "PHP syntax lint does not establish Drupal runtime correctness, cache behavior, access behavior, or functional success.",
+          "This locally run diagnostic has no Agent Readiness scorecard eligibility and changes no benchmark coverage status."
+        ],
+        "project_verdict_claim": false,
+        "scorecard_claim": false
+      },
+      "evidence": {
+        "classification": "locally_run_diagnostic",
+        "coverage_effect": "none",
+        "scorecard_eligible": false
+      },
+      "record_type": "agent_performance_diagnostic",
+      "recorded_at": "2026-07-12T02:27:44Z",
+      "result": {
+        "automated_outcome": "failed",
+        "cases_failed": 1,
+        "cases_passed": 0,
+        "cases_total": 1,
+        "detail": "The upstream literal oracle marked B01 failed because it found none of #cache, 'tags', or 'contexts'. The response instead used CacheableMetadata APIs, and the extracted PHP block passed syntax lint. This automated outcome requires manual or runtime adjudication.",
+        "manual_adjudication_reason": "The response uses semantically relevant CacheableMetadata APIs that the upstream literal-token oracle does not recognize, creating a likely oracle disagreement; Drupal correctness remains unresolved.",
+        "manual_adjudication_status": "required_unresolved",
+        "manual_observations": [
+          "The response returns a render array and uses CacheableMetadata::addCacheTags(['node_list']) followed by applyTo($build).",
+          "The upstream oracle searches only for literal #cache, 'tags', or 'contexts' tokens and recorded none of them.",
+          "The response says user.permissions is covered through an AccessResult, but no Drupal runtime check adjudicated that claim.",
+          "The one extracted PHP block passed the upstream syntax-lint check.",
+          "The --ignore-user-config flag removed an incompatible reasoning setting, but a separate direct diagnostic still emitted plugin and skill loading warnings; the retained trace captures neither provider stderr nor a loaded-context inventory."
+        ],
+        "published_outcome": "upstream_oracle_fail_manual_adjudication_required"
+      },
+      "run_id": "2026-07-12-render-pipeline-b01-codex-gpt-5.4",
+      "schema_version": "drupal_agent_readiness.external_eval_run.v1",
+      "source": {
+        "artifact_id": "skill-eval-cases",
+        "registry_revision": {
+          "kind": "branch",
+          "value": "1.0.x"
+        },
+        "source_id": "ai-best-practices",
+        "upstream_commit": "c45117130a4de1fe7d03d3fe225e3f09b8e4e803"
+      },
+      "substrate": {
+        "description": "Prompt-only execution in an isolated empty temporary Git worktree.",
+        "kind": "isolated_empty_git_worktree",
+        "real_target_runtime": false
+      },
+      "suite": {
+        "case_ids": [
+          "B01"
+        ],
+        "cases_selected": 1,
+        "id": "drupal-render-pipeline",
+        "name": "Drupal render pipeline behavioral evaluation"
+      },
+      "treatment": {
+        "comparison_design": "single_condition_no_ab",
+        "condition_id": "skill_injected"
+      }
+    }
+  ],
+  "counts": {
+    "agent_performance_diagnostics": 1,
+    "source_validations_not_agent_performance": 2
+  },
+  "publication_policy": {
+    "agent_runs_are_general_model_scores": false,
+    "coverage_effect": "none",
+    "manifest_only_records_are_auditable_evidence": false,
+    "purpose": "publish_bounded_maintainer_local_external_eval_records",
+    "registry_listing_is_execution_authority": false,
+    "scorecard_effect": "none",
+    "source_validations_are_agent_performance_results": false
+  },
+  "schema_version": "drupal_agent_readiness.external_eval_results.v1",
+  "source_validations_not_agent_performance": [
+    {
+      "adapter_id": "ai_agents_test_drupal_cms_codebase_preflight_v1",
+      "artifacts": [],
+      "claim_boundary": {
+        "agent_performance_claim": false,
+        "limitations": [
+          "No real model or configured AI provider evaluation completed, and no provider credential was used.",
+          "The internal EchoAI mock provider was an unsupported harness smoke only and is not a substitute for a supported model provider.",
+          "The Drush Success summary disagreed with failure statuses observed in result entities, so command presentation cannot be treated as a passed test result.",
+          "No raw stdout, database dump, or result entity export was retained beyond this manifest, so none of its observations are independently auditable evidence.",
+          "The substrate was a Drupal CMS 2.1.1 codebase installed with the Standard profile, not a Drupal CMS install-profile installation.",
+          "This preflight establishes no project verdict, model score, Agent Readiness scorecard eligibility, or benchmark coverage effect."
+        ],
+        "project_verdict_claim": false
+      },
+      "evidence": {
+        "agent_performance_result": false,
+        "coverage_effect": "none",
+        "scorecard_eligible": false,
+        "support_grade": "manifest_only_unverified"
+      },
+      "record_type": "source_validation_not_agent_performance",
+      "recorded_at": "2026-07-12T04:12:30Z",
+      "schema_version": "drupal_agent_readiness.external_eval_source_validation.v1",
+      "source": {
+        "artifact_id": "drupal-cms-agent-test-suites",
+        "registry_revision": {
+          "kind": "commit",
+          "value": "e06f11c33c2fda6beb09008e60bf8a65804a132c"
+        },
+        "source_id": "ai-agents-test",
+        "upstream_commit": "e06f11c33c2fda6beb09008e60bf8a65804a132c"
+      },
+      "validation": {
+        "adapter_data": {
+          "observations": [
+            {
+              "command_exit_code": 0,
+              "evidence_support": "manifest_only_unverified",
+              "facts": {
+                "lint_failures": 0,
+                "scope": "all_upstream_php_files"
+              },
+              "id": "php-lint",
+              "outcome": "validated_clean"
+            },
+            {
+              "command_exit_code": 0,
+              "evidence_support": "manifest_only_unverified",
+              "facts": {
+                "cases_counted": 81,
+                "yaml_groups": 11
+              },
+              "id": "yaml-catalog-parse",
+              "outcome": "parsed"
+            },
+            {
+              "command_exit_code": 0,
+              "evidence_support": "manifest_only_unverified",
+              "facts": {
+                "install_profile": "standard"
+              },
+              "id": "standard-profile-site-install",
+              "outcome": "installed"
+            },
+            {
+              "command_exit_code": 173,
+              "evidence_support": "manifest_only_unverified",
+              "facts": {
+                "default_chat_with_tools_provider_after": false,
+                "external_service": "amazee_trial_provisioning",
+                "http_status": 429,
+                "recipe": "drupal_cms_ai"
+              },
+              "id": "drupal-cms-ai-recipe",
+              "outcome": "externally_blocked_partial"
+            },
+            {
+              "command_exit_code": 0,
+              "evidence_support": "manifest_only_unverified",
+              "facts": {
+                "module": "ai_agents_test"
+              },
+              "id": "module-enable",
+              "outcome": "enabled"
+            },
+            {
+              "command_exit_code": 0,
+              "evidence_support": "manifest_only_unverified",
+              "facts": {
+                "cases_imported": 9,
+                "group": "content-type"
+              },
+              "id": "content-type-group-import",
+              "outcome": "imported"
+            },
+            {
+              "command_exit_code": 1,
+              "evidence_support": "manifest_only_unverified",
+              "facts": {
+                "error": "No default AI provider set for chat with tools",
+                "real_model_invoked": false,
+                "test_id": 1
+              },
+              "id": "real-test-1-no-provider",
+              "outcome": "blocked_missing_precondition"
+            },
+            {
+              "command_exit_code": 0,
+              "evidence_support": "manifest_only_unverified",
+              "facts": {
+                "attempts": [
+                  {
+                    "error_category": "permission_error",
+                    "observed_result_entity_status": "failure",
+                    "uid": 0
+                  },
+                  {
+                    "error_category": "tool_output_type_error",
+                    "observed_result_entity_status": "failure",
+                    "uid": 1
+                  }
+                ],
+                "drush_summary": "Success",
+                "provider": "internal_unsupported_echo_mock"
+              },
+              "id": "unsupported-echo-mock-smoke",
+              "outcome": "presentation_result_disagreement"
+            }
+          ],
+          "retention": {
+            "database_dump_retained": false,
+            "manifest_only": true,
+            "note": "These maintainer-recorded observations are manifest-only and unverified because raw stdout, database state, and result entities were not retained.",
+            "raw_stdout_retained": false,
+            "result_entity_export_retained": false
+          },
+          "substrate": {
+            "codebase_project": "Drupal CMS",
+            "codebase_version": "2.1.1",
+            "containers_stopped_after": true,
+            "drupal_cms_install_profile_used": false,
+            "drupal_version": "11.3.8",
+            "install_profile": "standard",
+            "lifecycle": "temporary_local_copy",
+            "runtime": "DDEV",
+            "substrate_label": "Drupal CMS 2.1.1 codebase with the Standard install profile"
+          }
+        },
+        "kind": "drupal_cms_codebase_standard_profile_preflight",
+        "outcome_model": "structured_observations"
+      },
+      "validation_id": "2026-07-12-drupal-cms-codebase-standard-profile-preflight-e06f11c3"
+    },
+    {
+      "adapter_id": "ai_best_practices_static_v1",
+      "artifacts": [
+        {
+          "id": "default-discovery",
+          "kind": "static_check_stdout",
+          "media_type": "text/plain",
+          "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/default-discovery.stdout.txt",
+          "sha256": "938bafa58e6d6d4cff8c0679da4122ddc47cc18fc6a02c158eebc61c7a84b189"
+        },
+        {
+          "id": "nested-a11y-fapi",
+          "kind": "static_check_stdout",
+          "media_type": "text/plain",
+          "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-fapi.stdout.txt",
+          "sha256": "4b4e187577face1fd9976f5976e54948a3a0d9a9b62e514b1f5b10d42d5369c2"
+        },
+        {
+          "id": "nested-a11y-dom",
+          "kind": "static_check_stdout",
+          "media_type": "text/plain",
+          "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-dom.stdout.txt",
+          "sha256": "fbbb66ba439bfef9526af5f234ac9a4d45098b6b4c36f4e6bce5abb16a12e43f"
+        },
+        {
+          "id": "nested-a11y-dynamic",
+          "kind": "static_check_stdout",
+          "media_type": "text/plain",
+          "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-dynamic.stdout.txt",
+          "sha256": "1390ebc257f82e14687910e9283e78471a5f172bffe8f82eb5d2379d3db3df95"
+        },
+        {
+          "id": "nested-a11y-qa",
+          "kind": "static_check_stdout",
+          "media_type": "text/plain",
+          "path": "evidence/external-evals/ai-best-practices/2026-07-12-static-checks-c4511713/artifacts/nested-a11y-qa.stdout.txt",
+          "sha256": "a521fb5048ff0e414f026a7118e3aa724f3c2ce320562fb6aedc9b5ebb37be07"
+        }
+      ],
+      "claim_boundary": {
+        "agent_performance_claim": false,
+        "limitations": [
+          "These 219 passing checks validate static source content and harness expectations; they do not evaluate an agent response.",
+          "The 219/219 aggregate combines five separately executed commands and must not be described as one default-discovery run.",
+          "Static source validation establishes neither Drupal runtime behavior nor the effectiveness of the skills for an agent.",
+          "The five retained stdout artifacts support auditing the reported command-level counts; they do not retain a complete execution environment."
+        ],
+        "project_verdict_claim": false
+      },
+      "evidence": {
+        "agent_performance_result": false,
+        "coverage_effect": "none",
+        "scorecard_eligible": false,
+        "support_grade": "retained_artifacts"
+      },
+      "record_type": "source_validation_not_agent_performance",
+      "recorded_at": "2026-07-12T04:19:47Z",
+      "schema_version": "drupal_agent_readiness.external_eval_source_validation.v1",
+      "source": {
+        "artifact_id": "skill-eval-cases",
+        "registry_revision": {
+          "kind": "branch",
+          "value": "1.0.x"
+        },
+        "source_id": "ai-best-practices",
+        "upstream_commit": "c45117130a4de1fe7d03d3fe225e3f09b8e4e803"
+      },
+      "validation": {
+        "adapter_data": {
+          "commands": [
+            {
+              "argv": [
+                "python3",
+                "-B",
+                "evals/run-evals.py",
+                "--static"
+              ],
+              "artifact_id": "default-discovery",
+              "checks_failed": 0,
+              "checks_passed": 144,
+              "checks_total": 144,
+              "default_discovery": true,
+              "environment": {
+                "PYTHONPYCACHEPREFIX": "/private/tmp/abp-static-pyc"
+              },
+              "exit_code": 0,
+              "id": "default-discovery"
+            },
+            {
+              "argv": [
+                "python3",
+                "-B",
+                "evals/run-evals.py",
+                "--static",
+                "--skill",
+                "drupal-accessibility/drupal-a11y-fapi"
+              ],
+              "artifact_id": "nested-a11y-fapi",
+              "checks_failed": 0,
+              "checks_passed": 14,
+              "checks_total": 14,
+              "default_discovery": false,
+              "environment": {
+                "PYTHONPYCACHEPREFIX": "/private/tmp/abp-a11y-fapi-pyc"
+              },
+              "exit_code": 0,
+              "id": "nested-a11y-fapi"
+            },
+            {
+              "argv": [
+                "python3",
+                "-B",
+                "evals/run-evals.py",
+                "--static",
+                "--skill",
+                "drupal-accessibility/drupal-a11y-dom"
+              ],
+              "artifact_id": "nested-a11y-dom",
+              "checks_failed": 0,
+              "checks_passed": 17,
+              "checks_total": 17,
+              "default_discovery": false,
+              "environment": {
+                "PYTHONPYCACHEPREFIX": "/private/tmp/abp-a11y-dom-pyc"
+              },
+              "exit_code": 0,
+              "id": "nested-a11y-dom"
+            },
+            {
+              "argv": [
+                "python3",
+                "-B",
+                "evals/run-evals.py",
+                "--static",
+                "--skill",
+                "drupal-accessibility/drupal-a11y-dynamic"
+              ],
+              "artifact_id": "nested-a11y-dynamic",
+              "checks_failed": 0,
+              "checks_passed": 21,
+              "checks_total": 21,
+              "default_discovery": false,
+              "environment": {
+                "PYTHONPYCACHEPREFIX": "/private/tmp/abp-a11y-dynamic-pyc"
+              },
+              "exit_code": 0,
+              "id": "nested-a11y-dynamic"
+            },
+            {
+              "argv": [
+                "python3",
+                "-B",
+                "evals/run-evals.py",
+                "--static",
+                "--skill",
+                "drupal-accessibility/drupal-a11y-qa"
+              ],
+              "artifact_id": "nested-a11y-qa",
+              "checks_failed": 0,
+              "checks_passed": 23,
+              "checks_total": 23,
+              "default_discovery": false,
+              "environment": {
+                "PYTHONPYCACHEPREFIX": "/private/tmp/abp-a11y-qa-pyc"
+              },
+              "exit_code": 0,
+              "id": "nested-a11y-qa"
+            }
+          ],
+          "commands_total": 5,
+          "default_discovery_checks": 144,
+          "discovery_note": "The default command discovers 144 checks in eight top-level suites; four nested accessibility suites require explicit --skill commands and add 75 checks.",
+          "nested_explicit_checks": 75
+        },
+        "checks_failed": 0,
+        "checks_passed": 219,
+        "checks_total": 219,
+        "kind": "static_source_checks",
+        "outcome_model": "aggregate_checks"
+      },
+      "validation_id": "2026-07-12-static-checks-c4511713"
+    }
+  ]
+}

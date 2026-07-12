@@ -1,0 +1,572 @@
+{
+  "schema_version": "drupal_agent_readiness.eval_landscape.v1",
+  "registry_policy": {
+    "purpose": "discovery_and_candidate_selection",
+    "success_metric": "documented_downstream_conversion",
+    "recorded_conversions": 0,
+    "inventory_count_is_success": false,
+    "intake_state": "open_pending_review",
+    "listing_effect": "none",
+    "trust_assumption": "none",
+    "network_access": "none",
+    "local_adoption_required": true,
+    "external_results_are_evidence": false,
+    "scorecard_eligibility_from_listing": false,
+    "routine_curation_limit_hours_per_week": 1,
+    "review_date": "2026-10-15",
+    "freeze_if_no_conversion_by_review": true
+  },
+  "counts": {
+    "sources": 6,
+    "artifacts": 9,
+    "task_candidates": 2,
+    "supporting_infrastructure": 7,
+    "plan_only_pointers": 1
+  },
+  "sources": [
+    {
+      "schema_version": "drupal_agent_readiness.eval_reference.v1",
+      "id": "ai-agents-test",
+      "name": "AI Agents Test and DrupalForge testing template",
+      "summary": "Drupal-native agent tool-behavior test suites plus a hosted Drupal CMS template that runs them on a site.",
+      "canonical_url": "https://www.drupal.org/project/ai_agents_test",
+      "repository_url": "https://git.drupalcode.org/project/ai_agents_test",
+      "roles": [
+        "task_source",
+        "workflow_source",
+        "substrate_source"
+      ],
+      "registry_effect": "reference_only_no_claim_or_coverage_effect",
+      "last_reviewed_at": "2026-07-11",
+      "provenance": {
+        "review_basis": "primary_sources_and_supplied_discussion",
+        "source_urls": [
+          "https://www.drupal.org/project/ai_agents_test",
+          "https://www.drupalforge.org/template/drupal-cms-ai-agents-testing-framework",
+          "https://git.drupalcode.org/project/ai_agents_test/-/tree/e06f11c33c2fda6beb09008e60bf8a65804a132c/examples/drupal_cms"
+        ],
+        "note": "AI Agents Test and its DrupalForge template are grouped because the hosted page points to the module; the suite pointer is pinned to the module's shipped Drupal CMS YAML examples."
+      },
+      "artifacts": [
+        {
+          "id": "drupal-cms-agent-test-suites",
+          "name": "Drupal CMS agent tool-behavior YAML suites",
+          "kind": "task_suite",
+          "pointer_type": "repository_tree",
+          "url": "https://git.drupalcode.org/project/ai_agents_test/-/tree/e06f11c33c2fda6beb09008e60bf8a65804a132c/examples/drupal_cms",
+          "upstream_revision": {
+            "kind": "commit",
+            "value": "e06f11c33c2fda6beb09008e60bf8a65804a132c",
+            "immutable": true
+          },
+          "agent_classes": [
+            "drupal_native_agent"
+          ],
+          "question_answered": "Does a Drupal-native agent select the expected tools, avoid forbidden tools, respect tool order, and pass parameter checks for the supplied prompts?",
+          "mapping_scope": "task_candidate",
+          "lifecycle_stages": [
+            "understand",
+            "plan_clarify",
+            "act"
+          ],
+          "candidate_task_family_ids": [
+            "governed_editorial_change"
+          ],
+          "substrate_fidelity": "drupal_runtime",
+          "evaluator_types": [
+            "deterministic",
+            "llm_judge"
+          ],
+          "disposition": "candidate_for_local_adaptation",
+          "mapping_note": "Most rules deterministically inspect tool presence, absence, order, and parameters; optional rules can ask an LLM to score a tool parameter or text response. Drupal-native agents must remain a separate class from external coding agents.",
+          "claim_boundary": "The shipped rules do not independently inspect final Drupal state, so a passing suite does not prove that the requested content or configuration outcome actually exists."
+        },
+        {
+          "id": "drupalforge-test-template",
+          "name": "Hosted Drupal CMS AI Agents Testing Framework",
+          "kind": "runtime_substrate",
+          "pointer_type": "hosted_demo",
+          "url": "https://www.drupalforge.org/template/drupal-cms-ai-agents-testing-framework",
+          "upstream_revision": {
+            "kind": "unversioned",
+            "value": "hosted-template-reviewed-2026-07-11",
+            "immutable": false
+          },
+          "agent_classes": [
+            "drupal_native_agent"
+          ],
+          "question_answered": "Can the Drupal-native agent tool-behavior suites be exercised on a real hosted Drupal CMS runtime with inspectable run results?",
+          "mapping_scope": "supporting_infrastructure",
+          "lifecycle_stages": [],
+          "candidate_task_family_ids": [],
+          "substrate_fidelity": "hosted_drupal_runtime",
+          "evaluator_types": [
+            "deterministic",
+            "llm_judge"
+          ],
+          "disposition": "candidate_for_substrate_reuse",
+          "mapping_note": "The hosted page is substrate prior art, not a task mapping; it states that tests mutate actual content and are not easily rerun without reset or cleanup.",
+          "claim_boundary": "A convenient hosted template is not a pinned, reset-proven evaluation substrate and does not make its displayed results comparable to local Agent Readiness runs."
+        }
+      ]
+    },
+    {
+      "schema_version": "drupal_agent_readiness.eval_reference.v1",
+      "id": "ai-bench",
+      "name": "AI Bench",
+      "summary": "A proposed public program for Drupal-specific model and agent benchmark tasks and community-submitted runs.",
+      "canonical_url": "https://www.drupal.org/project/ai_bench",
+      "repository_url": "https://git.drupalcode.org/project/ai_bench",
+      "roles": [
+        "benchmark_program"
+      ],
+      "registry_effect": "reference_only_no_claim_or_coverage_effect",
+      "last_reviewed_at": "2026-07-11",
+      "provenance": {
+        "review_basis": "primary_sources_and_supplied_discussion",
+        "source_urls": [
+          "https://www.drupal.org/project/ai_bench"
+        ],
+        "note": "The project page describes proposed issue-resolution, tool/MCP-use, code-audit, translation, and community-run directions. They remain one program-level plan until concrete task artifacts are published."
+      },
+      "artifacts": [
+        {
+          "id": "benchmark-program-plan",
+          "name": "Drupal model and agent benchmark program plan",
+          "kind": "benchmark_plan",
+          "pointer_type": "project_page",
+          "url": "https://www.drupal.org/project/ai_bench",
+          "upstream_revision": {
+            "kind": "unversioned",
+            "value": "project-plan-reviewed-2026-07-11",
+            "immutable": false
+          },
+          "agent_classes": [
+            "external_coding_agent",
+            "browser_agent",
+            "drupal_native_agent",
+            "model_only"
+          ],
+          "question_answered": "Which proposed Drupal benchmark directions should be monitored for concrete, locally adaptable task and evaluator artifacts?",
+          "mapping_scope": "supporting_infrastructure",
+          "lifecycle_stages": [],
+          "candidate_task_family_ids": [],
+          "substrate_fidelity": "not_reported",
+          "evaluator_types": [
+            "not_reported"
+          ],
+          "disposition": "reference_only",
+          "mapping_note": "The project proposes issue resolution, tool and MCP use, code-audit score deltas, translation, and community-submitted runs. Promote each direction separately only when a concrete suite, case, dataset, grader, workflow, substrate, work item, or implementation merge request exists.",
+          "claim_boundary": "This project page records benchmark intentions, not an available task package, evaluator, retained result, or Agent Readiness coverage candidate."
+        }
+      ]
+    },
+    {
+      "schema_version": "drupal_agent_readiness.eval_reference.v1",
+      "id": "ai-best-practices",
+      "name": "AI Best Practices for Drupal",
+      "summary": "Drupal-specific guidance and behavioral evaluation cases for external coding agents.",
+      "canonical_url": "https://www.drupal.org/project/ai_best_practices",
+      "repository_url": "https://git.drupalcode.org/project/ai_best_practices",
+      "roles": [
+        "task_source",
+        "grader_source"
+      ],
+      "registry_effect": "reference_only_no_claim_or_coverage_effect",
+      "last_reviewed_at": "2026-07-11",
+      "provenance": {
+        "review_basis": "primary_sources_and_supplied_discussion",
+        "source_urls": [
+          "https://www.drupal.org/project/ai_best_practices",
+          "https://git.drupalcode.org/project/ai_best_practices/-/work_items/3581832"
+        ],
+        "note": "The supplied Drupal AI discussion identified the suite as a source of Drupal skill evaluation cases."
+      },
+      "artifacts": [
+        {
+          "id": "skill-eval-cases",
+          "name": "Drupal skill evaluation cases",
+          "kind": "task_suite",
+          "pointer_type": "repository_tree",
+          "url": "https://git.drupalcode.org/project/ai_best_practices/-/tree/1.0.x/evals",
+          "upstream_revision": {
+            "kind": "branch",
+            "value": "1.0.x",
+            "immutable": false
+          },
+          "agent_classes": [
+            "external_coding_agent"
+          ],
+          "question_answered": "Does Drupal-specific guidance improve an external coding agent's behavior on bounded Drupal development tasks?",
+          "mapping_scope": "task_candidate",
+          "lifecycle_stages": [
+            "understand",
+            "plan_clarify",
+            "act",
+            "verify"
+          ],
+          "candidate_task_family_ids": [
+            "governed_editorial_change",
+            "diagnosis_and_rollback"
+          ],
+          "substrate_fidelity": "prompt_only",
+          "evaluator_types": [
+            "deterministic"
+          ],
+          "disposition": "candidate_for_local_adaptation",
+          "mapping_note": "The cases are candidates for skill versus no-skill treatments on a locally controlled Drupal substrate.",
+          "claim_boundary": "The upstream cases do not by themselves show successful work against a real Drupal runtime or establish that Drupal improved."
+        },
+        {
+          "id": "inspect-runner-migration",
+          "name": "Inspect AI runner migration",
+          "kind": "evaluation_framework",
+          "pointer_type": "merge_request",
+          "url": "https://git.drupalcode.org/project/ai_best_practices/-/merge_requests/69",
+          "upstream_revision": {
+            "kind": "unversioned",
+            "value": "merge-request-69",
+            "immutable": false
+          },
+          "agent_classes": [
+            "not_agent_specific"
+          ],
+          "question_answered": "How can the Drupal skill cases be expressed in a reusable runner rather than a project-specific evaluation loop?",
+          "mapping_scope": "supporting_infrastructure",
+          "lifecycle_stages": [],
+          "candidate_task_family_ids": [],
+          "substrate_fidelity": "none",
+          "evaluator_types": [
+            "not_reported"
+          ],
+          "disposition": "reference_only",
+          "mapping_note": "Runner convergence can lower adaptation cost but does not map to a lifecycle stage or task family until a concrete task uses it.",
+          "claim_boundary": "Adopting the same runner improves interoperability only; it supplies no agent-performance result and has no scorecard effect."
+        }
+      ]
+    },
+    {
+      "schema_version": "drupal_agent_readiness.eval_reference.v1",
+      "id": "ai-eval",
+      "name": "AI Eval",
+      "summary": "A Drupal evaluation framework with versioned dataset, rubric, judge, deterministic-grader, and result-contract implementations.",
+      "canonical_url": "https://www.drupal.org/project/ai_eval",
+      "repository_url": "https://git.drupalcode.org/project/ai_eval",
+      "roles": [
+        "grader_source",
+        "dataset_source"
+      ],
+      "registry_effect": "reference_only_no_claim_or_coverage_effect",
+      "last_reviewed_at": "2026-07-11",
+      "provenance": {
+        "review_basis": "primary_sources_and_supplied_discussion",
+        "source_urls": [
+          "https://www.drupal.org/project/ai_eval",
+          "https://git.drupalcode.org/project/ai_eval/-/tree/97d8660b3cb3815572e7ddd9e3898b53f4c81e84/schema",
+          "https://git.drupalcode.org/project/ai_eval/-/tree/97d8660b3cb3815572e7ddd9e3898b53f4c81e84/src/Plugin/AiEvalGrader"
+        ],
+        "note": "The supplied discussion described AI Eval as the reusable scoring layer; implementation pointers were verified at commit 97d8660b3cb3815572e7ddd9e3898b53f4c81e84."
+      },
+      "artifacts": [
+        {
+          "id": "dataset-rubric-judge-contracts",
+          "name": "Shipped dataset, rubric, and judge schemas",
+          "kind": "grader_contract",
+          "pointer_type": "repository_tree",
+          "url": "https://git.drupalcode.org/project/ai_eval/-/tree/97d8660b3cb3815572e7ddd9e3898b53f4c81e84/schema",
+          "upstream_revision": {
+            "kind": "commit",
+            "value": "97d8660b3cb3815572e7ddd9e3898b53f4c81e84",
+            "immutable": true
+          },
+          "agent_classes": [
+            "not_agent_specific"
+          ],
+          "question_answered": "Which portable case, rubric, and calibrated-judge contracts can describe and score agent evaluations consistently?",
+          "mapping_scope": "supporting_infrastructure",
+          "lifecycle_stages": [],
+          "candidate_task_family_ids": [],
+          "substrate_fidelity": "none",
+          "evaluator_types": [
+            "deterministic",
+            "human_label",
+            "llm_judge"
+          ],
+          "disposition": "candidate_for_evaluator_reuse",
+          "mapping_note": "These are cross-cutting contracts and therefore do not map to lifecycle stages or task families on their own.",
+          "claim_boundary": "A schema or calibrated judge is evaluation infrastructure, not evidence that any agent completed a Drupal task successfully."
+        },
+        {
+          "id": "shipped-deterministic-graders",
+          "name": "Shipped deterministic grader implementations",
+          "kind": "grader_contract",
+          "pointer_type": "repository_tree",
+          "url": "https://git.drupalcode.org/project/ai_eval/-/tree/97d8660b3cb3815572e7ddd9e3898b53f4c81e84/src/Plugin/AiEvalGrader",
+          "upstream_revision": {
+            "kind": "commit",
+            "value": "97d8660b3cb3815572e7ddd9e3898b53f4c81e84",
+            "immutable": true
+          },
+          "agent_classes": [
+            "not_agent_specific"
+          ],
+          "question_answered": "Which shipped graders can deterministically validate response format and expected-versus-forbidden tool usage without another LLM call?",
+          "mapping_scope": "supporting_infrastructure",
+          "lifecycle_stages": [],
+          "candidate_task_family_ids": [],
+          "substrate_fidelity": "not_reported",
+          "evaluator_types": [
+            "deterministic"
+          ],
+          "disposition": "candidate_for_evaluator_reuse",
+          "mapping_note": "The pinned implementation includes deterministic format and tool-usage graders; a concrete local task must still define the relevant lifecycle, oracle, and anti-gaming guards.",
+          "claim_boundary": "Shipped grader code is reusable infrastructure, not evidence that a Drupal task was executed, correctly scoped, or validly scored."
+        }
+      ]
+    },
+    {
+      "schema_version": "drupal_agent_readiness.eval_reference.v1",
+      "id": "ai-evaluations",
+      "name": "AI Ongoing Evaluations",
+      "summary": "A Drupal-native framework for capturing human feedback, comparing AI outputs, and importing or exporting evaluation records.",
+      "canonical_url": "https://www.drupal.org/project/ai_evaluations",
+      "repository_url": "https://git.drupalcode.org/project/ai_evaluations",
+      "roles": [
+        "dataset_source"
+      ],
+      "registry_effect": "reference_only_no_claim_or_coverage_effect",
+      "last_reviewed_at": "2026-07-11",
+      "provenance": {
+        "review_basis": "primary_sources_and_supplied_discussion",
+        "source_urls": [
+          "https://www.drupal.org/project/ai_evaluations"
+        ],
+        "note": "The supplied discussion identified this project as prior art for capturing and comparing human feedback on AI outputs."
+      },
+      "artifacts": [
+        {
+          "id": "human-feedback-capture-framework",
+          "name": "Human feedback capture and comparison framework",
+          "kind": "evaluation_framework",
+          "pointer_type": "release_page",
+          "url": "https://www.drupal.org/project/ai_evaluations/releases/0.1.0",
+          "upstream_revision": {
+            "kind": "release",
+            "value": "0.1.0",
+            "immutable": true
+          },
+          "agent_classes": [
+            "not_agent_specific"
+          ],
+          "question_answered": "How can a Drupal site capture human votes or comparisons with prompt and model context, then import or export those evaluation records?",
+          "mapping_scope": "supporting_infrastructure",
+          "lifecycle_stages": [],
+          "candidate_task_family_ids": [],
+          "substrate_fidelity": "drupal_runtime",
+          "evaluator_types": [
+            "human_label"
+          ],
+          "disposition": "candidate_for_dataset_reuse",
+          "mapping_note": "Release 0.1.0 captures and compares human feedback and supports record transfer; a separate evaluation design would be needed to turn those records into an agent task or validated grader.",
+          "claim_boundary": "Release 0.1.0 does not ship an LLM judge or judge-calibration workflow and does not show that an external agent acted correctly on Drupal state."
+        }
+      ]
+    },
+    {
+      "schema_version": "drupal_agent_readiness.eval_reference.v1",
+      "id": "ai-maintenance-skills",
+      "name": "AI Maintenance Skills",
+      "summary": "Drupal.org issue-triage and maintenance workflows for coding agents within a constrained DDEV design.",
+      "canonical_url": "https://www.drupal.org/project/ai_maintenance_skills",
+      "repository_url": "https://git.drupalcode.org/project/ai_maintenance_skills",
+      "roles": [
+        "workflow_source",
+        "substrate_source"
+      ],
+      "registry_effect": "reference_only_no_claim_or_coverage_effect",
+      "last_reviewed_at": "2026-07-11",
+      "provenance": {
+        "review_basis": "primary_sources_and_supplied_discussion",
+        "source_urls": [
+          "https://www.drupal.org/project/ai_maintenance_skills",
+          "https://git.drupalcode.org/project/ai_maintenance_skills/-/blob/1.0.x/README.md"
+        ],
+        "note": "The supplied discussion identified the project's maintenance tasks and two-container trust boundary as reusable prior art."
+      },
+      "artifacts": [
+        {
+          "id": "maintenance-workflow",
+          "name": "Drupal issue maintenance workflow and trust boundary",
+          "kind": "workflow",
+          "pointer_type": "repository_file",
+          "url": "https://git.drupalcode.org/project/ai_maintenance_skills/-/blob/1.0.x/README.md",
+          "upstream_revision": {
+            "kind": "branch",
+            "value": "1.0.x",
+            "immutable": false
+          },
+          "agent_classes": [
+            "external_coding_agent"
+          ],
+          "question_answered": "Can an external coding agent safely triage and prepare Drupal.org maintenance work that reduces total maintainer burden?",
+          "mapping_scope": "supporting_infrastructure",
+          "lifecycle_stages": [],
+          "candidate_task_family_ids": [],
+          "substrate_fidelity": "drupal_runtime",
+          "evaluator_types": [
+            "not_reported"
+          ],
+          "disposition": "candidate_for_local_reproduction",
+          "mapping_note": "This is workflow prior art. Promote a separately defined local task only after fixing its inputs, observable completion criteria, evaluator, decision target, and stop condition.",
+          "claim_boundary": "The workflow description does not provide a locally reproduced Agent Readiness result or a formal evaluator, so it cannot enter the scorecard directly."
+        }
+      ]
+    }
+  ],
+  "views": {
+    "by_lifecycle_stage": [
+      {
+        "id": "choose_onboard",
+        "references": []
+      },
+      {
+        "id": "connect",
+        "references": []
+      },
+      {
+        "id": "understand",
+        "references": [
+          "ai-agents-test:drupal-cms-agent-test-suites",
+          "ai-best-practices:skill-eval-cases"
+        ]
+      },
+      {
+        "id": "plan_clarify",
+        "references": [
+          "ai-agents-test:drupal-cms-agent-test-suites",
+          "ai-best-practices:skill-eval-cases"
+        ]
+      },
+      {
+        "id": "act",
+        "references": [
+          "ai-agents-test:drupal-cms-agent-test-suites",
+          "ai-best-practices:skill-eval-cases"
+        ]
+      },
+      {
+        "id": "verify",
+        "references": [
+          "ai-best-practices:skill-eval-cases"
+        ]
+      },
+      {
+        "id": "recover",
+        "references": []
+      },
+      {
+        "id": "handoff",
+        "references": []
+      }
+    ],
+    "by_task_family": [
+      {
+        "id": "supported_cold_start",
+        "references": []
+      },
+      {
+        "id": "governed_editorial_change",
+        "references": [
+          "ai-agents-test:drupal-cms-agent-test-suites",
+          "ai-best-practices:skill-eval-cases"
+        ]
+      },
+      {
+        "id": "diagnosis_and_rollback",
+        "references": [
+          "ai-best-practices:skill-eval-cases"
+        ]
+      }
+    ],
+    "by_disposition": [
+      {
+        "id": "reference_only",
+        "references": [
+          "ai-bench:benchmark-program-plan",
+          "ai-best-practices:inspect-runner-migration"
+        ]
+      },
+      {
+        "id": "candidate_for_local_adaptation",
+        "references": [
+          "ai-agents-test:drupal-cms-agent-test-suites",
+          "ai-best-practices:skill-eval-cases"
+        ]
+      },
+      {
+        "id": "candidate_for_local_reproduction",
+        "references": [
+          "ai-maintenance-skills:maintenance-workflow"
+        ]
+      },
+      {
+        "id": "candidate_for_dataset_reuse",
+        "references": [
+          "ai-evaluations:human-feedback-capture-framework"
+        ]
+      },
+      {
+        "id": "candidate_for_evaluator_reuse",
+        "references": [
+          "ai-eval:dataset-rubric-judge-contracts",
+          "ai-eval:shipped-deterministic-graders"
+        ]
+      },
+      {
+        "id": "candidate_for_substrate_reuse",
+        "references": [
+          "ai-agents-test:drupalforge-test-template"
+        ]
+      }
+    ],
+    "by_agent_class": [
+      {
+        "id": "external_coding_agent",
+        "references": [
+          "ai-bench:benchmark-program-plan",
+          "ai-best-practices:skill-eval-cases",
+          "ai-maintenance-skills:maintenance-workflow"
+        ]
+      },
+      {
+        "id": "browser_agent",
+        "references": [
+          "ai-bench:benchmark-program-plan"
+        ]
+      },
+      {
+        "id": "drupal_native_agent",
+        "references": [
+          "ai-agents-test:drupal-cms-agent-test-suites",
+          "ai-agents-test:drupalforge-test-template",
+          "ai-bench:benchmark-program-plan"
+        ]
+      },
+      {
+        "id": "model_only",
+        "references": [
+          "ai-bench:benchmark-program-plan"
+        ]
+      },
+      {
+        "id": "not_agent_specific",
+        "references": [
+          "ai-best-practices:inspect-runner-migration",
+          "ai-eval:dataset-rubric-judge-contracts",
+          "ai-eval:shipped-deterministic-graders",
+          "ai-evaluations:human-feedback-capture-framework"
+        ]
+      }
+    ]
+  }
+}

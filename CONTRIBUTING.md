@@ -61,6 +61,18 @@ final improvement decision.
 If the run used AI-generated code, prompts, or analysis, disclose that in the
 submission. Review and understand any AI-generated output before submitting it.
 
+## External Evaluation References
+
+Community PRs may add inert source pointers under `method/eval-references/` by
+following [`method/eval-references/README.md`](method/eval-references/README.md).
+A merged pointer is discovery metadata only: it is never fetched or executed,
+and it changes no Agent Readiness claim, lifecycle coverage, or score.
+
+Trusted local reproductions and their retained outputs use the separate
+external-evidence lane summarized in
+[`docs/external-eval-results.md`](docs/external-eval-results.md). Only a
+maintainer-selected, pinned, locally audited run belongs there.
+
 ## Local Checks
 
 Run these from the repository root before opening a pull request:
@@ -69,6 +81,8 @@ Run these from the repository root before opening a pull request:
 python3 -B -m unittest discover -s agent_readiness/tests -v
 PYTHONDONTWRITEBYTECODE=1 python3 -m py_compile agent_readiness/*.py agent_readiness/evaluators/*.py agent_readiness/scripts/*.py
 python3 -S -B agent_readiness/scripts/audit_benchmark_registries_v1.py --format json
+python3 -S -B -m agent_readiness.scripts.build_eval_landscape --check
+python3 -S -B -m agent_readiness.scripts.build_external_eval_results --check
 python3 agent_readiness/scripts/audit_publication_package.py --base-dir agent_readiness $(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort | sed 's/^/--run-result /')
 python3 agent_readiness/scripts/audit_readiness.py --base-dir agent_readiness $(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort | sed 's/^/--run-result /')
 python3 -B agent_readiness/scripts/audit_clean_checkout_integrity.py \

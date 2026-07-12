@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drupal.org/agent-readiness/external-eval-source-validation-v1.schema.json",
+  "title": "Maintainer-local external evaluation source validation record v1",
+  "description": "A generic, closed non-performance validation envelope. Records distinguish retained-artifact support from explicitly unverified manifests; adapter-specific fields are accepted only when a trusted local adapter validates adapter_data.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "record_type",
+    "validation_id",
+    "adapter_id",
+    "recorded_at",
+    "source",
+    "validation",
+    "artifacts",
+    "evidence",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "drupal_agent_readiness.external_eval_source_validation.v1"
+    },
+    "record_type": {
+      "const": "source_validation_not_agent_performance"
+    },
+    "validation_id": {
+      "$ref": "#/$defs/id"
+    },
+    "adapter_id": {
+      "$ref": "#/$defs/id"
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "validation": {
+      "type": "object",
+      "required": [
+        "kind",
+        "outcome_model",
+        "adapter_data"
+      ],
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/id"
+        },
+        "outcome_model": {
+          "type": "string",
+          "enum": ["aggregate_checks", "structured_observations"]
+        },
+        "checks_total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "checks_passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "checks_failed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "adapter_data": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "agent_performance_result",
+        "scorecard_eligible",
+        "coverage_effect",
+        "support_grade"
+      ],
+      "properties": {
+        "agent_performance_result": {
+          "const": false
+        },
+        "scorecard_eligible": {
+          "const": false
+        },
+        "coverage_effect": {
+          "const": "none"
+        },
+        "support_grade": {
+          "type": "string",
+          "enum": ["retained_artifacts", "manifest_only_unverified"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "claim_boundary": {
+      "type": "object",
+      "required": ["agent_performance_claim", "project_verdict_claim", "limitations"],
+      "properties": {
+        "agent_performance_claim": {
+          "const": false
+        },
+        "project_verdict_claim": {
+          "const": false
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 20
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "evidence": {
+            "properties": {
+              "support_grade": {
+                "const": "retained_artifacts"
+              }
+            },
+            "required": ["support_grade"]
+          }
+        },
+        "required": ["evidence"]
+      },
+      "then": {
+        "properties": {
+          "artifacts": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence": {
+            "properties": {
+              "support_grade": {
+                "const": "manifest_only_unverified"
+              }
+            },
+            "required": ["support_grade"]
+          }
+        },
+        "required": ["evidence"]
+      },
+      "then": {
+        "properties": {
+          "artifacts": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["id", "kind", "path", "sha256", "media_type"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "$ref": "#/$defs/id"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^evidence/external-evals/"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "media_type": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "artifact_id",
+        "registry_revision",
+        "upstream_commit"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "artifact_id": {
+          "$ref": "#/$defs/id"
+        },
+        "registry_revision": {
+          "type": "object",
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {
+              "$ref": "#/$defs/id"
+            },
+            "value": {
+              "$ref": "#/$defs/text"
+            }
+          },
+          "additionalProperties": false
+        },
+        "upstream_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,338 @@
+
+=== drupal-accessibility ===
+
+Static assertions:
+  [PASS] S01: Dispatcher SKILL.md exists
+         exists: skills/drupal-accessibility/SKILL.md
+  [PASS] S02: Agent Skills frontmatter is valid
+         name 'drupal-accessibility' matches parent directory; description is 267 characters
+  [PASS] S03: Routes to drupal-a11y-fapi
+         Found 'drupal-a11y-fapi'
+  [PASS] S04: Routes to drupal-a11y-dom
+         Found 'drupal-a11y-dom'
+  [PASS] S05: Routes to drupal-a11y-dynamic
+         Found 'drupal-a11y-dynamic'
+  [PASS] S06: Routes to drupal-a11y-qa
+         Found 'drupal-a11y-qa'
+  [PASS] S07: References WCAG 2.2 (not 2.1) as the conformance baseline
+         Found 'WCAG 2.2'
+  [PASS] S08: References SC 2.5.8 Target Size (Minimum) — new in WCAG 2.2
+         Found 'SC 2.5.8'
+  [PASS] S09: Mandates Playwright over Nightwatch
+         Found 'Playwright'
+  [PASS] S10: References Drupal.announce as the announcement API
+         Found 'Drupal.announce'
+  [PASS] S11: Calls out the AI-disclosure requirement
+         Found 'AI disclosure'
+  [PASS] S15: States detection order: tools before code review before AI
+         Found 'Detection order'
+  [PASS] S13: Links to CI/CD Accessibility Best Practices upstream guide
+         Found 'CI_CD_ACCESSIBILITY_BEST_PRACTICES'
+  [PASS] S14: Links to Accessibility Bug Reporting Best Practices upstream guide
+         Found 'ACCESSIBILITY_BUG_REPORTING_BEST_PRACTICES'
+  [PASS] S12: Dispatcher kept short (under 160 lines)
+         133 lines (limit: 160)
+
+  Score: 15/15
+
+=== drupal-automated-testing ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-automated-testing/SKILL.md
+  [PASS] S02: Agent Skills frontmatter is valid
+         name 'drupal-automated-testing' matches parent directory; description is 287 characters
+  [PASS] S03: Mentions BrowserTestBase (Functional test class)
+         Found 'BrowserTestBase'
+  [PASS] S04: Mentions KernelTestBase (Kernel test class)
+         Found 'KernelTestBase'
+  [PASS] S05: Mentions waitForElement (FunctionalJS flakiness pattern)
+         Found 'waitForElement'
+  [PASS] S06: Mentions RunTestsInSeparateProcesses (required attribute)
+         Found 'RunTestsInSeparateProcesses'
+  [PASS] S07: Functional tests listed before Unit tests (guards against unit-first ordering)
+         '**Functional tests**' at line 33, '**Unit tests**' at line 68
+  [PASS] S09: Covers the dual-container architecture trap in Functional tests
+         Found 'dual-container'
+  [PASS] S10: Covers SIMPLETEST_BASE_URL environment variable for DDEV
+         Found 'SIMPLETEST_BASE_URL'
+  [PASS] S08: Skill file is under 155 lines
+         142 lines (limit: 155)
+
+  Score: 10/10
+
+=== drupal-configuration ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-configuration/SKILL.md
+  [PASS] S02: Frontmatter has required fields (name, description)
+         name 'drupal-configuration' matches parent directory; description is 344 characters
+  [PASS] S03: Mentions State API as distinct from Config
+         Found '\Drupal::state()'
+  [PASS] S04: Mentions settings.php for secrets
+         Found 'settings.php'
+  [PASS] S05: Mentions config schema as mandatory
+         Found 'schema.yml'
+  [PASS] S06: Mentions getEditable for saving config
+         Found 'getEditable'
+  [PASS] S07: Mentions drush cex for export workflow
+         Found 'drush cex'
+  [PASS] S08: Mentions ConfigEntityInterface for config entities
+         Found 'ConfigEntityInterface'
+  [PASS] S09: Mentions config dependencies
+         Found 'dependencies'
+  [PASS] S10: Mentions third_party_settings mechanism
+         Found 'third_party_settings'
+  [PASS] S11: Mentions config actions and recipes for 10.3+
+         Found 'config action'
+  [PASS] S12: Three storage mechanisms section appears before config schema section
+         '### The three storage mechanisms' at line 18, '### Config schema' at line 147
+  [PASS] S13: Skill file is under 270 lines
+         290 lines (limit: 300)
+
+  Score: 13/13
+
+=== drupal-expert-corrections ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-expert-corrections/SKILL.md
+  [PASS] S02: Frontmatter has required Agent Skills fields (name, description)
+         name 'drupal-expert-corrections' matches parent directory; description is 217 characters
+  [PASS] S03: Mentions Capture step
+         Found 'Capture'
+  [PASS] S04: Mentions Classify step
+         Found 'Classify'
+  [PASS] S05: Mentions Remediate step
+         Found 'Remediate'
+  [PASS] S06: Mentions Verify step
+         Found 'Verify'
+  [PASS] S07: Contains SKILL_GAP classification
+         Found 'SKILL_GAP'
+  [PASS] S08: Contains SKILL_STALE classification
+         Found 'SKILL_STALE'
+  [PASS] S09: Contains EVAL_GAP classification
+         Found 'EVAL_GAP'
+  [PASS] S10: Contains HOOK_CANDIDATE classification
+         Found 'HOOK_CANDIDATE'
+  [PASS] S11: Contains CONFABULATION classification
+         Found 'CONFABULATION'
+  [PASS] S12: Contains ASSUMPTION_ERROR classification
+         Found 'ASSUMPTION_ERROR'
+  [PASS] S13: Contains reasoning_failure field
+         Found 'reasoning_failure'
+  [PASS] S14: Contains confidence field
+         Found 'confidence'
+  [PASS] S15: Contains project_id field
+         Found 'project_id'
+  [PASS] S16: Contains eval_seed field
+         Found 'eval_seed'
+  [PASS] S17: Contains continuous-learning-v2 prior art reference
+         Found 'continuous-learning-v2'
+  [PASS] S18: Skill file is under 300 lines
+         203 lines (limit: 300)
+
+  Score: 18/18
+
+=== drupal-gitlab ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-gitlab/SKILL.md
+  [PASS] S02: Frontmatter has required fields (name, description)
+         name 'drupal-gitlab' matches parent directory; description is 422 characters
+  [PASS] S03: SKILL.md targets git.drupalcode.org via --hostname (no GITLAB_HOST env var)
+         Found '--hostname git.drupalcode.org'
+  [PASS] S04: commit-messages reference documents the Conventional Commits format
+         Found 'Conventional Commits' in skills/drupal-gitlab/references/commit-messages.md
+  [PASS] S05: commit-messages reference uses Drupal.org usernames in By: lines
+         Found 'By: drupal-username' in skills/drupal-gitlab/references/commit-messages.md
+  [PASS] S06: merge-requests reference covers the Drupal issue-fork workflow
+         Found 'Issue-fork workflow' in skills/drupal-gitlab/references/merge-requests.md
+  [PASS] S07: merge-requests reference notes the fork must be provisioned before pushing
+         Found 'Provision the issue fork' in skills/drupal-gitlab/references/merge-requests.md
+  [PASS] S08: issues reference uses the work items URL convention (/-/work_items/)
+         Found 'work_items' in skills/drupal-gitlab/references/issues.md
+  [PASS] S09: merge-requests reference warns glab cannot create cross-project MRs
+         Found 'cannot create cross-project MRs' in skills/drupal-gitlab/references/merge-requests.md
+  [PASS] S10: ci-cd reference recommends glab ci trace for debugging failures
+         Found 'glab ci trace' in skills/drupal-gitlab/references/ci-cd.md
+  [PASS] S11: SKILL.md Prerequisites section appears before cross-cutting gotchas
+         '## Prerequisites' at line 21, '## Cross-cutting gotchas' at line 79
+  [PASS] S12: SKILL.md entry point stays lean (under 150 lines)
+         104 lines (limit: 150)
+  [PASS] S13: SKILL.md routes to reference files (progressive disclosure map)
+         Found 'references/merge-requests.md'
+  [PASS] S14: references/commit-messages.md exists
+         exists: skills/drupal-gitlab/references/commit-messages.md
+  [PASS] S15: references/issues.md exists
+         exists: skills/drupal-gitlab/references/issues.md
+  [PASS] S16: references/merge-requests.md exists
+         exists: skills/drupal-gitlab/references/merge-requests.md
+  [PASS] S17: references/ci-cd.md exists
+         exists: skills/drupal-gitlab/references/ci-cd.md
+  [PASS] S18: references/migration.md exists
+         exists: skills/drupal-gitlab/references/migration.md
+  [PASS] S19: issues reference documents the /do:fork comment command
+         Found '/do:fork' in skills/drupal-gitlab/references/issues.md
+  [PASS] S20: issues reference documents the state::rtbc scoped label
+         Found 'state::rtbc' in skills/drupal-gitlab/references/issues.md
+  [PASS] S21: migration reference translates RTBC terminology
+         Found 'RTBC' in skills/drupal-gitlab/references/migration.md
+  [PASS] S22: migration reference translates reroll/rebase terminology
+         Found 'reroll' in skills/drupal-gitlab/references/migration.md
+  [PASS] S23: references/issues.md stays focused (under 200 lines)
+         93 lines (limit: 200) (skills/drupal-gitlab/references/issues.md)
+  [PASS] S24: references/merge-requests.md stays focused (under 200 lines)
+         121 lines (limit: 200) (skills/drupal-gitlab/references/merge-requests.md)
+  [PASS] S25: references/migration.md stays focused (under 200 lines)
+         101 lines (limit: 200) (skills/drupal-gitlab/references/migration.md)
+  [PASS] S26: references/contribution.md exists
+         exists: skills/drupal-gitlab/references/contribution.md
+  [PASS] S27: SKILL.md routing map points to the contribution reference
+         Found 'references/contribution.md'
+  [PASS] S28: contribution reference branches on migrated vs legacy issue queue
+         Found 'drupalorg-cli' in skills/drupal-gitlab/references/contribution.md
+  [PASS] S29: contribution reference documents the fork-access path via /do:access
+         Found '/do:access' in skills/drupal-gitlab/references/contribution.md
+  [PASS] S30: contribution reference wires the MR to the issue with Closes
+         Found 'Closes #' in skills/drupal-gitlab/references/contribution.md
+  [PASS] S31: references/contribution.md stays focused (under 200 lines)
+         61 lines (limit: 200) (skills/drupal-gitlab/references/contribution.md)
+  [PASS] S32: SKILL.md tells agents not to @-mention/assign contributors unprompted
+         Found 'Don't pull specific people in unprompted'
+  [PASS] S33: SKILL.md guides agents to write permission-friendly commands (auto-approvable)
+         Found 'auto-approve'
+  [PASS] S34: SKILL.md documents passing multi-line API fields from a file (-f field=@file)
+         Found '-f field=@file'
+  [PASS] S35: merge-requests reference warns that merging one MR makes sibling MRs stale (rebase back-to-back)
+         Found 'back-to-back' in skills/drupal-gitlab/references/merge-requests.md
+  [PASS] S36: merge-requests reference notes squash-merge uses the MR title as the commit message
+         Found 'squash-merges use the MR' in skills/drupal-gitlab/references/merge-requests.md
+
+  Score: 36/36
+
+=== drupal-render-pipeline ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-render-pipeline/SKILL.md
+  [PASS] S02: Frontmatter has required Agent Skills fields (name, description)
+         name 'drupal-render-pipeline' matches parent directory; description is 322 characters
+  [PASS] S03: Mentions render arrays as the required return type
+         Found 'render array'
+  [PASS] S04: Mentions cache contexts as a dimension of variation
+         Found 'cache contexts'
+  [PASS] S05: Mentions cache tags as data dependencies
+         Found 'cache tags'
+  [PASS] S06: Mentions lazy builders for personalized content
+         Found '#lazy_builder'
+  [PASS] S07: Mentions #create_placeholder for lazy builder activation
+         Found '#create_placeholder'
+  [PASS] S08: Mentions #plain_text for user-generated content
+         Found '#plain_text'
+  [PASS] S09: Mentions two-phase invalidation behavior
+         Found 'two-phase'
+  [PASS] S10: Mentions CacheableMetadata value object
+         Found 'CacheableMetadata'
+  [PASS] S11: Mentions BigPipe streaming
+         Found 'BigPipe'
+  [PASS] S12: Mentions scalar-only lazy builder arguments
+         Found 'scalar'
+  [PASS] S13: Render arrays section appears before lazy builders section
+         '### Return render arrays, not HTML strings' at line 19, '### Lazy builders for personalized content' at line 122
+  [PASS] S14: Skill file is under 250 lines
+         228 lines (limit: 250)
+
+  Score: 14/14
+
+=== drupal-skill-authoring ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-skill-authoring/SKILL.md
+  [PASS] S02: Frontmatter has required fields (name, description)
+         name 'drupal-skill-authoring' matches parent directory; description is 687 characters
+  [PASS] S03: SKILL.md entry point stays lean (well under the 500-line spec guideline)
+         100 lines (limit: 200)
+  [PASS] S04: SKILL.md routes to reference files (progressive disclosure map)
+         Found 'references/frontmatter.md'
+  [PASS] S05: SKILL.md names the canonical 500-line guideline
+         Found '500'
+  [PASS] S06: SKILL.md states the validator checks frontmatter, not body length
+         Found 'frontmatter only'
+  [PASS] S07: SKILL.md points to docs/skill-authoring.md for the decision framework
+         Found 'docs/skill-authoring.md'
+  [PASS] S08: references/frontmatter.md exists
+         exists: skills/drupal-skill-authoring/references/frontmatter.md
+  [PASS] S09: references/progressive-disclosure.md exists
+         exists: skills/drupal-skill-authoring/references/progressive-disclosure.md
+  [PASS] S10: references/contributing-here.md exists
+         exists: skills/drupal-skill-authoring/references/contributing-here.md
+  [PASS] S11: frontmatter reference lists the allowed-field constraint (name must match directory)
+         Found 'match the directory name' in skills/drupal-skill-authoring/references/frontmatter.md
+  [PASS] S12: frontmatter reference documents the 1024-char description limit
+         Found '1024' in skills/drupal-skill-authoring/references/frontmatter.md
+  [PASS] S13: frontmatter reference warns against top-level custom keys
+         Found 'Do not invent top-level custom keys' in skills/drupal-skill-authoring/references/frontmatter.md
+  [PASS] S14: progressive-disclosure reference cites the agentskills.io specification
+         Found 'agentskills.io/specification' in skills/drupal-skill-authoring/references/progressive-disclosure.md
+  [PASS] S15: progressive-disclosure reference cites Anthropic's best-practices guide
+         Found 'best-practices' in skills/drupal-skill-authoring/references/progressive-disclosure.md
+  [PASS] S16: contributing-here reference documents the eval trio requirement
+         Found 'static-checks.json' in skills/drupal-skill-authoring/references/contributing-here.md
+  [PASS] S17: contributing-here reference reflects skill auto-discovery (no template wiring)
+         Found 'auto-discover' in skills/drupal-skill-authoring/references/contributing-here.md
+  [PASS] S18: contributing-here reference names the validator command
+         Found 'agent-skills-validator' in skills/drupal-skill-authoring/references/contributing-here.md
+  [PASS] S19: references/frontmatter.md stays focused (under 200 lines)
+         103 lines (limit: 200) (skills/drupal-skill-authoring/references/frontmatter.md)
+  [PASS] S20: references/progressive-disclosure.md stays focused (under 200 lines)
+         70 lines (limit: 200) (skills/drupal-skill-authoring/references/progressive-disclosure.md)
+  [PASS] S21: references/contributing-here.md stays focused (under 200 lines)
+         111 lines (limit: 200) (skills/drupal-skill-authoring/references/contributing-here.md)
+  [PASS] S22: frontmatter reference states metadata custom fields are spec-legal and pass CI (not forbidden)
+         Found 'spec-legal and pass CI' in skills/drupal-skill-authoring/references/frontmatter.md
+  [PASS] S23: frontmatter reference flags the reserved-words spec rule the validator misses
+         Found 'reserved words' in skills/drupal-skill-authoring/references/frontmatter.md
+  [PASS] S24: frontmatter reference requires third-person descriptions
+         Found 'third person' in skills/drupal-skill-authoring/references/frontmatter.md
+  [PASS] S25: SKILL.md covers writing a good skill, not just a valid one
+         Found 'Write a good skill, not just a valid one'
+  [PASS] S26: SKILL.md teaches eval-driven development (evals first)
+         Found 'Evals first'
+
+  Score: 26/26
+
+=== drupal-writing-documentation ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-writing-documentation/SKILL.md
+  [PASS] S02: Agent Skills frontmatter is valid
+         name 'drupal-writing-documentation' matches parent directory; description is 224 characters
+  [PASS] S03: Mentions drupal.org wiki as documentation location
+         Found 'drupal.org wiki'
+  [PASS] S04: Mentions api.drupal.org as documentation source
+         Found 'api.drupal.org'
+  [PASS] S05: Teaches 'link to everything else' principle
+         Found 'Document Drupal; link to everything else'
+  [PASS] S06: Teaches audience awareness
+         Found 'Know your audience'
+  [PASS] S07: Teaches opinionated documentation
+         Found 'Be opinionated'
+  [PASS] S08: Teaches Drupal terminology
+         Found 'Use Drupal's terminology correctly'
+  [PASS] S09: Teaches scannability
+         Found 'Keep pages short and scannable'
+  [PASS] S10: References Content Style Guide
+         Found 'Content Style Guide'
+  [PASS] S11: Core principles appear before common mistakes
+         '## Core principles' at line 60, '## Common mistakes' at line 119
+  [PASS] S12: Skill file is under 200 lines
+         167 lines (limit: 200)
+
+  Score: 12/12
+
+

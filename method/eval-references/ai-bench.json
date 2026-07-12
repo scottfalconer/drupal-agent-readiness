@@ -1,0 +1,42 @@
+{
+  "schema_version": "drupal_agent_readiness.eval_reference.v1",
+  "id": "ai-bench",
+  "name": "AI Bench",
+  "summary": "A proposed public program for Drupal-specific model and agent benchmark tasks and community-submitted runs.",
+  "canonical_url": "https://www.drupal.org/project/ai_bench",
+  "repository_url": "https://git.drupalcode.org/project/ai_bench",
+  "roles": ["benchmark_program"],
+  "registry_effect": "reference_only_no_claim_or_coverage_effect",
+  "last_reviewed_at": "2026-07-11",
+  "provenance": {
+    "review_basis": "primary_sources_and_supplied_discussion",
+    "source_urls": [
+      "https://www.drupal.org/project/ai_bench"
+    ],
+    "note": "The project page describes proposed issue-resolution, tool/MCP-use, code-audit, translation, and community-run directions. They remain one program-level plan until concrete task artifacts are published."
+  },
+  "artifacts": [
+    {
+      "id": "benchmark-program-plan",
+      "name": "Drupal model and agent benchmark program plan",
+      "kind": "benchmark_plan",
+      "pointer_type": "project_page",
+      "url": "https://www.drupal.org/project/ai_bench",
+      "upstream_revision": {
+        "kind": "unversioned",
+        "value": "project-plan-reviewed-2026-07-11",
+        "immutable": false
+      },
+      "agent_classes": ["external_coding_agent", "browser_agent", "drupal_native_agent", "model_only"],
+      "question_answered": "Which proposed Drupal benchmark directions should be monitored for concrete, locally adaptable task and evaluator artifacts?",
+      "mapping_scope": "supporting_infrastructure",
+      "lifecycle_stages": [],
+      "candidate_task_family_ids": [],
+      "substrate_fidelity": "not_reported",
+      "evaluator_types": ["not_reported"],
+      "disposition": "reference_only",
+      "mapping_note": "The project proposes issue resolution, tool and MCP use, code-audit score deltas, translation, and community-submitted runs. Promote each direction separately only when a concrete suite, case, dataset, grader, workflow, substrate, work item, or implementation merge request exists.",
+      "claim_boundary": "This project page records benchmark intentions, not an available task package, evaluator, retained result, or Agent Readiness coverage candidate."
+    }
+  ]
+}

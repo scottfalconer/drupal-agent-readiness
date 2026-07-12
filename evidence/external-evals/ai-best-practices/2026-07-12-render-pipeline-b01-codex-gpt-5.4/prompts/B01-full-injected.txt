@@ -1,0 +1,233 @@
+---
+name: drupal-render-pipeline
+description: Guidance for working with Drupal's render pipeline — render arrays, cacheability metadata, cache tag propagation, lazy builders, BigPipe, and the render element types. Covers the mistakes AI agents make most frequently when generating controller and block output, especially caching bugs that are invisible in development.
+---
+
+# Working with the render pipeline
+
+## When to use this guidance
+
+You are writing or modifying code that produces HTML output in Drupal — page
+controllers, block plugins, field formatters, preprocess functions, or anything
+that returns a render array. Drupal's render pipeline is where AI agents
+confabulate most frequently, and the errors are especially dangerous because
+they produce working code in development that breaks under caching in
+production.
+
+## Guidance
+
+### Return render arrays, not HTML strings
+
+Page controllers that serve HTML must return render arrays, not raw HTML or
+`Response` objects. Render arrays are structured data that the render system
+turns into HTML while preserving cacheability metadata.
+
+```php
+// Correct: render array with cache metadata.
+public function myPage(): array {
+  return [
+    '#theme' => 'my_template',
+    '#title' => $this->t('Page title'),
+    '#items' => $this->loadItems(),
+    '#cache' => [
+      'tags' => ['node_list'],
+      'contexts' => ['user.permissions'],
+    ],
+  ];
+}
+```
+
+When you return a `Response` object or a raw HTML string from a controller,
+Drupal cannot attach cache metadata to the output. The page either becomes
+uncacheable or caches incorrectly. Return a `Response` only when you are
+intentionally bypassing the render system (JSON endpoints, file downloads) and
+are handling caching yourself. For JSON endpoints, use `CacheableJsonResponse`
+to attach cache metadata to non-HTML responses.
+
+### Cacheability metadata is mandatory
+
+Every render array that varies by user, permission, route, or query string must
+declare its **cache contexts**. Every render array that depends on an entity or
+config object must declare its **cache tags**. Missing metadata means the render
+system cannot cache the output correctly.
+
+```php
+$build['#cache']['contexts'][] = 'user.permissions';
+$build['#cache']['tags'][] = 'node:42';
+$build['#cache']['max-age'] = 3600;
+```
+
+The three types:
+
+- **Cache contexts**: dimensions of variation (user role, URL, language). If the
+  output differs by user permission, add `user.permissions`.
+- **Cache tags**: data dependencies. If the output includes node 42, add
+  `node:42`. When that node changes, the cache entry is invalidated.
+- **Max-age**: time-based expiration in seconds. Use `0` for uncacheable, `-1`
+  (Cache::PERMANENT) for no time limit. Max-age uses **minimum-wins bubbling**:
+  when a child render array has `max-age: 0`, it propagates up and forces the
+  entire parent to be uncacheable. This is why lazy builders exist — without
+  them, a single personalized element with `max-age: 0` would make the whole
+  page uncacheable.
+
+A fourth property, **cache keys** (`#cache['keys']`), controls whether a render
+array is individually stored in the render cache. Without keys, a render
+array's metadata bubbles up to parents, but the array itself is not cached
+independently.
+
+For non-trivial cache metadata operations — especially merging metadata across
+render arrays and non-render-array objects — use the `CacheableMetadata` value
+object rather than manipulating raw array keys:
+
+```php
+$cache_metadata = CacheableMetadata::createFromRenderArray($build);
+$cache_metadata->addCacheTags(['node:42']);
+$cache_metadata->addCacheContexts(['user.permissions']);
+$cache_metadata->applyTo($build);
+```
+
+`CacheableMetadata` handles correct merging of tags, contexts, and max-age
+(including minimum-wins). The raw array approach works for simple cases, but
+when merging metadata between render arrays and `AccessResult` objects, config
+overrides, or REST responses, `CacheableMetadata` prevents the subtle merge
+bugs that raw array manipulation introduces.
+
+### Metadata bubbles up — but requires explicit attachment in some cases
+
+Cacheability metadata propagates automatically up the render tree. When a child
+render array declares `node:42` as a cache tag, the parent page-level render
+inherits it. But this only works when the entire output chain uses render
+arrays. If you bypass the render system at any level — raw HTML, string
+concatenation, a Response object — metadata from that subtree is silently lost.
+
+Several subsystems require **explicit** cache metadata attachment — automatic
+bubbling does not cover them:
+
+- **Access results**: `AccessResult` objects carry their own cacheability. When
+  an access check varies by user permission, the `AccessResult` must declare
+  `user.permissions` as a cache context, or the access decision may be cached
+  without the variation.
+- **Config overrides**: config override classes must declare the cache contexts
+  and tags that their overrides depend on.
+- **Entity translations**: runtime cache contexts for language negotiation must
+  be added via the entity's `getCacheContexts()`.
+
+The `#access` render property controls whether an element is processed at all.
+It accepts both booleans and `AccessResult` objects. When using an
+`AccessResult`, its cacheability metadata is merged into the render tree. When
+using a plain boolean, no cacheability information is conveyed — which can
+cause silent caching bugs where access decisions are cached without the
+correct variation.
+
+### Lazy builders for personalized content
+
+The Dynamic Page Cache caches full page render arrays for anonymous and
+authenticated users, replacing personalized sections with placeholders. Lazy
+builders are how you mark a section as "fill this in per-request":
+
+```php
+$build['user_greeting'] = [
+  '#lazy_builder' => [
+    'my_module.greeting_builder:build',
+    [$account_id],
+  ],
+  '#create_placeholder' => TRUE,
+];
+```
+
+**Lazy builder arguments must be scalar values only** (strings, integers,
+floats, booleans, or NULL). The arguments are serialized into the placeholder
+markup, so arrays, objects, and render arrays cannot be passed. This is a
+common mistake in AI-generated code — pass an entity ID, not an entity object.
+
+Without lazy builders, any personalized content (username, cart count,
+user-specific messages) forces the entire page to be uncacheable. If you are
+adding user-specific output to a page, always use a lazy builder.
+
+**BigPipe** is the production consumer of the placeholder system. It streams
+the page HTML immediately and replaces lazy builder placeholders via chunked
+transfer as they resolve. Code that renders placeholder content into strings
+before BigPipe can intercept it defeats this mechanism.
+
+### Cache tag invalidation is two-phase
+
+When a cache tag is invalidated (e.g., a node is saved), Drupal updates the
+tag's checksum immediately but does not eagerly delete cached items from the
+backend. On the next read, the stored checksum no longer matches the current
+one, so the cache returns a miss and the item is regenerated. The stale entry
+may remain in the backend until overwritten or naturally expired — the
+important point is that the read sees a miss, not that the data is physically
+gone. This is a deliberate performance design — mass invalidation is cheap
+because it writes one checksum row, not N cache deletes.
+
+Do not write code that expects cached items to be physically absent immediately
+after invalidation. The cache will return a miss, but the old data may still
+exist in the backend.
+
+### Render element types
+
+Drupal has several render element types that agents confuse:
+
+- **`#theme`**: delegates to a theme template. The standard choice for
+  structured output with a Twig template.
+- **`#type`**: uses a render element plugin (form elements, tables, links).
+- **`#markup`**: filtered HTML. Runs through `Xss::filterAdmin()`, which
+  allows a limited set of tags. However, values that already implement
+  `MarkupInterface` (from `t()`, `Markup::create()`, etc.) bypass this filter
+  entirely. Do not wrap user input in `Markup::create()` to suppress escaping
+  warnings — this silently defeats the XSS filter.
+- **`#plain_text`**: escaped text. Use this for user-generated content that
+  should not contain any HTML.
+- **`inline_template`** (`#type => 'inline_template'`): renders a Twig snippet
+  inline without a separate template file. Use for small dynamic HTML fragments
+  that do not warrant a full theme template.
+
+Use `#theme` for structured templates, `#plain_text` for user content,
+`inline_template` for small Twig snippets, and `#markup` only for trusted
+admin HTML. Never use `#markup` for user input.
+
+### Rendering outside the request pipeline
+
+When rendering in contexts outside the normal HTTP request (queue workers,
+Drush commands, cron), cacheability bubbling behaves differently. Use
+`renderInIsolation()` or `renderPlain()` instead of `render()` to avoid
+attaching metadata to a non-existent request context.
+
+## What not to do
+
+Do not return `new Response($html)` from an HTML page controller. You lose all
+cacheability metadata and force the page to be uncacheable.
+
+Do not omit cache metadata from render arrays. Missing tags cause stale
+content in production; missing contexts cause personalization leaks.
+
+Do not put personalized content (usernames, session data, cart counts) directly
+in a render array. Use a lazy builder with `#create_placeholder`.
+
+Do not pass arrays or objects as lazy builder arguments. Arguments must be
+scalar values only (string, int, float, bool, NULL).
+
+Do not use `#markup` for user-generated content. It runs through a permissive
+filter that allows HTML tags. Use `#plain_text` instead.
+
+Do not wrap user input in `Markup::create()` to suppress escaping. This
+bypasses `Xss::filterAdmin()` entirely and creates an XSS vulnerability.
+
+Do not assume cached items disappear immediately after tag invalidation.
+Invalidation is two-phase — eviction happens on the next read.
+
+Do not attach cache tags to a render array that sits outside the render tree.
+Tags only bubble when they are part of the hierarchy that Drupal actually
+renders.
+
+## See also
+
+- [Render API overview](https://www.drupal.org/docs/drupal-apis/render-api)
+- [Cacheability metadata](https://www.drupal.org/docs/drupal-apis/cache-api/cache-api)
+- [Lazy builders and placeholders](https://www.drupal.org/docs/drupal-apis/render-api/auto-placeholdering)
+- [Render element types](https://api.drupal.org/api/drupal/elements)
+
+
+---
+
+Write a Drupal page controller method that displays a list of the 10 most recent published articles. The page is visible to any user with the 'access content' permission.

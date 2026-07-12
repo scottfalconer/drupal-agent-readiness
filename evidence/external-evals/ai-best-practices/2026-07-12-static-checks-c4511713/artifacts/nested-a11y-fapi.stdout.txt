@@ -1,0 +1,36 @@
+
+=== drupal-accessibility/drupal-a11y-fapi ===
+
+Static assertions:
+  [PASS] S01: Skill file exists
+         exists: skills/drupal-accessibility/drupal-a11y-fapi/SKILL.md
+  [PASS] S02: Agent Skills frontmatter is valid
+         name 'drupal-a11y-fapi' matches parent directory; description is 318 characters
+  [PASS] S03: Requires #title on every form element
+         Found '#title'
+  [PASS] S04: Covers #description and aria-describedby auto-generation
+         Found '#description'
+  [PASS] S05: Mandates fieldset or details for grouped controls
+         Found 'fieldset'
+  [PASS] S06: Prohibits interactive elements inside #markup
+         Found '#markup'
+  [PASS] S07: Covers #alt contract for image render elements
+         Found '#alt'
+  [PASS] S08: Covers #type => 'table' for accessible table rendering
+         Found '#type' => 'table''
+  [PASS] S09: Prohibits redundant ARIA on native elements
+         Found 'role="button"'
+  [PASS] S10: References #title_display => invisible for visually-hidden labels
+         Found '#title_display'
+  [PASS] S11: Covers #access => FALSE for hiding elements from accessibility tree
+         Found '#access'
+  [PASS] S13: Covers #title_display => 'invisible' for visually-hidden labels
+         Found ''invisible''
+  [PASS] S14: Covers #states vs #access distinction
+         Found '#states'
+  [PASS] S12: Skill kept under 320 lines
+         276 lines (limit: 320)
+
+  Score: 14/14
+
+
