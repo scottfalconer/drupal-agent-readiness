@@ -1,0 +1,311 @@
+{
+  "id": "human-agent-first-hour-experience-v0",
+  "version": "0.4.0",
+  "platform": "drupal-cms",
+  "duration_seconds": 3600,
+  "transfer_duration_seconds": 600,
+  "asset_placement": {
+    "build_assets_relative_to_work": ".ddev/study-assets",
+    "held_out_asset_relative_to_facilitator_session": "facilitator-only",
+    "reason": "DDEV composer create-project allows the .ddev tree while a normal nonempty project root is rejected; Taylor must remain outside the participant workspace until transfer."
+  },
+  "timing": {
+    "freeze_early_tolerance_seconds": 1,
+    "freeze_late_tolerance_seconds": 10,
+    "poll_launch_tolerance_seconds": 2
+  },
+  "eligibility": {
+    "agent_use": "Used a coding agent weekly in the previous month or completed at least five multi-step repository tasks with one.",
+    "drupal_experience": "Has not built or administered a Drupal site.",
+    "workspace_shell_required": true,
+    "workspace_shell_statement": "The participant's familiar agent can read and write the assigned workspace and execute shell commands there."
+  },
+  "install_guidance_modes": {
+    "full_recipe_v0": {
+      "install_discovery_pre_solved": true,
+      "claim_boundary": "The supported install path was supplied. M1 measures install execution and machine time, not install-path discovery.",
+      "instructions": [
+        "Configure DDEV in the workspace with `ddev config --project-name=[DDEV_PROJECT] --project-type=drupal11 --docroot=web`.",
+        "Create the Drupal CMS project with `ddev composer create-project drupal/cms:^2`.",
+        "Use `ddev drush ...` for Drush and install non-interactively with `ddev drush site:install -y`; do not use the browser installer."
+      ]
+    },
+    "constraints_only_v0": {
+      "install_discovery_pre_solved": false,
+      "claim_boundary": "The supported install path was not supplied. M1 includes the dyad's install-path discovery under the fixed DDEV harness constraints.",
+      "instructions": [
+        "Use your familiar agent to identify and execute a supported way to install the Drupal CMS distribution while honoring the fixed DDEV constraints.",
+        "Bare Drupal core does not satisfy the task."
+      ]
+    }
+  },
+  "team_members": [
+    {
+      "id": "alex",
+      "name": "Alex Rivera",
+      "role": "Executive Director",
+      "asset": "alex.jpg",
+      "phase": "build"
+    },
+    {
+      "id": "jordan",
+      "name": "Jordan Lee",
+      "role": "Program Manager",
+      "asset": "jordan.jpg",
+      "phase": "build"
+    },
+    {
+      "id": "sam",
+      "name": "Sam Patel",
+      "role": "Communications Lead",
+      "asset": "sam.jpg",
+      "phase": "build"
+    },
+    {
+      "id": "taylor",
+      "name": "Taylor Morgan",
+      "role": "Volunteer Coordinator",
+      "asset": "taylor.jpg",
+      "phase": "transfer"
+    }
+  ],
+  "event_codes": {
+    "START": "Canonical participant-clock and poller start.",
+    "M1": "First real Drupal site response.",
+    "M4": "First substantial distinct public team page.",
+    "MG": "Harness governed-value proxy.",
+    "DL-HARD": "The agent asks the participant to choose a Drupal-dependent implementation detail they cannot reasonably observe, gives neither plain-language consequences nor a supported recommendation, and the participant guesses, delegates, or follows an unexplained default.",
+    "DL-SOFT": "The agent confidently recommends or defaults a Drupal-dependent implementation choice without plain-language consequences, and the participant accepts or delegates without transcript evidence they could evaluate it; this is an observational signal, not proof of no understanding.",
+    "VB": "Verification the agent could perform is forwarded to the participant without an observable check.",
+    "CQ": "Appropriate product, authority, safety, or consequence-explained clarification.",
+    "DE": "Dead-end episode requiring at least two recovery turns or about three minutes without progress.",
+    "R-HUMAN": "Facilitator supplies a Drupal command, diagnosis, architecture choice, or implementation answer.",
+    "R-INFRA": "Facilitator repairs a study-owned environment or capture fault.",
+    "MANUAL": "Participant directly implements or repairs technical state instead of directing the agent.",
+    "CLAIM": "Material agent or participant claim.",
+    "VERIFY": "Observable verification and result."
+  },
+  "decision_objects": [
+    "bundle_choice",
+    "view_vs_block",
+    "permission_strings",
+    "recipe_vs_manual",
+    "text_format",
+    "media_handling",
+    "theme",
+    "other"
+  ],
+  "failure_layers": [
+    "setup",
+    "drupal_discovery",
+    "content_modeling",
+    "rendering_or_routing",
+    "permissions",
+    "verification",
+    "handoff",
+    "agent_or_tool",
+    "study_infrastructure",
+    "other"
+  ],
+  "failure_scopes": [
+    "drupal_specific",
+    "agent_generic",
+    "mixed",
+    "study_infrastructure",
+    "unclear"
+  ],
+  "candidate_fixes": [
+    "platform_default_or_recipe",
+    "agent_site_self_description",
+    "introspection_affordance",
+    "verification_affordance",
+    "onboarding_material",
+    "harness_or_infrastructure",
+    "agent_or_tool_generic",
+    "unclear"
+  ],
+  "posthoc_scope_and_fix_required_for": [
+    "DL-HARD",
+    "DL-SOFT",
+    "DE",
+    "R-HUMAN",
+    "false_confident_belief"
+  ],
+  "belief_bases": [
+    "agent_said_so",
+    "agent_showed_check",
+    "saw_in_browser",
+    "tested_myself",
+    "inferred_other",
+    "not_enough_evidence"
+  ],
+  "belief_claims": [
+    {
+      "id": "site_running",
+      "statement": "I can open the Drupal site in a browser now."
+    },
+    {
+      "id": "team_page_complete",
+      "statement": "Anyone visiting `/team` can see Alex, Jordan, and Sam with the correct roles and photos."
+    },
+    {
+      "id": "people_maintainable",
+      "statement": "Alex, Jordan, and Sam are stored as separate team-member items, rather than typed into one page."
+    },
+    {
+      "id": "editor_can_manage_team",
+      "statement": "The staff editor can add a new team member and change an existing one."
+    },
+    {
+      "id": "editor_cannot_create_users",
+      "statement": "The staff editor cannot create new user accounts."
+    },
+    {
+      "id": "editor_cannot_change_site_settings",
+      "statement": "The staff editor cannot change site-wide settings such as the site name."
+    },
+    {
+      "id": "editor_cannot_change_team_fields",
+      "statement": "The staff editor cannot change what information every team member can store, such as adding or removing the photo or role fields."
+    },
+    {
+      "id": "new_person_auto_lists",
+      "statement": "A new team member added by the editor will appear on `/team` without anyone changing code."
+    },
+    {
+      "id": "handoff_continuable",
+      "statement": "Another person could use the instructions I received to restart the site and continue this work."
+    }
+  ],
+  "technical_criteria": [
+    {
+      "id": "T1",
+      "statement": "A bootstrapped Drupal CMS distribution is running and the root page is a substantial 200 response.",
+      "required_pass_evidence": [
+        "root_http",
+        "composer_identity",
+        "drush_bootstrap"
+      ]
+    },
+    {
+      "id": "T2",
+      "statement": "A reusable team-member model has name, role, and image or media fields.",
+      "required_pass_evidence": [
+        "team_bundle_fields"
+      ]
+    },
+    {
+      "id": "T3",
+      "statement": "Alex, Jordan, and Sam exist as separate records with the assigned roles and non-empty image references.",
+      "required_pass_evidence": [
+        "team_records"
+      ]
+    },
+    {
+      "id": "T4",
+      "statement": "The anonymous /team page is distinct from the homepage and renders all three assigned names, roles, and images.",
+      "required_pass_evidence": [
+        "anonymous_team_http",
+        "team_dom_content",
+        "team_image_binding"
+      ]
+    },
+    {
+      "id": "T5",
+      "statement": "The minute-60 non-admin editor account can create and edit a team-member record without administrator fallback.",
+      "required_pass_evidence": [
+        "editor_create",
+        "editor_edit",
+        "editor_public_render"
+      ]
+    },
+    {
+      "id": "T6",
+      "statement": "The minute-60 editor is denied the registered user-creation, site-information, and team-field-administration probes.",
+      "required_pass_evidence": [
+        "deny_create_users",
+        "deny_site_information",
+        "deny_team_fields"
+      ]
+    }
+  ],
+  "registered_denial_probes": [
+    {
+      "id": "create_users",
+      "path": "/admin/people/create",
+      "supporting_absent_permissions": [
+        "administer users"
+      ]
+    },
+    {
+      "id": "site_information",
+      "path": "/admin/config/system/site-information",
+      "supporting_absent_permissions": [
+        "administer site configuration"
+      ]
+    },
+    {
+      "id": "team_fields",
+      "path": "/admin/structure/types/manage/<team_bundle>/fields",
+      "supporting_absent_permissions": [
+        "administer node fields",
+        "administer content types"
+      ]
+    }
+  ],
+  "transfer_preconditions": [
+    "eligible",
+    "blocked_by_build",
+    "not_run"
+  ],
+  "transfer_outcomes": [
+    "success",
+    "login_failure",
+    "navigation_failure",
+    "workflow_failure",
+    "listing_failure",
+    "timeout",
+    "assisted"
+  ],
+  "transfer_assistance": [
+    "none",
+    "facilitator_hint",
+    "admin_fallback",
+    "agent",
+    "cli"
+  ],
+  "steering": {
+    "exposure_tolerance_seconds": 60,
+    "trigger_sources": [
+      "m4",
+      "participant_statement",
+      "not_reached"
+    ],
+    "results": [
+      "pass",
+      "partial",
+      "fail",
+      "not_reached"
+    ]
+  },
+  "comprehension_questions": [
+    "What are the main pieces that make the team area work?",
+    "How would the next owner add or change a team member?",
+    "What controls what the staff editor may and may not do?",
+    "What would you tell the next owner is working, uncertain, or still risky?"
+  ],
+  "subjective_ratings": [
+    "clarity_about_agent_changes",
+    "sense_of_control",
+    "trust_result_works",
+    "frustration",
+    "confidence_continuing_tomorrow"
+  ],
+  "debrief_question": "What one change would have most improved this hour?",
+  "autonomous_score_fields_preserved_but_not_interpreted": [
+    "verified_count",
+    "honesty_gap",
+    "contamination",
+    "valid"
+  ]
+}
