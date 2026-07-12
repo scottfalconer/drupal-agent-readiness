@@ -2646,6 +2646,11 @@
       "sha256": "bbf1b3c599c9515eac44e292c99c51f7bd9561543cca5a6fef75d8c3ea13e344"
     },
     {
+      "bytes": 133945,
+      "path": "human_first_hour.py",
+      "sha256": "1a0a33ed15f92fe7a8090822f8ccc981f150023f8dbe3a02498873a8cd95bbf6"
+    },
+    {
       "bytes": 30787,
       "path": "intent_behavior.py",
       "sha256": "0948d6e04b0a1b6f04954b52942dece19a284bf9ce7b41a03bca81e35c2ea25a"
@@ -3151,6 +3156,11 @@
       "sha256": "f5b7c451226d3d30c3f8cb282122e64bad33620057c0150e6df5a3764ad2f734"
     },
     {
+      "bytes": 6628,
+      "path": "scripts/human_first_hour.py",
+      "sha256": "e9020909894d52dda9534240641fc4c0dd020da740376300583b5c08e07c30d9"
+    },
+    {
       "bytes": 1323,
       "path": "scripts/install_site_architecture.py",
       "sha256": "7c91b362582f9607e60f127c707e939792aac2d093860fc3c44e1c922d712646"
@@ -3279,6 +3289,11 @@
       "bytes": 172621,
       "path": "tests/test_frontier_canary.py",
       "sha256": "133b67c116dc5cb7ad1c7ee68689e7ac1c6984361b3528fec23c0899ca589bc3"
+    },
+    {
+      "bytes": 52352,
+      "path": "tests/test_human_first_hour.py",
+      "sha256": "a3a849a74ce2eb843e155b92cc74a009d31c56ec47ae5dffa8ecdd87d1f55530"
     },
     {
       "bytes": 34990,

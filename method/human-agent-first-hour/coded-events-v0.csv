@@ -1,0 +1,2 @@
+session_id,event_id,start_clock,end_clock,event_code,decision_object,minutes_lost,failure_layer,failure_scope,candidate_fix,evidence_ref,coder_id,notes
+EXAMPLE_ONLY,E001,00:00,00:00,START,,not_estimable,,,unclear,observer-log row 1,CODER_ID,replace or delete example row
