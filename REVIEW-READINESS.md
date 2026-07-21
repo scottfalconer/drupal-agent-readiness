@@ -18,7 +18,10 @@ The registered alias-safety and intent-behavior experiments both have
 in `docs/experiments-v1.json`.
 
 It is not ready to be framed as a broad Drupal agent-readiness verdict, a
-statistical benchmark, a cross-CMS comparison, or a model-provider leaderboard.
+statistical benchmark, a general cross-CMS ranking, or a model-provider
+leaderboard. The repository separately links an exploratory first-hour source
+index; that summary is not a registered scorecard experiment and does not change
+this package posture.
 
 ## Alignment with the Outside AI / Dries framing
 

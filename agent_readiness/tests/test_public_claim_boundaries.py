@@ -11,6 +11,7 @@ HAND_AUTHORED_PUBLIC_FILES = [
     REPO_ROOT / "REVIEW-READINESS.md",
     REPO_ROOT / "evidence" / "experiments" / "alias-safety-SYNTHESIS.md",
     REPO_ROOT / "docs" / "claims-ledger.md",
+    REPO_ROOT / "docs" / "finding-first-hour-v0.md",
     REPO_ROOT / "docs" / "finding-site-self-description-v0.md",
     REPO_ROOT / "method" / "PUBLISHING.md",
     PACKAGE_ROOT / "PUBLISHING.md",
@@ -21,6 +22,51 @@ HAND_AUTHORED_PUBLIC_FILES = [
 
 
 class PublicClaimBoundariesTest(unittest.TestCase):
+
+    def test_first_hour_summary_freezes_selected_denominators(self) -> None:
+        index = json.loads(
+            (REPO_ROOT / "docs" / "first-hour-selected-runs-v0.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        selected = index["selected_primary_matrix"]
+        self.assertEqual(16, len(selected))
+        self.assertTrue(all(item["valid"] for item in selected))
+        self.assertTrue(all(item["required_rungs_cleared"] == 5 for item in selected))
+        self.assertEqual(15, sum(item["optional_stretch"] for item in selected))
+
+        extensions = {item["platform"]: item for item in index["extensions"]}
+        self.assertEqual({"wagtail", "joomla", "payload", "strapi"}, set(extensions))
+        for platform in ("wagtail", "joomla", "payload"):
+            self.assertTrue(extensions[platform]["included_in_result"])
+            self.assertTrue(extensions[platform]["valid"])
+            self.assertEqual(5, extensions[platform]["required_rungs_cleared"])
+        self.assertFalse(extensions["strapi"]["included_in_result"])
+        self.assertFalse(extensions["strapi"]["valid"])
+        self.assertTrue(extensions["strapi"]["strong_contamination"])
+
+        all_rows = selected + list(extensions.values())
+        hashes = [item["source_score_sha256"] for item in all_rows]
+        self.assertEqual(len(hashes), len(set(hashes)))
+        for digest in hashes:
+            self.assertRegex(digest, r"^[0-9a-f]{64}$")
+
+        finding = (REPO_ROOT / "docs" / "finding-first-hour-v0.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "16 valid selected cells",
+            "15 of 16",
+            "per-run artifacts are not included",
+            "not a registered measurement-v1 experiment",
+        ):
+            self.assertIn(phrase, finding)
+        for overclaim in (
+            "zero capability failures",
+            "every platform tested",
+            "every drupal run",
+        ):
+            self.assertNotIn(overclaim, finding.lower())
 
     def test_hand_authored_narratives_do_not_copy_registered_result_ratios(self) -> None:
         from agent_readiness.published_experiments import load_published_experiments

@@ -2756,9 +2756,9 @@
       "sha256": "d7453431abfcf3397bb635e5e1dc4114c4b8725bd97f0437a7ebaf806214613f"
     },
     {
-      "bytes": 60619,
+      "bytes": 60701,
       "path": "publishing.py",
-      "sha256": "df9b2cd5096aaeddc6eeaa631b3034845ab058e3df21a9a3877982f9ee45d6ec"
+      "sha256": "45cceabe99d3bf0d395203fbd64a338c81efc36be3abee9ad6d1b370dfd6b0f2"
     },
     {
       "bytes": 15715,
@@ -3316,9 +3316,9 @@
       "sha256": "4b501f933d94b4859bd8f96c860e2827dd1a69ea57b88a1498c2965fe394a7da"
     },
     {
-      "bytes": 8914,
+      "bytes": 11008,
       "path": "tests/test_public_claim_boundaries.py",
-      "sha256": "b63011fe7e4fee8b1675cfa9642ef80c4af013d4703b9a00b8a610d2850f98be"
+      "sha256": "3020e9302b704e913a2aa2131e8dd786bddbd8fd8ba3a80126a70a1121073db0"
     },
     {
       "bytes": 31216,
@@ -3354,19 +3354,24 @@
   "package": "State of Agents in Drupal v0 evidence package",
   "repository_dependencies": [
     {
-      "bytes": 18962,
+      "bytes": 20604,
       "path": "README.md",
-      "sha256": "9f9396e69b7957a5829d238940a3ccdf8e46d6f72181b19d5d8ab9b135276985"
+      "sha256": "287458450c9247ec212d9ad61915e7a755556595b5106fa1dccbd81ea6f590cd"
     },
     {
-      "bytes": 6495,
+      "bytes": 6668,
       "path": "REVIEW-READINESS.md",
-      "sha256": "e933a8ec980217c35d604d9d5557bbe74b059c14b18518972fc15e05434f0f07"
+      "sha256": "3fee5fa900f3a54416c5aa77109b90a0767f16971a71dfef695228645ca3f968"
     },
     {
       "bytes": 4776,
       "path": "docs/claims-ledger.md",
       "sha256": "bdbf541412aac47e395f3896d60ad9bf8d65263fb5283227a8302696d1c24010"
+    },
+    {
+      "bytes": 5088,
+      "path": "docs/finding-first-hour-v0.md",
+      "sha256": "cbf3681b829dac9e44921b1574b76c0115d697f485dc3c90e234ba526be5a976"
     },
     {
       "bytes": 8531,
@@ -3407,6 +3412,11 @@
       "bytes": 485,
       "path": "repro/README.md",
       "sha256": "09d9fed83f01d2cc7abafaeef431e93959ff8a47b2cc0b2835509a506328fa0f"
+    },
+    {
+      "bytes": 7349,
+      "path": "docs/first-hour-selected-runs-v0.json",
+      "sha256": "91716ce256c4ed392874d082a6c02f3a3d25760fdab44615cb2e6b8da7912e2b"
     },
     {
       "bytes": 12155,

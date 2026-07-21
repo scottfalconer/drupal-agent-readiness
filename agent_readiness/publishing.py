@@ -161,6 +161,7 @@ CIRCULATED_REPOSITORY_MARKDOWN = [
     "README.md",
     "REVIEW-READINESS.md",
     "docs/claims-ledger.md",
+    "docs/finding-first-hour-v0.md",
     "docs/finding-site-self-description-v0.md",
     "docs/state-of-agents-in-drupal-v0.md",
     "docs/why-this-bench.md",
@@ -173,6 +174,7 @@ CIRCULATED_REPOSITORY_MARKDOWN = [
 
 REPOSITORY_DEPENDENCIES = [
     *CIRCULATED_REPOSITORY_MARKDOWN,
+    "docs/first-hour-selected-runs-v0.json",
     "method/benchmark-coverage-v1.json",
     "method/task-families-v1.json",
     "method/improvement-registry-v1.json",

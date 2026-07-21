@@ -1,0 +1,217 @@
+{
+  "artifact_kind": "drupal_agent_readiness.autonomous_first_hour_selected_runs.v0",
+  "status": "exploratory_source_index",
+  "frozen_at": "2026-07-21",
+  "source_artifacts_in_this_repository": false,
+  "source_score_path_template": "first-hour-experience/evidence/runs/{run_id}/score.json",
+  "hash_scope": "SHA-256 of source score.json only",
+  "selection_scope": "The named cells used by the v0 public summary, not every attempted run in the source workspace.",
+  "selection_rule": "One named valid run for each cell in the completed four-platform by four-agent-stack matrix; infrastructure failures and runs affected by known probe defects were excluded or rerun rather than counted as platform outcomes.",
+  "required_rung_keys": [
+    "rung1_site_up",
+    "rung3_content_model",
+    "rung4_three_members",
+    "rung5_team_page",
+    "rung6_editor_role"
+  ],
+  "optional_rung_key": "rung8_stretch",
+  "agent_stack_labels": [
+    "codex_full",
+    "codex_mini",
+    "claude_sonnet",
+    "claude_haiku"
+  ],
+  "selected_primary_matrix": [
+    {
+      "platform": "framework-scratch",
+      "agent_stack": "codex_full",
+      "run_id": "fw-02",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "f62a6dfa2eee7e43952895254c88ddf809f53568aadd6f2221ae3409c942bdf4"
+    },
+    {
+      "platform": "framework-scratch",
+      "agent_stack": "codex_mini",
+      "run_id": "fw-mini-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": false,
+      "source_score_sha256": "d3821241751d65c76bd0c738f6ac48a18e1c253430211db8d6f52f70bc1d39d9"
+    },
+    {
+      "platform": "framework-scratch",
+      "agent_stack": "claude_sonnet",
+      "run_id": "cw-01",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "597c9e52dbb69587e9360b9051455e90249fe18c054771e4be4d679851525d89"
+    },
+    {
+      "platform": "framework-scratch",
+      "agent_stack": "claude_haiku",
+      "run_id": "fw-haiku-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "55ee38e4c4b708412f227d06a3a761df3054077a3ed72648aa9e61b3428bd5ba"
+    },
+    {
+      "platform": "wordpress",
+      "agent_stack": "codex_full",
+      "run_id": "wp-g55-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "a4a6a2c6025e901e015f3cac42828b71b8165e58ac07585e8078b2b550607f91"
+    },
+    {
+      "platform": "wordpress",
+      "agent_stack": "codex_mini",
+      "run_id": "wp-mini-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "be28cafe7b3a6214558e8898245320a97d61248ce6d2a9edfb7274885d0288cb"
+    },
+    {
+      "platform": "wordpress",
+      "agent_stack": "claude_sonnet",
+      "run_id": "wp-son-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "3ee162c5e64e9a30243a3ecc5aa9e371fd4f1d8e4999138aa0cba599c2499bd3"
+    },
+    {
+      "platform": "wordpress",
+      "agent_stack": "claude_haiku",
+      "run_id": "wp-haiku-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "5d7a640ba4cca9c348636964d02748f67d064ffcd09f80f5bc5d53abe5c83049"
+    },
+    {
+      "platform": "drupal-core",
+      "agent_stack": "codex_full",
+      "run_id": "dcore-g55-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "4dad38aa31e65fe7ea66e7d961d74865dce3f3d621e4df57760a2df136637431"
+    },
+    {
+      "platform": "drupal-core",
+      "agent_stack": "codex_mini",
+      "run_id": "dcore-mini-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "a33938e4c4883348f19e88d637d4579ac85c13945dec178f9e25d2e3015585ad"
+    },
+    {
+      "platform": "drupal-core",
+      "agent_stack": "claude_sonnet",
+      "run_id": "dcore-son-2",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "9faeab38cb93c05d85fb0ff443e351fe1451689e01e42f98ca6eff923110d905"
+    },
+    {
+      "platform": "drupal-core",
+      "agent_stack": "claude_haiku",
+      "run_id": "dcore-haiku-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "183a398837c9d4fe5d74703a8e1994305b0ea6f3474ddd03db68d4ff29021871"
+    },
+    {
+      "platform": "drupal-cms",
+      "agent_stack": "codex_full",
+      "run_id": "dcms-g55-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "eeb7826cd85d750dde5f5cab7bab011bff85828c26272535cfe3d152a267d8a0"
+    },
+    {
+      "platform": "drupal-cms",
+      "agent_stack": "codex_mini",
+      "run_id": "dcms-mini-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "17f2fc3244db0e58b132e808528ac3415574701bbdb17af6b9ebe76364554703"
+    },
+    {
+      "platform": "drupal-cms",
+      "agent_stack": "claude_sonnet",
+      "run_id": "dcms-son-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "60776991794d3312ea34476bf98fd4b84fc64d5a6180cf825242c4d0a4393e94"
+    },
+    {
+      "platform": "drupal-cms",
+      "agent_stack": "claude_haiku",
+      "run_id": "dcms-haiku-1",
+      "valid": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "source_score_sha256": "05f6f07b4d2bfa2d4c2761280e5a163dfc47e5f1d0042969482d2880d2cee97e"
+    }
+  ],
+  "extensions": [
+    {
+      "platform": "wagtail",
+      "agent_stack": "codex_full",
+      "run_id": "wag-g55-1",
+      "valid": true,
+      "strong_contamination": false,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "included_in_result": true,
+      "source_score_sha256": "b0a44a26e376f3fcfff8bd5a98644bb4b3b7d8054188977272c14601bed48345"
+    },
+    {
+      "platform": "joomla",
+      "agent_stack": "codex_full",
+      "run_id": "joo-g55-1",
+      "valid": true,
+      "strong_contamination": false,
+      "required_rungs_cleared": 5,
+      "optional_stretch": true,
+      "included_in_result": true,
+      "source_score_sha256": "c063a430272ae6724898da527ee7fdf97687e0da76e727fd0599bef6352b199f"
+    },
+    {
+      "platform": "payload",
+      "agent_stack": "codex_full",
+      "run_id": "pay-g55-1",
+      "valid": true,
+      "strong_contamination": false,
+      "required_rungs_cleared": 5,
+      "optional_stretch": false,
+      "included_in_result": true,
+      "source_score_sha256": "6cd18375deb48d0b23bf85241b2edd69203b89e9bc5523f6901ec0eb1c2517cd"
+    },
+    {
+      "platform": "strapi",
+      "agent_stack": "codex_full",
+      "run_id": "str-g55-1",
+      "valid": false,
+      "strong_contamination": true,
+      "required_rungs_cleared": 5,
+      "optional_stretch": false,
+      "included_in_result": false,
+      "exclusion_reason": "The selected run's scorer recorded strong contamination.",
+      "source_score_sha256": "73651bc7cbee81bf3b5c88af27efc5d5151620acf1f731246a646dfedb1ddd50"
+    }
+  ]
+}
