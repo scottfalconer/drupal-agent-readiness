@@ -5,6 +5,18 @@ sites and publish what they get wrong. The current release is a narrow
 historical observation plus an evidence-loop package, not broad operational
 coverage.
 
+## TL;DR — What The Evidence Supports
+
+| Finding | Result | Evidence boundary |
+| --- | --- | --- |
+| [Basic build capability did not separate the selected first-hour cells](docs/finding-first-hour-v0.md) | All 16 valid selected cells in a four-platform by four-agent-stack matrix cleared five required mechanically checked rungs; 15 of 16 also cleared the optional stretch. Valid single-run extensions on Wagtail, Joomla, and Payload cleared the required bar; the Strapi extension was excluded because its contamination check failed. | Exploratory source index; not registered or claim-grade. The per-run artifacts are not yet in this repository. |
+| [A running site did not fully describe its own path claims](docs/finding-site-self-description-v0.md) | Retained judgments differed between a Drush-only condition and a condition whose prompt named a verdict-bearing helper. | Historical frontier observation; unpinned and not claim-grade. |
+| [Stored rationale alone did not preserve the target affordances](evidence/experiments/intent-behavior-evaluation-v0-clean/README.md) | The registered arms were equal on the preservation-only outcome. | Registered null; does not judge whether removal, adaptation, deferral, or escalation was appropriate. |
+
+“Capability is becoming table stakes” is a directional interpretation of the
+selected first-hour result, not a claim that the platforms are generally
+equivalent.
+
 The bench is designed to give an AI agent a real Drupal site and a real job:
 figure out the site, decide what is safe to change, make a governed change when
 the task calls for it, check the result, and recover from a mistake. Under the
@@ -23,21 +35,24 @@ or never picks Drupal at all. The point is to watch Drupal the way an agent
 experiences it from the outside and turn rough edges into things someone can
 fix.
 
-This is early: one historical frontier observation so far, plus the harness to
-produce stronger evidence and one preservation-only null from the next
-intent-behavior study. Neither registered experiment is claim-grade. For the
-first test, we asked agents whether a Drupal URL path was free to use as a new
-node alias. An agent can incorrectly say "yes" because a disabled View owns the
-path but currently returns nothing. Retained judgments differed between the
-Drush-only condition and the condition whose prompt named a verdict-bearing
-path helper; the bundled treatment did not isolate discovery, tool availability,
-facts-only output, advice, or an actual write.
+This is early. The registered scorecard contains one historical frontier
+observation plus the harness to produce stronger evidence and one
+preservation-only null from the next intent-behavior study. Neither registered
+experiment is claim-grade. The adjacent first-hour result above is an
+exploratory source index rather than a registered scorecard experiment. For the
+first registered test, we asked agents whether a Drupal URL path was free to
+use as a new node alias. An agent can incorrectly say "yes" because a disabled
+View owns the path but currently returns nothing. Retained judgments differed
+between the Drush-only condition and the condition whose prompt named a
+verdict-bearing path helper; the bundled treatment did not isolate discovery,
+tool availability, facts-only output, advice, or an actual write.
 
 This repo is the public package for `State of Agents in Drupal` v0.
 
 ## Where Should I Start?
 
-- Skimmers: read the v0 finding below, then
+- Skimmers: start with the [TL;DR](#tldr--what-the-evidence-supports), then read
+  the v0 finding below and
   [`docs/finding-site-self-description-v0.md`](docs/finding-site-self-description-v0.md).
 - Drupal roadmap reviewers: read
   [`docs/why-this-bench.md`](docs/why-this-bench.md), then the next hardening
@@ -150,7 +165,7 @@ gaps visible, inspectable, testable, and fixable.
 
 - Not a broad verdict that Drupal is agent-ready.
 - Not a statistically powered benchmark.
-- Not a cross-CMS comparison.
+- Not a general cross-CMS ranking.
 - Not a private held-out model exam.
 - Not a production-ready Drupal.org contrib module.
 
