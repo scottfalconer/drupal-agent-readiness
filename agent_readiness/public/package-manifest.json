@@ -6,9 +6,9 @@
       "sha256": "178bc28cd00c9d21c58e9f95ffea6f89c8f33da26f605bcd0cd5c511ece5a824"
     },
     {
-      "bytes": 1810,
+      "bytes": 2208,
       "path": "README.md",
-      "sha256": "dcb94f1679b7772c2e18631994967b26bdb87d029838fd43beff54410b493a2a"
+      "sha256": "6426d502519e413a584259544d3c171a04011bdb458e3606fcee3023b4cfcdeb"
     },
     {
       "bytes": 50,
@@ -36,9 +36,9 @@
       "sha256": "21293e6f289022dff86edf0b44410eaffca84ca40dbeafe6c4dd9c2d21093c58"
     },
     {
-      "bytes": 30500,
+      "bytes": 30711,
       "path": "eval_references.py",
-      "sha256": "401722e2183c97cd0a072418159b837d23100ddf0b8a556b0e76d18bf3a3f768"
+      "sha256": "26bbb6f3e98bb5ef2437990e7a25bcaefbb6f22ff4a30578549bc19d30fb2ca0"
     },
     {
       "bytes": 54,
@@ -46,9 +46,9 @@
       "sha256": "07b0ca8b0a3dc1b313f1eba34bfdbc4337b4a5e361afa30dd796e28418d68340"
     },
     {
-      "bytes": 3316,
+      "bytes": 3344,
       "path": "evaluators/alias_safety.py",
-      "sha256": "b1a1191b7f47b8b3b6f719bec07664f0f15f44c7f61a3861a39c02566aedc9c5"
+      "sha256": "9549d6e4babd6bdc7e9c06aaa0babb607cab518a42083ddbe0390bcff00c8708"
     },
     {
       "bytes": 3364,
@@ -96,14 +96,14 @@
       "sha256": "a14d7f524719afb6a5285f3ac0428507f6934d651b208eb96eb9ec6c20c18e0a"
     },
     {
-      "bytes": 3739,
+      "bytes": 3969,
       "path": "evaluators/event.py",
-      "sha256": "4a11bee1636576fbec7cdc700a1e90df0d18ae08f73b7debea728c4a13497369"
+      "sha256": "219f2da5f5031cc1d9e7c62b86bb8aa5de60f26b7611037d12ce5020e6d1f5f6"
     },
     {
-      "bytes": 4651,
+      "bytes": 4783,
       "path": "evaluators/inventory.py",
-      "sha256": "28aaa8506427530856965cc576198abe9628f47e02546e5bb1e7ff73b9d503a8"
+      "sha256": "3153675f76cc7f9b31bcc13c2d89492b33ed989aafa83e8f70e06076f3f322a6"
     },
     {
       "bytes": 2003,
@@ -3116,9 +3116,9 @@
       "sha256": "06b2fd035151e73b53bae6a169b239799ae4e26b760677bb2add0717c45622f2"
     },
     {
-      "bytes": 4281,
+      "bytes": 6269,
       "path": "scripts/build_clean_manifest.py",
-      "sha256": "3633c08e4a79501b8952ea62c7e9faf9ca0f69805e538d6b6c71669ceccec1bb"
+      "sha256": "a8a632a3f7af7132eca8cec3ccd71100441e9bc2a8f5fcc19deb7eb87f2118f9"
     },
     {
       "bytes": 1976,
@@ -3246,9 +3246,9 @@
       "sha256": "2da709246fcef306dc283acd790abfad846e4b1a2e8c9e1fbaf63f1b34e2df18"
     },
     {
-      "bytes": 3118,
+      "bytes": 4222,
       "path": "tests/test_alias_safety.py",
-      "sha256": "3de2bb08ff781558409623db2f45309c9b910126f75b72959bf6eca37276ca5d"
+      "sha256": "7f2158d14907fe7b42c9bb24555c01ab50f39445942ecf1fc9454223b171b75d"
     },
     {
       "bytes": 1603,
@@ -3266,19 +3266,19 @@
       "sha256": "5301e5a485b91681e3adfa47e0d7da38f4c17d1bc3386a43d49f245cce58303b"
     },
     {
-      "bytes": 13543,
+      "bytes": 14366,
       "path": "tests/test_clean_manifest.py",
-      "sha256": "52de59ef1489ffdd577d9c60ed78edfd8999ccef6046493234c8c5cf597a649b"
+      "sha256": "5d124ce3231a3b63fcab29b7f6fa366b72bb508f4a4a852c14694114425ee89b"
     },
     {
-      "bytes": 16364,
+      "bytes": 16372,
       "path": "tests/test_eval_references.py",
-      "sha256": "38d9b9f08374157cf96ab11ede6cc6e9c0af1421c45ff72955570f075265d52e"
+      "sha256": "36692e58f2e7c7f10854aefc723ac55f6828b43ee4f77095da35ba6ed0548148"
     },
     {
-      "bytes": 10604,
+      "bytes": 12620,
       "path": "tests/test_evaluators.py",
-      "sha256": "bb448f9237856d47faeac940390956b302db24a0e99bb950584b294b6f8351db"
+      "sha256": "003dcebba0eb7dfb4ed80034120afac781f4f8378bd59d60b41bc2b1824b6eef"
     },
     {
       "bytes": 32260,
@@ -3354,9 +3354,9 @@
   "package": "State of Agents in Drupal v0 evidence package",
   "repository_dependencies": [
     {
-      "bytes": 18962,
+      "bytes": 12240,
       "path": "README.md",
-      "sha256": "9f9396e69b7957a5829d238940a3ccdf8e46d6f72181b19d5d8ab9b135276985"
+      "sha256": "9e782a07d6e6e305e3be55ac2d948dd35cc434605a6d1373a758ba94a8bdb09f"
     },
     {
       "bytes": 6495,
@@ -3389,9 +3389,9 @@
       "sha256": "9b939f179ac389bcc62771fe82d7ebc8d197162e8b98e2457e2586e2608eced3"
     },
     {
-      "bytes": 14623,
+      "bytes": 14666,
       "path": "method/PUBLISHING.md",
-      "sha256": "be863604ee58dd0f63fe93031747d12a4d5f493785ff5173013465a24c544e2d"
+      "sha256": "1ea54ebbbddd8099a645e001e96aea495d155a24a05660dda721f5dfcf424c0e"
     },
     {
       "bytes": 18432,
@@ -3404,9 +3404,9 @@
       "sha256": "36fea026c7a9bd1431a2166313d746fe0b8ff98d76b433d15f0b32a2b8b3b006"
     },
     {
-      "bytes": 485,
+      "bytes": 659,
       "path": "repro/README.md",
-      "sha256": "09d9fed83f01d2cc7abafaeef431e93959ff8a47b2cc0b2835509a506328fa0f"
+      "sha256": "8833117765872166397a080bc7555d71bb9fe611257ca5a34431f2ded773974d"
     },
     {
       "bytes": 12155,

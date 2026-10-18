@@ -27,18 +27,19 @@ def render_clean_manifest(repo_root: Path, output_path: Path) -> str:
         raise RuntimeError("git ls-tree HEAD failed; commit the release candidate first")
 
     lines: list[str] = []
-    head_paths: list[bytes] = []
+    head_entries: list[tuple[bytes, bytes, bytes]] = []
     for entry in completed.stdout.split(b"\0"):
         if not entry:
             continue
         try:
             metadata, raw_path = entry.split(b"\t", 1)
-            _mode, object_type, _object_id = metadata.split(b" ", 2)
+            mode, object_type, object_id = metadata.split(b" ", 2)
         except ValueError as exc:
             raise RuntimeError("git ls-tree HEAD returned malformed output") from exc
         if object_type == b"blob":
-            head_paths.append(raw_path)
-    for raw_path in sorted(head_paths):
+            head_entries.append((raw_path, mode, object_id))
+    blobs = _read_blobs(repo_root, [entry[2] for entry in head_entries])
+    for raw_path, mode, object_id in sorted(head_entries):
         relative = raw_path.decode("utf-8", errors="strict")
         if relative == output_relative:
             continue
@@ -48,13 +49,56 @@ def render_clean_manifest(repo_root: Path, output_path: Path) -> str:
         except ValueError as exc:
             raise ValueError(f"tracked path escapes repository: {relative}") from exc
         unresolved = repo_root / relative
-        if unresolved.is_symlink():
+        if mode == b"120000" or unresolved.is_symlink():
             raise ValueError(f"tracked symlink is not allowed in a release: {relative}")
         if not path.is_file():
             raise FileNotFoundError(f"tracked file is missing: {relative}")
-        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        committed_bytes = blobs[object_id]
+        if path.read_bytes() != committed_bytes:
+            raise ValueError(
+                f"clean-manifest-drift: tracked file differs from HEAD: {relative}; "
+                "commit the release candidate first"
+            )
+        digest = hashlib.sha256(committed_bytes).hexdigest()
         lines.append(f"{digest}  {relative}")
     return "\n".join(lines) + "\n"
+
+
+def _read_blobs(repo_root: Path, object_ids: list[bytes]) -> dict[bytes, bytes]:
+    """Read the enumerated HEAD objects without consulting index/worktree bytes."""
+    unique_ids = sorted(set(object_ids))
+    if not unique_ids:
+        return {}
+    completed = _run_git(
+        repo_root, ["cat-file", "--batch"], input=b"\n".join(unique_ids) + b"\n"
+    )
+    if completed.returncode != 0:
+        raise RuntimeError("git cat-file failed to read HEAD blobs")
+    blobs: dict[bytes, bytes] = {}
+    offset = 0
+    for expected_id in unique_ids:
+        header_end = completed.stdout.find(b"\n", offset)
+        if header_end < 0:
+            raise RuntimeError("git cat-file returned a truncated blob header")
+        try:
+            object_id, object_type, raw_size = completed.stdout[offset:header_end].split(b" ")
+            size = int(raw_size)
+        except ValueError as exc:
+            raise RuntimeError("git cat-file returned a malformed blob header") from exc
+        start = header_end + 1
+        end = start + size
+        if (
+            object_id != expected_id
+            or object_type != b"blob"
+            or size < 0
+            or completed.stdout[end:end + 1] != b"\n"
+        ):
+            raise RuntimeError("git cat-file returned invalid blob data")
+        blobs[object_id] = completed.stdout[start:end]
+        offset = end + 1
+    if offset != len(completed.stdout):
+        raise RuntimeError("git cat-file returned unexpected trailing data")
+    return blobs
 
 
 def _sanitized_git_environment() -> dict[str, str]:
@@ -67,7 +111,9 @@ def _sanitized_git_environment() -> dict[str, str]:
     return environment
 
 
-def _run_git(repo_root: Path, args: list[str]) -> subprocess.CompletedProcess[bytes]:
+def _run_git(
+    repo_root: Path, args: list[str], *, input: bytes | None = None
+) -> subprocess.CompletedProcess[bytes]:
     env = _sanitized_git_environment()
     system_git = Path("/usr/bin/git")
     executable = (
@@ -81,6 +127,7 @@ def _run_git(repo_root: Path, args: list[str]) -> subprocess.CompletedProcess[by
         [str(Path(executable).resolve()), "--no-replace-objects", *args],
         cwd=repo_root,
         env=env,
+        input=input,
         capture_output=True,
         check=False,
     )

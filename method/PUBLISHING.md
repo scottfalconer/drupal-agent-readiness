@@ -83,7 +83,7 @@ Run:
 
 ```bash
 python3 -B -m unittest discover -s agent_readiness/tests -v
-PYTHONDONTWRITEBYTECODE=1 python3 -m py_compile agent_readiness/*.py agent_readiness/evaluators/*.py agent_readiness/scripts/*.py
+PYTHONPYCACHEPREFIX="${TMPDIR:-/tmp}/drupal-agent-readiness-pycache" python3 -m py_compile agent_readiness/*.py agent_readiness/evaluators/*.py agent_readiness/scripts/*.py
 python3 -S -B agent_readiness/scripts/audit_benchmark_registries_v1.py --format json
 python3 -B agent_readiness/scripts/build_clean_manifest.py --repo-root . --check
 python3 -B agent_readiness/scripts/audit_clean_checkout_integrity.py \

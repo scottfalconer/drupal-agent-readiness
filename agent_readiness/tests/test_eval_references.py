@@ -253,7 +253,7 @@ class EvalReferencesTest(unittest.TestCase):
             landscape["registry_policy"]["freeze_if_no_conversion_by_review"]
         )
         self.assertEqual(
-            "open_pending_review", landscape["registry_policy"]["intake_state"]
+            "frozen_pending_concrete_use", landscape["registry_policy"]["intake_state"]
         )
         expected_artifact_count = sum(
             len(reference["artifacts"]) for reference in self.references

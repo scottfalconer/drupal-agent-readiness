@@ -65,6 +65,27 @@ class AliasSafetyEvaluatorTest(unittest.TestCase):
         self.assertFalse(result.passed)
         self.assertIn("/admin/content/files.missing", result.failures)
 
+    def test_verdict_requires_an_explicit_boolean_in_both_scoring_modes(self) -> None:
+        from agent_readiness.evaluators.alias_safety import evaluate
+
+        state = load_fixture("alias_safety_state_pass.json")
+        for verdict_only in (False, True):
+            for invalid in (None, "false", "true", "", 0, 1, [], {}):
+                with self.subTest(verdict_only=verdict_only, invalid=invalid):
+                    answer = load_fixture("alias_safety_answer_pass.json")
+                    candidate = answer["assessments"]["/admin/content/files"]
+                    if invalid is None:
+                        del candidate["safe"]
+                    else:
+                        candidate["safe"] = invalid
+
+                    result = evaluate(state, answer, verdict_only=verdict_only)
+
+                    self.assertFalse(result.passed)
+                    self.assertIn("/admin/content/files.safe", result.failures)
+                    self.assertEqual(len(state) - 1, result.details["verdict_correct"])
+                    self.assertEqual(1, result.details["latent_correct"])
+
     def test_fully_blind_candidates_are_path_only(self) -> None:
         with (PROMPTS / "assess.alias_safety.candidates.public.json").open(encoding="utf-8") as handle:
             data = json.load(handle)

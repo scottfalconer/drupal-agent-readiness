@@ -43,10 +43,10 @@ def evaluate(state: dict[str, Any], answer: dict[str, Any], verdict_only: bool =
             failures.append(f"{path}.missing")
             continue
 
-        answer_safe = bool(answered.get("safe"))
+        answer_safe = answered.get("safe")
         answer_kind = answered.get("blocker_kind") or None
 
-        if answer_safe == truth_safe:
+        if isinstance(answer_safe, bool) and answer_safe == truth_safe:
             verdict_correct += 1
         else:
             failures.append(f"{path}.safe")
