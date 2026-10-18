@@ -1,14 +1,18 @@
 # External evaluation reference registry
 
-This directory is a community-editable index of relevant Drupal agent-evaluation work. Each JSON file describes one upstream source and points to concrete task suites, cases, datasets, graders, workflows, or substrates.
+This directory is an archived index of relevant Drupal agent-evaluation work. Each JSON file describes one upstream source and points to concrete task suites, cases, datasets, graders, workflows, or substrates.
+
+New source intake is frozen as of October 17, 2026. The scheduled October 15 review found no recorded downstream conversion. Maintainers can correct existing entries. A concrete planned use must reopen intake before contributors add sources.
 
 It is intentionally not a plugin registry. Merging a pointer means only that the source is relevant enough to discover. The registry never fetches or runs upstream code, accepts credentials, imports source-reported results as evidence, changes lifecycle coverage, or makes anything eligible for the Agent Readiness Scorecard.
 
 This is Agent Readiness consumer-side curation. It is not an umbrella evaluation program, shared execution service, or standards body, and is intended to complement Eval Commons and upstream projects rather than replace them.
 
-## Add or update a source
+## Update a source
 
-1. Add one file named for the source ID, such as `example-project.json`.
+Use these steps for corrections. Add a source only after a maintainer reopens intake for a concrete planned use.
+
+1. Update the JSON file for the source. If intake is open, name a new file for its source ID, such as `example-project.json`.
 2. Validate it against `method/schema/eval-reference-v1.schema.json`.
 3. Point each artifact at a concrete upstream object, not only a project homepage when a suite, file, work item, or merge request exists.
 4. Set `mapping_scope` to `task_candidate` only for a concrete task-like artifact, then map it to lifecycle stages and candidate task families. Use `supporting_infrastructure` with empty mapping arrays for frameworks, contracts, graders, result formats, and substrates.
@@ -48,13 +52,13 @@ Contributor-controlled names and prose are escaped when Markdown is generated. K
 
 This lane is judged by documented conversions, not inventory size. A conversion means that a listed reference informed a separately governed Agent Readiness task, evaluator, or coverage decision, or led to an accepted upstream task, evaluator, or harness change. Registry entries never change coverage themselves. Adding a pointer, running a diagnostic, filing an issue, or receiving a comment is not a conversion by itself.
 
-As of 2026-07-12, no conversion is recorded. The retained diagnostics are findings awaiting downstream disposition.
+As of 2026-10-17, no conversion is recorded. The retained diagnostics are findings awaiting downstream disposition.
 
 Routine registry triage and curation is capped at one maintainer-hour per week and must not displace committed Agent Readiness measurement or publication work. Selected reproductions are separately scoped work.
 
 Before starting a selected reproduction, name the specific Agent Readiness task or evaluator decision, or the upstream reproduction target, that the run could change. Also name the stop condition. A general-interest run without a decision target does not belong in this lane.
 
-Review this lane on 2026-10-15. If no conversion has been recorded, stop soliciting entries and retain the registry as a read-only archive until a concrete planned use reopens it.
+The review was due on 2026-10-15 and completed on 2026-10-17. No conversion is recorded, so new intake is frozen. Retain the registry as an archive until a concrete planned use reopens it. Corrections to existing records remain possible.
 
 ## From pointer to evidence
 

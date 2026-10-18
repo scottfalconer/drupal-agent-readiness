@@ -72,6 +72,10 @@ def evaluate(state: dict[str, Any], answer: dict[str, Any]) -> EvaluationResult:
 
 
 def _as_int(value: Any) -> int | None:
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, float) and not value.is_integer():
+        return None
     try:
         return int(value)
     except (TypeError, ValueError):

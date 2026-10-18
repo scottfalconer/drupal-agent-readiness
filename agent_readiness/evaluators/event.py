@@ -4,6 +4,9 @@ from agent_readiness.evaluators.common import get_path
 from agent_readiness.evaluators.result import EvaluationResult
 
 
+REQUIRED_FIELDS = ("field_event_date", "field_event_location")
+
+
 def _event_related_alias(alias: str) -> bool:
     normalized = alias.lower()
     return "event" in normalized or "agent-readiness" in normalized
@@ -19,6 +22,9 @@ def evaluate(state: dict[str, Any], answer: dict[str, Any]) -> EvaluationResult:
 
     required_state = get_path(state, "content_model.event_required_fields") or []
     required_answer = get_path(answer, "event.required_fields") or []
+    for field_name in REQUIRED_FIELDS:
+        if field_name not in required_state:
+            failures.append(f"content_model.event_required_fields.{field_name}")
     for field_name in required_state:
         if field_name not in required_answer:
             failures.append(f"event.required_fields.{field_name}")

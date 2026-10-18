@@ -12,8 +12,9 @@ Inventory counts describe scope, not success. Success is a documented downstream
 
 - Recorded conversions: 0
 - Routine curation cap: 1 maintainer-hour per week
-- Intake state: Open Pending Review
+- Intake state: Frozen Pending Concrete Use
 - Review date: 2026-10-15; if no conversion is recorded, freeze new intake and retain the registry as a read-only archive
+- Review completed: 2026-10-17; no conversion is recorded, so new intake is frozen until a concrete planned use reopens it
 - Plan-only pointer ratio: 1/9
 
 ## How this becomes evidence

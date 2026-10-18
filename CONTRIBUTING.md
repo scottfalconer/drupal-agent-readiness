@@ -63,10 +63,12 @@ submission. Review and understand any AI-generated output before submitting it.
 
 ## External Evaluation References
 
-Community PRs may add inert source pointers under `method/eval-references/` by
-following [`method/eval-references/README.md`](method/eval-references/README.md).
-A merged pointer is discovery metadata only: it is never fetched or executed,
-and it changes no Agent Readiness claim, lifecycle coverage, or score.
+New source intake is frozen under the registry's October 15 review rule.
+No downstream conversion is recorded as of October 17, 2026.
+Existing references remain available under `method/eval-references/`.
+See [`method/eval-references/README.md`](method/eval-references/README.md)
+for the conditions to reopen intake. A reference is discovery metadata only:
+it is never fetched or executed, and it changes no claim, coverage, or score.
 
 Trusted local reproductions and their retained outputs use the separate
 external-evidence lane summarized in
@@ -75,16 +77,29 @@ maintainer-selected, pinned, locally audited run belongs there.
 
 ## Local Checks
 
-Run these from the repository root before opening a pull request:
+Run these in Bash from the repository root before opening a pull request.
+If generated files are out of date, use the refresh steps below first.
+The compile command stores Python cache files outside the checkout.
+`PYTHONDONTWRITEBYTECODE` alone does not prevent `py_compile` from writing them.
 
 ```bash
 python3 -B -m unittest discover -s agent_readiness/tests -v
-PYTHONDONTWRITEBYTECODE=1 python3 -m py_compile agent_readiness/*.py agent_readiness/evaluators/*.py agent_readiness/scripts/*.py
+PYTHONPYCACHEPREFIX="${TMPDIR:-/tmp}/drupal-agent-readiness-pycache" python3 -m py_compile agent_readiness/*.py agent_readiness/evaluators/*.py agent_readiness/scripts/*.py
 python3 -S -B agent_readiness/scripts/audit_benchmark_registries_v1.py --format json
 python3 -S -B -m agent_readiness.scripts.build_eval_landscape --check
 python3 -S -B -m agent_readiness.scripts.build_external_eval_results --check
-python3 agent_readiness/scripts/audit_publication_package.py --base-dir agent_readiness $(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort | sed 's/^/--run-result /')
-python3 agent_readiness/scripts/audit_readiness.py --base-dir agent_readiness $(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort | sed 's/^/--run-result /')
+```
+
+The remaining checks require a committed release candidate with current manifests.
+Follow the refresh steps below before you run them:
+
+```bash
+RUN_ARGS=()
+while IFS= read -r path; do
+  RUN_ARGS+=(--run-result "$path")
+done < <(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort)
+python3 -B agent_readiness/scripts/audit_publication_package.py --base-dir agent_readiness --distribution-dir docs "${RUN_ARGS[@]}"
+python3 -B agent_readiness/scripts/audit_readiness.py --base-dir agent_readiness "${RUN_ARGS[@]}"
 python3 -B agent_readiness/scripts/audit_clean_checkout_integrity.py \
   --repo-root . --checksum-manifest CLEAN-MANIFEST.sha256 \
   --require-clean-worktree \
@@ -99,8 +114,20 @@ python3 -B agent_readiness/scripts/build_clean_manifest.py --repo-root . --check
 shasum -a 256 -c CLEAN-MANIFEST.sha256
 ```
 
-If a change updates public package wording or artifacts, regenerate or update the
-relevant public files and refresh `CLEAN-MANIFEST.sha256`.
+If a change updates public package wording or artifacts, regenerate the public
+assets before you commit the release candidate. Use Bash for these commands:
+
+```bash
+python3 -S -B -m agent_readiness.scripts.build_eval_landscape
+python3 -S -B -m agent_readiness.scripts.build_external_eval_results
+RUN_ARGS=()
+while IFS= read -r path; do
+  RUN_ARGS+=(--run-result "$path")
+done < <(find agent_readiness/runs -maxdepth 2 -name run-result.json | sort)
+python3 -B agent_readiness/scripts/build_publish_assets.py "${RUN_ARGS[@]}"
+```
+
+Review the generated diff. Commit the intended changes, including generated files.
 
 Regenerate the clean manifest only from an immutable, already-committed release
 candidate. The builder reads `HEAD`; it deliberately does not bless ambient
@@ -109,3 +136,5 @@ modified or untracked files:
 ```bash
 python3 -B agent_readiness/scripts/build_clean_manifest.py --repo-root .
 ```
+
+Commit the updated checksum manifest. Then run the release checks above.

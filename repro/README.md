@@ -1,9 +1,13 @@
-# Historical v0 reproduction snapshot
+# Historical v0 Snapshot
 
-This directory freezes the scripts, evaluators, workflows, and tests used to
-inspect the original v0 evidence. It is historical evidence, not the active
-implementation and not a generated mirror of `agent_readiness/`.
+This directory preserves scripts, evaluators, workflows, and tests from the
+original v0 evidence package. Use these files to inspect how the historical
+alias-safety and scorecard artifacts were produced.
 
-Use `agent_readiness/` for current benchmark behavior, v1 measurement
-contracts, readiness gates, and tests. Use this directory only when auditing how
-the retained historical alias-safety and scorecard artifacts were produced.
+The files remain frozen. They do not track changes to the active implementation.
+Retained source alone does not supply every environment record needed for exact
+historical replication.
+
+Use the [active source package](../agent_readiness/README.md) for current behavior,
+measurement contracts, audits, and tests. The [harness guide](../method/HARNESS.md)
+explains the historical records and the requirements for new experiments.

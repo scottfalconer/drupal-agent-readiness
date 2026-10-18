@@ -1,38 +1,56 @@
-# agent_readiness Source Package
+# Active Source Package
 
-This directory contains the runnable Python source, evaluator code, scripts,
-tests, prompts, fixtures, and generated public package assets used by the v0
-evidence loop.
+This directory contains the current Python implementation of Drupal Agent
+Readiness. It includes evaluators, scripts, tests, prompts, fixtures, and public
+package assets.
 
-Start from the repository root for public context:
+Use the [project README](../README.md) for the purpose, evidence limits, and
+initial setup. Use Python 3.12 for the commands below.
 
-- [Project README](../README.md)
-- [Finding write-up](../docs/finding-site-self-description-v0.md)
-- [Claims ledger](../docs/claims-ledger.md)
-- [Harness](../method/HARNESS.md)
-- [Publishing checklist](../method/PUBLISHING.md)
-- [Measurement v1 guide](../method/MEASUREMENT-V1.md)
-- [Lifecycle coverage](../method/benchmark-coverage-v1.json)
-- [Clean/messy task families](../method/task-families-v1.json)
-- [Improvement registry](../method/improvement-registry-v1.json)
+## Check The Source
 
-Run checks from the repository root, not from this subdirectory:
+Run commands from the repository root.
 
-```bash
-python3 -B -m unittest discover -s agent_readiness/tests -v
-PYTHONDONTWRITEBYTECODE=1 python3 -m py_compile agent_readiness/*.py agent_readiness/evaluators/*.py agent_readiness/scripts/*.py
-python3 -S -B agent_readiness/scripts/audit_benchmark_registries_v1.py --format json
-python3 agent_readiness/scripts/audit_measurement_v1.py --help
-python3 -B agent_readiness/scripts/build_clean_manifest.py --repo-root . --check
-python3 -B agent_readiness/scripts/audit_clean_checkout_integrity.py \
-  --repo-root . --checksum-manifest CLEAN-MANIFEST.sha256 \
-  --require-clean-worktree \
-  --entrypoint agent_readiness/measurement_v1.py \
-  --entrypoint agent_readiness/published_experiments.py \
-  --entrypoint agent_readiness/benchmark_registries_v1.py
-shasum -a 256 -c CLEAN-MANIFEST.sha256
-```
+1. Run the unit tests.
 
-Patch source behavior here first. The `repro/` tree is a frozen historical v0
-snapshot used to audit the original evidence; it is not a mirror of the current
-implementation and should not be imported by current checks.
+   ```bash
+   python3 -B -m unittest discover -s agent_readiness/tests -v
+   ```
+
+2. Check the benchmark registries.
+
+   ```bash
+   python3 -S -B agent_readiness/scripts/audit_benchmark_registries_v1.py --format json
+   ```
+
+3. Check the generated evaluation documents.
+
+   ```bash
+   python3 -S -B -m agent_readiness.scripts.build_eval_landscape --check
+   python3 -S -B -m agent_readiness.scripts.build_external_eval_results --check
+   ```
+
+The [contributor guide](../CONTRIBUTING.md) explains the change process. The
+[publishing checklist](../method/PUBLISHING.md) defines the complete release
+checks. File changes require updated generated assets and checksums before the
+clean-checkout audit can pass.
+
+## Make Changes
+
+Make current behavior changes in this directory. The
+[`repro/` directory](../repro/README.md) preserves historical v0 source. Current
+checks must not import that historical source.
+
+The [`site_architecture` fixture](fixtures/site_architecture_module/) supplies
+Drupal test tools for disposable sites. It is not a supported public module.
+
+| Work | Reference |
+| --- | --- |
+| Review a claim | [Claims ledger](../docs/claims-ledger.md) |
+| Inspect the historical finding | [Path-safety finding](../docs/finding-site-self-description-v0.md) |
+| Prepare an alias-safety experiment | [Harness guide](../method/HARNESS.md) |
+| Register an experiment | [Measurement v1 guide](../method/MEASUREMENT-V1.md) |
+| Review task coverage | [Coverage registry](../method/benchmark-coverage-v1.json) |
+| Review target tasks | [Task-family registry](../method/task-families-v1.json) |
+| Record a proposed improvement | [Improvement registry](../method/improvement-registry-v1.json) |
+| Prepare a human-agent study | [First-hour study kit](../method/human-agent-first-hour/README.md) |

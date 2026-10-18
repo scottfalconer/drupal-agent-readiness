@@ -82,6 +82,22 @@ class CleanManifestTest(unittest.TestCase):
             self.assertEqual(1, drift.returncode)
             self.assertIn("clean-manifest-drift", drift.stderr)
 
+            # Rebuilding must not bless modified bytes, whether or not they
+            # have also been staged in the index.
+            for staged in (False, True):
+                with self.subTest(staged=staged):
+                    if staged:
+                        subprocess.run(["git", "add", "tracked.txt"], cwd=root, check=True)
+                    rebuilt = subprocess.run(
+                        [sys.executable, str(SCRIPT), "--repo-root", str(root)],
+                        text=True,
+                        capture_output=True,
+                        check=False,
+                    )
+                    self.assertEqual(1, rebuilt.returncode)
+                    self.assertIn("clean-manifest-drift", rebuilt.stderr)
+                    self.assertEqual(first, manifest.read_text(encoding="utf-8"))
+
     def test_ambient_alternate_index_cannot_omit_a_head_file(self) -> None:
         from agent_readiness.scripts.audit_clean_checkout_integrity import (
             audit_git_release_hygiene,

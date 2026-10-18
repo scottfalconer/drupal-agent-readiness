@@ -73,6 +73,32 @@ class InventoryEvaluatorTest(unittest.TestCase):
         self.assertFalse(result.passed)
         self.assertIn("canvas.page_count", result.failures)
 
+    def test_inventory_rejects_fractional_boolean_and_nonfinite_page_counts(self) -> None:
+        from agent_readiness.evaluators.inventory import evaluate
+
+        for count in (7.9, True, False, float("inf"), float("nan")):
+            with self.subTest(count=count):
+                state = load_fixture("inventory_state_pass.json")
+                answer = load_fixture("inventory_answer_pass.json")
+                if isinstance(count, bool):
+                    state["canvas"]["page_count"] = int(count)
+                answer["canvas"]["page_count"] = count
+
+                result = evaluate(state, answer)
+
+                self.assertFalse(result.passed)
+                self.assertIn("canvas.page_count", result.failures)
+
+    def test_inventory_accepts_an_exact_integer_page_count_string(self) -> None:
+        from agent_readiness.evaluators.inventory import evaluate
+
+        answer = load_fixture("inventory_answer_pass.json")
+        answer["canvas"]["page_count"] = "7"
+
+        result = evaluate(load_fixture("inventory_state_pass.json"), answer)
+
+        self.assertTrue(result.passed)
+
     def test_inventory_fails_when_answer_invents_entity_type_for_unclaimed_path(self) -> None:
         from agent_readiness.evaluators.inventory import evaluate
 
@@ -135,6 +161,23 @@ class EventEvaluatorTest(unittest.TestCase):
 
         self.assertFalse(result.passed)
         self.assertIn("jsonapi.verified", result.failures)
+
+    def test_event_requires_both_registered_fields_in_live_state(self) -> None:
+        from agent_readiness.evaluators.event import evaluate
+
+        for missing in ("field_event_date", "field_event_location"):
+            for answer_claims_field in (True, False):
+                with self.subTest(missing=missing, answer_claims_field=answer_claims_field):
+                    state = load_fixture("event_state_pass.json")
+                    answer = load_fixture("event_answer_pass.json")
+                    state["content_model"]["event_required_fields"].remove(missing)
+                    if not answer_claims_field:
+                        answer["event"]["required_fields"].remove(missing)
+
+                    result = evaluate(state, answer)
+
+                    self.assertFalse(result.passed)
+                    self.assertIn(f"content_model.event_required_fields.{missing}", result.failures)
 
     def test_event_fails_when_unrelated_surfaces_or_permissions_change(self) -> None:
         from agent_readiness.evaluators.event import evaluate
